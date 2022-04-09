@@ -1,0 +1,9 @@
+export const ContentType = {
+    LOGIN: 'LOGIN',
+    LOGOUT: "LOGOUT",
+    ACCOUT_INIALIZED: 'ACCOUT_INIALIZED',
+    GET_CATAGORY: 'GET_CATAGORY',
+    GET_INFO: 'GET_INFO',
+    GET_SINGLE_NFT: "GET_SINGLE_NFT"
+
+}

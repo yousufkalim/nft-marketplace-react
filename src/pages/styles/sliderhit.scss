@@ -1,0 +1,21 @@
+@import './variables.scss';
+.SliderHit {
+  padding-top: 60px;
+  padding-bottom: 70px;
+  overflow: hidden;
+  h2 {
+    font-family: inherit;
+    font-size: 32px;
+    color: $white-color;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 38px;
+    letter-spacing: 0em;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .card {
+    max-width: 330px;
+    margin: auto;
+  }
+}

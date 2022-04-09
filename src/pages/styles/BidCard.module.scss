@@ -1,0 +1,101 @@
+@import './variables.scss';
+.cardfish {
+  position: relative;
+  background-color: $primary-color !important;
+  border-radius: 34px !important;
+  min-height: 470px;
+  padding: 30px 24px;
+  @media screen and (max-width: 992px) {
+    max-width: 330px;
+    margin: auto;
+  }
+  @media screen and (max-width: 575px) {
+  }
+  &:hover {
+    .cardTitle {
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.75) 0%,
+        rgba(255, 255, 255, 0.54) 48.44%,
+        rgba(255, 255, 255, 0.3) 100%
+      );
+    }
+  }
+  .cardTitle {
+    position: absolute;
+    min-height: 70px;
+    background: rgba(29, 40, 122, 0.5);
+    border-radius: 30px 30px 0px 0px;
+    width: 100%;
+    display: flex;
+    left: 0;
+    align-items: center;
+    padding-left: 27px;
+    padding-right: 27px;
+    font-family: inherit;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 29px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: $white-color;
+  }
+  img {
+    object-fit: cover;
+    border-radius: 20px;
+  }
+  .cardBody {
+    padding: 0 !important;
+    position: relative;
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    .innerText {
+      min-height: 50px;
+      h5 {
+        font-family: inherit;
+        color: $white-color;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 22px;
+        letter-spacing: 0em;
+        text-align: left;
+      }
+      p {
+        font-family: inherit;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 300;
+        color: $white-color;
+        line-height: 22px;
+        letter-spacing: 0em;
+        text-align: left;
+      }
+    }
+  }
+  .footer {
+    span {
+      font-family: inherit;
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 18px;
+      color: $white-color;
+      margin-right: 2px;
+      letter-spacing: 0em;
+      text-align: right;
+    }
+    p {
+      font-family: inherit;
+      font-size: 15px;
+      font-style: normal;
+      color: $white-color;
+      font-weight: 400;
+      line-height: 18px;
+      letter-spacing: 0em;
+      text-align: left;
+    }
+  }
+}

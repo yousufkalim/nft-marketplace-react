@@ -1,0 +1,95 @@
+@import "./variables.scss";
+.cardfish {
+  position: relative;
+  background-color: $primary-color !important;
+  border-radius: 34px !important;
+  min-height: 470px;
+
+  @media screen and (max-width: 575px) {
+  }
+  .cardTitle {
+    position: absolute;
+    min-height: 70px;
+    background: rgba(29, 40, 122, 0.5);
+    border-radius: 30px 30px 0px 0px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    left: 0;
+    padding-left: 27px;
+    padding-right: 27px;
+    font-family: inherit;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 29px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: $white-color;
+  }
+  img {
+    object-fit: cover;
+  }
+  .cardBody {
+    padding: 32px 28px !important;
+    position: relative;
+    img {
+      top: -38px;
+      right: 10%;
+      position: absolute;
+    }
+    .innerText {
+      h5 {
+        font-family: inherit;
+        color: $white-color;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 700;
+        margin-bottom: 10px;
+        line-height: 22px;
+        letter-spacing: 0em;
+        text-align: left;
+      }
+      p {
+        font-family: inherit;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 300;
+        color: $white-color;
+        line-height: 22px;
+        letter-spacing: 0em;
+        text-align: left;
+      }
+    }
+  }
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    span {
+      font-family: inherit;
+      font-size: 15px;
+      font-style: normal;
+      color: $white-color;
+      font-weight: 400;
+      line-height: 18px;
+      letter-spacing: 0em;
+      text-align: right;
+    }
+    div {
+      flex: 0 0 40%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      &:last-child {
+        justify-content: flex-start;
+      }
+      img {
+        max-width: 30px;
+        max-height: 20px;
+      }
+    }
+  }
+}

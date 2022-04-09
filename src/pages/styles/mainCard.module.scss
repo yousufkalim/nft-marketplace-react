@@ -1,0 +1,26 @@
+@import "./variables.scss";
+
+.main {
+  display: flex;
+  position: relative;
+  min-height: calc(100vh - 93px);
+  .cardMain {
+    position: absolute;
+    padding: 16px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $white-color;
+    border-radius: 4px;
+    height: calc(100% - 5%);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    width: calc(100% - 50%);
+    @media screen and (max-width: 992px) {
+      width: calc(100% - 20%);
+      height: calc(100% - 5%);
+    }
+    @media screen and (max-width: 575px) {
+      width: calc(100% - 5%);
+    }
+  }
+}
