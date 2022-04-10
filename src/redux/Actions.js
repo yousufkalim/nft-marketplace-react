@@ -4,10 +4,26 @@ import { toast } from 'react-toastify';
 
 
 
+
+export const getCollectionPage = (id) => async (dispatch) => {
+    const response = await axios.get(`collections/${id}`)
+    try {
+
+        dispatch({ type: ContentType.GET_COLLECTION_PAGE, payload: response.data.body })
+    } catch (err) {
+        console.log(err.response)
+        return err
+    }
+}
+
 export const getSingleNFT = (id) => async (dispatch) => {
     const response = await axios.get(`nfts/${id}`)
-    console.log(response)
-    dispatch({ type: ContentType.GET_SINGLE_NFT, payload: response.data.body.nft })
+    try {
+
+        dispatch({ type: ContentType.GET_SINGLE_NFT, payload: response.data.body.nft })
+    } catch (e) {
+        return e
+    }
 }
 export const getCatagory = () => async (dispatch) => {
     const response = await axios.get('/collections/category/Art');
@@ -22,6 +38,9 @@ export const getInfo = () => async (dispatch) => {
     });
 
     dispatch({ type: ContentType.GET_INFO, payload: response.data })
+}
+export const removeNftpage = () => {
+    return ({ type: ContentType.REMOVE_NFT })
 }
 
 export const Login = (user) => {

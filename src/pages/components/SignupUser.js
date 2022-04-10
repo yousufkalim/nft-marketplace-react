@@ -101,7 +101,7 @@ const SignupUser = () => {
                                             }
                                         })
                                         .catch(function (error) {
-                                            console.log(error, error.response)
+
 
                                             setStatus({ success: false });
                                             setErrors({ submit: error.response.data.message });

@@ -1,16 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import MainLayout from '../mainlayout/MainLayout';
+import { getCollectionPage, removeNftpage } from '../redux/Actions';
 import ViewCardList from './components/ViewCardList';
 import ViewHead from './components/ViewHead';
 import ViewList from './components/ViewlList';
 
 const CollectionView = () => {
+
+  const dispatch = useDispatch()
+
+  const id = useParams().id
+  useEffect(() => {
+    dispatch(getCollectionPage(id))
+    return () => {
+      dispatch(removeNftpage())
+    }
+  }, [id])
+
   return (
     <>
-
-      <ViewHead />
+      <ViewHead id={id} />
       <ViewList />
-      <ViewCardList />
+      <ViewCardList id={id} />
 
     </>
   );

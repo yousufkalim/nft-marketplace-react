@@ -9,8 +9,6 @@ import { ToastContainer, } from 'react-toastify';
 const Home = () => {
   return (
     <>
-
-
       <Hero />
       <TopHits />
       <HitWeek />

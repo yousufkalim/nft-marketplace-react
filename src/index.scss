@@ -106,3 +106,18 @@ span {
 .show > .btn-primary.dropdown-toggle:focus {
   box-shadow: none;
 }
+
+.list-group{
+  position: absolute;
+  left: 0;
+  top: 100%;
+  z-index:99;
+  width: 80%;
+    border-radius: 5px !important;
+    .list-group-item{
+     &:hover{
+       background-color:#f7f5f5 ;
+       cursor:pointer;
+     } 
+    }
+}

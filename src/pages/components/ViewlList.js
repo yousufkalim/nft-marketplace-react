@@ -5,32 +5,43 @@ import CustomButton from '../common/Button';
 
 import style from '../styles/ViewList.module.scss';
 import twitter from '../../images/twitter.svg';
+import insta from '../../images/insta.svg';
+import discord from '../../images/discord.svg';
+import { useSelector } from 'react-redux';
 
 const ViewList = () => {
+  const data = useSelector(state => state.collection.collectionpage)
+
   return (
     <div className='mt-4' style={{ paddingBottom: '70px' }}>
       <Container>
         <div className={style.viewList}>
-          <h2>GenOut Studios</h2>
-          <h4>Created by UserName</h4>
+          <h2>{data?.StoreName}</h2>
+          <h4>{data?.CreatedBy}</h4>
         </div>
         <Row className={'gy-3 align-items-center mt-4 justify-content-center'}>
           <Col lg={3}>
             <div className={style.twitter}>
-              <img src={twitter} alt='twitter' />
-              <span>TwitterHandle</span>
+              <a target="_blank" rel="noreferrer" href={`${data?.URLInstagram}`}>
+                <img src={insta} alt='instagram' />
+                <span>Instagram</span>
+              </a>
             </div>
           </Col>
           <Col lg={3}>
             <div className={style.twitter}>
-              <img src={twitter} alt='twitter' />
-              <span>TwitterHandle</span>
+              <a target="_blank" rel="noreferrer" href={`${data?.URLDiscord}`} >
+                <img src={discord} alt='discord' />
+                <span>Discord</span>
+              </a>
             </div>
           </Col>
           <Col lg={3}>
             <div className={style.twitter}>
-              <img src={twitter} alt='twitter' />
-              <span>TwitterHandle</span>
+              <a target="_blank" rel="noreferrer" href={`${data?.URLPersonal}`} >
+                <img src={twitter} alt='twitter' />
+                <span>Personal</span>
+              </a>
             </div>
           </Col>
         </Row>
@@ -53,17 +64,12 @@ const ViewList = () => {
           </div>
         </div>
         <p className={style.detailText}>
-          The GenOut Studios is a collection of 10,000 unique Animated NFTs—
-          unique digital collectibles living on the Ethereum blockchain. Your
-          GenOut Studios grants access to members-only benefits, the first of
-          which is access to the treasure chest, a stockpile of goodies. Future
-          areas and perks can be unlocked by the community through other
-          rewards. Visit www.GenOutStudios.com for more details.
+          {data?.DescriptionLong}
         </p>
-        <div className={style.buttons}>
+        {/* <div className={style.buttons}>
           <CustomButton text={'Items'} customClass={style.explore} />
           <CustomButton text={'Stats'} customClass={style.createBtn} disable />
-        </div>
+        </div> */}
       </Container>
     </div>
   );

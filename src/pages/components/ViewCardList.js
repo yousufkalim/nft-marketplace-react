@@ -1,14 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import BidCard from '../common/BidCard';
 import axios from '../../api/instance';
 import '../styles/ViewCardList.scss';
 import fish from '../../images/fish.png';
-const ViewCardList = () => {
+const ViewCardList = ({ id }) => {
   const [value, setValue] = useState('');
   const [searchData, isData] = useState([]);
   const [loading, isLoading] = useState(false)
   const [search, setSearch] = useState(false)
+  const [nft, setnfts] = useState([])
+
+  useEffect(() => {
+    async function getAllNFTS() {
+      isLoading(true)
+      const res = await axios.get(`collections/${id}/nfts/1`)
+      try {
+        if (res.data.body.length > 0) {
+          isLoading(false)
+          setnfts(res.data.body)
+        } else {
+          isLoading(false)
+          setnfts([])
+        }
+      } catch (e) {
+        return e
+      }
+
+
+    }
+    getAllNFTS()
+
+  }, [id])
 
 
   const submit = async (e) => {
@@ -20,7 +43,7 @@ const ViewCardList = () => {
       return
     }
     const res = await axios.get('/nfts/search', { params: { query: value } })
-    console.log(res)
+
     try {
       if (res.status === 200) {
         if (res.data.body.nfts.length > 0) {
@@ -58,7 +81,7 @@ const ViewCardList = () => {
             />
           </Col>
           <Col lg={3} xs={6}>
-            <div className='buttonSearch' onClick={submit}>Single Items</div>
+            <div className='buttonSearch' onClick={submit}>Search Items</div>
           </Col>
           <Col lg={3} xs={6}>
             <div className='buttonSearch'>Price: High to Low</div>
@@ -71,7 +94,6 @@ const ViewCardList = () => {
           </div> :
             (
               search ? (
-
                 searchData && searchData?.map((e, i) => (
                   <Col key={i} lg={3} md={6} xs={12}>
                     <BidCard styleClass={'cards'} image={fish} overlay={true} post={e} />
@@ -80,8 +102,15 @@ const ViewCardList = () => {
 
               ) : (
                 <>
-
-                  <Col lg={3} md={6} xs={12}>
+                  {loading ? <div style={{ color: "white", height: '50vh', margin: 'auto' }} className='d-flex align-items-center justify-content-center'> <Spinner animation="border" role="status" style={{ color: "white" }}>
+                  </Spinner>
+                  </div> :
+                    nft.length > 0 ? nft?.map((e, i) => (
+                      <Col key={i} lg={3} md={6} xs={12}>
+                        <BidCard styleClass={'cards'} image={fish} overlay={true} post={e} />
+                      </Col>
+                    )) : <div className="text-white text-center mt-5">No NFTS FOUND </div>}
+                  {/* <Col lg={3} md={6} xs={12}>
                     <BidCard styleClass={'cards'} image={fish} overlay={true} />
                   </Col>
                   <Col lg={3} md={6} xs={12}>
@@ -92,7 +121,7 @@ const ViewCardList = () => {
                   </Col>
                   <Col lg={3} md={6} xs={12}>
                     <BidCard styleClass={'cards'} image={fish} overlay={true} />
-                  </Col>
+                  </Col> */}
                 </>
 
               )
