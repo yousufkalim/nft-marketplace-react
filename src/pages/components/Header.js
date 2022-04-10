@@ -38,9 +38,10 @@ const Header = () => {
   }, [user.isLoginIn, location])
 
   useEffect(() => {
-
+    if (input === '') return
     async function search() {
-      const res = await axios.get('/collections/search/', { params: { query: input.toString() } })
+
+      const res = await axios.get('/collections/search/', { params: { query: input } })
       try {
         if (res.status === 200) {
 
@@ -84,8 +85,8 @@ const Header = () => {
           >
             <div className={style.menuSetting}>
               <div>
-                <Nav className={` ${style.navmenu} activeNav  `} >
-                  <NavLink to={routes.home}>Home</NavLink>
+                <Nav className={` ${style.navmenu} activeNav `} >
+                  <NavLink to={routes.home} >Home</NavLink>
                   {/* <NavLink to={routes.collectionList}>Features</NavLink>
                   <NavLink to={routes.collectionView}>Pricing</NavLink> */}
                   {user.isLoginIn ? <NavLink to={routes.info}>Profile</NavLink> : null}
