@@ -18,7 +18,7 @@ import { toast } from 'react-toastify';
 
 
 const Header = () => {
-  const user = useSelector(state => (state.authReducer))
+  const user = useSelector(state => (state?.authReducer))
   const location = useLocation();
 
   const dispatch = useDispatch()

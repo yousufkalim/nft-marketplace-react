@@ -11,7 +11,7 @@ export const getCollectionPage = (id) => async (dispatch) => {
 
         dispatch({ type: ContentType.GET_COLLECTION_PAGE, payload: response.data.body })
     } catch (err) {
-        console.log(err.response)
+
         return err
     }
 }
@@ -25,8 +25,8 @@ export const getSingleNFT = (id) => async (dispatch) => {
         return e
     }
 }
-export const getCatagory = () => async (dispatch) => {
-    const response = await axios.get('/collections/category/Art');
+export const getCatagory = (category) => async (dispatch) => {
+    const response = await axios.get(`/collections/category/${category}`);
 
     dispatch({ type: ContentType.GET_CATAGORY, payload: response.data })
 }

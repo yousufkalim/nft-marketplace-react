@@ -10,9 +10,7 @@ const TopCollection = () => {
   const dispatch = useDispatch()
   const data = useSelector(state => state?.api?.payload?.body?.collections)
   // const user = useSelector(state => console.log(state))
-  useEffect(() => {
-    dispatch(getCatagory())
-  }, [])
+
   return (
     <>
       <SliderHits title='Top Collections'>

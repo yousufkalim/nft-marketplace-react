@@ -10,7 +10,7 @@ import discord from '../../images/discord.svg';
 import { useSelector } from 'react-redux';
 
 const ViewList = () => {
-  const data = useSelector(state => state.collection.collectionpage)
+  const data = useSelector(state => state?.collection?.collectionpage)
 
   return (
     <div className='mt-4' style={{ paddingBottom: '70px' }}>

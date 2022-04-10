@@ -32,7 +32,7 @@ const Hero = () => {
                 <CustomButton
                   text={'Create'}
                   customClass={style.createBtn}
-                  onClick={() => routeTo(routes.collectionDetail)}
+                  onClick={() => routeTo(routes.createCollection)}
                 />
               </div>
             </div>

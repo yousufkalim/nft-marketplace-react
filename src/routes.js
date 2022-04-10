@@ -1,7 +1,7 @@
 export const routes = {
   home: '/',
   collectionList: '/collection-list',
-  collectionDetail: '/collection-detail',
+  collectionDetail: '/nft-view',
   collectionView: '/collection-view',
   login: '/login',
   signup: '/sign-up',

@@ -15,12 +15,14 @@ const FishCard = ({ navigation, content, i }) => {
     MintingSupplyCount,
     DescriptionLong,
     CreatedBy,
-    CategoryCode
+    CategoryCode,
+    GUID
   } = content;
+
 
   const navigate = useNavigate();
   const linkSite = () => {
-    navigation ? navigate(navigation) : navigate(routes.collectionView);
+    navigation ? navigate(navigation) : navigate(`${routes.collectionView}/${GUID}`);
   };
 
   return (

@@ -33,7 +33,7 @@ const BidCard = ({ overlay, styleClass, image, post }) => {
               <p>Price $$ {post?.MintingCoin ? post?.MintingCoin : 'Eth'}</p>
             </div>
             <div>
-              <span>{post?.Views ? post?.Views : '123'}</span>
+              <span>{post?.Views}</span>
               <img src={eye} alt='eye' />
             </div>
           </div>
@@ -42,7 +42,7 @@ const BidCard = ({ overlay, styleClass, image, post }) => {
               <p>Auction Hours</p>
             </div>
             <div>
-              <span>{post?.Likes ? post?.Likes : '123'}</span>
+              <span>{post?.Likes}</span>
               <img src={heart} alt='heart' />
             </div>
           </div>

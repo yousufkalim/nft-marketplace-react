@@ -57,7 +57,7 @@ export const getSingleNFT = (state = {}, { type, payload }) => {
         case ContentType.GET_SINGLE_NFT:
             return { ...state, ...payload }
         case ContentType.REMOVE_NFT:
-            return {}
+            return null
         default:
             return state
     }

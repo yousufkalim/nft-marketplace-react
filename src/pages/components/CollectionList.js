@@ -7,13 +7,15 @@ import { getCatagory } from '../../redux/Actions'
 import { useDispatch, useSelector } from 'react-redux';
 
 
-const CollectionList = () => {
+const CollectionList = ({ title }) => {
   const dispatch = useDispatch()
   const data = useSelector(state => state?.api?.payload?.body?.collections)
   // const user = useSelector(state => console.log(state))
   useEffect(() => {
-    dispatch(getCatagory())
-  }, [])
+    dispatch(getCatagory(title))
+  }, [title])
+
+
   return (
     <div>
       <Container>

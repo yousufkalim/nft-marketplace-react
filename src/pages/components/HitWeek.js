@@ -11,7 +11,7 @@ const HitWeek = () => {
   const data = useSelector(state => state?.api?.payload?.body?.collections)
   // const user = useSelector(state => console.log(state))
   useEffect(() => {
-    dispatch(getCatagory())
+
   }, [])
 
 

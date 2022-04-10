@@ -1,20 +1,27 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import box from '../../images/box.png';
+import { routes } from '../../routes';
 import style from '../styles/WeekCard.module.scss';
 
 
 
 const WeekCard = ({ content, index }) => {
+  const navigate = useNavigate();
   const {
 
     StoreName,
     MintingSupplyCount,
     DescriptionShort,
     CreatedBy,
-    CategoryCode } = content;
+    CategoryCode, GUID } = content;
+
+  const routeToView = () => {
+    navigate(`${routes.collectionView}/${GUID}`)
+  }
   return (
-    <div className={style.WeekCard}>
+    <div className={style.WeekCard} onClick={routeToView}>
       <h5>{index}</h5>
       <div className={style.cardBody}>
         <div className={style.namespace}>

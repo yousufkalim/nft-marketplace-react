@@ -68,6 +68,12 @@ span {
     font-size: 18px;
   }
 }
+.profileBtn {
+  background-color: $primary-color;
+  margin: 16px auto;
+  font-size: 18px;
+
+}
 
 .show > .btn-primary.dropdown-toggle:focus {
   box-shadow: none !important;
@@ -120,4 +126,11 @@ span {
        cursor:pointer;
      } 
     }
+}
+
+.spinnerClass{
+  min-height:calc(100vh - 200px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

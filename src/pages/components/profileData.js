@@ -6,7 +6,7 @@ import CustomButton from '../common/Button';
 
 
 const ProfileData = () => {
-    const state = useSelector(state => state.authReducer)
+    const state = useSelector(state => state?.authReducer)
 
     return (
         <div className='white-bg'>
