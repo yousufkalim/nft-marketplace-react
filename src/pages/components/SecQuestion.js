@@ -19,7 +19,7 @@ const SecQuestion = () => {
                     </Col>
 
                     <Col xs={12} md={6} lg={6}>
-                        <Form.Group className="mb-3" controlId="q1">
+                        <Form.Group className="mb-3" controlId="q2">
                             <Form.Control type="email" placeholder="Answer 1 " />
                         </Form.Group>
                     </Col>
@@ -33,7 +33,7 @@ const SecQuestion = () => {
                     </Col>
 
                     <Col xs={12} md={6} lg={6}>
-                        <Form.Group className="mb-3" controlId="q1">
+                        <Form.Group className="mb-3" controlId="q3">
                             <Form.Control type="email" placeholder="Answer 1 " />
                         </Form.Group>
                     </Col>
@@ -48,7 +48,7 @@ const SecQuestion = () => {
                     </Col>
 
                     <Col xs={12} md={6} lg={6}>
-                        <Form.Group className="mb-3" controlId="q1">
+                        <Form.Group className="mb-3" controlId="q4">
                             <Form.Control type="email" placeholder="Answer 1 " />
                         </Form.Group>
                     </Col>
@@ -63,7 +63,7 @@ const SecQuestion = () => {
                     </Col>
 
                     <Col xs={12} md={6} lg={6}>
-                        <Form.Group className="mb-3" controlId="q1">
+                        <Form.Group className="mb-3" controlId="q5">
                             <Form.Control type="email" placeholder="Answer 1 " />
                         </Form.Group>
                     </Col>

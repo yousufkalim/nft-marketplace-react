@@ -17,10 +17,8 @@ const Collection = () => {
             <CollectionList title='Art' />
           </Tab>
           <Tab eventKey='Anime' title='Anime'>
-
           </Tab>
           <Tab eventKey='Dinos' title='Dinos'>
-
           </Tab>
         </Tabs>
       </Container>

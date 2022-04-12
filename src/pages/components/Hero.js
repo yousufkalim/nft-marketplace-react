@@ -5,12 +5,24 @@ import style from '../styles/Hero.module.scss';
 import { useNavigate } from 'react-router-dom';
 import CustomCard from '../common/Card';
 import { routes } from '../../routes';
+import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 const Hero = () => {
   const navigate = useNavigate();
+  const user = useSelector(state => (state?.authReducer))
   const routeTo = (name) => {
     navigate(name);
   };
+
+  const clickHandle = () => {
+    if (user?.isLoginIn) {
+      routeTo(routes.createCollection)
+    } else {
+      toast.dark('Login First')
+      return
+    }
+  }
   return (
     <div className={style.hero}>
       <Container>
@@ -32,7 +44,9 @@ const Hero = () => {
                 <CustomButton
                   text={'Create'}
                   customClass={style.createBtn}
-                  onClick={() => routeTo(routes.createCollection)}
+                  onClick={clickHandle}
+
+
                 />
               </div>
             </div>

@@ -11,7 +11,7 @@ import style from '../styles/header.module.scss';
 import logo from '../../images/logonft.png';
 import { routes } from '../../routes';
 import { useSelector, useDispatch } from 'react-redux';
-import { Logout, getInfo } from '../../redux/Actions';
+import { Logout, getInfo, getCodeCata } from '../../redux/Actions';
 import { toast } from 'react-toastify';
 
 
@@ -31,12 +31,16 @@ const Header = () => {
 
   }
   useEffect(() => {
-    setInput('')
+
     if (user.isLoginIn) {
       dispatch(getInfo())
+      dispatch(getCodeCata())
     }
-  }, [user.isLoginIn, location])
 
+  }, [user.isLoginIn])
+  useEffect(() => {
+    setInput('')
+  }, [location])
   useEffect(() => {
     if (input === '') return
     async function search() {

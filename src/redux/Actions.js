@@ -5,6 +5,18 @@ import { toast } from 'react-toastify';
 
 
 
+
+export const getCodeCata = () => async (dispatch) => {
+    const response = await axios.get(`/codes/CategoryCode`)
+    try {
+
+        dispatch({ type: ContentType.GET_CODE_CATA, payload: response.data.body })
+    } catch (err) {
+
+        return err
+    }
+}
+
 export const getCollectionPage = (id) => async (dispatch) => {
     const response = await axios.get(`collections/${id}`)
     try {

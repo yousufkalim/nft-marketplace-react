@@ -124,16 +124,16 @@ const SignupUser = () => {
                             {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values, isValid,
                             }) => (
 
-                                <Form noValidate onSubmit={handleSubmit}>
+                                <Form onSubmit={handleSubmit}>
                                     <Form.Group className={`${!!errors.email ? 'mb-0' : 'mb-2'}`} controlId="formBasicEmail">
                                         <Form.Label>Email address</Form.Label>
                                         <Form.Control type="email"
                                             value={values.email}
                                             name="email"
-                                            onBlur={handleBlur}
+
                                             onChange={handleChange}
                                             placeholder="Email Address / Username"
-                                            isValid={touched.email && !errors.email}
+
                                             isInvalid={!!errors.email}
                                         />
                                         <Form.Control.Feedback type="invalid">
@@ -147,10 +147,10 @@ const SignupUser = () => {
                                                 <Form.Control type="email"
                                                     value={values.first_name}
                                                     name="first_name"
-                                                    onBlur={handleBlur}
+
                                                     onChange={handleChange}
                                                     placeholder="First name"
-                                                    isValid={touched.first_name && !errors.first_name}
+
                                                     isInvalid={!!errors.first_name}
                                                 />
                                                 <Form.Control.Feedback type="invalid">
@@ -164,10 +164,10 @@ const SignupUser = () => {
                                                 <Form.Control type="last_name"
                                                     value={values.last_name}
                                                     name="last_name"
-                                                    onBlur={handleBlur}
+
                                                     onChange={handleChange}
                                                     placeholder="Last name"
-                                                    isValid={touched.last_name && !errors.last_name}
+
                                                     isInvalid={!!errors.last_name}
                                                 />
                                                 <Form.Control.Feedback type="invalid">
@@ -185,9 +185,9 @@ const SignupUser = () => {
                                                 <Form.Control type={'password'}
                                                     value={values.password}
                                                     name="password"
-                                                    onBlur={handleBlur}
+
                                                     onChange={handleChange}
-                                                    isValid={touched.password && !errors.password}
+
                                                     isInvalid={!!errors.password}
                                                     placeholder="Password"
 
@@ -204,9 +204,9 @@ const SignupUser = () => {
                                                 <Form.Control type={'password'}
                                                     value={values.confirm_password}
                                                     name="confirm_password"
-                                                    onBlur={handleBlur}
+
                                                     onChange={handleChange}
-                                                    isValid={touched.confirm_password && !errors.confirm_password}
+
                                                     isInvalid={!!errors.confirm_password}
                                                     placeholder="Confirm Password"
 

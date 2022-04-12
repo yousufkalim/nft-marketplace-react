@@ -75,3 +75,13 @@ export const collectionPage = (state = [], { type, payload }) => {
     }
 
 }
+export const cataCode = (state = [], { type, payload }) => {
+
+    switch (type) {
+        case ContentType.GET_CODE_CATA:
+            return { ...state, cata: payload }
+        default:
+            return state
+    }
+
+}

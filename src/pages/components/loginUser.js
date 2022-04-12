@@ -92,7 +92,7 @@ const LoginUser = () => {
                                                 localStorage.setItem('token', response.data.body.token)
                                                 dispatch(Login({ user: values?.email, token: response.data.body.token, isLoginIn: true }))
 
-                                                // dispatcher({
+                                                // dispatcher({      
                                                 //     type: ACCOUNT_INITIALIZE,
                                                 //     payload: { isLoggedIn: true, user: response.data.body.user, token: response.data.body.token }
                                                 // });
@@ -132,17 +132,17 @@ const LoginUser = () => {
                         >
                             {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values, isValid,
                             }) => (
-                                <Form noValidate onSubmit={handleSubmit} >
+                                <Form onSubmit={handleSubmit} >
                                     <Form.Group className={`${!!errors.email ? 'mb-1' : 'mb-3'}`} controlId="formBasicEmail">
                                         <Form.Label>Email address</Form.Label>
                                         <Form.Control type="email"
 
                                             value={values.email}
                                             name="email"
-                                            onBlur={handleBlur}
+
                                             onChange={handleChange}
                                             placeholder="Email Address / Username"
-                                            isValid={touched.email && !errors.email}
+
                                             isInvalid={!!errors.email}
                                         />
                                         <Form.Control.Feedback type="invalid">
@@ -155,9 +155,9 @@ const LoginUser = () => {
                                         <Form.Control type={'password'}
                                             value={values.password}
                                             name="password"
-                                            onBlur={handleBlur}
+
                                             onChange={handleChange}
-                                            isValid={touched.password && !errors.password}
+
                                             isInvalid={!!errors.password}
                                             placeholder='Password'
 
