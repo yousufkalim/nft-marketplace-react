@@ -55,7 +55,7 @@ const ProfileData = () => {
                     first_name: Yup.string().required('feild is required'),
                     last_name: Yup.string().required('feild is required'),
                     username: Yup.string().required('feild is required'),
-                    address: Yup.string().required('feild is required'),
+                    // address: Yup.string().required('feild is required'),
                     address2: Yup.string().required('feild is required'),
                     city: Yup.string().required('feild is required'),
                     statee: Yup.string().required('feild is required'),
