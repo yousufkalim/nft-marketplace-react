@@ -20,6 +20,7 @@ const FishCard = ({ navigation, content, i }) => {
   } = content;
 
 
+
   const navigate = useNavigate();
   const linkSite = () => {
     navigation ? navigate(navigation) : navigate(`${routes.collectionView}/${GUID}`);

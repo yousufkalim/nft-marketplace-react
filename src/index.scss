@@ -50,7 +50,13 @@ span {
 .white-bg {
   background: $white-color;
   padding: 16px;
-
+div{
+  position:  relative ; 
+}
+.invalid-feedback{
+position: absolute ;
+padding-bottom: 8px;
+}
   h2 {
     margin-top: 16px;
     color: $primary-color;
@@ -134,3 +140,93 @@ span {
   align-items: center;
   justify-content: center;
 }
+.invalid-feedback{
+  position: absolute ;
+  left: 0;
+
+}
+.mainmb .mb-4{
+  margin-bottom: 1.3rem !important;
+  position: relative;
+ 
+}
+.s{
+  @media screen and (max-width:575px){
+    margin-top: 16px;
+    
+  }
+}
+
+
+// .customPass{
+//   display: flex;
+//   align-items: center;
+// justify-content: space-between;
+//     input{
+//       border: none !important;
+//       background:transparent !important;
+//       padding:0;
+//       flex: 0 0 90%;
+//       box-shadow: none ;
+//       &:focus{
+//         color: #212529;
+//         background-color: #fff;
+//         border-color: #86b7fe;
+//         outline: 0 !important;
+//         box-shadow: none !important;
+    
+//       }
+//     }
+// }
+input{
+  position: relative;
+}
+.eye{
+  position: absolute;
+  right: 30px;
+  top: 60%;
+  cursor: pointer;
+
+}
+
+.react-tabs__tab-list{
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  list-style: none;
+  margin-bottom: 30px;
+  .react-tabs__tab{
+    background: #c4c4c4;
+    border-radius: 15px 15px 0px 0px;
+    min-width: 151px;
+    font-family: inherit;
+    cursor: pointer;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 24px;
+    color: #000000;
+    padding:8px 0;
+    letter-spacing: 0em;
+    text-align: center;
+    border-bottom: 4px solid #939393;
+    &:focus-visible {
+    outline: none !important;
+    }
+  }
+  .react-tabs__tab--selected{
+    background: #ffffff;
+    border-radius: 15px 15px 0px 0px;
+    font-family: inherit;
+    color: #000000;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+    border-bottom: 4px solid #ff0000;
+  
+   }
+}
+

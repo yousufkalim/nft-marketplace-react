@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Row, Container, Col, Form, Spinner } from 'react-bootstrap'
 
 import { Field, Formik } from 'formik'
@@ -9,14 +9,74 @@ import CustomButton from '../common/Button';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { routes } from '../../routes';
+import axioss from 'axios';
+import { Toast } from 'bootstrap';
 
 
 const CreateNFT = () => {
     const navigate = useNavigate();
     const code = useSelector(state => state?.code?.cata)
+    const userName = useSelector(state => state?.authReducer)
 
     const [loading, isLoading] = useState(false)
+    const [image_small, setSmallImage] = useState('')
+    const [large_small, setLargeImage] = useState('')
+    const [banner_img, setBannerImage] = useState('')
 
+
+
+    const [imageSmall, setSmall] = useState('')
+    const [imageLarge, setLarge] = useState('')
+    const [BaanerImage, setBanner] = useState('')
+
+
+
+    useEffect(() => {
+        if (!image_small) return
+        async function uploadImage(img) {
+            var formData = new FormData();
+            formData.append("file", img);
+            const res = await axios.post(`https://nftdepot-api.azurewebsites.net/collection/upload_image?folder=${userName?.last_name}`, formData, {
+                method: 'POST',
+                header: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(res => setSmall(res?.data?.body?.url))
+            return res
+        }
+        uploadImage(image_small)
+    }, [image_small])
+    useEffect(() => {
+        if (!large_small) return
+        async function uploadImage(img) {
+            var formData = new FormData();
+            formData.append("file", img);
+            const res = await axios.post(`https://nftdepot-api.azurewebsites.net/collection/upload_image?folder=${userName?.last_name}`, formData, {
+                method: 'POST',
+                header: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(res => setLarge(res?.data?.body?.url))
+            return res
+        }
+        uploadImage(large_small)
+    }, [large_small])
+    useEffect(() => {
+        if (!banner_img) return
+        async function uploadImage(img) {
+            var formData = new FormData();
+            formData.append("file", img);
+            const res = await axios.post(`https://nftdepot-api.azurewebsites.net/collection/upload_image?folder=${userName?.last_name}`, formData, {
+                method: 'POST',
+                header: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(res => setBanner(res?.data?.body?.url))
+            return res
+        }
+        uploadImage(banner_img)
+    }, [banner_img])
+    console.log()
     return (
         <Container>
             <div className='white-bg'>
@@ -25,10 +85,10 @@ const CreateNFT = () => {
                     initialValues={{
                         description_short: '',
                         description_long: '',
-                        image_small_location: 'sdsd',
-                        image_large_location: false,
+                        // image_small_location: imageSmall,
+                        // image_large_location: false,
                         store_name: '',
-                        image_banner_location: 'ssds',
+                        // image_banner_location: 'ssds',
                         category_code: "",
                         url_personal: '',
                         url_instagram: "",
@@ -38,7 +98,7 @@ const CreateNFT = () => {
                         is_explicit: false,
                         minting_coin: "",
                         layout_style_code: "",
-                        minting_supply_count: false,
+                        minting_supply_count: '',
                         mint_locked: false,
                         after_1st_purchase_text: "",
                         url_name: "",
@@ -49,25 +109,33 @@ const CreateNFT = () => {
                     validationSchema={Yup.object().shape({
                         description_short: Yup.string().required('feild is required'),
                         store_name: Yup.string().required('feild is required'),
-
-                        mintable: Yup.string().required('feild is required'),
+                        minting_supply_count: Yup.string().required('feild is required'),
                         minting_coin: Yup.string().required('feild is required'),
 
                     })}
                     onSubmit={(values, { setErrors, setStatus, setSubmitting }) => {
+                        if (imageLarge === '' || imageSmall === '' || BaanerImage === '') {
+                            toast.dark('add Images Please')
+                            setSubmitting(false);
+                            setTimeout(() => {
+                                navigate(routes.createCollection)
+                            }, 500
+                            )
+                            return
+                        }
                         isLoading(true)
-                        // console.log(values)
                         try {
-
                             axios.post('/collections/create',
 
                                 {
                                     description_short: values.description_short,
                                     description_long: values.description_long,
-                                    image_small_location: 'sdsdsd',
-                                    image_large_location: 'sdsdsd',
+                                    image_small_location: `${imageSmall}`,
+                                    image_large_location: `${imageLarge}`,
                                     store_name: values.store_name,
-                                    image_banner_location: 'sdsdsd',
+
+
+                                    image_banner_location: `${BaanerImage}`,
                                     category_code: values.category_code,
                                     url_personal: values.url_personal,
                                     url_instagram: values.url_instagram,
@@ -78,11 +146,11 @@ const CreateNFT = () => {
                                     is_explicit: 1,
                                     minting_coin: values.minting_coin,
                                     layout_style_code: values.layout_style_code,
-                                    minting_supply_count: 1,
-                                    mint_locked: 1,
+                                    minting_supply_count: values.minting_supply_count,
+                                    mint_locked: values.mint_locked,
                                     after_1st_purchase_text: values.after_1st_purchase_text,
                                     url_name: "test",
-                                    mintable: 1,
+                                    mintable: values.mintable,
                                     url_time: "test",
 
                                 }
@@ -104,7 +172,7 @@ const CreateNFT = () => {
                                         setTimeout(() => {
                                             navigate(routes.home)
                                         }, 1000);
-
+                                        console.log(values)
 
                                     } else {
                                         setStatus({ success: false });
@@ -112,6 +180,7 @@ const CreateNFT = () => {
                                         toast.dark(response.data.message)
                                         isLoading(false)
                                         setSubmitting(false);
+                                        console.log(values)
 
                                     }
                                 })
@@ -123,7 +192,7 @@ const CreateNFT = () => {
                                     toast.dark(error.response.data.message)
                                     isLoading(false)
                                     setSubmitting(false);
-
+                                    console.log(values)
                                 });
                         } catch (err) {
 
@@ -132,6 +201,7 @@ const CreateNFT = () => {
                             isLoading(false)
                             toast.dark(err.message)
                             setSubmitting(false);
+                            console.log(values)
 
                         }
                     }
@@ -139,7 +209,7 @@ const CreateNFT = () => {
                     }
 
                 >
-                    {({ errors, handleChange, handleSubmit, isSubmitting, values,
+                    {({ errors, handleChange, handleSubmit, isSubmitting, values, touched
                     }) => (
                         <>
                             <Form noValidate onSubmit={handleSubmit}>
@@ -148,28 +218,38 @@ const CreateNFT = () => {
                                         <Form.Group controlId="formFile" className="mb-3">
                                             <Form.Label>Small Image</Form.Label>
                                             <Form.Control type="file"
+                                                required={true}
+                                                onChange={(e) => setSmallImage(e.target.files[0])}
                                             />
                                         </Form.Group>
                                     </Col>
                                     <Col xs={12} md={6} lg={4}>
                                         <Form.Group controlId="formFile" className="mb-3">
                                             <Form.Label>Large Image</Form.Label>
-                                            <Form.Control type="file" />
+                                            <Form.Control type="file"
+                                                required
+                                                onChange={(e) => setLargeImage(e.target.files[0])}
+
+
+                                            />
                                         </Form.Group>
                                     </Col>
                                     <Col xs={12} md={6} lg={4}>
                                         <Form.Group controlId="formFile" className="mb-3">
-                                            <Form.Label>Large Image</Form.Label>
-                                            <Form.Control type="file" />
+                                            <Form.Label>Banner Image</Form.Label>
+                                            <Form.Control type="file"
+                                                onChange={(e) => setBannerImage(e.target.files[0])}
+                                                required
+                                            />
                                         </Form.Group>
                                     </Col>
                                     <Col xs={12} md={6} lg={4}>
                                         <Form.Group className="mb-3" controlId="StoreName">
                                             <Form.Label>Store Name</Form.Label>
-                                            <Form.Control type="email" placeholder="Store Name"
+                                            <Form.Control type="text" placeholder="Store Name"
                                                 value={values.store_name}
                                                 name="store_name"
-                                                isInvalid={errors.store_name}
+                                                isInvalid={errors.store_name && touched.store_name}
 
                                                 onChange={handleChange}
 
@@ -180,10 +260,10 @@ const CreateNFT = () => {
                                     <Col xs={12} md={6} lg={4}>
                                         <Form.Group className="mb-3" controlId="sd">
                                             <Form.Label>Short Description</Form.Label>
-                                            <Form.Control type="email" placeholder="Short Description "
+                                            <Form.Control type="text" placeholder="Short Description "
                                                 value={values.description_short}
                                                 name="description_short"
-                                                isInvalid={errors.description_short}
+                                                isInvalid={errors.description_short && touched.description_short}
                                                 onChange={handleChange}
                                             />
                                         </Form.Group>
@@ -191,7 +271,7 @@ const CreateNFT = () => {
                                     <Col xs={12} md={6} lg={4}>
                                         <Form.Group className="mb-3" controlId="ld">
                                             <Form.Label>Long Description</Form.Label>
-                                            <Form.Control type="email" placeholder="Long Description"
+                                            <Form.Control type="text" placeholder="Long Description"
                                                 value={values.description_long}
                                                 name="description_long"
                                                 isInvalid={errors.description_long}
@@ -220,7 +300,7 @@ const CreateNFT = () => {
                                     <Col xs={12} md={6} lg={4}>
                                         <Form.Group className="mb-3" controlId="ilink">
                                             <Form.Label>Personal Link</Form.Label>
-                                            <Form.Control type="email" placeholder="Personal Link"
+                                            <Form.Control type="text" placeholder="Personal Link"
                                                 value={values.url_personal}
                                                 name="url_personal"
                                                 onChange={handleChange}
@@ -230,7 +310,7 @@ const CreateNFT = () => {
                                     <Col xs={12} md={6} lg={4}>
                                         <Form.Group className="mb-3" controlId="plink">
                                             <Form.Label>Instagram Link</Form.Label>
-                                            <Form.Control type="email" placeholder="Instagram Link "
+                                            <Form.Control type="text" placeholder="Instagram Link "
                                                 value={values.url_instagram}
                                                 name="url_instagram"
                                                 onChange={handleChange}
@@ -240,7 +320,7 @@ const CreateNFT = () => {
                                     <Col xs={12} md={6} lg={4}>
                                         <Form.Group className="mb-3" controlId="dlink">
                                             <Form.Label>Discord Link</Form.Label>
-                                            <Form.Control type="email" placeholder="Discord Link"
+                                            <Form.Control type="text" placeholder="Discord Link"
                                                 value={values.url_discord}
                                                 name="url_discord"
                                                 onChange={handleChange}
@@ -250,7 +330,7 @@ const CreateNFT = () => {
                                     <Col xs={12} md={6} lg={4}>
                                         <Form.Group className="mb-3" controlId="me">
                                             <Form.Label>Media Link</Form.Label>
-                                            <Form.Control type="email" placeholder="Media Link"
+                                            <Form.Control type="text" placeholder="Media Link"
                                                 value={values.url_media}
                                                 name="url_media"
                                                 onChange={handleChange}
@@ -260,10 +340,10 @@ const CreateNFT = () => {
                                     <Col xs={12} md={6} lg={4}>
                                         <Form.Group className="mb-3" controlId="ms">
                                             <Form.Label>Minting Supply</Form.Label>
-                                            <Form.Control type="email" placeholder="Minting Supply"
+                                            <Form.Control type="number" placeholder="Minting Supply"
                                                 value={values.minting_supply_count}
                                                 name="minting_supply_count"
-                                                isInvalid={errors.minting_supply_count}
+                                                isInvalid={errors.minting_supply_count && touched.minting_supply_count}
                                                 onChange={handleChange}
                                             />
                                         </Form.Group>
@@ -271,7 +351,7 @@ const CreateNFT = () => {
                                     <Col xs={12} md={6} lg={6}>
                                         <Form.Group className="mb-3" controlId="af">
                                             <Form.Label>After Purchase Price</Form.Label>
-                                            <Form.Control type="number" placeholder="After Purchase price"
+                                            <Form.Control type="text" placeholder="After Purchase price"
                                                 value={values.after_1st_purchase_text}
                                                 name="after_1st_purchase_text"
                                                 onChange={handleChange}
@@ -282,11 +362,11 @@ const CreateNFT = () => {
                                     <Col xs={12} md={6} lg={6}>
                                         <Form.Group className="mb-3" controlId="mcoin">
                                             <Form.Label>Minting Coin</Form.Label>
-                                            <Form.Control type="email" placeholder="Minting Coin"
+                                            <Form.Control type="text" placeholder="Minting Coin"
 
                                                 value={values.minting_coin}
                                                 name="minting_coin"
-                                                isInvalid={errors.minting_coin}
+                                                isInvalid={errors.minting_coin && touched.minting_coin}
                                                 onChange={handleChange} />
                                         </Form.Group>
                                     </Col>

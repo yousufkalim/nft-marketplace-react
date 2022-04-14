@@ -50,6 +50,20 @@ export const fetchCatagories = (state = [], { type, payload }) => {
 
 }
 
+export const fetchCatagoriestitle = (state = [], { type, payload }) => {
+
+    switch (type) {
+        case ContentType.GET_CATAGORY_TITLE:
+            return { ...state, payload }
+        case ContentType.REMOVE_NFT:
+            return {}
+        default:
+            return state
+    }
+
+}
+
+
 
 export const getSingleNFT = (state = {}, { type, payload }) => {
 

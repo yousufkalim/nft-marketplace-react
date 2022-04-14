@@ -11,7 +11,7 @@ const persistConfig = {
     key: 'root',
     storage,
     stateReconciler: hardSet,
-    blacklist: ['api', "collection", "singleNFT", "code"]
+    blacklist: ['api', "collection", "singleNFT", "code", "apii"]
 }
 const persistedReducer = persistReducer(persistConfig, Reducers)
 const store = createStore(

@@ -14,7 +14,7 @@ import { ToastContainer } from 'react-toastify';
 import Header from './pages/components/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import Scroll from './hooks/Scroll';
-import { getCatagory } from './redux/Actions';
+import { getCatagory, Logout } from './redux/Actions';
 import CreateNFT from './pages/components/CreateNft';
 
 
@@ -24,7 +24,13 @@ function App() {
   const user = useSelector(state => state?.authReducer)
 
   useEffect(() => {
-    dispatch(getCatagory('Art'))
+    dispatch(getCatagory())
+  }, [])
+  useEffect(() => {
+    if (!user?.token && !localStorage.getItem('token')) {
+      dispatch(Logout)
+    }
+
   }, [])
 
   return (

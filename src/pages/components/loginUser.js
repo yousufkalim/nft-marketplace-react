@@ -16,12 +16,19 @@ import { Formik } from 'formik'
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye } from '@fortawesome/free-regular-svg-icons/faEye'
+import { faEyeSlash } from '@fortawesome/free-regular-svg-icons/faEyeSlash'
+
+
 
 const LoginUser = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const [loading, isLoading] = useState(false)
+
+    const [showPass, isShowPass] = useState(false)
 
     // useEffect(() => {
     //     if (data?.isInitializzed) {
@@ -133,7 +140,7 @@ const LoginUser = () => {
                             {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values, isValid,
                             }) => (
                                 <Form onSubmit={handleSubmit} >
-                                    <Form.Group className={`${!!errors.email ? 'mb-1' : 'mb-3'}`} controlId="formBasicEmail">
+                                    <Form.Group className='mb-4' controlId="formBasicEmail">
                                         <Form.Label>Email address</Form.Label>
                                         <Form.Control type="email"
 
@@ -143,31 +150,33 @@ const LoginUser = () => {
                                             onChange={handleChange}
                                             placeholder="Email Address / Username"
 
-                                            isInvalid={!!errors.email}
+                                            isInvalid={errors.email && touched.email}
                                         />
                                         <Form.Control.Feedback type="invalid">
-                                            {errors.email}
+                                            {errors.email && touched.email ? <div>{errors.email}</div> : null}
                                         </Form.Control.Feedback>
                                     </Form.Group>
 
-                                    <Form.Group className={`${!!errors.email ? 'mb-1' : 'mb-3'}`} controlId="formBasicPassword">
+                                    <Form.Group className='mb-4 position-relative' controlId="formBasicPassword">
                                         <Form.Label>Password</Form.Label>
-                                        <Form.Control type={'password'}
+
+
+                                        <Form.Control type={`${showPass ? 'text' : 'password'}`}
                                             value={values.password}
                                             name="password"
-
                                             onChange={handleChange}
-
-                                            isInvalid={!!errors.password}
+                                            isInvalid={errors.password && touched.password}
                                             placeholder='Password'
 
+
                                         />
+                                        <FontAwesomeIcon icon={showPass ? faEye : faEyeSlash} className='eye' onClick={() => isShowPass(!showPass)} />
                                         <Form.Control.Feedback type="invalid">
-                                            {errors.password}
+                                            {errors.password && touched.password ? <div>{errors.password}</div> : null}
                                         </Form.Control.Feedback>
 
                                     </Form.Group>
-                                    <Form.Group className="mb-3 d-flex align-items-center justify-content-between" controlId="formBasicCheckbox">
+                                    <Form.Group className="mt-4 mb-3 d-flex align-items-center justify-content-between" controlId="formBasicCheckbox">
                                         <Form.Check type="checkbox" label="Remember me" />
                                         <Link to={routes.forgetpass} className={style.forgetpass} >Forget password ?</Link>
                                     </Form.Group>

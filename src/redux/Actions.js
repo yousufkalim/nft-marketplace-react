@@ -37,11 +37,16 @@ export const getSingleNFT = (id) => async (dispatch) => {
         return e
     }
 }
-export const getCatagory = (category) => async (dispatch) => {
-    const response = await axios.get(`/collections/category/${category}`);
-
+export const getCatagory = () => async (dispatch) => {
+    const response = await axios.get(`/collections/category/Art`);
     dispatch({ type: ContentType.GET_CATAGORY, payload: response.data })
 }
+
+export const getCatagoryTitle = (category) => async (dispatch) => {
+    const response = await axios.get(`/collections/category/${category}`);
+    dispatch({ type: ContentType.GET_CATAGORY_TITLE, payload: response.data })
+}
+
 export const getInfo = () => async (dispatch) => {
     const response = await axios.get('/me', {
         headers: {

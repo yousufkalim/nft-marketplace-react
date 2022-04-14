@@ -10,15 +10,16 @@ const ViewCardList = ({ id }) => {
   const [loading, isLoading] = useState(false)
   const [search, setSearch] = useState(false)
   const [nft, setnfts] = useState([])
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
-    async function getAllNFTS() {
+    async function getAllNFTS(page) {
       isLoading(true)
-      const res = await axios.get(`collections/${id}/nfts/1`)
+      const res = await axios.get(`collections/${id}/nfts/${page}`)
       try {
         if (res.data.body.length > 0) {
           isLoading(false)
-          setnfts(res.data.body)
+          setnfts([...nft, ...res.data.body])
         } else {
           isLoading(false)
           setnfts([])
@@ -27,12 +28,12 @@ const ViewCardList = ({ id }) => {
         return e
       }
 
-
     }
-    getAllNFTS()
+
+    getAllNFTS(page)
 
   }, [id])
-
+  console.log(nft)
 
   const submit = async (e) => {
     e.preventDefault();
@@ -43,7 +44,13 @@ const ViewCardList = ({ id }) => {
       return
     }
     const res = await axios.get('/nfts/search', { params: { query: value } })
+    if (Object.keys(res.data.body).length === 0) {
+      isLoading(false)
+      setSearch(true)
+      isData([])
+      return
 
+    }
     try {
       if (res.status === 200) {
         if (res.data.body.nfts.length > 0) {
@@ -71,7 +78,7 @@ const ViewCardList = ({ id }) => {
   return (
     <div className={'ViewCardList'}>
       <Container>
-        <Row className='align-items-center gy-4 mb-4'>
+        {/* <Row className='align-items-center gy-4 mb-4'>
           <Col lg={6}>
             <input
               type='text'
@@ -86,7 +93,7 @@ const ViewCardList = ({ id }) => {
           <Col lg={3} xs={6}>
             <div className='buttonSearch'>Price: High to Low</div>
           </Col>
-        </Row>
+        </Row> */}
         <Row className='align-item-center gy-4 '>
 
           {loading ? <div style={{ color: "white", height: '50vh', margin: 'auto' }} className='d-flex align-items-center justify-content-center'> <Spinner animation="border" role="status" style={{ color: "white" }}>
@@ -94,11 +101,11 @@ const ViewCardList = ({ id }) => {
           </div> :
             (
               search ? (
-                searchData && searchData?.map((e, i) => (
+                searchData.length > 0 ? searchData?.map((e, i) => (
                   <Col key={i} lg={3} md={6} xs={12}>
                     <BidCard styleClass={'cards'} image={fish} overlay={true} post={e} />
                   </Col>
-                ))
+                )) : <div className="text-white text-center mt-5"> No NFTS FOUND </div>
 
               ) : (
                 <>

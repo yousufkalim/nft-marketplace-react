@@ -1,25 +1,34 @@
 import React from 'react';
 
-import { Container, Tab, Tabs } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+
 import CollectionList from './CollectionList';
 
 import '../styles/Collection.scss';
 
 const Collection = () => {
+  const [tabIndex, setTabIndex] = React.useState(0);
+
   return (
     <div className={'collection'}>
       <Container>
         <h2>Find Your Favorite Collections</h2>
-        <Tabs defaultActiveKey='Art' id='uncontrolled-tab-example'>
-          <Tab eventKey='Fantasy' title='Fantasy'>
-          </Tab>
-          <Tab eventKey='Art' title='Art'>
-            <CollectionList title='Art' />
-          </Tab>
-          <Tab eventKey='Anime' title='Anime'>
-          </Tab>
-          <Tab eventKey='Dinos' title='Dinos'>
-          </Tab>
+        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+          <TabList>
+            <Tab>Art</Tab>
+            <Tab>Anime</Tab>
+            <Tab>Comics</Tab>
+          </TabList>
+          <TabPanel>
+            <CollectionList id={tabIndex} />
+          </TabPanel>
+          <TabPanel>
+            <CollectionList id={tabIndex} />
+          </TabPanel>
+          <TabPanel>
+            <CollectionList id={tabIndex} />
+          </TabPanel>
         </Tabs>
       </Container>
     </div>
@@ -27,3 +36,7 @@ const Collection = () => {
 };
 
 export default Collection;
+
+
+
+

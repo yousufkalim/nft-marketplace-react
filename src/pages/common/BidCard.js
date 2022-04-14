@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router';
 import { routes } from '../../routes'
 
 const BidCard = ({ overlay, styleClass, image, post }) => {
+
   const navigate = useNavigate();
 
   return (
@@ -19,7 +20,7 @@ const BidCard = ({ overlay, styleClass, image, post }) => {
           <Card.Title className={style.cardTitle}>{post?.Category ? post?.Category : 'StoreName'}</Card.Title>
         ) : null}
         <div>
-          <Card.Img src={image ? image : ownImage} alt='title' />
+          <Card.Img src={post?.nft_data[0]?.ImageLocation} alt='title' />
         </div>
         <Card.Body className={style.cardBody}>
           <div className={style.innerText}>

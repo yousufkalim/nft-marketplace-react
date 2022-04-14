@@ -4,7 +4,7 @@ import style from '../styles/mainCard.module.scss'
 
 const MainCard = ({ children }) => {
     return (
-        <div className={style.main}>
+        <div className={`${style.main} mainmb`}>
             <div className={style.cardMain}>
                 {children}
             </div>

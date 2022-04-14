@@ -55,7 +55,7 @@ const ProfileData = () => {
                     first_name: Yup.string().required('feild is required'),
                     last_name: Yup.string().required('feild is required'),
                     username: Yup.string().required('feild is required'),
-                    // address: Yup.string().required('feild is required'),
+                    //  address: Yup.string().required('feild is required'),
                     address2: Yup.string().required('feild is required'),
                     city: Yup.string().required('feild is required'),
                     statee: Yup.string().required('feild is required'),
@@ -92,7 +92,6 @@ const ProfileData = () => {
 
                         })
                             .then(function (response) {
-
                                 if (response.data.status === 200) {
 
                                     setStatus({ success: true });
@@ -137,14 +136,14 @@ const ProfileData = () => {
                             <Col xs={12} md={6} lg={4}>
                                 <Form.Group className="mb-3" controlId="username">
                                     <Form.Label>User name</Form.Label>
-                                    <Form.Control type="email" placeholder="Username"
+                                    <Form.Control type="text" placeholder="Username"
                                         value={values.username || " "}
                                         name="username"
-                                        isInvalid={errors.username}
+                                        isInvalid={errors.username && touched.username}
                                         onChange={handleChange}
 
                                     />
-                                    {errors.username && <Form.Control.Feedback type="invalid">
+                                    {errors.username && touched.username && <Form.Control.Feedback type="invalid">
                                         {errors.username}
                                     </Form.Control.Feedback>
                                     }
@@ -153,41 +152,52 @@ const ProfileData = () => {
                             <Col xs={12} md={6} lg={4}>
                                 <Form.Group className="mb-3" controlId="Email">
                                     <Form.Label>Email</Form.Label>
-                                    <Form.Control type="email" placeholder="Email" disabled value={values?.email || " "}
-
+                                    <Form.Control type="email " placeholder="Email" disabled value={values?.email || " "}
                                         name="email"
-
+                                        isInvalid={errors.email && touched.email}
                                         onChange={handleChange}
 
                                     />
+                                    {errors.email && touched.email && <Form.Control.Feedback type="invalid">
+                                        {errors.email}
+                                    </Form.Control.Feedback>
+                                    }
                                 </Form.Group>
                             </Col>
                             <Col xs={12} md={6} lg={4}>
                                 <Form.Group className="mb-3" controlId="firstName">
                                     <Form.Label>First name</Form.Label>
-                                    <Form.Control type="email" placeholder="First name" value={values?.first_name}
+                                    <Form.Control type="text" placeholder="First name" value={values?.first_name}
 
 
                                         name="first_name"
-
+                                        isInvalid={errors.first_name && touched.first_name}
                                         onChange={handleChange}
                                     />
+                                    {errors.first_name && touched.first_name && <Form.Control.Feedback type="invalid">
+                                        {errors.first_name}
+                                    </Form.Control.Feedback>
+                                    }
                                 </Form.Group>
                             </Col>
                             <Col xs={12} md={6} lg={4}>
                                 <Form.Group className="mb-3" controlId="lastName">
                                     <Form.Label>Last name</Form.Label>
-                                    <Form.Control type="email" placeholder="Last name" value={values?.last_name || " "}
+                                    <Form.Control type="text" placeholder="Last name" value={values?.last_name || " "}
                                         name="last_name"
-
+                                        isInvalid={errors.last_name && touched.last_name}
                                         onChange={handleChange}
                                     />
+                                    {errors.last_name && touched.last_name && <Form.Control.Feedback type="invalid">
+                                        {errors.last_name}
+                                    </Form.Control.Feedback>
+                                    }
                                 </Form.Group>
                             </Col>
                             {/* <Col xs={12} md={6} lg={4}>
                                 <Form.Group className="mb-3" controlId="address">
                                     <Form.Label>Address 1</Form.Label>
-                                    <Form.Control type="email" placeholder="Address 1"
+                                    <Form.Control type="text" placeholder="Address 1"
                                         value={values?.address}
                                         name="address"
                                         onChange={handleChange}
@@ -198,66 +208,91 @@ const ProfileData = () => {
                             <Col xs={12} md={6} lg={4}>
                                 <Form.Group className="mb-3" controlId="add2">
                                     <Form.Label>Address </Form.Label>
-                                    <Form.Control type="email" placeholder="Address 2"
+                                    <Form.Control type="text" placeholder="Address "
                                         value={values?.address2 || " "}
                                         name="address2"
-
+                                        isInvalid={errors.address2 && touched.address2}
                                         onChange={handleChange}
 
                                     />
+                                    {errors.address2 && touched.address2 && <Form.Control.Feedback type="invalid">
+                                        {errors.address2}
+                                    </Form.Control.Feedback>
+                                    }
                                 </Form.Group>
                             </Col>
                             <Col xs={12} md={6} lg={4}>
                                 <Form.Group className="mb-3" controlId="city">
                                     <Form.Label>City</Form.Label>
-                                    <Form.Control type="email" placeholder="City"
+                                    <Form.Control type="text" placeholder="City"
                                         value={values?.city || " "}
                                         name="city"
-
+                                        isInvalid={errors.city && touched.city}
                                         onChange={handleChange}
                                     />
+                                    {errors.city && touched.city && <Form.Control.Feedback type="invalid">
+                                        {errors.city}
+                                    </Form.Control.Feedback>
+                                    }
                                 </Form.Group>
                             </Col>
                             <Col xs={12} md={6} lg={4}>
                                 <Form.Group className="mb-3" controlId="state">
                                     <Form.Label>State</Form.Label>
-                                    <Form.Control type="email" placeholder="State"
+                                    <Form.Control type="text" placeholder="State"
                                         value={values?.statee || " "}
                                         name="statee"
+                                        isInvalid={errors.statee && touched.statee}
                                         onChange={handleChange}
 
                                     />
+                                    {errors.statee && touched.statee && <Form.Control.Feedback type="invalid">
+                                        {errors.statee}
+                                    </Form.Control.Feedback>
+                                    }
                                 </Form.Group>
                             </Col>
                             <Col xs={12} md={6} lg={4}>
                                 <Form.Group className="mb-3" controlId="province">
                                     <Form.Label>Province</Form.Label>
-                                    <Form.Control type="email" placeholder="Province"
+                                    <Form.Control type="text" placeholder="Province"
                                         value={values?.provence || " "}
                                         name="provence"
-
+                                        isInvalid={errors.provence && touched.provence}
                                         onChange={handleChange} />
+                                    {errors.provence && touched.provence && <Form.Control.Feedback type="invalid">
+                                        {errors.provence}
+                                    </Form.Control.Feedback>
+                                    }
                                 </Form.Group>
                             </Col>
                             <Col xs={12} md={6} lg={4}>
                                 <Form.Group className="mb-3" controlId="Country">
                                     <Form.Label>Country</Form.Label>
-                                    <Form.Control type="email" placeholder="Country"
+                                    <Form.Control type="text" placeholder="Country"
                                         value={values?.country || " "}
                                         name="country"
-
+                                        isInvalid={errors.country && touched.country}
                                         onChange={handleChange} />
+                                    {errors.country && touched.country && <Form.Control.Feedback type="invalid">
+                                        {errors.provence}
+                                    </Form.Control.Feedback>
+                                    }
                                 </Form.Group>
                             </Col>
                             <Col xs={12} md={6} lg={4}>
                                 <Form.Group className="mb-3" controlId="pscode">
                                     <Form.Label>Postal code</Form.Label>
-                                    <Form.Control type="email" placeholder="Postal code"
+                                    <Form.Control type="text" placeholder="Postal code"
                                         value={values?.postal_code || " "}
                                         name="postal_code"
-
+                                        isInvalid={errors.postal_code && touched.postal_code}
                                         onChange={handleChange}
                                     />
+                                    {errors.postal_code && touched.postal_code && <Form.Control.Feedback type="invalid">
+                                        {errors.postal_code}
+                                    </Form.Control.Feedback>
+                                    }
                                 </Form.Group>
                             </Col>
                             <Col xs={12} md={6} lg={4}>
@@ -266,10 +301,14 @@ const ProfileData = () => {
                                     <Form.Control type="number" placeholder="Phone 1"
                                         value={values?.phone1 || " "}
                                         name="phone1"
-
+                                        isInvalid={errors.phone1 && touched.phone1}
                                         onChange={handleChange}
 
                                     />
+                                    {errors.phone1 && touched.phone1 && <Form.Control.Feedback type="invalid">
+                                        {errors.phone1}
+                                    </Form.Control.Feedback>
+                                    }
                                 </Form.Group>
                             </Col>
                             <Col xs={12} md={6} lg={4}>
@@ -279,14 +318,19 @@ const ProfileData = () => {
                                         value={values?.phone2 || " "}
                                         name="phone2"
                                         onChange={handleChange}
+                                        isInvalid={errors.phone2 && touched.phone2}
 
                                     />
+                                    {errors.phone2 && touched.phone2 && <Form.Control.Feedback type="invalid">
+                                        {errors.phone2}
+                                    </Form.Control.Feedback>
+                                    }
                                 </Form.Group>
                             </Col>
                             <Col xs={12} md={6} lg={4}>
                                 <Form.Group className="mb-3" controlId="lang">
                                     <Form.Label>Language</Form.Label>
-                                    <Form.Control type="email" placeholder="Language"
+                                    <Form.Control type="text" placeholder="Language"
 
                                     />
                                 </Form.Group>
@@ -294,7 +338,7 @@ const ProfileData = () => {
                             <Col xs={12} md={6} lg={4}>
                                 <Form.Group className="mb-3" controlId="wallet">
                                     <Form.Label>Wallet</Form.Label>
-                                    <Form.Control type="email" placeholder="Wallet type"
+                                    <Form.Control type="text" placeholder="Wallet type"
 
                                     />
                                 </Form.Group>
@@ -302,24 +346,29 @@ const ProfileData = () => {
                             <Col xs={12} md={6} lg={4}>
                                 <Form.Group className="mb-3" controlId="wallet id">
                                     <Form.Label>Wallet ID</Form.Label>
-                                    <Form.Control type="email" placeholder="Wallet ID" />
+                                    <Form.Control type="text" placeholder="Wallet ID" />
                                 </Form.Group>
                             </Col>
                             <Col xs={12} md={6} lg={4}>
                                 <Form.Group className="mb-3" controlId="NFt">
                                     <Form.Label>NFT description</Form.Label>
-                                    <Form.Control type="email" placeholder="NFT description" />
+                                    <Form.Control type="text" placeholder="NFT description" />
                                 </Form.Group>
                             </Col>
                             <Col xs={12} md={6} lg={4}>
                                 <Form.Group className="mb-3" controlId="Company">
                                     <Form.Label>Company</Form.Label>
-                                    <Form.Control type="email" placeholder="Company"
+                                    <Form.Control type="text" placeholder="Company"
                                         value={values?.company || " "}
+                                        isInvalid={errors.company && touched.company}
                                         name="company"
                                         onChange={handleChange}
 
                                     />
+                                    {errors.company && touched.company && <Form.Control.Feedback type="invalid">
+                                        {errors.company}
+                                    </Form.Control.Feedback>
+                                    }
                                 </Form.Group>
                             </Col>
                         </Row>

@@ -5,6 +5,10 @@
   position: relative;
   min-height: calc(100vh - 93px);
   .cardMain {
+    @media screen and (max-width:575px){
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
     position: absolute;
     padding: 16px;
     left: 50%;
@@ -17,10 +21,11 @@
     width: calc(100% - 50%);
     @media screen and (max-width: 992px) {
       width: calc(100% - 20%);
-      height: calc(100% - 5%);
+      
     }
     @media screen and (max-width: 575px) {
       width: calc(100% - 5%);
+      height:100%;
     }
   }
 }

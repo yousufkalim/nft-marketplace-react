@@ -16,11 +16,14 @@ import { Field, Formik } from 'formik'
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye } from '@fortawesome/free-regular-svg-icons/faEye'
+import { faEyeSlash } from '@fortawesome/free-regular-svg-icons/faEyeSlash'
 
 const SignupUser = () => {
 
-
+    const [showPass, isShowPass] = useState(false)
+    const [cshowPass, cisShowPass] = useState(false)
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -124,8 +127,8 @@ const SignupUser = () => {
                             {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values, isValid,
                             }) => (
 
-                                <Form onSubmit={handleSubmit}>
-                                    <Form.Group className={`${!!errors.email ? 'mb-0' : 'mb-2'}`} controlId="formBasicEmail">
+                                <Form noValidate onSubmit={(e) => e.preventDefault()}>
+                                    <Form.Group controlId="formBasicEmail" className='mb-4'>
                                         <Form.Label>Email address</Form.Label>
                                         <Form.Control type="email"
                                             value={values.email}
@@ -134,32 +137,30 @@ const SignupUser = () => {
                                             onChange={handleChange}
                                             placeholder="Email Address / Username"
 
-                                            isInvalid={!!errors.email}
+                                            isInvalid={errors.email && touched.email}
                                         />
                                         <Form.Control.Feedback type="invalid">
-                                            {errors.email}
+                                            {errors.email && touched.email ? <div>{errors.email}</div> : null}
                                         </Form.Control.Feedback>
                                     </Form.Group>
-                                    <Row className={`'align-items-center' ${!!errors.last_name || !!errors.first_name ? 'mb-0' : 'mb-2'}`}>
-                                        <Col xs={6} md={6}>
-                                            <Form.Group controlId="fName">
+                                    <Row className={`align-items-center mb-4`}>
+                                        <Col xs={12} md={6}>
+                                            <Form.Group controlId="fName" className='position-relative '>
                                                 <Form.Label>First Name</Form.Label>
                                                 <Form.Control type="email"
                                                     value={values.first_name}
                                                     name="first_name"
-
                                                     onChange={handleChange}
                                                     placeholder="First name"
-
-                                                    isInvalid={!!errors.first_name}
+                                                    isInvalid={errors.first_name && touched.first_name}
                                                 />
                                                 <Form.Control.Feedback type="invalid">
-                                                    {errors.first_name}
+                                                    {errors.first_name && touched.first_name ? <div>{errors.first_name}</div> : null}
                                                 </Form.Control.Feedback>
                                             </Form.Group>
                                         </Col>
-                                        <Col xs={6} md={6}>
-                                            <Form.Group controlId="Namel">
+                                        <Col xs={12} md={6}>
+                                            <Form.Group controlId="Namel" className='position-relative s'>
                                                 <Form.Label>Last Name</Form.Label>
                                                 <Form.Control type="last_name"
                                                     value={values.last_name}
@@ -168,56 +169,57 @@ const SignupUser = () => {
                                                     onChange={handleChange}
                                                     placeholder="Last name"
 
-                                                    isInvalid={!!errors.last_name}
+                                                    isInvalid={errors.last_name && touched.last_name}
                                                 />
                                                 <Form.Control.Feedback type="invalid">
-                                                    {errors.last_name}
+                                                    {errors.last_name && touched.last_name ? <div>{errors.last_name}</div> : null}
                                                 </Form.Control.Feedback>
                                             </Form.Group>
                                         </Col>
                                     </Row>
 
 
-                                    <Row className={`'align-items-center' ${!!errors.password || !!errors.confirm_password ? 'mb-0' : 'mb-2'}`}>
-                                        <Col xs={6} md={6}>
-                                            <Form.Group controlId="formBasicPassword">
+                                    <Row className={`align-items-center  mb-4`}>
+                                        <Col xs={12} md={6}>
+                                            <Form.Group controlId="formBasicPassword" className='position-relative '>
                                                 <Form.Label>Password</Form.Label>
-                                                <Form.Control type={'password'}
+                                                <Form.Control type={`${showPass ? 'text' : 'password'}`}
                                                     value={values.password}
                                                     name="password"
-
                                                     onChange={handleChange}
+                                                    isInvalid={errors.password && touched.password}
+                                                    placeholder='Password'
 
-                                                    isInvalid={!!errors.password}
-                                                    placeholder="Password"
 
                                                 />
+                                                <FontAwesomeIcon icon={showPass ? faEye : faEyeSlash} className='eye' onClick={() => isShowPass(!showPass)} />
 
                                                 <Form.Control.Feedback type="invalid">
-                                                    {errors.password}
+                                                    {errors.password && touched.password ? <div>{errors.password}</div> : null}
                                                 </Form.Control.Feedback>
                                             </Form.Group>
                                         </Col>
-                                        <Col xs={6} md={6}>
-                                            <Form.Group controlId="confirm_password">
+                                        <Col xs={12} md={6}>
+                                            <Form.Group controlId="confirm_password" className='position-relative s'>
                                                 <Form.Label>Confirm Password</Form.Label>
-                                                <Form.Control type={'password'}
+                                                <Form.Control type={`${cshowPass ? 'text' : 'password'}`}
                                                     value={values.confirm_password}
                                                     name="confirm_password"
-
                                                     onChange={handleChange}
+                                                    isInvalid={errors.confirm_password && touched.confirm_password}
+                                                    placeholder='Password'
 
-                                                    isInvalid={!!errors.confirm_password}
-                                                    placeholder="Confirm Password"
 
                                                 />
+                                                <FontAwesomeIcon icon={cshowPass ? faEye : faEyeSlash} className='eye' onClick={() => cisShowPass(!cshowPass)} />
+
                                                 <Form.Control.Feedback type="invalid">
-                                                    {errors.confirm_password}
+                                                    {errors.confirm_password && touched.confirm_password ? <div>{errors.confirm_password}</div> : null}
                                                 </Form.Control.Feedback>
                                             </Form.Group>
                                         </Col>
                                     </Row>
-                                    <Form.Group className="mb-2 d-flex align-items-center justify-content-between" controlId="formBasicCheckbox">
+                                    <Form.Group className="mb-4 d-flex align-items-center justify-content-between" controlId="formBasicCheckbox">
 
                                         <div className="form-group form-check">
                                             <Field type="checkbox" name="acceptTerms" id="acceptTerms" className={'form-check-input ' + (errors.acceptTerms && touched.acceptTerms ? ' is-invalid' : '')} />
