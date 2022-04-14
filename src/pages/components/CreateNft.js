@@ -76,7 +76,7 @@ const CreateNFT = () => {
         }
         uploadImage(banner_img)
     }, [banner_img])
-    console.log()
+
     return (
         <Container>
             <div className='white-bg'>
@@ -172,7 +172,7 @@ const CreateNFT = () => {
                                         setTimeout(() => {
                                             navigate(routes.home)
                                         }, 1000);
-                                        console.log(values)
+
 
                                     } else {
                                         setStatus({ success: false });
@@ -180,7 +180,7 @@ const CreateNFT = () => {
                                         toast.dark(response.data.message)
                                         isLoading(false)
                                         setSubmitting(false);
-                                        console.log(values)
+
 
                                     }
                                 })
@@ -192,7 +192,7 @@ const CreateNFT = () => {
                                     toast.dark(error.response.data.message)
                                     isLoading(false)
                                     setSubmitting(false);
-                                    console.log(values)
+
                                 });
                         } catch (err) {
 
@@ -201,7 +201,7 @@ const CreateNFT = () => {
                             isLoading(false)
                             toast.dark(err.message)
                             setSubmitting(false);
-                            console.log(values)
+
 
                         }
                     }

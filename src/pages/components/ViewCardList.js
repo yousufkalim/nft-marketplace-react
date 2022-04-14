@@ -33,7 +33,7 @@ const ViewCardList = ({ id }) => {
     getAllNFTS(page)
 
   }, [id])
-  console.log(nft)
+
 
   const submit = async (e) => {
     e.preventDefault();

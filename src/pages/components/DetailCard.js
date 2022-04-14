@@ -8,7 +8,7 @@ import CustomButton from '../common/Button';
 import { useSelector } from 'react-redux';
 const DetailCard = () => {
   const user = useSelector(state => state?.singleNFT)
-  console.log(user)
+
   const {
     CreatedBy,
 
