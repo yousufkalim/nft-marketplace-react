@@ -1,0 +1,56 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins.scss";
+
+.header {
+  background-color: $headerBg;
+  width: 100%;
+  height: 92px;
+  left: 0;
+  top: 0;
+  right: 0;
+  position: fixed;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 10;
+  .tabs{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .centerTabs{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        h3{
+          font-family: 'Lato';
+          font-style: normal;
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 17px;
+          text-transform: capitalize;
+          color: $textColor;
+          padding-left: 22px;    
+  
+          
+        }
+        
+    }
+      .icons{
+          padding-left: 60px;
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          .headerIcons{
+            width: 36px;
+            height: 36px;
+            background: $textColor;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 10px;
+          }
+      }
+  }
+}
+

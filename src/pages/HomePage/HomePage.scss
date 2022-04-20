@@ -1,0 +1,17 @@
+@import "../../styles/variables";
+@import "../../styles/mixins.scss";
+
+.subHeader {
+  .bgImage {
+      width: 100%;
+      height: auto;
+      left: 0px;
+      top: 0px;
+      right: 0;
+    }
+    .footerImage{
+        margin-top: -19px;
+        width: 100%;
+        height: auto;
+    }
+}
