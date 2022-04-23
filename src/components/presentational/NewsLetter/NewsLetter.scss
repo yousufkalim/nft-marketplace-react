@@ -1,0 +1,66 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+.newsLetterWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 60px;
+  margin-bottom: 60px;
+  .newsLetterContainer {
+    width: 1180px;
+    height: 339px;
+    background: $textColor;
+    box-shadow: 0px 4px 23px -6px rgba(94, 92, 238, 0.64);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 60px;
+    .subscribeHeading {
+      font-family: "Rubik";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 50px;
+      line-height: 55px;
+      color: $CreateBtnBg;
+    }
+    .subscribeDesc {
+      font-family: "Rubik";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 23px;
+      line-height: 35px;
+      color: $CreateBtnBg;
+      margin-top: 20px;
+    }
+    .unsetMargin {
+      margin-top: unset;
+    }
+    .emailContainer {
+      width: 1048px;
+      height: 65px;
+      margin-top: 40px;
+      border-radius: 10px !important;
+      .ant-input-affix-wrapper {
+        line-height: 2.5715;
+        background:$InputBg  !important;
+        border-radius: 10px !important;
+        border: none !important;
+      }
+      .ant-input{
+        background: $InputBg !important;
+      }
+      .arrowContainer{
+        width: 78px;
+        height: 65px;
+        background: $ExploreBtnBg;
+        border-radius: 0px 10px 10px 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}

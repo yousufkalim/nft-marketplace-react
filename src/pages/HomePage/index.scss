@@ -1,0 +1,87 @@
+@import "../../styles/variables";
+@import "../../styles/mixins.scss";
+
+.homePage {
+  .subHeader {
+    position: relative;
+    .bgImage {
+      width: 100%;
+      height: 811px;
+      left: 0px;
+      top: 0px;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .leftSide {
+        width: 666px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-left: 250px;
+        .leftHeading {
+          font-family: "Rubik";
+          font-style: normal;
+          font-weight: 700;
+          font-size: 64px;
+          line-height: 75px;
+          color: $textColor;
+        }
+        .leftSubHeading {
+          font-family: "Rubik";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 20px;
+          line-height: 35px;
+          color: $textColor;
+        }
+      }
+      .rightSide {
+        margin-right: 250px;
+      }
+      .btnSection {
+        display: flex;
+        align-items: center;
+        margin-top: 22px;
+        .explore {
+          width: 250px;
+          height: 75px;
+          background: $ExploreBtnBg;
+          border-radius: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-family: "Rubik";
+          font-style: normal;
+          font-weight: 700;
+          font-size: 24px;
+          line-height: 28px;
+          text-transform: capitalize;
+          color: $textColor;
+        }
+        .create {
+          width: 250px;
+          height: 75px;
+          background: $textColor;
+          border-radius: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-family: "Rubik";
+          font-style: normal;
+          font-weight: 700;
+          font-size: 24px;
+          line-height: 28px;
+          text-transform: capitalize;
+          color: $CreateBtnBg;
+          margin-left: 12px;
+        }
+      }
+    }
+    .footerImage {
+      margin-top: -19px;
+      width: 100%;
+      height: auto;
+    }
+  }
+}

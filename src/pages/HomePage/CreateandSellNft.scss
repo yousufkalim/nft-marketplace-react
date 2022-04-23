@@ -1,0 +1,20 @@
+@import "../../styles/variables";
+@import "../../styles/mixins.scss";
+
+.instructionSection {
+    margin-left: 250px;
+    margin-right: 250px;
+    margin-top: 180px;
+    padding-bottom: 60px;
+  .headingText {
+    font-family: "Rubik";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 75px;
+    color: $CreateBtnBg;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+}
