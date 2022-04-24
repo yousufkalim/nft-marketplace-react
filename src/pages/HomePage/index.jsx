@@ -6,7 +6,6 @@ import NftCard from "../../components/presentational/Card/Card";
 import "./index.scss";
 import Featured from "./Featured";
 import CreateandSellNft from "./CreateandSellNft";
-import InstructionCard from "../../components/presentational/InstructionCard/InstructionCard";
 import NewsLetter from "../../components/presentational/NewsLetter/NewsLetter";
 
 const HomePage = () => {

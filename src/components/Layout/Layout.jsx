@@ -3,6 +3,7 @@ import React from "react";
 import "./Layout.scss";
 import { userRoutes } from "../../Routes/userRoutes";
 import Header from "./Header/Header";
+import Footer from "./Footer/Footer";
 
 const MainLayout = () => {
   return (
@@ -20,6 +21,7 @@ const MainLayout = () => {
           ))}
         </Switch>
       </div>
+      <Footer/>
     </div>
   );
 };
