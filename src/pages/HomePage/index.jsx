@@ -3,10 +3,12 @@ import BG_IMGAGE from "../../images/HomePageHeader.svg";
 import IMAGE_FOOTER from "../../images/imageFooter.svg";
 import TopHits from "./TopHits";
 import NftCard from "../../components/presentational/Card/Card";
-import "./index.scss";
 import Featured from "./Featured";
 import CreateandSellNft from "./CreateandSellNft";
 import NewsLetter from "../../components/presentational/NewsLetter/NewsLetter";
+import "./index.scss";
+import { Link } from "react-router-dom";
+
 
 const HomePage = () => {
   return (
@@ -25,7 +27,7 @@ const HomePage = () => {
               of talented artists from around the world
             </span>
             <span className="btnSection">
-              <span className="explore">Explore</span>
+             <Link to='/explore'> <span className="explore">Explore</span></Link>
               <span className="create">Create</span>
             </span>
           </div>

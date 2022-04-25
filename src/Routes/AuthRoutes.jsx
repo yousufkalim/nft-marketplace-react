@@ -1,26 +1,40 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import Footer from "../components/Layout/Footer/Footer";
-import Header from "../components/Layout/Header/Header";
+import AppFooter from "../components/Layout/Footer/Footer";
+import AppHeader from "../components/Layout/Header/Header";
 import Login from "../pages/AuthPages/Login";
 import SignUp from "../pages/AuthPages/SignUp";
 import ForgotPassword from "../pages/AuthPages/ForgotPassword";
+import { Layout } from "antd";
 import '../components/Layout/Layout.scss';
+const { Header, Footer, Sider, Content } = Layout;
+
 const AuthRoutes = () => {
   return (
     <>
-      <div className="Layout">
-        <Header />
-        <div className="auth-main-content">
-          <Switch>
+     <Layout>
+      <Header>
+        <AppHeader />
+      </Header>
+      <Content>
+      <Switch>
             <Route path="/auth/login" exact component={Login} />
             <Route path="/auth/signup" exact component={SignUp} />
             <Route path="/auth/forgotPassword" exact component={ForgotPassword}/>
             <Redirect from="/auth" to="/auth/login" />
           </Switch>
+      </Content>
+      <Footer>
+        <AppFooter />
+      </Footer>
+    </Layout>
+      {/* <div className="Layout">
+        <AppHeader />
+        <div className="auth-main-content">
+         
         </div>
         <Footer />
-      </div>
+      </div> */}
     </>
   );
 };

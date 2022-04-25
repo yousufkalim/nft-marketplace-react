@@ -10,7 +10,7 @@ import SEARCH_ICON from '../../../images/search_icon.svg';
 import './Header.scss';
 import { Link } from 'react-router-dom';
 
-const Header = () => {
+const AppHeader = () => {
   return (
     <div className='header'>
         <div className='logo'>
@@ -44,4 +44,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default AppHeader

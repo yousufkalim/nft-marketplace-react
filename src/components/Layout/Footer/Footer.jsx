@@ -8,7 +8,7 @@ import LINKEDIN from "../../../images/linkedin.svg";
 import YOUTUBE from "../../../images/youtube.svg";
 import "./Footer.scss";
 
-const Footer = () => {
+const AppFooter = () => {
   return (
     <div>
       <div className="footerWrapper">
@@ -56,4 +56,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default AppFooter;

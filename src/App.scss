@@ -22,3 +22,19 @@ hr {
 p {
     margin-bottom: 0;
 }
+.ant-layout{
+    min-height: 100vh !important;
+}
+.ant-layout-header {
+    height: unset !important;; 
+    padding: unset !important;
+    color: unset !important;
+    line-height: unset !important;
+    background: unset !important;
+}
+.ant-layout-footer {
+    padding: unset !important;
+    color: unset !important;
+    font-size: unset !important;
+    background: unset !important;
+}

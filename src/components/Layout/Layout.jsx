@@ -2,14 +2,17 @@ import { Switch, Route } from "react-router-dom";
 import React from "react";
 import "./Layout.scss";
 import { userRoutes } from "../../Routes/userRoutes";
-import Header from "./Header/Header";
-import Footer from "./Footer/Footer";
-
+import AppHeader from "./Header/Header";
+import AppFooter from "./Footer/Footer";
+import { Layout } from "antd";
+const { Header, Footer, Sider, Content } = Layout;
 const MainLayout = () => {
   return (
-    <div className="Layout">
-      <Header/>
-      <div className="main-content">
+    <Layout>
+      <Header>
+        <AppHeader />
+      </Header>
+      <Content>
         <Switch>
           {userRoutes.map((route, key) => (
             <Route
@@ -20,9 +23,27 @@ const MainLayout = () => {
             />
           ))}
         </Switch>
-      </div>
-      {/* <Footer/> */}
-    </div>
+      </Content>
+      <Footer>
+        <AppFooter />
+      </Footer>
+    </Layout>
+    // <div className="Layout">
+    //   <Header/>
+    //   <div className="main-content">
+    //     <Switch>
+    //       {userRoutes.map((route, key) => (
+    //         <Route
+    //           path={route?.path}
+    //           component={route?.component}
+    //           exact
+    //           key={key}
+    //         />
+    //       ))}
+    //     </Switch>
+    //   </div>
+    //   <Footer/>
+    // </div>
   );
 };
 
