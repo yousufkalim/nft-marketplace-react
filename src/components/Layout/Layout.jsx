@@ -21,7 +21,7 @@ const MainLayout = () => {
           ))}
         </Switch>
       </div>
-      <Footer/>
+      {/* <Footer/> */}
     </div>
   );
 };
