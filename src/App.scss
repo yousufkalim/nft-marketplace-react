@@ -25,6 +25,9 @@ p {
 .ant-layout{
     min-height: 100vh !important;
 }
+.ant-layout-content{
+    background: #ffffff;
+}
 .ant-layout-header {
     height: unset !important;; 
     padding: unset !important;
