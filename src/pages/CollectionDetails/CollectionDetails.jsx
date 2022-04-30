@@ -6,7 +6,7 @@ import LeftSection from "./LeftSection";
 import RightSection from "./RightSection";
 import NewsLetter from "../../components/presentational/NewsLetter/NewsLetter";
 import { Row, Col, AutoComplete, Input, Menu, Dropdown, Space } from "antd";
-import { UserOutlined, DownOutlined,SearchOutlined } from "@ant-design/icons";
+import { UserOutlined, DownOutlined, SearchOutlined } from "@ant-design/icons";
 
 import "./CollectionDetails.scss";
 
@@ -100,35 +100,37 @@ const CollectionDetails = () => {
       </div>
       <div className="searchBar">
         <div className="inputSection">
-        <div className="searchInput">
-          <AutoComplete
-            dropdownClassName="certain-category-search-dropdown"
-            dropdownMatchSelectWidth={500}
-            style={{
-              width: '100%',
-            }}
-            options={options}
-          >
-            <Input suffix={<SearchOutlined />} size="large" placeholder="input here" />
-          </AutoComplete>
+          <div className="searchInput">
+            <AutoComplete
+              dropdownClassName="certain-category-search-dropdown"
+              dropdownMatchSelectWidth={500}
+              style={{
+                width: "100%",
+              }}
+              options={options}
+            >
+              <Input
+                suffix={<SearchOutlined />}
+                size="large"
+                placeholder="input here"
+              />
+            </AutoComplete>
+          </div>
+          <div className="filterDropdown">
+            <Dropdown overlay={menu} trigger={["click"]}>
+              <a onClick={(e) => e.preventDefault()}>
+                <span>
+                  Click me
+                  <DownOutlined />
+                </span>
+              </a>
+            </Dropdown>
+          </div>
+          <div className="filterImage">
+            <img src={FILTER_IMG} alt={"FILTER_IMG"} />
+          </div>
         </div>
-        <div className="filterDropdown">
-          <Dropdown overlay={menu} trigger={["click"]}>
-            <a onClick={(e) => e.preventDefault()}>
-              <span>
-                Click me
-                <DownOutlined />
-              </span>
-            </a>
-          </Dropdown>
-        </div>
-         <div className="filterImage">
-          <img src={FILTER_IMG} alt={'FILTER_IMG'} />
-          </div>   
-        </div>
-        <div className="reset" >
-          RESET FILTERS
-        </div>
+        <div className="reset">RESET FILTERS</div>
       </div>
       <div className="resultCardsGrid">
         <div className="heading">
