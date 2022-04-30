@@ -24,9 +24,9 @@ const AuthRoutes = () => {
             <Redirect from="/auth" to="/auth/login" />
           </Switch>
       </Content>
-      <Footer>
-        <AppFooter />
-      </Footer>
+      <Footer/>
+        {/* <AppFooter /> */}
+      <Footer/>
     </Layout>
       {/* <div className="Layout">
         <AppHeader />
