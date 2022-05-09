@@ -6,8 +6,8 @@ import NftCard from "../../components/presentational/Card/Card";
 import Featured from "./Featured";
 import CreateandSellNft from "./CreateandSellNft";
 import NewsLetter from "../../components/presentational/NewsLetter/NewsLetter";
-import "./index.scss";
 import { Link } from "react-router-dom";
+import "./index.scss";
 
 
 const HomePage = () => {
@@ -16,7 +16,7 @@ const HomePage = () => {
       <div className="subHeader">
         <div
           className="bgImage"
-          style={{ background: `url(${BG_IMGAGE}) no-repeat` }}
+          style={{ background: `url(${BG_IMGAGE}) no-repeat`,width:'100%' }}
         >
           <div className="leftSide">
             <span className="leftHeading">
@@ -28,7 +28,7 @@ const HomePage = () => {
             </span>
             <span className="btnSection">
              <Link to='/explore'> <span className="explore">Explore</span></Link>
-              <span className="create">Create</span>
+             <Link to='/createNft' ><span className="create">Create</span></Link> 
             </span>
           </div>
           <div className="rightSide">

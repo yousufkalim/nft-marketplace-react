@@ -81,6 +81,7 @@
     .CollectionDetailsSubHeader {
       display: flex;
       align-items: center;
+      justify-content: space-between;
     }
     .searchedCard {
     }
@@ -91,5 +92,8 @@
     left: 0px;
     top: 0px;
     right: 0;
+    img{
+      width: 100%;
+    }
   }
 }

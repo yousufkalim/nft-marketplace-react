@@ -1,0 +1,77 @@
+@import "../../styles/mixins";
+@import "../../styles/variables";
+
+.CreateNftWrapper {
+  width: 100%;
+  .CreateNftHeader {
+    width: 100%;
+    height: 611px;
+    left: 0px;
+    top: 0px;
+    right: 0;
+    img{
+        width: 100%;
+    }
+    .CreateNftHeadingSection {
+      position: absolute;
+      top: 27%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .CreateNftText {
+        font-family: "Rubik";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 35px;
+        color: $textColor;
+      }
+      .CreateNftHeading {
+        font-family: "Rubik";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 64px;
+        line-height: 75px;
+        text-align: center;
+        color: $textColor;
+      }
+    }
+  }
+  .nftDetailForm{
+      margin-left: 257px;
+      margin-right: 257px;
+      .nftFormItemWrapper{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-flow: row wrap;
+          .ant-form-item{
+                width: 697px;
+          }
+          .ant-input-group-addon {
+            background: $InputBg !important;
+            line-height: 2.9715;
+            background: $InputBg !important;
+            border-radius: 10px !important;
+            border: none !important;
+          }
+          .ant-input-affix-wrapper {
+            background: $InputBg !important;
+            line-height: 2.9715;
+            background: $InputBg !important;
+            border-radius: 10px !important;
+            border: none !important;
+          }
+          .ant-input {
+            background: $InputBg !important;
+            line-height: 2.9715;
+            background: $InputBg !important;
+            border-radius: 10px !important;
+            border: none !important;
+          }
+      }
+  }
+}

@@ -8,7 +8,6 @@ import "./SignUp.scss";
 import { useHistory } from "react-router-dom";
 import { openNotification } from "../../components/Smart/Notification";
 import Spin from "../../components/presentational/Spin";
-import Footer from "../../components/Layout/Footer/Footer";
 
 
 const SignUp = () => {
