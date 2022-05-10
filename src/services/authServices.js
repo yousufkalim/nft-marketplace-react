@@ -1,12 +1,7 @@
 import axios from "axios";
+import { apiConfig } from "../helpers/utils";
+
 export const SignUpAPI = async (userInfo) => {
-  const header = {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Cache-Control': 'no-cache',
-    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
-    };
   const body = {
         first_name: userInfo.first_name,
         last_name: userInfo.last_name,
@@ -19,18 +14,11 @@ export const SignUpAPI = async (userInfo) => {
   return await axios.post(
     `https://nftdepot-api.azurewebsites.net/signup`,
     body,
-    header
+    apiConfig
   );
 };
 
 export const LoginAPI = async (userInfo) => {
-    const header = {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Cache-Control': 'no-cache',
-      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
-      };
     const body = {
           password: userInfo.password,
           email: userInfo.email
@@ -39,18 +27,11 @@ export const LoginAPI = async (userInfo) => {
     return await axios.post(
       `https://nftdepot-api.azurewebsites.net/login`,
       body,
-      header
+      apiConfig
     );
 };
 
 export const ForgotPasswordAPI = async (userInfo) => {
-  const header = {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Cache-Control': 'no-cache',
-    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
-    };
   const body = {
         email: userInfo.email
 
@@ -58,7 +39,7 @@ export const ForgotPasswordAPI = async (userInfo) => {
   return await axios.post(
     `https://nftdepot-api.azurewebsites.net/reset_password_request`,
     body,
-    header
+    apiConfig
   );
 };
 
