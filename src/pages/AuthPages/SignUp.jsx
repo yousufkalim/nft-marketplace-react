@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PAGE_HEADER from "../../images/Page_Header.svg";
+import PAGE_HEADER from "../../images/PageHeader.png";
 import AUTH_ICON from "../../images/auth_icon.svg";
 import { Input, Form, Button } from "antd";
 import { Link } from "react-router-dom";
@@ -59,6 +59,7 @@ const SignUp = () => {
         <div className="SignUpPageHeader">
           <img src={PAGE_HEADER} alt={"PAGE_HEADER"} />
         </div>
+        <div className="registerFormWrapper">
         <div className="registerForm">
             <div className="form">
               <span className="formHeadingWrapper">
@@ -171,6 +172,7 @@ const SignUp = () => {
                     {loading ? <Spin/> :  'Sign Up'}
                   </Button>
                 </Form.Item>
+                <div className="alreadyAcc">
                 <Form.Item>
                   <Link to={"/auth/login"}>
                     <span className="toLoginText">
@@ -178,11 +180,12 @@ const SignUp = () => {
                     </span>
                   </Link>
                 </Form.Item>
+                </div>
               </Form>
             </div>
           </div>
+          </div>
       </div>
-                  {/* <Footer/> */}
     </>
   );
 };

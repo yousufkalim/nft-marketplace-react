@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PAGE_HEADER from "../../images/Page_Header.svg";
+import PAGE_HEADER from "../../images/PageHeader.png";
 import AUTH_ICON from "../../images/auth_icon.svg";
 import { Input, Form, Button } from "antd";
 import { ForgotPasswordAPI } from "../../services/authServices";
@@ -37,6 +37,7 @@ const ForgotPassword = () => {
         <div className="ForgotPasswordPageHeader">
           <img src={PAGE_HEADER} alt={"PAGE_HEADER"} />
         </div>
+        <div className="ForgotPasswordFormWrapper" >
         <div className="ForgotPasswordForm">
           <div className="form">
             <span className="formHeadingWrapper">
@@ -88,6 +89,7 @@ const ForgotPassword = () => {
               </>
             )}
           </div>
+        </div>
         </div>
       </div>
       {/* <Footer/> */}

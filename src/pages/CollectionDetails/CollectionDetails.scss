@@ -11,8 +11,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-left: 257px;
-    padding-right: 257px;
+    padding: 0% 5%;
     .reset {
       font-family: "Rubik";
       font-style: normal;
@@ -26,7 +25,7 @@
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      .filterImage{
+      .filterImage {
         margin-left: 27px;
       }
       .filterDropdown {
@@ -54,7 +53,8 @@
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      margin-left: 257px;
+      // margin-left: 257px;
+      padding: 0% 5%;
       margin-top: 40px;
       .resultCount {
         font-family: "Rubik";
@@ -67,17 +67,15 @@
     }
     .cardGrid {
       margin-top: 2px;
-      margin-left: 257px;
-      margin-right: 237px;
+      padding: 0% 5%;
       .ant-col {
         margin-top: 30px !important;
       }
     }
   }
   .selectedCollection {
-    margin-left: 257px;
-    margin-top: -207px;
-    margin-right: 237px;
+    margin-top: -167px;
+    padding: 0% 5%;
     .CollectionDetailsSubHeader {
       display: flex;
       align-items: center;
@@ -88,12 +86,10 @@
   }
   .CollectionPageHeader {
     width: 100%;
-    height: 487.5px;
-    left: 0px;
-    top: 0px;
-    right: 0;
-    img{
+    margin-bottom: 5px;
+    img {
       width: 100%;
+      height: inherit;
     }
   }
 }

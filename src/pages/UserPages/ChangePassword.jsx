@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PAGE_HEADER from "../../images/Page_Header.svg";
+import PAGE_HEADER from "../../images/PageHeader.png";
 import AUTH_ICON from "../../images/auth_icon.svg";
 import { Input, Form, Button } from "antd";
 import Spin from "../../components/presentational/Spin";
@@ -37,75 +37,77 @@ const ChangePassword = () => {
         <div className="ChangePasswordPageHeader">
           <img src={PAGE_HEADER} alt={"PAGE_HEADER"} />
         </div>
-        <div className="ChangePasswordForm">
-          <div className="form">
-            <span className="formHeadingWrapper">
-              <span className="ChangePasswordAcc">Reset password</span>
-              <span className="ChangePasswordIcon">
-                <img src={AUTH_ICON} alt={"AUTH_ICON"} />
+        <div className="ChangePasswordFormWrapper">
+          <div className="ChangePasswordForm">
+            <div className="form">
+              <span className="formHeadingWrapper">
+                <span className="ChangePasswordAcc">Reset password</span>
+                <span className="ChangePasswordIcon">
+                  <img src={AUTH_ICON} alt={"AUTH_ICON"} />
+                </span>
               </span>
-            </span>
-            <Form
-              name="basic"
-              initialValues={{
-                remember: true,
-              }}
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
-              autoComplete="on"
-            >
-              <Form.Item
-                name="password"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your password!",
-                  },
-                ]}
+              <Form
+                name="basic"
+                initialValues={{
+                  remember: true,
+                }}
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+                autoComplete="on"
               >
-                <Input.Password placeholder="Password" />
-              </Form.Item>
-
-              <Form.Item
-                name="confirmPassword"
-                dependencies={["password"]}
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your confirmPassword!",
-                  },
-                  ({ getFieldValue }) => ({
-                    validator(_, value) {
-                      if (!value || getFieldValue("password") === value) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject(
-                        new Error(
-                          "The two passwords that you entered do not match!"
-                        )
-                      );
+                <Form.Item
+                  name="password"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your password!",
                     },
-                  }),
-                ]}
-              >
-                <Input.Password placeholder="Confirm Password" />
-              </Form.Item>
-
-              <Form.Item>
-                <Button type="primary" htmlType="submit">
-                  {loading ? <Spin /> : "Reset Password"}
-                </Button>
-              </Form.Item>
-              <Form.Item>
-                    <span className="passInfo">
-                    Password must be 8 characters long. Should have at least 1 uppercase letter.
-                    </span>
+                  ]}
+                >
+                  <Input.Password placeholder="Password" />
                 </Form.Item>
-            </Form>
+
+                <Form.Item
+                  name="confirmPassword"
+                  dependencies={["password"]}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your confirmPassword!",
+                    },
+                    ({ getFieldValue }) => ({
+                      validator(_, value) {
+                        if (!value || getFieldValue("password") === value) {
+                          return Promise.resolve();
+                        }
+                        return Promise.reject(
+                          new Error(
+                            "The two passwords that you entered do not match!"
+                          )
+                        );
+                      },
+                    }),
+                  ]}
+                >
+                  <Input.Password placeholder="Confirm Password" />
+                </Form.Item>
+
+                <Form.Item>
+                  <Button type="primary" htmlType="submit">
+                    {loading ? <Spin /> : "Reset Password"}
+                  </Button>
+                </Form.Item>
+                <Form.Item>
+                  <span className="passInfo">
+                    Password must be 8 characters long. Should have at least 1
+                    uppercase letter.
+                  </span>
+                </Form.Item>
+              </Form>
+            </div>
           </div>
         </div>
       </div>
-      {/* <Footer/> */}
     </>
   );
 };

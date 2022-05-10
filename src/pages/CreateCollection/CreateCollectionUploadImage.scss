@@ -4,12 +4,10 @@
 .CreateCollectionUploadImage {
   .CreateCollectionHeader {
     width: 100%;
-    height: 611px;
-    left: 0px;
-    top: 0px;
-    right: 0;
-    img {
+    margin-bottom: 5px;
+    img{
       width: 100%;
+      height: inherit;
     }
     .CreateCollectionHeadingSection {
       position: absolute;
@@ -38,5 +36,126 @@
         color: $textColor;
       }
     }
+  }
+  .CreateCollectionUploadImageWrapper {
+    .ant-radio-inner{
+      background: rgba(243, 115, 66, 0.14) !important;
+      border-color: $ExploreBtnBg !important;
+    }
+    .ant-radio-inner::after{
+      background: $ExploreBtnBg !important;
+
+    }
+    .agree{
+      font-family: 'Rubik';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 21px;
+      color: $FadeGrayColor;
+    }
+    .termConditions{
+      color: $OrangeColor;
+
+    }
+    .dropZoneHeader{
+      width: 100%;
+    }
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0% 5%;
+    .step2Header {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: flex-start;
+      .step2 {
+        font-family: "Rubik";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 28px;
+        color: $ExploreBtnBg;
+      }
+      .desc {
+        font-family: "Rubik";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 28px;
+        color: $CreateBtnBg;
+        margin-top: 19px;
+      }
+      .desc2 {
+        font-family: "Rubik";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 21px;
+        color: $FadeGrayColor;
+        margin-top: 19px;
+      }
+    }
+  .uploadForm {
+    .bannerImage{
+      .ant-form-item {
+        width: 100%;
+        .ant-upload.ant-upload-drag .ant-upload {
+        width: 100%;
+        padding: 40px 25px;
+          border-radius: 6px;
+        }
+        .ant-upload.ant-upload-drag {
+          border: 1px dashed #c4c4c4;
+          background: #ffffff !important;
+        }
+      }
+    }
+    .ant-form-item {
+      width: 45%;
+      .ant-upload.ant-upload-drag .ant-upload {
+      width: 100%;
+      padding: 40px 25px;
+        border-radius: 6px;
+      }
+      .ant-upload.ant-upload-drag {
+        border: 1px dashed #c4c4c4;
+        background: #ffffff !important;
+      }
+    }
+    .uploadFormItemWrapper {
+      display: flex;
+      justify-content: space-between;
+    }
+    .submitButton {
+      .ant-form-item {
+        border-top: 1px dashed rgba(48, 53, 73, 0.25);
+        padding-top: 49px;
+        width: 100%;
+      }
+      .ant-btn-primary {
+        width: 160px;
+        height: 56px;
+        background: #f37342;
+        border-radius: 10px;
+        border: unset !important;
+        font-family: "Rubik";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 24px;
+        text-transform: capitalize;
+        color: #ffffff;
+        img {
+          margin-left: 20px;
+        }
+      }
+    }
+  }
+    
   }
 }

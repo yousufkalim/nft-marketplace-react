@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ExploreCard from "../../components/presentational/ExploreCard/ExploreCard";
-import PAGE_HEADER from "../../images/Page_Header.svg";
+import PAGE_HEADER from "../../images/PageHeader.png";
 import { Row,Col } from "antd";
 import './ExplorePage.scss';
 import NewsLetter from "../../components/presentational/NewsLetter/NewsLetter";
@@ -18,17 +18,17 @@ const ExplorePage = () => {
         </div>
        
         <div className="ExplorecardGrid">
-        <Row>
-          <Col className="gutter-row" md={8}>
+        <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }} >
+          <Col className="gutter-row" span={8}>
             <ExploreCard />
           </Col>
-          <Col className="gutter-row" md={8}>
+          <Col className="gutter-row" span={8}>
             <ExploreCard />
           </Col>
-          <Col className="gutter-row" md={8}>
+          <Col className="gutter-row" span={8}>
             <ExploreCard />
           </Col>
-          <Col className="gutter-row" md={8}>
+          <Col className="gutter-row" span={8}>
             <ExploreCard />
           </Col>
         </Row>

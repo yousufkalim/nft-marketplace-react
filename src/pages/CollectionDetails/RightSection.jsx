@@ -17,6 +17,7 @@ const RightSection = () => {
     <div className="rightSectionWrapper">
       <div className="RightHeader">
         <div className="leftSideWithImage">
+          <div className="creatorDetails">
           <span className="imageSection">
             <img src={TEST_ICON} alt={"TEST_ICON"} />
           </span>
@@ -24,6 +25,7 @@ const RightSection = () => {
             <span className="createdBy">created by</span>
             <span className="creatorName">Phil Lee</span>
           </span>
+          </div>
           <div className="socialIcons">
             <span className="socialIconImage">
               <img src={DISCORD_ICON} alt={"DISCORD_ICON"} />

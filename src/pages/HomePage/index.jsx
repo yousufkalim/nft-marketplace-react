@@ -28,7 +28,7 @@ const HomePage = () => {
             </span>
             <span className="btnSection">
              <Link to='/explore'> <span className="explore">Explore</span></Link>
-             <Link to='/createNft' ><span className="create">Create</span></Link> 
+             <Link to='/createCollection' ><span className="create">Create</span></Link> 
             </span>
           </div>
           <div className="rightSide">

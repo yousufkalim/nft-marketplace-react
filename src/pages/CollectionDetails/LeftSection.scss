@@ -6,9 +6,13 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: flex-start;
+    width: 30%;
+    .searchedCard{
+      width: 100%;
+    }
     .cardFotterSection {
       margin-top: 30px;
-      width: 465.5px;
+      width: 100%;
       .unsetBorder{
           border-bottom: unset !important;
       }

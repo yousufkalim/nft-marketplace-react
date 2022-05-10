@@ -14,12 +14,13 @@
       justify-content: space-between;
       align-items: center;
       background-size:cover !important;
+      padding: 0% 5%;
       .leftSide {
-        width: 666px;
+        width: 48%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        margin-left: 250px;
+        // margin-left: 250px;
         .leftHeading {
           font-family: "Rubik";
           font-style: normal;
@@ -38,7 +39,8 @@
         }
       }
       .rightSide {
-        margin-right: 250px;
+        // margin-right: 25
+        width: 32%;
       }
       .btnSection {
         display: flex;

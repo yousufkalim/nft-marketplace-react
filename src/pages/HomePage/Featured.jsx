@@ -15,11 +15,23 @@ const Featured = () => {
         </span>
       </div>
       <div className="cardGrid">
-        <Row>
-          <Col className="gutter-row" md={12}>
+        <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
+          <Col className="gutter-row" span={12}>
             <FeaturedCard />
           </Col>
-          <Col className="gutter-row" md={12}>
+          <Col className="gutter-row" span={12}>
+          < FeaturedCard />
+          </Col>
+          <Col className="gutter-row" span={12}>
+          < FeaturedCard />
+          </Col>
+          <Col className="gutter-row" span={12}>
+          < FeaturedCard />
+          </Col>
+          <Col className="gutter-row" span={12}>
+          < FeaturedCard />
+          </Col>
+          <Col className="gutter-row" span={12}>
           < FeaturedCard />
           </Col>
         </Row>

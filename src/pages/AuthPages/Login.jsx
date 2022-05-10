@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PAGE_HEADER from "../../images/Page_Header.svg";
+import PAGE_HEADER from "../../images/PageHeader.png";
 import AUTH_ICON from "../../images/auth_icon.svg";
 import { Input, Form, Button } from "antd";
 import { Link } from "react-router-dom";
@@ -45,6 +45,7 @@ const Login = () => {
         <div className="LoginPageHeader">
           <img src={PAGE_HEADER} alt={"PAGE_HEADER"} />
         </div>
+        <div className="loginFormWrapper">
         <div className="loginForm">
           <div className="form">
             <span className="formHeadingWrapper">
@@ -112,6 +113,7 @@ const Login = () => {
             </div>
             </Link>
           </div>
+        </div>
         </div>
       </div>
       {/* <Footer/> */}

@@ -7,8 +7,9 @@
   margin-top: 180px;
   .cardGrid {
     margin-top: 20px;
-    margin-left: 257px;
-    margin-right: 237px;
+    padding: 0% 5%;
+    // margin-left: 257px;
+    // margin-right: 237px;
     .ant-col {
       margin-top: 30px !important;
     }
@@ -17,9 +18,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-left: 250px;
-    margin-right: 250px;
-
+    padding: 0% 5%;
     .feature {
       font-family: "Rubik";
       font-style: normal;

@@ -24,17 +24,10 @@ const AuthRoutes = () => {
             <Redirect from="/auth" to="/auth/login" />
           </Switch>
       </Content>
-      <Footer/>
-        {/* <AppFooter /> */}
-      <Footer/>
+      <Footer>
+        <AppFooter />
+      </Footer>
     </Layout>
-      {/* <div className="Layout">
-        <AppHeader />
-        <div className="auth-main-content">
-         
-        </div>
-        <Footer />
-      </div> */}
     </>
   );
 };

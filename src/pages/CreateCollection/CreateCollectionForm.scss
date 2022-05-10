@@ -4,8 +4,7 @@
 .CreateCollectionFormWrapper {
   width: 100%;
   .step1Header {
-    margin-left: 257px;
-    margin-right: 257px;
+   padding: 0% 5%;
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
@@ -30,13 +29,18 @@
     }
   }
   .CreateCollectionForm {
-    margin-left: 257px;
-    margin-right: 257px;
+   padding: 0% 5%;
     .CreateCollectionFormItemWrapper {
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-flow: row wrap;
+      .mediaAndDiscordLinks{
+        width: 45%;
+        .ant-form-item{
+          width: 100%;
+        }
+      }
       .dFlex {
         display: flex;
         justify-content: space-around;
@@ -50,7 +54,7 @@
         }
       }
       .ant-form-item {
-        width: 697px;
+        width: 45%;
       }
       .ant-input-group-addon {
         background: $InputBg !important;
@@ -100,7 +104,7 @@
         padding-top: 49px;
       }
       .ant-btn-primary {
-        width: 250px;
+        width: 180px;
         height: 66px;
         background: #f37342;
         border-radius: 10px;

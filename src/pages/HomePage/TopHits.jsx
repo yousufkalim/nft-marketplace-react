@@ -15,29 +15,29 @@ const TopHits = () => {
         </span>
       </div>
       <div className="cardGrid">
-        <Row>
-          <Col className="gutter-row" md={6}>
+        <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
+          <Col className="gutter-row" span={6}>
             <NftCard />
           </Col>
-          <Col className="gutter-row" md={6}>
+          <Col className="gutter-row" span={6}>
             <NftCard />
           </Col>
-          <Col className="gutter-row" md={6}>
+          <Col className="gutter-row" span={6}>
             <NftCard />
           </Col>
-          <Col className="gutter-row" md={6}>
+          <Col className="gutter-row" span={6}>
             <NftCard />
           </Col>
-          <Col className="gutter-row" md={6}>
+          <Col className="gutter-row" span={6}>
             <NftCard />
           </Col>
-          <Col className="gutter-row" md={6}>
+          <Col className="gutter-row" span={6}>
             <NftCard />
           </Col>
-          <Col className="gutter-row" md={6}>
+          <Col className="gutter-row" span={6}>
             <NftCard />
           </Col>
-          <Col className="gutter-row" md={6}>
+          <Col className="gutter-row" span={6}>
             <NftCard />
           </Col>
         </Row>

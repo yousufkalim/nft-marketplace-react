@@ -12,17 +12,19 @@ const FeaturedCard = () => {
     <div className="featuredCard">
       <Card>
         <div className="cardContent">
+          
           <div className="coverImageWrapper">
-            <span className="coverImage">
+            <div className="coverImage">
               <img
                 alt="example"
                 src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
               />
-            </span>
-            <span className="tagImage">
+            </div>
+            <div className="tagImage">
               <img src={TEST_ICON} alt={"TEST_ICON"} />
-            </span>
+            </div>
           </div>
+          <div className="content">
           <div className="description">
             <span className="head">Heading</span>
             <span className="desc">description</span>
@@ -46,6 +48,7 @@ const FeaturedCard = () => {
                 <img src={ORANGE_FRAME} alt={"ORANGE_FRAME"} />
               </span>
             </Tooltip>
+          </div>
           </div>
         </div>
       </Card>

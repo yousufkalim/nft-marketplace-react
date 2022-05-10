@@ -2,14 +2,13 @@
 @import "../../styles/variables";
 
 .rightSectionWrapper {
-  margin-left: 40px;
   margin-top: 120px;
+  width: 65%;
   .RightHeader {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     .itemDetails {
-      max-width: 878px;
       border-top: 1px dashed rgba(48, 53, 73, 0.25);
       display: flex;
       flex-flow: row wrap;
@@ -47,7 +46,6 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
-      margin-left: 430px;
       .socialIconImage {
         display: flex;
         justify-content: center;
@@ -70,8 +68,15 @@
     }
     .leftSideWithImage {
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       align-items: center;
+      width: 100%;
+      .creatorDetails{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+      }
       .textSection {
         display: flex;
         flex-direction: column;

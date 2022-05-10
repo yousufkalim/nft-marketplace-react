@@ -103,7 +103,7 @@ const CreateCollectionForm = () => {
                 />
               </Form.Item>
 
-              <span>
+              <span className="mediaAndDiscordLinks" >
                 <Form.Item
                   name="mediaLink"
                   rules={[
