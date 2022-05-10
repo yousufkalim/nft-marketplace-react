@@ -1,13 +1,7 @@
 import axios from "axios";
+import { apiConfig } from "../helpers/utils";
 
 export const ChangePasswordAPI = async (userInfo) => {
-  const header = {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-    "Cache-Control": "no-cache",
-    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
-  };
   const body = {
     email: userInfo.email,
     token: userInfo?.token,
@@ -17,6 +11,6 @@ export const ChangePasswordAPI = async (userInfo) => {
   return await axios.post(
     `https://nftdepot-api.azurewebsites.net/reset_password`,
     body,
-    header
+    apiConfig
   );
 };
