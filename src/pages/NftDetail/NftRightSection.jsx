@@ -1,0 +1,66 @@
+import React from "react";
+import TEST_ICON from "../../images/test_footer.svg";
+import DISCORD_ICON from "../../images/discord_icon.svg";
+import M_ICON from "../../images/M_icon.svg";
+import TWITTER_ICON from "../../images/twitter_icon.svg";
+import WHITE_FRAME_ICON from "../../images/white_frame_icon.svg";
+import SHARE_ICON from "../../images/share.svg";
+import EYE_ICON from "../../images/eye_icon.svg";
+import ORANGE_FRAME from "../../images/orange_frame.svg";
+import PRICE_ICON from "../../images/price_icon.svg";
+import { Tooltip } from "antd";
+
+import "./NftRightSection.scss";
+
+const NftRightSection = () => {
+  return (
+    <div className="NftrightSectionWrapper">
+      <div className="RightHeader">
+        <div className="leftSideWithImage">
+            <div className="priceDetails">
+                <span className="test">Current Price</span>
+                <span className="icon" >78.62  <img src={PRICE_ICON} alt={'PRICE_ICON'} /></span>
+            </div>
+          <div className="socialIcons">
+            <span className="socialIconImage">
+              <img src={DISCORD_ICON} alt={"DISCORD_ICON"} />
+            </span>
+            <span className="socialIconImage">
+              <img src={M_ICON} alt={"M_ICON"} />
+            </span>
+            <span className="socialIconImage">
+              <img src={TWITTER_ICON} alt={"TWITTER_ICON"} />
+            </span>
+            <span className="socialIconImage changebg">
+              <img src={SHARE_ICON} alt={"SHARE_ICON"} />
+            </span>
+            <Tooltip
+              title="Add to favourites"
+              color={"#303549"}
+              overlayClassName="favouriteToolTip"
+            >
+              <span className="socialIconImage changebgColor ">
+                <img src={WHITE_FRAME_ICON} alt={"WHITE_FRAME_ICON"} />
+              </span>
+            </Tooltip>
+          </div>
+        </div>
+        <div className="itemDetails">
+          <span className="detail">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in.
+          </span>
+        </div>
+        <div className="offerBtn" >
+            <span className="buyNow" >Buy Now</span>
+            <span className="makeOffer" >Make Offer</span>
+
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default NftRightSection;

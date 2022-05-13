@@ -5,7 +5,7 @@
   .CreateCollectionHeader {
     width: 100%;
     margin-bottom: 5px;
-    img{
+    img {
       width: 100%;
       height: inherit;
     }
@@ -38,27 +38,51 @@
     }
   }
   .CreateCollectionUploadImageWrapper {
-    .ant-radio-inner{
+    .ant-radio-inner {
       background: rgba(243, 115, 66, 0.14) !important;
       border-color: $ExploreBtnBg !important;
     }
-    .ant-radio-inner::after{
+    .ant-radio-inner::after {
       background: $ExploreBtnBg !important;
-
     }
-    .agree{
-      font-family: 'Rubik';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 21px;
-      color: $FadeGrayColor;
+    .submitBtn {
+      margin-top: 30px;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: center;
+      background: $ExploreBtnBg;
+      border-radius: 10px;
+      width: 150px;
+      margin-bottom: 60px;
+      cursor: pointer;
+      .submit {
+        font-family: "Rubik";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 24px;
+        text-transform: capitalize;
+        color: #ffffff;
+      }
     }
-    .termConditions{
-      color: $OrangeColor;
-
+    .agreeSection {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      margin-top: 30px;
+      .agree {
+        font-family: "Rubik";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 21px;
+        color: $FadeGrayColor;
+      }
+      .termConditions {
+        color: $OrangeColor;
+      }
     }
-    .dropZoneHeader{
+    .dropZoneHeader {
       width: 100%;
     }
     width: 100%;
@@ -100,62 +124,22 @@
         margin-top: 19px;
       }
     }
-  .uploadForm {
-    .bannerImage{
-      .ant-form-item {
-        width: 100%;
-        .ant-upload.ant-upload-drag .ant-upload {
-        width: 100%;
-        padding: 40px 25px;
-          border-radius: 6px;
+    .uploadForm {
+      margin-bottom: 30px;
+      .collectionImages {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        .smallImage {
+          width: 48%;
         }
-        .ant-upload.ant-upload-drag {
-          border: 1px dashed #c4c4c4;
-          background: #ffffff !important;
-        }
-      }
-    }
-    .ant-form-item {
-      width: 45%;
-      .ant-upload.ant-upload-drag .ant-upload {
-      width: 100%;
-      padding: 40px 25px;
-        border-radius: 6px;
-      }
-      .ant-upload.ant-upload-drag {
-        border: 1px dashed #c4c4c4;
-        background: #ffffff !important;
-      }
-    }
-    .uploadFormItemWrapper {
-      display: flex;
-      justify-content: space-between;
-    }
-    .submitButton {
-      .ant-form-item {
-        border-top: 1px dashed rgba(48, 53, 73, 0.25);
-        padding-top: 49px;
-        width: 100%;
-      }
-      .ant-btn-primary {
-        width: 160px;
-        height: 56px;
-        background: #f37342;
-        border-radius: 10px;
-        border: unset !important;
-        font-family: "Rubik";
-        font-style: normal;
-        font-weight: 700;
-        font-size: 20px;
-        line-height: 24px;
-        text-transform: capitalize;
-        color: #ffffff;
-        img {
-          margin-left: 20px;
+        .largeImage {
+          width: 48%;
         }
       }
+      .bannerImage {
+        width: 100%;
+      }
     }
-  }
-    
   }
 }

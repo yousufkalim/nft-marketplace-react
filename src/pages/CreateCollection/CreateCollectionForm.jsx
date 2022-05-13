@@ -1,21 +1,68 @@
-import React,{useState} from "react";
-import { Input, Form, Button, Select, Switch } from "antd";
+import React, { useEffect, useState } from "react";
+import { Input, Form, Button, Select, Switch, InputNumber } from "antd";
 import { Link } from "react-router-dom";
 import RightArrow from "../../images/rightIcon.svg";
-import "./CreateCollectionForm.scss";
 import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { collectionDataSuccess } from "../../store/collectionForm/collectionActions";
+import { categoryCodesAPI } from "../../services/createCollectionServices";
+import "./CreateCollectionForm.scss";
+
 
 const CreateCollectionForm = () => {
-
   const [isExplicit, setIsExplicit] = useState(false);
   const [isMintable, setIsMintable] = useState(false);
   const [isActive, setIsActive] = useState(false);
-  const history=useHistory();
+  const [categoryCodes, setCategoryCodes] = useState("");
+  const history = useHistory();
+
+  const user = useSelector((state) => state?.auth?.user);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getCode = async () => {
+      try {
+        const res = await categoryCodesAPI();
+        setCategoryCodes(res.data);
+      } catch (err) {
+        console.log("error", err);
+      }
+    };
+    getCode();
+  }, []);
 
   const onFinish = async (values) => {
-    console.log("value", values);
+    const data = {
+      store_name: values.storename ?? "",
+      url_instagram: values.instagramLink ?? "",
+      description_short: values.shortDescription ?? "",
+      description_long: values.longDescription ?? "",
+      url_personal: values.personalLink ?? "",
+      url_medium: values.mediaLink ?? "",
+      url_discord: values.discordLink ?? "",
+      url_telegram: "",
+      after_1st_purchase_text: values.afterPurchaseMessage ?? "",
+      minting_supply_count: values.mintingSupply ?? 0,
+      minting_coin: values.mintingCoin ?? "",
+      mint_locked: 0,
+      layout_style_code: "",
+      is_explicit: isExplicit ? 1 : 0,
+      mintable: isMintable ? 1 : 0,
+      isActive: isActive,
+      created_by: user?.first_name ?? "",
+      created_date: new Date().toLocaleString(),
+      category_code: values.category ?? "",
+      url_name: "",
+      delay_days: 0,
+      royalty_percent: 0,
+      third_party_royalty_percent: 0,
+      third_party_wallet_id: "0xE7b3D35c1939592332735E6300b4DC00d3A3E5B0",
+      who_pays_fees: "",
+    };
     try {
-        history.push("/createCollectionUploadImage");
+      dispatch(collectionDataSuccess(data));
+      history.push("/createCollectionUploadImage");
     } catch (error) {}
   };
 
@@ -23,12 +70,13 @@ const CreateCollectionForm = () => {
     console.log("Failed:", errorInfo);
   };
 
+
   return (
     <>
       <div className="CreateCollectionFormWrapper">
         <div className="step1Header">
           <span className="step1">Step 1</span>
-          <span className="desc" >Fill the following fields</span>
+          <span className="desc">Fill the following fields</span>
         </div>
         <div className="CreateCollectionForm">
           <Form
@@ -103,7 +151,7 @@ const CreateCollectionForm = () => {
                 />
               </Form.Item>
 
-              <span className="mediaAndDiscordLinks" >
+              <span className="mediaAndDiscordLinks">
                 <Form.Item
                   name="mediaLink"
                   rules={[
@@ -113,7 +161,7 @@ const CreateCollectionForm = () => {
                     },
                   ]}
                 >
-                  <Input placeholder="Media link" />
+                  <Input placeholder="Medium link" />
                 </Form.Item>
 
                 <Form.Item
@@ -139,7 +187,13 @@ const CreateCollectionForm = () => {
                 ]}
               >
                 <Select placeholder="Category">
-                  <Select.Option value="demo">Demo</Select.Option>
+                  {categoryCodes?.body?.map((item)=>{
+                    return (
+                      <Select.Option value={item?.code}>{item?.code}</Select.Option>
+                    )
+                  })
+
+                  }
                 </Select>
               </Form.Item>
 
@@ -160,11 +214,11 @@ const CreateCollectionForm = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Please input Minting supply!",
+                    message: "Please input Minting supply Count!",
                   },
                 ]}
               >
-                <Input placeholder="Minting supply" />
+                <InputNumber placeholder="Minting supply" controls={false} />
               </Form.Item>
 
               <Form.Item
@@ -186,7 +240,11 @@ const CreateCollectionForm = () => {
                   valuePropName="checked"
                   className="firstSwitch"
                 >
-                  <Switch size="small" checked={isExplicit} onChange={()=>setIsExplicit(!isExplicit)} />
+                  <Switch
+                    size="small"
+                    checked={isExplicit}
+                    onChange={() => setIsExplicit(!isExplicit)}
+                  />
                 </Form.Item>
 
                 <Form.Item
@@ -194,7 +252,11 @@ const CreateCollectionForm = () => {
                   labelAlign="left"
                   valuePropName="checked"
                 >
-                  <Switch size="small" checked={isMintable} onChange={()=>setIsMintable(!isMintable)}  />
+                  <Switch
+                    size="small"
+                    checked={isMintable}
+                    onChange={() => setIsMintable(!isMintable)}
+                  />
                 </Form.Item>
 
                 <Form.Item
@@ -202,7 +264,11 @@ const CreateCollectionForm = () => {
                   labelAlign="left"
                   valuePropName="checked"
                 >
-                  <Switch size="small" checked={isActive} onChange={()=>setIsActive(!isActive)}  />
+                  <Switch
+                    size="small"
+                    checked={isActive}
+                    onChange={() => setIsActive(!isActive)}
+                  />
                 </Form.Item>
               </span>
             </div>

@@ -1,0 +1,92 @@
+@import "../../styles/mixins";
+@import "../../styles/variables";
+
+.detailSection {
+  .detailselectedCollection {
+    .detailCollectionDetailsSubHeader {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding-top: 40px;
+      border-top: 1px dashed rgba(48, 53, 73, 0.25);
+      margin-top: 30px;
+      .leftSide {
+        display: flex;
+        flex-direction: column;
+        width: 48%;
+        .aboutUser {
+          font-family: "Rubik";
+          font-style: normal;
+          font-weight: 700;
+          font-size: 30px;
+          line-height: 36px;
+          text-transform: capitalize;
+        }
+        .aboutUserDesc {
+          font-family: "Rubik";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 18px;
+          line-height: 25px;
+          color: $CreateBtnBg;
+          margin-top: 20px;
+        }
+      }
+    }
+    .details {
+      width: 48%;
+      .heading {
+        font-family: "Rubik";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 30px;
+        line-height: 36px;
+        text-transform: capitalize;
+      }
+      .flexStyle {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 20px;
+        border-bottom: 1px dashed rgba(48, 53, 73, 0.25);
+        margin-top: 22px;
+        .key {
+          font-family: "Rubik";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 18px;
+          line-height: 21px;
+          color: $GrayColor;
+        }
+        .value {
+          font-family: "Rubik";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 18px;
+          line-height: 21px;
+          color: $CreateBtnBg;
+          .dFlex {
+            img {
+              margin-right: 14px;
+              margin-top: -4px;
+            }
+          }
+        }
+      }
+    }
+    .statsSection {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      .chartContainer {
+        width: 48%;
+      }
+      .offers {
+        width: 48%;
+      }
+    }
+    .searchedCard {
+    }
+  }
+}

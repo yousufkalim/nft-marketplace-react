@@ -1,0 +1,55 @@
+import React from "react";
+import { Card } from "antd";
+import FRAME_ICON from "../../../images/frame.svg";
+import EYE_ICON from "../../../images/eye_icon.svg";
+import TEST_ICON from "../../../images/test_footer.svg";
+import ORANGE_FRAME from "../../../images/orange_frame.svg";
+import { Tooltip } from "antd";
+import "./NftDetailCard.scss";
+
+const { Meta } = Card;
+
+const NftDetailCard = () => {
+  return (
+    <div className="NftDetailCard">
+      <Card
+        hoverable
+        cover={
+          <span className="ExploreCardWrapper">
+            <span className="ExploreCardImage">
+              <img
+                alt="example"
+                src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+              />
+            </span>
+          </span>
+        }
+      >
+        <Meta title="Europe Street beat" description="www.instagram.com" />
+        <div className="exploreCardFooter">
+          <div className="creatorDetails">
+            <span className="imageSection">
+              <img src={TEST_ICON} alt={"TEST_ICON"} />
+            </span>
+            <span className="textSection">
+              <span className="createdBy">created by</span>
+              <span className="creatorName">Phil Lee</span>
+            </span>
+          </div>
+          <span className="rightSection">
+            <span>
+              <img src={EYE_ICON} alt={"EYE_ICON"} />
+              <span className="beliefPrice">456</span>
+            </span>
+            <span className="tagImage">
+              <img src={ORANGE_FRAME} alt={"ORANGE_FRAME"} />
+              <span className="tagPrice">33</span>
+            </span>
+          </span>
+        </div>
+      </Card>
+    </div>
+  );
+};
+
+export default NftDetailCard;

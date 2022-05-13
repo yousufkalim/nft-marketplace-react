@@ -7,7 +7,7 @@ import { Tooltip } from "antd";
 
 import "./FeaturedCard.scss";
 
-const FeaturedCard = () => {
+const FeaturedCard = ({data}) => {
   return (
     <div className="featuredCard">
       <Card>

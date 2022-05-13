@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card } from "antd";
 import FRAME_ICON from "../../../images/frame.svg";
 import TEST_ICON from "../../../images/test_footer.svg";
 import { Tooltip } from "antd";
 import "./Card.scss";
+import { getImageUrl } from "../../../services/createCollectionServices";
 
 const { Meta } = Card;
 
-const NftCard = ({ showTopPick = false }) => {
+const NftCard = ({ showTopPick = false ,data}) => {
+  // useEffect(()=>{
+  //   const getImgrl=async()=>{
+  //     const res=await getImageUrl(data?.image_large_location)
+  //     console.log("res",res);
+  //   }
+  //   getImgrl();
+  // },[])
   return (
     <div className="imageCard">
       <Card
@@ -17,7 +25,7 @@ const NftCard = ({ showTopPick = false }) => {
             <span className="coverImage" >
             <img
               alt="example"
-              src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+              src={"https://nftdepotblob.blob.core.windows.net/images/first/0myo32ycmeb8m4rvqaw24iz8xnflxba31.svg"}
              
             />
             </span>
@@ -29,13 +37,13 @@ const NftCard = ({ showTopPick = false }) => {
 
             <span
               className="footer"
-              style={{ background: `url(${TEST_ICON}) no-repeat` }}
+              style={{ background: `url(${data?.image_small_location}) no-repeat` }}
             ></span>
             {showTopPick && <span className="tag">TOP PICK</span>}
           </span>
         }
       >
-        <Meta title="Europe Street beat" description="www.instagram.com" />
+        <Meta title={data?.store_name} description={data?.description_short} />
       </Card>
     </div>
   );

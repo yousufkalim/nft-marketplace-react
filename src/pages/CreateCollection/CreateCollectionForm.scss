@@ -4,7 +4,7 @@
 .CreateCollectionFormWrapper {
   width: 100%;
   .step1Header {
-   padding: 0% 5%;
+    padding: 0% 5%;
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
@@ -29,15 +29,15 @@
     }
   }
   .CreateCollectionForm {
-   padding: 0% 5%;
+    padding: 0% 5%;
     .CreateCollectionFormItemWrapper {
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-flow: row wrap;
-      .mediaAndDiscordLinks{
-        width: 45%;
-        .ant-form-item{
+      .mediaAndDiscordLinks {
+        width: 48%;
+        .ant-form-item {
           width: 100%;
         }
       }
@@ -54,7 +54,7 @@
         }
       }
       .ant-form-item {
-        width: 45%;
+        width: 48%;
       }
       .ant-input-group-addon {
         background: $InputBg !important;
@@ -68,7 +68,20 @@
         border-radius: 10px !important;
         border: none !important;
       }
+      .ant-input-number {
+        line-height: 2.9715;
+        background: $InputBg !important;
+        border-radius: 10px !important;
+        border: none !important;
+        width: 100%;
+      }
       .ant-input {
+        line-height: 2.9715;
+        background: $InputBg !important;
+        border-radius: 10px !important;
+        border: none !important;
+      }
+      .ant-input-number-input {
         line-height: 2.9715;
         background: $InputBg !important;
         border-radius: 10px !important;
@@ -116,6 +129,8 @@
         line-height: 24px;
         text-transform: capitalize;
         color: #ffffff;
+        margin-bottom: 60px;
+
         img {
           margin-left: 20px;
         }

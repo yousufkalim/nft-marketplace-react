@@ -1,9 +1,11 @@
 import CollectionDetails from "../pages/CollectionDetails/CollectionDetails";
+import CollectionView from "../pages/CollectionView/CollectionView";
 import CreateCollection from "../pages/CreateCollection/CreateCollection";
 import CreateCollectionUploadImage from "../pages/CreateCollection/CreateCollectionUploadImage";
 import CreateNft from "../pages/CreateNft/CreateNft";
 import ExplorePage from "../pages/ExplorePage/ExplorePage";
 import HomePage from "../pages/HomePage";
+import NftDetail from "../pages/NftDetail/NftDetail";
 import ChangePassword from "../pages/UserPages/ChangePassword";
 
 export const userRoutes = [
@@ -34,6 +36,14 @@ export const userRoutes = [
     {
         path:"/createCollectionUploadImage",
         component:CreateCollectionUploadImage
+    },
+    {
+        path:"/nftDetail",
+        component:NftDetail
+    },
+    {
+        path:"/collectionView",
+        component:CollectionView
     }
 
     
