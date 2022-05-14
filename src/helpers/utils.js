@@ -10,7 +10,7 @@ export const apiConfig = {
 export const restrictedConfig = {
   headers: {
     "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+     Authorization: `Bearer ${localStorage.getItem("token")}`,
     "Access-Control-Allow-Origin": `${window.location.origin}/`,
     "Access-Control-Allow-Headers":
       "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization",
