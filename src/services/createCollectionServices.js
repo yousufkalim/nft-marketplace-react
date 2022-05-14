@@ -21,13 +21,12 @@ export const uploadAPI = async (selectedImage) => {
   return resKey;
 };
 
-
 export const createCollectionAPI = async (collectionInfo) => {
   const body = collectionInfo;
   return await axios.post(
     `https://nftdepot-api.azurewebsites.net/collections/create`,
     body,
-    restrictedConfig
+    restrictedConfig,
   );
 };
 
@@ -39,8 +38,5 @@ export const categoryCodesAPI = async () => {
 };
 
 export const getImageUrl = async (url) => {
-  return await axios.get(
-    `${url}`,
-    apiConfig
-  );
+  return await axios.get(`${url}`, apiConfig);
 };
