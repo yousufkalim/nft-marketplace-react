@@ -18,7 +18,9 @@ import "./App.scss";
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
-  const fetchUserData = async () => {
+  
+  useEffect(() => {
+    const fetchUserData = async () => {
     setIsLoading(true);
     const token = localStorage.getItem("token");
     if (token) {
@@ -37,7 +39,6 @@ function App() {
     }
     setIsLoading(false);
   };
-  useEffect(() => {
     fetchUserData();
   }, []);
 
