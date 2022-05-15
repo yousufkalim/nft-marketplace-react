@@ -4,6 +4,7 @@ import RIGHT_ARROW from "../../images/right_arrow.svg";
 import { Row,Col } from 'antd';
 import './Featured.scss';
 import { getFeaturedAPI } from '../../services/homePageServices';
+import { Link } from 'react-router-dom';
 
 const Featured = () => {
   const [featured, setFeatured] = useState([]);
@@ -23,7 +24,7 @@ const Featured = () => {
         <span className="feature">Featured</span>
         <span>
           <span className="discover">Discover</span>
-          <img src={RIGHT_ARROW} alt={"RIGHT_ARROW"} />
+          <Link to={'/explore'} ><img src={RIGHT_ARROW} alt={"RIGHT_ARROW"} /></Link>
         </span>
       </div>
       <div className="cardGrid">
@@ -32,7 +33,7 @@ const Featured = () => {
             featured?.slice(0,8)?.map((item, index) => {
               return (
                 <Col className="gutter-row" span={12} key={index}>
-                  <FeaturedCard data={item}/>
+                  <Link to={'/explore'} ><FeaturedCard data={item}/></Link>
                 </Col>
               );
             })

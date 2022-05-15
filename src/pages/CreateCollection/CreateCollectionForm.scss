@@ -87,6 +87,16 @@
         border-radius: 10px !important;
         border: none !important;
       }
+      .ant-radio-checked .ant-radio-inner{
+        border-color:rgba(243, 115, 66, 0.14) !important ;
+        // background: #f37342 !important;
+
+      }
+      .ant-radio-inner{
+        border-color:rgba(243, 115, 66, 0.14) !important ;
+        background: #facbb9 !important;
+
+      }
       .ant-select {
         line-height: 2.9715;
       }

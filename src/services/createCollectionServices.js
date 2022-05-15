@@ -30,13 +30,20 @@ export const createCollectionAPI = async (collectionInfo) => {
   );
 };
 
-export const categoryCodesAPI = async () => {
+export const codesAPI = async (codes) => {
   return await axios.get(
-    `https://nftdepot-api.azurewebsites.net/codes/categoryCode`,
+    `https://nftdepot-api.azurewebsites.net/codes/${codes}`,
     apiConfig
   );
 };
 
 export const getImageUrl = async (url) => {
   return await axios.get(`${url}`, apiConfig);
+};
+
+export const checkStroeNameAvailability = async (storeName) => {
+  return await axios.get(
+    `https://nftdepot-api.azurewebsites.net/collections/collection_name_availability?collection_name=${storeName}`,
+    apiConfig
+  );
 };

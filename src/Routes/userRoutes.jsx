@@ -6,6 +6,7 @@ import CreateNft from "../pages/CreateNft/CreateNft";
 import ExplorePage from "../pages/ExplorePage/ExplorePage";
 import HomePage from "../pages/HomePage";
 import NftDetail from "../pages/NftDetail/NftDetail";
+import Profile from "../pages/Profile/Profile";
 import ChangePassword from "../pages/UserPages/ChangePassword";
 
 export const userRoutes = [
@@ -44,7 +45,12 @@ export const userRoutes = [
     {
         path:"/collectionView",
         component:CollectionView
+    },
+    {
+        path:"/profile",
+        component:Profile
     }
+
 
     
 

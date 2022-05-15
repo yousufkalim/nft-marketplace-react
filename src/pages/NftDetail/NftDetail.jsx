@@ -11,6 +11,7 @@ import "./NftDetail.scss";
 import NftLeftSection from "./NftLeftSection";
 import NftRightSection from "./NftRightSection";
 import DetailSection from "./DetailSection";
+import { Link } from "react-router-dom";
 // import DetailSection from "./DetailSection";
 
 const NftDetails = () => {
@@ -105,12 +106,12 @@ const NftDetails = () => {
       <div className="resultCardsGrid"> 
         <div className="heading">
           <span className="seeMore">More from this collection</span>
-          <span ><span className="view" >View all</span> <img src={RIGHT_ARROW} alt="RIGHT_ARROW" /> </span>
+          <span ><span className="view" >View all</span> <Link to={'/collectionView'} ><img src={RIGHT_ARROW} alt="RIGHT_ARROW" /></Link> </span>
         </div>
         <div className="cardGrid">
           <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }} >
             <Col className="gutter-row" span={12}>
-              <FeaturedCard />
+               <FeaturedCard />
             </Col>
             <Col className="gutter-row" span={12}>
               <FeaturedCard />

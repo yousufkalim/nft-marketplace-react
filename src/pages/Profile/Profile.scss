@@ -1,0 +1,63 @@
+@import "../../styles/mixins";
+@import "../../styles/variables";
+
+.ProfileWrapper {
+    width: 100%; 
+    .ProfileHeader {
+      width: 100%;
+      margin-bottom: 5px;
+      img{
+        width: 100%;
+        height: inherit;
+      }
+    }
+    .userData{
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        width: 70%;
+        padding: 0% 5%;
+        margin-top: -180px;
+        .profileCard{
+          width: 40%;
+        }
+    }
+    .profilecardFotterSection {
+      margin-top: 30px;
+      width: 50%;
+      .unsetBorder{
+          border-bottom: unset !important;
+      }
+      .flexStyle {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 20px;
+        border-bottom: 1px dashed rgba(48, 53, 73, 0.25);
+        margin-top: 22px;
+        .key {
+          font-family: "Rubik";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 18px;
+          line-height: 21px;
+          color: $GrayColor;
+        }
+        .value {
+          font-family: "Rubik";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 18px;
+          line-height: 21px;
+          color: $CreateBtnBg;
+          .dFlex{
+              img{
+                  margin-right: 14px;
+                  margin-top: -4px;
+              }
+          }
+        }
+      }
+    }
+}

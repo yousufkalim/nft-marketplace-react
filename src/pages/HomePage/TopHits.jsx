@@ -5,6 +5,7 @@ import NftCard from "../../components/presentational/Card/Card";
 import "./TopHits.scss";
 import { getTopHitsAPI } from "../../services/homePageServices";
 import { getImageUrl } from "../../services/createCollectionServices";
+import { Link } from "react-router-dom";
 
 const TopHits = () => {
   const [topHits, setTopHits] = useState([]);
@@ -24,15 +25,15 @@ const TopHits = () => {
         <span className="topHits">Top Hits</span>
         <span>
           <span className="discover">Discover</span>
-          <img src={RIGHT_ARROW} alt={"RIGHT_ARROW"} />
+          <Link to={'/explore'}><img src={RIGHT_ARROW} alt={"RIGHT_ARROW"} /></Link>
         </span>
       </div>
       <div className="cardGrid">
         <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
-          {topHits.map((item, index) => {
+          {topHits?.slice(0,8)?.map((item, index) => {
             return (
               <Col className="gutter-row" span={6} key={index}>
-                <NftCard data={item}/>
+                <Link to={'/collectionView'}><NftCard data={item}/></Link> 
               </Col>
             );
           })}

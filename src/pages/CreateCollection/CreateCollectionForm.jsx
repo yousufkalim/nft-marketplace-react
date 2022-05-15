@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { Input, Form, Button, Select, Switch, InputNumber } from "antd";
+import { Input, Form, Button, Select, Switch, InputNumber,Radio } from "antd";
 import { Link } from "react-router-dom";
 import RightArrow from "../../images/rightIcon.svg";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { collectionDataSuccess } from "../../store/collectionForm/collectionActions";
-import { categoryCodesAPI } from "../../services/createCollectionServices";
+import { checkStroeNameAvailability, codesAPI } from "../../services/createCollectionServices";
 import "./CreateCollectionForm.scss";
-
+import { openNotification } from "../../components/Smart/Notification";
+import Spin from "../../components/presentational/Spin";
 
 const CreateCollectionForm = () => {
   const [isExplicit, setIsExplicit] = useState(false);
   const [isMintable, setIsMintable] = useState(false);
   const [isActive, setIsActive] = useState(false);
-  const [categoryCodes, setCategoryCodes] = useState("");
+  const [categoryCodes, setCategoryCodes] = useState([]);
+  const [layoutCodes, setLayoutCodes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isStoreNameAvailable, setIsStoreNameAvailable] = useState(true);
+
+
+  console.log("isStoreNameAvailable", isStoreNameAvailable);
+
+
   const history = useHistory();
 
   const user = useSelector((state) => state?.auth?.user);
@@ -23,8 +32,10 @@ const CreateCollectionForm = () => {
   useEffect(() => {
     const getCode = async () => {
       try {
-        const res = await categoryCodesAPI();
+        const res = await codesAPI("categoryCodes");
         setCategoryCodes(res.data);
+        const response = await codesAPI("layoutCodes");
+        setLayoutCodes(response?.data);
       } catch (err) {
         console.log("error", err);
       }
@@ -32,7 +43,9 @@ const CreateCollectionForm = () => {
     getCode();
   }, []);
 
+
   const onFinish = async (values) => {
+    setIsLoading(true);
     const data = {
       store_name: values.storename ?? "",
       url_instagram: values.instagramLink ?? "",
@@ -46,7 +59,7 @@ const CreateCollectionForm = () => {
       minting_supply_count: values.mintingSupply ?? 0,
       minting_coin: values.mintingCoin ?? "",
       mint_locked: 0,
-      layout_style_code: "",
+      layout_style_code: values?.layoutCode ?? "",
       is_explicit: isExplicit ? 1 : 0,
       mintable: isMintable ? 1 : 0,
       isActive: isActive,
@@ -58,18 +71,30 @@ const CreateCollectionForm = () => {
       royalty_percent: 0,
       third_party_royalty_percent: 0,
       third_party_wallet_id: "0xE7b3D35c1939592332735E6300b4DC00d3A3E5B0",
-      who_pays_fees: "",
+      who_pays_fees: values?.whoPayFee ?? "",
     };
     try {
+      const res=await checkStroeNameAvailability(values.storename);
+      if(res?.data?.body?.exists){
+        openNotification("Oops", "Store name already exists");
+        setIsStoreNameAvailable(false);
+        setIsLoading(false);
+      }
+      else{
+      setIsStoreNameAvailable(true);
       dispatch(collectionDataSuccess(data));
       history.push("/createCollectionUploadImage");
-    } catch (error) {}
+      setIsLoading(false);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      openNotification("Oops", "Something went wrong");
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-
 
   return (
     <>
@@ -92,6 +117,8 @@ const CreateCollectionForm = () => {
             <div className="CreateCollectionFormItemWrapper">
               <Form.Item
                 name="storename"
+                // validateStatus={isStoreNameAvailable ? "success" : "error"}
+                // help="Store name should be unique"
                 rules={[
                   {
                     required: true,
@@ -187,13 +214,13 @@ const CreateCollectionForm = () => {
                 ]}
               >
                 <Select placeholder="Category">
-                  {categoryCodes?.body?.map((item)=>{
+                  {categoryCodes?.body?.map((item) => {
                     return (
-                      <Select.Option value={item?.code}>{item?.code}</Select.Option>
-                    )
-                  })
-
-                  }
+                      <Select.Option value={item?.code}>
+                        {item?.code}
+                      </Select.Option>
+                    );
+                  })}
                 </Select>
               </Form.Item>
 
@@ -231,6 +258,36 @@ const CreateCollectionForm = () => {
                 ]}
               >
                 <Input placeholder="Minting coin" />
+              </Form.Item>
+
+              <Form.Item
+                name="layoutCode"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please select a Layout_Code!",
+                  },
+                ]}
+              >
+                <Select placeholder="layout">
+                  {layoutCodes?.body?.map((item) => {
+                    return (
+                      <Select.Option value={item?.code}>
+                        {item?.code}
+                      </Select.Option>
+                    );
+                  })}
+                </Select>
+              </Form.Item>
+
+
+
+              <Form.Item name="whoPayFee" label={<b>Who Pay Gas Fee</b>}>
+                <Radio.Group>
+                  <Radio value="buyer">Buyer</Radio>
+                  <Radio value="Creator">Creator</Radio>
+                  <Radio value="Both">Both</Radio>
+                </Radio.Group>
               </Form.Item>
 
               <span className="dFlex">
@@ -276,8 +333,7 @@ const CreateCollectionForm = () => {
             <span className="nextButton">
               <Form.Item>
                 <Button type="primary" htmlType="submit">
-                  {/* {loading ? <Spin /> : "Sign Up"} */}
-                  Next
+                  {isLoading ? <Spin /> : "Next"}
                   <img src={RightArrow} alt={"RightArrow"} />
                 </Button>
               </Form.Item>

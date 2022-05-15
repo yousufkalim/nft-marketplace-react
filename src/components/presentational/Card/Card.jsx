@@ -5,6 +5,7 @@ import TEST_ICON from "../../../images/test_footer.svg";
 import { Tooltip } from "antd";
 import "./Card.scss";
 import { getImageUrl } from "../../../services/createCollectionServices";
+import TEST_IMG from "../../../images/test_img.png";
 
 const { Meta } = Card;
 
@@ -25,7 +26,7 @@ const NftCard = ({ showTopPick = false ,data}) => {
             <span className="coverImage" >
             <img
               alt="example"
-              src={"https://nftdepotblob.blob.core.windows.net/images/first/0myo32ycmeb8m4rvqaw24iz8xnflxba31.svg"}
+              src={TEST_IMG}
              
             />
             </span>
@@ -37,7 +38,7 @@ const NftCard = ({ showTopPick = false ,data}) => {
 
             <span
               className="footer"
-              style={{ background: `url(${data?.image_small_location}) no-repeat` }}
+              style={{ background: `url(${TEST_ICON}) no-repeat` }}
             ></span>
             {showTopPick && <span className="tag">TOP PICK</span>}
           </span>

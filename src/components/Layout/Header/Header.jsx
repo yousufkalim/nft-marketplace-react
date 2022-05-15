@@ -20,10 +20,10 @@ const AppHeader = () => {
         </div>
         <div className='tabs'>
         <div className='centerTabs'>
-            <h3>Explore</h3>
-            <h3>Stats</h3>
-            <h3>Resource</h3>
-            <h3>Create</h3>
+            <Link to={'/explore'} ><h3>Explore</h3></Link>
+            {/* <h3>Stats</h3> */}
+            {/* <h3>Resource</h3> */}
+            <Link to={'createCollection'}><h3>Create</h3></Link>
 
 
         </div>
@@ -35,7 +35,7 @@ const AppHeader = () => {
                 <img src={BELL_ICON} alt={'BELL_ICON'} />
             </span>
             <span className='headerIcons'>
-                <img src={PROFILE_ICON} alt={'PROFILE_ICON'} />
+                <Link to={'/profile'} ><img src={PROFILE_ICON} alt={'PROFILE_ICON'} /></Link>
             </span>
 
         </div>

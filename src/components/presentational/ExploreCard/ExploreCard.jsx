@@ -20,7 +20,7 @@ const ExploreCard = () => {
             <span className="ExploreCardImage" >
             <img
               alt="example"
-              src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+              src="https://nftdepotblob.blob.core.windows.net/images/first/smh5bgbtfb6acg5i7x2mwnu5x25p3tqyb.PNG"
              
             />
             </span>

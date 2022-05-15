@@ -1,39 +1,82 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ExploreCard from "../../components/presentational/ExploreCard/ExploreCard";
 import PAGE_HEADER from "../../images/PageHeader.png";
-import { Row,Col } from "antd";
-import './ExplorePage.scss';
+import { Row, Col } from "antd";
+import "./ExplorePage.scss";
 import NewsLetter from "../../components/presentational/NewsLetter/NewsLetter";
+import { allCollectionsAPI } from "../../services/explorePageServices";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { Link } from "react-router-dom";
 
 const ExplorePage = () => {
+  const [exploreData, setExploreData] = useState([]);
+  useEffect(() => {
+    const fetchExploreData = async () => {
+      try{
+      const res = await allCollectionsAPI(exploreData?.next_page ?? 0);
+      setExploreData(res?.data?.body?.data);
+      }
+      catch(err){
+        console.log("err", err);
+        setExploreData([])
+      }
+    };
+    fetchExploreData();
+  }, []);
+
+  // console.log("exploreData", exploreData);
+
   return (
     <>
       <div className="ExplorePageWrapper">
         <div className="ExplorePageHeader">
           <img src={PAGE_HEADER} alt={"PAGE_HEADER"} />
           <div className="exploreHeadingSection">
-            <span className="exploreText" >FIND, EXPLORE & FOLLOW DIGITAL ART NFTS.</span>
-            <span className="exploreHeading" >Explore Collections</span>
+            <span className="exploreText">
+              FIND, EXPLORE & FOLLOW DIGITAL ART NFTS.
+            </span>
+            <span className="exploreHeading">Explore Collections</span>
           </div>
         </div>
-       
+
         <div className="ExplorecardGrid">
-        <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }} >
-          <Col className="gutter-row" span={8}>
-            <ExploreCard />
-          </Col>
-          <Col className="gutter-row" span={8}>
-            <ExploreCard />
-          </Col>
-          <Col className="gutter-row" span={8}>
-            <ExploreCard />
-          </Col>
-          <Col className="gutter-row" span={8}>
-            <ExploreCard />
-          </Col>
-        </Row>
-      </div>
-        <NewsLetter/>
+          {/* <InfiniteScroll
+            dataLength={exploreData.length} //This is important field to render the next data
+            next={fetchExploreData}
+            hasMore={true}
+            loader={<h4>Loading...</h4>}
+            endMessage={
+              <p style={{ textAlign: "center" }}>
+                <b>Yay! You have seen it all</b>
+              </p>
+            }
+            below props only if you need pull down functionality
+            refreshFunction={fetchExploreData}
+            pullDownToRefresh
+            pullDownToRefreshThreshold={50}
+            pullDownToRefreshContent={
+              <h3 style={{ textAlign: "center" }}>
+                &#8595; Pull down to refresh
+              </h3>
+            }
+            releaseToRefreshContent={
+              <h3 style={{ textAlign: "center" }}>
+                &#8593; Release to refresh
+              </h3>
+            }
+          > */}
+            <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
+              {exploreData?.map((item, index) => {
+                return (
+                  <Col className="gutter-row" span={8} key={index}>
+                   <Link to={'/collectionView'} ><ExploreCard data={item} /></Link> 
+                  </Col>
+                );
+              })}
+            </Row>
+          {/* </InfiniteScroll> */}
+        </div>
+        <NewsLetter />
       </div>
     </>
   );
