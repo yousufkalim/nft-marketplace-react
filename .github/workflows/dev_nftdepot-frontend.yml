@@ -23,7 +23,7 @@ jobs:
 
       - name: npm install, build, and test
         run: |
-          npm install
+          npm install -g
           npm run build --if-present
           npm run test --if-present
 
@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'NFTDepot-frontend'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5D4847801E41448EAC7E58C7C155E152 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C0A12BF90F6B4A2AA94EDAAA2E7477FD }}
           package: .
