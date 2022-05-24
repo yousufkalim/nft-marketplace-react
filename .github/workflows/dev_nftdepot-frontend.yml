@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'NFTDepot-frontend'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5D4847801E41448EAC7E58C7C155E152 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_67791AEE0FC346EE9DF891C47F54941F }}
           package: .
