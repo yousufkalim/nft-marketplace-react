@@ -3,6 +3,7 @@ import {
   AUTH_FAILURE,
   SET_PROFILE,
   REMOVE_PROFILE,
+  REMEMBER_PROFILE
 } from "./authActionTypes";
 
 export const LoginSuccess = () => {
@@ -13,6 +14,11 @@ export const LoginSuccess = () => {
 
 export const searchUserSuccess = (payload) => ({
   type: "SEARCH_USER_SUCCESS",
+  payload,
+});
+
+export const rememberUser = (payload) => ({
+  type: REMEMBER_PROFILE,
   payload,
 });
 
@@ -36,6 +42,7 @@ export const removeProfile = () => {
 
 export const Logout = () => async (dispatch) => {
   localStorage.removeItem("token");
+  localStorage.removeItem("saved");
   dispatch(LoginFail());
   dispatch(removeProfile());
 }

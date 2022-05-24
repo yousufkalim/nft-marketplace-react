@@ -9,14 +9,20 @@ import { Link } from 'react-router-dom';
 import useWindowSize from '../../helpers/hooks';
 import ExploreCard from '../../components/presentational/ExploreCard/ExploreCard';
 import FeatureMobileCard from '../../components/presentational/FeatureMobileCard/FeatureMobileCard';
+import { openNotification } from '../../components/Smart/Notification';
 
 const Featured = () => {
   const [featured, setFeatured] = useState([]);
   const [browserWidth]=useWindowSize()
   useEffect(() => {
     const featured = async () => {
+      try{
       const res = await getFeaturedAPI();
       setFeatured(res?.data?.body);
+      }
+      catch(error){
+        openNotification("Oops",error?.response?.data?.message)
+      }
     };
 
     featured();

@@ -27,8 +27,8 @@ const ExplorePage = () => {
         next_page: res?.data?.body?.next_page,
         has_more: res?.data?.body?.has_more,
       });
-    } catch (err) {
-      console.log("err", err);
+    } catch (error) {
+      console.log("err", error?.response?.data?.message);
       // setExploreData([]);
     }
   };

@@ -7,14 +7,20 @@ import { getTopHitsAPI } from "../../services/homePageServices";
 import { getImageUrl } from "../../services/createCollectionServices";
 import { Link } from "react-router-dom";
 import useWindowSize from "../../helpers/hooks";
+import { openNotification } from "../../components/Smart/Notification";
 
 const TopHits = () => {
   const [topHits, setTopHits] = useState([]);
   const [browserWidth]=useWindowSize()
   useEffect(() => {
     const topHits = async () => {
+      try{
       const res = await getTopHitsAPI();
       setTopHits(res?.data?.body);
+      }
+      catch(error){
+        openNotification("Oops",error?.response?.data?.message)
+      }
     };
 
     topHits();

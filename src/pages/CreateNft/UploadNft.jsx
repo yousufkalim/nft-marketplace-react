@@ -32,9 +32,9 @@ const UploadNft = () => {
           const nftFileLocation = await uploadNft(nftFile[0]);
           openNotification("Success", "Nft created successfully");
           setIsLoading(false);
-        } catch (err) {
+        } catch (error) {
           setIsLoading(false);
-          openNotification("Oops", "An Error occured");
+          openNotification("Oops", error?.response?.data?.message);
         }
       } else {
         openNotification("Oops", "Please agree to the terms and conditions");

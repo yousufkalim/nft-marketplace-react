@@ -20,8 +20,8 @@ const CollectionDetails = ({match}) => {
       try{
       const res=await collectionDetailsApi(match.params.id);
       setCollectionsDetails(res?.data?.body);
-      }catch(err){
-      console.log("err",err);
+      }catch(error){
+      console.log("err",error?.response?.data?.message);
       }
     }
     getCollectionDetails();

@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import BG_IMGAGE from "../../images/HomePageHeader.svg";
 import IMAGE_FOOTER from "../../images/imageFooter.svg";
 import MOBILE_HEADER_IMG from "../../images/mobile_header_img.png";
@@ -10,10 +10,25 @@ import NewsLetter from "../../components/presentational/NewsLetter/NewsLetter";
 import { Link } from "react-router-dom";
 import "./index.scss";
 import useWindowSize from "../../helpers/hooks";
+import { getTopHitsAPI } from "../../services/homePageServices";
+import { openNotification } from "../../components/Smart/Notification";
 
 const HomePage = () => {
   const [browserWidth] = useWindowSize();
-  console.log("browserWidth", browserWidth);
+  const [topPick,setTopPick] = useState([]);
+  useEffect(() => {
+    const topHits = async () => {
+      try{
+      const res = await getTopHitsAPI();
+      setTopPick(res?.data?.body);
+      }
+      catch(error){
+        openNotification("Oops",error?.response?.data?.message)
+      }
+    };
+
+    topHits();
+  }, []);
   return (
     <div className="homePage">
       <div className="subHeader">
@@ -46,7 +61,7 @@ const HomePage = () => {
           </div>
           {browserWidth > 620 && <div className="rightSide">
             <span className="leftHeading">
-              <NftCard showTopPick={true} />
+              <NftCard showTopPick={true} data={topPick[0]} />
             </span>
           </div>}
         </div>
@@ -54,7 +69,7 @@ const HomePage = () => {
       </div>
       {browserWidth < 620 && <div className="rightSide">
             <span className="leftHeading">
-              <NftCard showTopPick={true} />
+              <NftCard showTopPick={true} data={topPick[0]} />
             </span>
           </div>}
       <TopHits />

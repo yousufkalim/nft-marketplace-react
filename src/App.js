@@ -1,11 +1,11 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import MainLayout from "./components/Layout/Layout";
 import AuthRouter from "./HOC/AuthRouter";
 import PrivateRouter from "./HOC/PrivateRouter";
 import AuthRoutes from "./Routes/AuthRoutes";
 import { Switch } from "react-router-dom";
 import "antd/dist/antd.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { VerifyUser } from "./services/authServices";
 import {
   LoginSuccess,
@@ -18,38 +18,50 @@ import "./App.scss";
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
-  
+
+  const isRemember = useSelector((state) => state.auth.isRemember);
+
   useEffect(() => {
     const fetchUserData = async () => {
-    setIsLoading(true);
-    const token = localStorage.getItem("token");
-    if (token) {
-      const user = await VerifyUser();
-      if (user) {
-        dispatch(LoginSuccess());
-        dispatch(setProfile(user));
+      setIsLoading(true);
+      const token = localStorage.getItem("token");
+      let hours = isRemember ? 720 : 24;
+      let saved = localStorage.getItem("saved");
+      if (
+        token &&
+        !(saved && new Date().getTime() - saved > hours * 60 * 60 * 1000)
+      ) {
+        const user = await VerifyUser();
+        if (user) {
+          dispatch(LoginSuccess());
+          dispatch(setProfile(user));
+        } else {
+          localStorage.removeItem("token");
+          localStorage.removeItem("saved");
+          dispatch(LoginFail());
+          dispatch(removeProfile());
+        }
       } else {
         localStorage.removeItem("token");
+        localStorage.removeItem("saved");
         dispatch(LoginFail());
         dispatch(removeProfile());
       }
-    } else {
-      dispatch(LoginFail());
-      dispatch(removeProfile());
-    }
-    setIsLoading(false);
-  };
+      setIsLoading(false);
+    };
     fetchUserData();
   }, []);
 
   return (
     <>
-     {!isLoading ? <Switch>
-        <AuthRouter path="/auth" component={AuthRoutes} />
-        <PrivateRouter path="/" component={MainLayout} />
-      </Switch> 
-    : ""  
-    }
+      {!isLoading ? (
+        <Switch>
+          <AuthRouter path="/auth" component={AuthRoutes} />
+          <PrivateRouter path="/" component={MainLayout} />
+        </Switch>
+      ) : (
+        ""
+      )}
     </>
   );
 }

@@ -13,15 +13,11 @@ import Spin from "../../components/presentational/Spin";
 const CreateCollectionForm = () => {
   const [isExplicit, setIsExplicit] = useState(false);
   const [isMintable, setIsMintable] = useState(false);
-  const [isActive, setIsActive] = useState(false);
+  // const [isActive, setIsActive] = useState(false);
   const [categoryCodes, setCategoryCodes] = useState([]);
   const [layoutCodes, setLayoutCodes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isStoreNameAvailable, setIsStoreNameAvailable] = useState(true);
-
-
-  console.log("isStoreNameAvailable", isStoreNameAvailable);
-
 
   const history = useHistory();
 
@@ -36,8 +32,8 @@ const CreateCollectionForm = () => {
         setCategoryCodes(res.data);
         const response = await codesAPI("layoutCodes");
         setLayoutCodes(response?.data);
-      } catch (err) {
-        console.log("error", err);
+      } catch (error) {
+        console.log("error", error?.response?.data?.message);
       }
     };
     getCode();
@@ -62,7 +58,7 @@ const CreateCollectionForm = () => {
       layout_style_code: values?.layoutCode ?? "",
       is_explicit: isExplicit ? 1 : 0,
       mintable: isMintable ? 1 : 0,
-      isActive: isActive,
+      isActive: 1,
       created_by: user?.first_name ?? "",
       created_date: new Date().toLocaleString(),
       category_code: values.category ?? "",
@@ -87,6 +83,7 @@ const CreateCollectionForm = () => {
       setIsLoading(false);
       }
     } catch (error) {
+      console.log("error", error);
       setIsLoading(false);
       openNotification("Oops", "Something went wrong");
     }
@@ -130,12 +127,12 @@ const CreateCollectionForm = () => {
               </Form.Item>
               <Form.Item
                 name="instagramLink"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your Instagram link !",
-                  },
-                ]}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: "Please input your Instagram link !",
+                //   },
+                // ]}
               >
                 <Input placeholder="Instagram link " />
               </Form.Item>
@@ -153,12 +150,12 @@ const CreateCollectionForm = () => {
 
               <Form.Item
                 name="personalLink"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your Personal link!",
-                  },
-                ]}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: "Please input your Personal link!",
+                //   },
+                // ]}
               >
                 <Input placeholder="Personal link" />
               </Form.Item>
@@ -181,24 +178,24 @@ const CreateCollectionForm = () => {
               <span className="mediaAndDiscordLinks">
                 <Form.Item
                   name="mediaLink"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your Media link!",
-                    },
-                  ]}
+                  // rules={[
+                  //   {
+                  //     required: true,
+                  //     message: "Please input your Media link!",
+                  //   },
+                  // ]}
                 >
                   <Input placeholder="Medium link" />
                 </Form.Item>
 
                 <Form.Item
                   name="discordLink"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your Discord link!",
-                    },
-                  ]}
+                  // rules={[
+                  //   {
+                  //     required: true,
+                  //     message: "Please input your Discord link!",
+                  //   },
+                  // ]}
                 >
                   <Input placeholder="Discord link" />
                 </Form.Item>
@@ -226,12 +223,12 @@ const CreateCollectionForm = () => {
 
               <Form.Item
                 name="afterPurchaseMessage"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input After purshase message!",
-                  },
-                ]}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: "Please input After purshase message!",
+                //   },
+                // ]}
               >
                 <Input placeholder="After purshase message" />
               </Form.Item>
@@ -316,7 +313,7 @@ const CreateCollectionForm = () => {
                   />
                 </Form.Item>
 
-                <Form.Item
+                {/* <Form.Item
                   label="Active"
                   labelAlign="left"
                   valuePropName="checked"
@@ -326,7 +323,7 @@ const CreateCollectionForm = () => {
                     checked={isActive}
                     onChange={() => setIsActive(!isActive)}
                   />
-                </Form.Item>
+                </Form.Item> */}
               </span>
             </div>
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input, Form, Button, Select, Switch, Upload, Radio } from "antd";
 import { UploadOutlined, InboxOutlined } from "@ant-design/icons";
 import PAGE_HEADER from "../../images/PageHeader.png";
@@ -46,9 +46,9 @@ const CreateCollectionUploadImage = () => {
           openNotification("Success", "Collection created successfully , Lets Add some NFTs to your collection");
           history.push("/createNft");
           setIsLoading(false);
-        } catch (err) {
+        } catch (error) {
           setIsLoading(false);
-          openNotification("Oops", "An Error occured");
+          openNotification("Oops",error?.response?.data?.message);
         }
       } else {
         openNotification("Oops", "Please agree to the terms and conditions");
@@ -57,6 +57,12 @@ const CreateCollectionUploadImage = () => {
       openNotification("Oops", "Please upload all the images");
     }
   };
+
+  useEffect(()=>{
+    if(!formData){
+      history.push('/createCollection')
+    }
+  },[])
 
   return (
     <div className="CreateCollectionUploadImage">

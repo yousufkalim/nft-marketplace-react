@@ -7,14 +7,20 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import "./CollectionNftView.scss";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import useWindowSize from "../../helpers/hooks";
+import { openNotification } from "../../components/Smart/Notification";
 
 
 const CollectionNftView = () => {
   const [exploreData, setExploreData] = useState([]);
   useEffect(() => {
     const fetchExploreData = async () => {
+      try{
       const res = await allCollectionsAPI(0);
       setExploreData(res?.data?.body?.data);
+      }
+      catch(error){
+        openNotification("Oops",error?.response?.data?.message)
+      }
     };
     fetchExploreData();
   }, []);

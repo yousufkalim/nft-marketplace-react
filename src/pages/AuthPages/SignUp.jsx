@@ -33,7 +33,7 @@ const SignUp = () => {
     }
     catch(error){
       setLoading(false);
-      openNotification("Oops","An error occured");
+      openNotification("Oops",error?.response?.data?.message);
 
     }
   };
