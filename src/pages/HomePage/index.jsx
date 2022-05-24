@@ -1,6 +1,7 @@
 import React from "react";
 import BG_IMGAGE from "../../images/HomePageHeader.svg";
 import IMAGE_FOOTER from "../../images/imageFooter.svg";
+import MOBILE_HEADER_IMG from "../../images/mobile_header_img.png";
 import TopHits from "./TopHits";
 import NftCard from "../../components/presentational/Card/Card";
 import Featured from "./Featured";
@@ -8,15 +9,22 @@ import CreateandSellNft from "./CreateandSellNft";
 import NewsLetter from "../../components/presentational/NewsLetter/NewsLetter";
 import { Link } from "react-router-dom";
 import "./index.scss";
-
+import useWindowSize from "../../helpers/hooks";
 
 const HomePage = () => {
+  const [browserWidth] = useWindowSize();
+  console.log("browserWidth", browserWidth);
   return (
     <div className="homePage">
       <div className="subHeader">
         <div
           className="bgImage"
-          style={{ background: `url(${BG_IMGAGE}) no-repeat`,width:'100%' }}
+          style={{
+            background: `url(${
+              browserWidth < 620 ? MOBILE_HEADER_IMG : BG_IMGAGE
+            }) no-repeat`,
+            width: "100%",
+          }}
         >
           <div className="leftSide">
             <span className="leftHeading">
@@ -27,22 +35,32 @@ const HomePage = () => {
               of talented artists from around the world
             </span>
             <span className="btnSection">
-             <Link to='/explore'> <span className="explore">Explore</span></Link>
-             <Link to='/createCollection' ><span className="create">Create</span></Link> 
+              <Link to="/explore" className="link">
+                {" "}
+                <span className="explore">Explore</span>
+              </Link>
+              <Link to="/createCollection" className="link">
+                <span className="create">Create</span>
+              </Link>
             </span>
           </div>
-          <div className="rightSide">
+          {browserWidth > 620 && <div className="rightSide">
             <span className="leftHeading">
               <NftCard showTopPick={true} />
             </span>
-          </div>
+          </div>}
         </div>
         <img src={IMAGE_FOOTER} alt={"IMAGE_FOOTER"} className="footerImage" />
       </div>
+      {browserWidth < 620 && <div className="rightSide">
+            <span className="leftHeading">
+              <NftCard showTopPick={true} />
+            </span>
+          </div>}
       <TopHits />
-      <Featured/>
+      <Featured />
       <CreateandSellNft/>
-      <NewsLetter/>
+      <NewsLetter />
     </div>
   );
 };

@@ -20,6 +20,10 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      @include mobile {
+        top: 10%;
+        width: 100%;
+      }
       .CollectionViewText {
         font-family: "Rubik";
         font-style: normal;
@@ -27,6 +31,13 @@
         font-size: 12px;
         line-height: 35px;
         color: $textColor;
+        @include mobile {
+          line-height: 1.25;
+          font-size: 18px;
+          text-align: center;
+          display: inline-block;
+          width: 100%;
+        }
       }
       .CollectionViewHeading {
         font-family: "Rubik";
@@ -36,6 +47,57 @@
         line-height: 75px;
         text-align: center;
         color: $textColor;
+        @include mobile {
+          line-height: 1.25;
+          font-size: 24px;
+          display: inline-block;
+          width: 100%;
+          text-align: center;
+        }
+      }
+    }
+  }
+  .mobileBannerDetailsWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: -40px;
+    .mobileBannerDetails {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      align-items: center;
+      width: 60%;
+      .values {
+        display: flex;
+        justify-content: space-between;
+        flex-flow: row wrap;
+        align-items: center;
+      }
+      .mobileItemWrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #ffffff;
+        box-shadow: 0px 4px 16px -7px rgba(83, 82, 237, 0.57);
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 15px;
+      }
+      .imageWrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 160px;
+        height: 160px;
+        border-radius: 10px;
+        img {
+          width: 100%;
+          object-fit: contain;
+        }
       }
     }
   }
@@ -81,6 +143,9 @@
     align-items: center;
     width: 100%;
     margin-top: 40px;
+    @include mobile {
+      padding: 0% 5%;
+    }
     .collectionDetails {
       display: flex;
       justify-content: center;
@@ -90,7 +155,9 @@
       box-shadow: 0px 4px 16px -7px rgba(83, 82, 237, 0.57);
       border-radius: 10px;
       padding: 20px;
-  
+      @include mobile {
+        width: 100%;
+      }
     }
   }
   .searchBar {
@@ -101,6 +168,11 @@
     align-items: center;
     padding: 1.2% 5%;
     margin-bottom: 12px;
+    @include mobile {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
     .reset {
       font-family: "Rubik";
       font-style: normal;
@@ -109,13 +181,26 @@
       line-height: 22px;
       color: $GrayColor;
       margin-left: 27px;
+      @include mobile {
+        margin-left: unset;
+        margin-top: 12px;
+      }
     }
     .inputSection {
       display: flex;
       justify-content: flex-start;
       align-items: center;
+      @include mobile {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin-top: 12px;
+      }
       .filterImage {
         margin-left: 27px;
+        @include mobile {
+          display: none;
+        }
       }
       .filterDropdown {
         width: 110px;
@@ -123,9 +208,19 @@
         background: $textColor;
         border-radius: 5px;
         display: flex;
-        justify-content: center;
+        justify-content: space-around;
         align-items: center;
         margin-left: 27px;
+        @include mobile {
+          margin-left: unset;
+          margin-top: 12px;
+        }
+        .downIcon{
+          width: 10px;
+          height: 10px;
+          margin-left: 5px;
+          margin-right: 5px;
+        }
       }
       .searchInput {
         width: 248px;

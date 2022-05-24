@@ -1,46 +1,51 @@
-@import url('https://fonts.googleapis.com/css?family=Patrick+Hand+SC|Roboto&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Patrick+Hand+SC|Roboto&display=swap");
 .App {
-    height: 100vh;
+  height: 100vh;
 }
 body {
-    padding: 0;
-    margin: 0;
-    font-family: 'Rubrick';
-    background: #ffffff;
-    overflow-x: hidden;
+  padding: 0;
+  margin: 0;
+  font-family: "Rubrick";
+  background: #ffffff;
+  overflow-x: hidden;
 }
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 hr {
-    opacity: 0.25;
-    margin-top: 5px;
-    margin-bottom: 5px;
+  opacity: 0.25;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 p {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
-.ant-layout{
-    min-height: 100vh !important;
+.ant-layout {
+  min-height: 100vh !important;
 }
-.ant-layout-content{
-    background: #ffffff;
+.ant-layout-content {
+  background: #ffffff;
 }
 .ant-layout-header {
-    height: unset !important;; 
-    padding: unset !important;
-    color: unset !important;
-    line-height: unset !important;
-    background: unset !important;
+  height: unset !important;
+  padding: unset !important;
+  color: unset !important;
+  line-height: unset !important;
+  background: unset !important;
 }
 .ant-layout-footer {
-    padding: unset !important;
-    color: unset !important;
-    font-size: unset !important;
-    background: unset !important;
+  padding: unset !important;
+  color: unset !important;
+  font-size: unset !important;
+  background: unset !important;
 }
-::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: #566C8E !important;
-  }
+::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: #566c8e !important;
+}
+
+.ant-drawer-header {
+  background: #030e31 !important;
+}

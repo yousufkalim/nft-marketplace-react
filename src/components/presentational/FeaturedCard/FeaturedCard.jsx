@@ -1,10 +1,10 @@
 import React from "react";
 import { Card } from "antd";
 import TEST_ICON from "../../../images/test_footer.svg";
+import TEST_IMG from "../../../images/test_img.png";
 import ORANGE_DOT from "../../../images/orange_dot.svg";
 import ORANGE_FRAME from "../../../images/orange_frame.svg";
 import { Tooltip } from "antd";
-
 import "./FeaturedCard.scss";
 
 const FeaturedCard = ({data}) => {
@@ -17,17 +17,17 @@ const FeaturedCard = ({data}) => {
             <div className="coverImage">
               <img
                 alt="example"
-                src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+                src={data ? data?.image_large_location : TEST_IMG}
               />
             </div>
             <div className="tagImage">
-              <img src={TEST_ICON} alt={"TEST_ICON"} />
+              <img src={data ? data?.image_small_location : TEST_ICON} alt={"TEST_ICON"} />
             </div>
           </div>
           <div className="content">
           <div className="description">
-            <span className="head">Heading</span>
-            <span className="desc">description</span>
+            <span className="head">{data ? data?.store_name : 'test store_name'}</span>
+            <span className="desc">{data ? data?.description_short : 'test description'}</span>
             <span className="StatsSection">
               <span className="avgSection">
                 <img src={ORANGE_DOT} alt={"ORANGE_DOT"} />

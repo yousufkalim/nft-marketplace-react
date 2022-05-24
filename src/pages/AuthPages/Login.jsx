@@ -6,11 +6,13 @@ import { Link } from "react-router-dom";
 import { LoginAPI, SignUpAPI } from "../../services/authServices";
 import { useHistory } from "react-router-dom";
 import { openNotification } from "../../components/Smart/Notification";
+import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import Spin from "../../components/presentational/Spin";
 import Footer from "../../components/Layout/Footer/Footer";
 import "./Login.scss";
 import { useDispatch } from "react-redux";
 import { LoginSuccess, setProfile } from "../../store/auth/authActions";
+import useWindowSize from "../../helpers/hooks";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -39,11 +41,13 @@ const Login = () => {
     console.log("Failed:", errorInfo);
   };
 
+  const [browserWidth]=useWindowSize()
+
   return (
     <>
       <div className="LoginWrapper">
         <div className="LoginPageHeader">
-          <img src={PAGE_HEADER} alt={"PAGE_HEADER"} />
+          <img src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER} alt={"PAGE_HEADER"} />
         </div>
         <div className="loginFormWrapper">
         <div className="loginForm">

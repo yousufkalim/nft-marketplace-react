@@ -14,9 +14,12 @@ const DropZone = ({
   selectedImage,
   imageType,
   imgSrc,
-  isUploading
+  isUploading,
 }) => {
   const { acceptedFiles, getRootProps, getInputProps,isDragActive } = useDropzone({
+    accept: {
+      "image/png": [".png", ".jpg", ".jpeg"],
+    },
     onDrop: (acceptedFiles) =>
       acceptedFiles.map((file) =>
         Object.assign(file, {
@@ -35,6 +38,10 @@ const DropZone = ({
   : imageType === "banner" ?
   {
     heading: "Upload Banner Image",
+  }
+  : imageType === "zip" ?
+  {
+    heading: "Upload Zip File",
   }
   :null;
   

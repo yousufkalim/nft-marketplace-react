@@ -6,6 +6,7 @@ import { allCollectionsAPI } from "../../services/explorePageServices";
 import InfiniteScroll from "react-infinite-scroll-component";
 import "./CollectionNftView.scss";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import useWindowSize from "../../helpers/hooks";
 
 
 const CollectionNftView = () => {
@@ -17,6 +18,22 @@ const CollectionNftView = () => {
     };
     fetchExploreData();
   }, []);
+
+  const filterCollections = (topHits) => {
+    if (topHits?.image_large_location?.includes("https")) {
+      const check = topHits?.image_large_location?.lastIndexOf(".");
+      const extension = topHits?.image_large_location.slice(check);
+      if (extension !== ".svg") {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return false;
+  };
+
+  const [browserWidth]=useWindowSize();
+
   return (
     <>
       <div className="collectionNftViewWrapper">
@@ -47,9 +64,9 @@ const CollectionNftView = () => {
             }
           > */}
             <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
-              {exploreData?.map((item, index) => {
+              {exploreData?.filter(filterCollections)?.map((item, index) => {
                 return (
-                  <Col className="gutter-row" span={8} key={index}>
+                  <Col className="gutter-row" span={browserWidth < 620 ? 24 : 8} key={index}>
                    <Link to={'/nftDetail'} ><ExploreCard data={item} /></Link> 
                   </Col>
                 );

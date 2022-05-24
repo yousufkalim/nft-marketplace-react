@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import PAGE_HEADER from "../../images/PageHeader.png";
 import AUTH_ICON from "../../images/auth_icon.svg";
 import { Input, Form, Button } from "antd";
+import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import Spin from "../../components/presentational/Spin";
 import { openNotification } from "../../components/Smart/Notification";
 import { useSelector } from "react-redux";
 import { ChangePasswordAPI } from "../../services/userServices";
 import "./ChangePassword.scss";
+import useWindowSize from "../../helpers/hooks";
 
 const ChangePassword = () => {
   const [loading, setLoading] = useState(false);
@@ -31,11 +33,14 @@ const ChangePassword = () => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
+  const [browserWidth]=useWindowSize();
+
   return (
     <>
       <div className="ChangePasswordWrapper">
         <div className="ChangePasswordPageHeader">
-          <img src={PAGE_HEADER} alt={"PAGE_HEADER"} />
+          <img src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER} alt={"PAGE_HEADER"} />
         </div>
         <div className="ChangePasswordFormWrapper">
           <div className="ChangePasswordForm">

@@ -1,0 +1,89 @@
+import React, { useState } from "react";
+import { Input, Form, Button, Select, Switch, Upload, Radio } from "antd";
+import { UploadOutlined, InboxOutlined } from "@ant-design/icons";
+import PAGE_HEADER from "../../images/PageHeader.png";
+import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
+import DropZone from "../../components/Smart/DropZone/DropZone";
+import {
+  createCollectionAPI,
+  uploadAPI,
+} from "../../services/createCollectionServices";
+import { useSelector } from "react-redux";
+import { openNotification } from "../../components/Smart/Notification";
+import Spin from "../../components/presentational/Spin";
+import "./UploadNft.scss";
+import ZipDropZone from "../../components/Smart/ZipDropdown/ZipDropZone";
+import { uploadNft } from "../../services/createNftServices";
+import useWindowSize from "../../helpers/hooks";
+
+
+const UploadNft = () => {
+  const [nftFile, setNftFile] = useState("");
+  const [isAgree, setIsAgree] = useState(false);
+  const [loading, setIsLoading] = useState(false);
+
+  const [browserWidth]=useWindowSize()
+
+  const handleSubmit = async () => {
+    if (nftFile?.length) {
+      if (isAgree) {
+        setIsLoading(true);
+        try {
+          const nftFileLocation = await uploadNft(nftFile[0]);
+          openNotification("Success", "Nft created successfully");
+          setIsLoading(false);
+        } catch (err) {
+          setIsLoading(false);
+          openNotification("Oops", "An Error occured");
+        }
+      } else {
+        openNotification("Oops", "Please agree to the terms and conditions");
+      }
+    } else {
+      openNotification("Oops", "Please upload all the images");
+    }
+  };
+
+  return (
+    <div className="UploadNft">
+      <div className="UploadNftHeader">
+        <img src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER} alt={"PAGE_HEADER"} />
+        <div className="UploadNftHeadingSection">
+          <span className="UploadNftText">
+            Become an NFT artist with NFTdepot
+          </span>
+          <span className="UploadNftHeading">Upload Zip</span>
+        </div>
+      </div>
+      <div className="UploadNftUploadImageWrapper">
+        <div className="dropZoneHeader">
+          <div className="uploadForm">
+            <div className="bannerImage">
+              <ZipDropZone
+                selectedImage={nftFile}
+                setSelectedImage={setNftFile}
+                imageType="zip"
+              />
+            </div>
+            <div className="agreeSection">
+              <Radio
+                checked={isAgree}
+                onClick={() => setIsAgree((prev) => !prev)}
+              />
+              <div className="agree">
+                I agree to the{" "}
+                <span className="termConditions">Terms and Conditions</span> and{" "}
+                <span className="termConditions">Privacy Policy</span>
+              </div>
+            </div>
+            <div className="submitBtn" onClick={handleSubmit}>
+              {loading ? <span><Spin /></span> : <span className="submit">Submit</span>}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default UploadNft;

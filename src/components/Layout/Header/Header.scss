@@ -14,48 +14,77 @@
   align-items: center;
   z-index: 10;
   padding: 0% 5%;
-  .logo{
-    // margin-left: 250px;
+  @include mobile {
+    height:55px;
   }
-  .tabs{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      // margin-right: 250px;
-      .centerTabs{
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        h3{
-          font-family: 'Lato';
-          font-style: normal;
-          font-weight: 700;
-          font-size: 14px;
-          line-height: 17px;
-          text-transform: capitalize;
-          color: $textColor;
-          padding-left: 22px;    
-  
-          
-        }
-        
+  .logo {
+    // margin-left: 250px;
+    @include mobile{
+      width: 20px;
     }
-      .icons{
-          padding-left: 60px;
-          display: flex;
-          justify-content: space-around;
-          align-items: center;
-          .headerIcons{
-            width: 36px;
-            height: 36px;
-            background: $textColor;
-            border-radius: 5px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-left: 10px;
-          }
+  }
+  .tabs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    // margin-right: 250px;
+    .centerTabs {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      @include mobile{
+        display: none;
       }
+      h3 {
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 17px;
+        text-transform: capitalize;
+        color: $textColor;
+        padding-left: 22px;
+      }
+    }
+    .icons {
+      padding-left: 60px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      .headerIcons {
+        width: 36px;
+        height: 36px;
+        background: $textColor;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 10px;
+        cursor: pointer;
+        @include mobile{
+          width: 25px;
+          height: 25px;
+        }
+      }
+      .toggleIcon {
+        margin-right: 10px;
+        cursor: pointer;
+      }
+      .searchSection {
+        width: 140px;
+        height: 36px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 10px;
+        // .ant-btn{
+        //   border-color: unset;
+        // }
+        @include mobile{
+          display: none;
+        }
+      }
+    }
   }
 }
-

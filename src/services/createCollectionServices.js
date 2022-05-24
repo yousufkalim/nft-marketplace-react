@@ -38,7 +38,7 @@ export const codesAPI = async (codes) => {
 };
 
 export const getImageUrl = async (url) => {
-  return await axios.get(`${url}`, apiConfig);
+  return await axios.get(`${url}`);
 };
 
 export const checkStroeNameAvailability = async (storeName) => {

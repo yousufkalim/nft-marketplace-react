@@ -4,13 +4,12 @@ import FRAME_ICON from "../../../images/frame.svg";
 import EYE_ICON from "../../../images/eye_icon.svg";
 import TEST_ICON from "../../../images/test_footer.svg";
 import ORANGE_FRAME from "../../../images/orange_frame.svg";
-
 import { Tooltip } from "antd";
 import "./ExploreCard.scss";
 
 const { Meta } = Card;
 
-const ExploreCard = () => {
+const ExploreCard = ({data}) => {
   return (
     <div className="ExploreCard">
       <Card
@@ -20,7 +19,7 @@ const ExploreCard = () => {
             <span className="ExploreCardImage" >
             <img
               alt="example"
-              src="https://nftdepotblob.blob.core.windows.net/images/first/smh5bgbtfb6acg5i7x2mwnu5x25p3tqyb.PNG"
+              src={data?.image_large_location}
              
             />
             </span>
@@ -32,12 +31,12 @@ const ExploreCard = () => {
 
             <span
               className="footer"
-              style={{ background: `url(${TEST_ICON}) no-repeat` }}
+              style={{ background: `url(${data?.image_small_location}) no-repeat` }}
             ></span>
           </span>
         }
       >
-        <Meta title="Europe Street beat" description="www.instagram.com" />
+        <Meta title={data?.store_name} description={data?.description_short} />
         <div className="exploreCardFooter">
             <span className="priceHeading">Price <span className="priceHeading">$$ ETH</span></span>
             <span className="rightSection" >

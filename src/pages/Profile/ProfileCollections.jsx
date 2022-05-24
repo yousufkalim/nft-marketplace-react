@@ -7,6 +7,8 @@ import { allCollectionsAPI } from "../../services/explorePageServices";
 import InfiniteScroll from "react-infinite-scroll-component";
 import "./ProfileCollections.scss";
 import FeaturedCard from "../../components/presentational/FeaturedCard/FeaturedCard";
+import useWindowSize from "../../helpers/hooks";
+import ProfileCollectionsFlicker from "./ProfileCollectionsFlicker";
 
 const ProfileCollections = () => {
   const [exploreData, setExploreData] = useState([]);
@@ -17,6 +19,7 @@ const ProfileCollections = () => {
   };
   fetchExploreData();
   }, []);
+  const [browserWidth]=useWindowSize()
   return (
     <>
       <div className="ProfileCollectionWrapper">
@@ -42,6 +45,11 @@ const ProfileCollections = () => {
             <span className="value" >0</span>
           </div>
         </div>
+        {browserWidth < 620 && (
+          <ProfileCollectionsFlicker/>
+        )
+
+        }
 
         <div className="ProfileCollectioncardGrid">
           {/* <InfiniteScroll
@@ -72,7 +80,7 @@ const ProfileCollections = () => {
             <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
               {exploreData?.map((item, index) => {
                 return (
-                  <Col className="gutter-row" span={12} key={index}>
+                  <Col className="gutter-row" span={browserWidth < 620 ? 24 : 12} key={index}>
                     <FeaturedCard />
                   </Col>
                 );

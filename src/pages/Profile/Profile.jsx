@@ -1,18 +1,21 @@
 import React from "react";
 import PAGE_HEADER from "../../images/PageHeader.png";
+import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import { Input, Form, Button, Col, Row } from "antd";
 import Spin from "../../components/presentational/Spin";
 import { Link } from "react-router-dom";
 import "./Profile.scss";
 import ProfileCard from "../../components/presentational/ProfileCard/ProfieCard";
 import ProfileCollections from "./ProfileCollections";
+import useWindowSize from "../../helpers/hooks";
 
 const Profile = () => {
+  const [browserWidth]=useWindowSize();
   return (
     <>
       <div className="ProfileWrapper">
         <div className="ProfileHeader">
-          <img src={PAGE_HEADER} alt={"PAGE_HEADER"} />
+          <img src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER} alt={"PAGE_HEADER"} />
         </div>
         <div className="userData">
           <div className="profileCard">

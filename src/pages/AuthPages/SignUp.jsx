@@ -4,10 +4,12 @@ import AUTH_ICON from "../../images/auth_icon.svg";
 import { Input, Form, Button } from "antd";
 import { Link } from "react-router-dom";
 import { SignUpAPI } from "../../services/authServices";
+import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import "./SignUp.scss";
 import { useHistory } from "react-router-dom";
 import { openNotification } from "../../components/Smart/Notification";
 import Spin from "../../components/presentational/Spin";
+import useWindowSize from "../../helpers/hooks";
 
 
 const SignUp = () => {
@@ -53,11 +55,13 @@ const SignUp = () => {
   //   </Form.Item>
   // );
 
+  const [browserWidth]=useWindowSize()
+
   return (
     <>
       <div className="signUpWrapper">
         <div className="SignUpPageHeader">
-          <img src={PAGE_HEADER} alt={"PAGE_HEADER"} />
+          <img src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER} alt={"PAGE_HEADER"} />
         </div>
         <div className="registerFormWrapper">
         <div className="registerForm">

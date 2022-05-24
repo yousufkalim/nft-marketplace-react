@@ -3,18 +3,20 @@ import FeaturedCard from "../../components/presentational/FeaturedCard/FeaturedC
 import PAGE_HEADER_IMG from "../../images/PageHeader.png";
 import FILTER_IMG from "../../images/filter_icon.svg";
 import RIGHT_ARROW from "../../images/right_arrow.svg";
-
+import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import NewsLetter from "../../components/presentational/NewsLetter/NewsLetter";
-import { Row, Col, AutoComplete, Input, Menu, Dropdown, Space } from "antd";
+import { Row, Col, AutoComplete, Input, Menu, Dropdown, Space, Carousel } from "antd";
 import { UserOutlined, DownOutlined, SearchOutlined } from "@ant-design/icons";
 import "./NftDetail.scss";
 import NftLeftSection from "./NftLeftSection";
 import NftRightSection from "./NftRightSection";
 import DetailSection from "./DetailSection";
 import { Link } from "react-router-dom";
+import useWindowSize from "../../helpers/hooks";
 // import DetailSection from "./DetailSection";
 
 const NftDetails = () => {
+  const arr=[1,2,3,4,5,6]
   const renderTitle = (title) => (
     <span>
       {title}
@@ -91,45 +93,54 @@ const NftDetails = () => {
     />
   );
 
+  const [browserWidth] = useWindowSize();
+
   return (
     <div className="NftDetailPageWrapper">
       <div className="CollectionPageHeader">
-        <img src={PAGE_HEADER_IMG} alt={"PAGE_HEADER_IMG"} />
+        <img
+          src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER_IMG}
+          alt={"PAGE_HEADER_IMG"}
+        />
       </div>
       <div className="selectedCollection">
         <div className="CollectionDetailsSubHeader">
           <NftLeftSection />
           <NftRightSection />
         </div>
-      <DetailSection/>
+        <DetailSection />
       </div>
-      <div className="resultCardsGrid"> 
+      <div className="resultCardsGrid">
         <div className="heading">
           <span className="seeMore">More from this collection</span>
-          <span ><span className="view" >View all</span> <Link to={'/collectionView'} ><img src={RIGHT_ARROW} alt="RIGHT_ARROW" /></Link> </span>
+          <span>
+            <span className="view">View all</span>{" "}
+            <Link to={"/collectionView"}>
+              <img src={RIGHT_ARROW} alt="RIGHT_ARROW" />
+            </Link>{" "}
+          </span>
         </div>
-        <div className="cardGrid">
-          <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }} >
-            <Col className="gutter-row" span={12}>
-               <FeaturedCard />
-            </Col>
-            <Col className="gutter-row" span={12}>
-              <FeaturedCard />
-            </Col>
-            <Col className="gutter-row" span={12}>
-              <FeaturedCard />
-            </Col>
-            <Col className="gutter-row" span={12}>
-              <FeaturedCard />
-            </Col>
-            <Col className="gutter-row" span={12}>
-              <FeaturedCard />
-            </Col>
-            <Col className="gutter-row" span={12}>
-              <FeaturedCard />
-            </Col>
-          </Row>
-        </div>
+        {browserWidth < 620 ? (
+           <Carousel  dotPosition={"bottom"}>
+            {arr.map(() => {
+                return (
+                    <FeaturedCard />
+                );
+              })}
+         </Carousel>
+        ) : (
+          <div className="cardGrid">
+            <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
+              {arr.map(() => {
+                return (
+                  <Col className="gutter-row" span={12}>
+                    <FeaturedCard />
+                  </Col>
+                );
+              })}
+            </Row>
+          </div>
+        )}
       </div>
       <NewsLetter />
     </div>

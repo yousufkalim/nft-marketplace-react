@@ -65,6 +65,9 @@
         font-size: 40px;
         line-height: 75px;
         color: $CreateBtnBg;
+        @include mobile{
+          font-size: 20px;
+        }
       }
       .view{
         font-family: 'Rubik';
@@ -90,10 +93,16 @@
     padding: 0% 5%;
     display: flex;
     flex-direction: column;
+    @include mobile{
+      margin-top: 50px;
+    }
     .CollectionDetailsSubHeader {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      @include mobile{
+        flex-direction: column;
+      }
     }
     .searchedCard {
     }
@@ -105,5 +114,21 @@
       width: 100%;
       height: inherit;
     }
+  }
+  .ant-carousel .slick-dots {
+    position: unset;
+  }
+  .ant-carousel .slick-dots li button {
+    background: #c4c4c4;
+    border-radius: 21px;
+    margin-top: 20px;
+    position: unset !important;
+  }
+  .ant-carousel .slick-dots li.slick-active button {
+    background: #f37342 !important;
+    border-radius: 21px;
+  }
+  .ant-carousel {
+    padding: 0% 5%;
   }
 }

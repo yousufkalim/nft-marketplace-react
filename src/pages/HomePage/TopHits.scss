@@ -2,6 +2,9 @@
 @import "../../styles/mixins.scss";
 
 .TopHits {
+  @include mobile {
+    margin-top: 50px;
+  }
   .cardGrid {
     margin-top: 20px;
     // margin-left: 257px;
@@ -12,6 +15,9 @@
     justify-content: space-around;
     .ant-col {
       margin-top: 30px !important;
+    }
+    @include mobile {
+      display: none;
     }
   }
   .heading {
@@ -29,6 +35,11 @@
       font-size: 50px;
       line-height: 75px;
       color: $TopHitsHeadingColor;
+      @include mobile {
+        font-size: 34px;
+        text-align: center;
+        line-height: 1.25;
+      }
     }
     .discover {
       font-family: "Rubik";
@@ -36,8 +47,26 @@
       font-weight: 400;
       font-size: 20px;
       line-height: 35px;
-      color:$TopHitsHeadingColor; 
+      color: $TopHitsHeadingColor;
       padding-right: 12px;
     }
+
+   
+  }
+  .ant-carousel .slick-dots {
+    position: unset;
+  }
+  .ant-carousel .slick-dots li button {
+    background: #c4c4c4;
+    border-radius: 21px;
+    margin-top: 20px;
+    position: unset !important;
+  }
+  .ant-carousel .slick-dots li.slick-active button {
+    background: #f37342 !important;
+    border-radius: 21px;
+  }
+  .ant-carousel {
+    padding: 0% 5%;
   }
 }

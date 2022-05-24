@@ -10,10 +10,16 @@
       padding-top: 40px;
       border-top: 1px dashed rgba(48, 53, 73, 0.25);
       margin-top: 30px;
+      @include mobile{
+        flex-direction: column;
+      }
       .leftSide {
         display: flex;
         flex-direction: column;
         width: 48%;
+        @include mobile{
+          width: 100%;
+        }
         .aboutUser {
           font-family: "Rubik";
           font-style: normal;
@@ -35,6 +41,10 @@
     }
     .details {
       width: 48%;
+      @include mobile{
+        width: 100%;
+        margin-top: 30px;
+      }
       .heading {
         font-family: "Rubik";
         font-style: normal;
@@ -79,11 +89,20 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
+      @include mobile{
+        flex-direction: column;
+      }
       .chartContainer {
         width: 48%;
+        @include mobile{
+          width: 100%;
+        }
       }
       .offers {
         width: 48%;
+        @include mobile{
+          width: 100%;
+        }
       }
     }
     .searchedCard {

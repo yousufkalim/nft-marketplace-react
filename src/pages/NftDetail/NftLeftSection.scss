@@ -7,6 +7,9 @@
     justify-content: space-around;
     align-items: flex-start;
     width: 30%;
+    @include mobile{
+      width: 100%;
+    }
     .searchedCard{
       width: 100%;
     }

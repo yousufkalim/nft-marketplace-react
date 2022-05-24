@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import PAGE_HEADER from "../../images/PageHeader.png";
 import AUTH_ICON from "../../images/auth_icon.svg";
+import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import { Input, Form, Button } from "antd";
 import { ForgotPasswordAPI } from "../../services/authServices";
 import Spin from "../../components/presentational/Spin";
 import { openNotification } from "../../components/Smart/Notification";
 import "./ForgotPassword.scss";
+import useWindowSize from "../../helpers/hooks";
 
 const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
@@ -31,11 +33,12 @@ const ForgotPassword = () => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+  const [browserWidth]=useWindowSize();
   return (
     <>
       <div className="ForgotPasswordWrapper">
         <div className="ForgotPasswordPageHeader">
-          <img src={PAGE_HEADER} alt={"PAGE_HEADER"} />
+          <img src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER} alt={"PAGE_HEADER"} />
         </div>
         <div className="ForgotPasswordFormWrapper" >
         <div className="ForgotPasswordForm">

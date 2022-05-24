@@ -18,6 +18,10 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      @include mobile {
+        top: 10%;
+        width: 100%;
+      }
       .CreateCollectionText {
         font-family: "Rubik";
         font-style: normal;
@@ -25,6 +29,13 @@
         font-size: 20px;
         line-height: 35px;
         color: $textColor;
+        @include mobile {
+          line-height: 1.25;
+          font-size: 18px;
+          text-align: center;
+          display: inline-block;
+          width: 100%;
+        }
       }
       .CreateCollectionHeading {
         font-family: "Rubik";
@@ -34,6 +45,13 @@
         line-height: 75px;
         text-align: center;
         color: $textColor;
+        @include mobile {
+          line-height: 1.25;
+          font-size: 24px;
+          display: inline-block;
+          width: 100%;
+          text-align: center;
+        }
       }
     }
   }

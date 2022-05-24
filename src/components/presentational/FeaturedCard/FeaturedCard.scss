@@ -15,12 +15,12 @@
   .cardContent {
     position: relative;
     display: flex;
-    .content{
-    display:flex;
-    justify-content:space-between;
-    width:100%;
-    padding: 30px;
-    // padding-top: 10px;
+    .content {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 30px;
+      // padding-top: 10px;
     }
     .coverImageWrapper {
       position: relative;
@@ -41,6 +41,7 @@
         width: 54px;
         height: 54px;
         img {
+          border-radius: 50%;
           object-fit: contain;
           width: inherit;
           height: inherit;

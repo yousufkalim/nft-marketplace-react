@@ -1,47 +1,152 @@
-import React from 'react'
-import HEADER_LOGO from '../../../images/headerLogo.svg';
-import BELL_ICON from '../../../images/bell_icon.svg';
-import PROFILE_ICON from '../../../images/profile_icon.svg';
-import SEARCH_ICON from '../../../images/search_icon.svg';
+import React, { useState } from "react";
+import HEADER_LOGO from "../../../images/headerLogo.svg";
+import BELL_ICON from "../../../images/bell_icon.svg";
+import PROFILE_ICON from "../../../images/profile_icon.svg";
+import SEARCH_ICON from "../../../images/search_icon.svg";
+import TOGGLE_ICON from "../../../images/toggle_icon.png";
 
+import { Link } from "react-router-dom";
+import { AutoComplete, Drawer, message, Tooltip, Dropdown, Menu } from "antd";
+import { searchApi } from "../../../services/searchServices";
+import useWindowSize from "../../../helpers/hooks";
+import "./Header.scss";
+import { useDispatch } from "react-redux";
+import { Logout } from "../../../store/auth/authActions";
 
-
-
-import './Header.scss';
-import { Link } from 'react-router-dom';
+const { Option } = AutoComplete;
 
 const AppHeader = () => {
+  const [collections, setCollections] = useState([]);
+  const [browserWidth] = useWindowSize();
+  const [visible, setVisible] = useState(false);
+
+  const dispatch=useDispatch();
+
+  const handleSearch = async (value) => {
+    if (value) {
+      let collections = await searchApi(value);
+      setCollections(collections?.data?.body);
+    }
+  };
+
+  const onSelect = (data) => {
+    console.log("onSelect", data);
+  };
+
+  const showDrawer = () => {
+    setVisible(true);
+  };
+
+  const onClose = () => {
+    setVisible(false);
+  };
+
+  const menu = (
+    <Menu
+      items={[
+        {
+          key: "1",
+          label: <Link to={"/profile"}>My Profile</Link>,
+        },
+        {
+          key: "2",
+          label: <span onClick={()=>dispatch(Logout())}>Logout</span>,
+        },
+      ]}
+    />
+  );
+
   return (
-    <div className='header'>
-        <div className='logo'>
-            <Link to='/'>
-            <img  src={HEADER_LOGO} alt={'HEADER_LOGO'} />
+    <div className="header">
+      <div className="logo">
+        <Link to="/">
+          <img src={HEADER_LOGO} alt={"HEADER_LOGO"} />
+        </Link>
+      </div>
+      <div className="tabs">
+        <div className="centerTabs">
+          <Link to={"/explore"}>
+            <h3>Explore</h3>
+          </Link>
+          {/* <h3>Stats</h3> */}
+          {/* <h3>Resource</h3> */}
+          <Link to={"/createCollection"}>
+            <h3>Create</h3>
+          </Link>
+        </div>
+        <div className="icons">
+          {browserWidth < 620 && (
+            <span
+              className="toggleIcon"
+              onClick={() => setVisible((prev) => !prev)}
+            >
+              <img src={TOGGLE_ICON} alt={"PROFILE_ICON"} />
+            </span>
+          )}
+          <Tooltip
+            placement={"bottomLeft"}
+            color={"transparent"}
+            trigger={"click"}
+            title={
+              <AutoComplete
+                style={{
+                  width: 200,
+                }}
+                onSelect={(e) => onSelect(e)}
+                onSearch={handleSearch}
+                placeholder="Search here"
+              >
+                {collections?.length ? (
+                  collections?.map((location) => (
+                    <Option key={location.guid} value={location.store_name}>
+                      {location.store_name}
+                    </Option>
+                  ))
+                ) : (
+                  <Option key={1} value={"No Collections Found"}>
+                    No Collections Found
+                  </Option>
+                )}
+              </AutoComplete>
+            }
+          >
+            <span className="headerIcons">
+              <img src={SEARCH_ICON} alt={"SEARCH_ICON"} />
+            </span>
+          </Tooltip>
+          <span className="headerIcons">
+            <img src={BELL_ICON} alt={"BELL_ICON"} />
+          </span>
+          <Dropdown overlay={menu} placement="bottomLeft" arrow>
+            <span className="headerIcons">
+                <img src={PROFILE_ICON} alt={"PROFILE_ICON"} />
+            </span>
+          </Dropdown>
+        </div>
+      </div>
+      <Drawer
+        title={
+          <div onClick={onClose}>
+            <Link to="/">
+              <img src={HEADER_LOGO} alt={"HEADER_LOGO"} />
             </Link>
-        </div>
-        <div className='tabs'>
-        <div className='centerTabs'>
-            <Link to={'/explore'} ><h3>Explore</h3></Link>
-            {/* <h3>Stats</h3> */}
-            {/* <h3>Resource</h3> */}
-            <Link to={'createCollection'}><h3>Create</h3></Link>
-
-
-        </div>
-        <div className='icons'>
-            <span className='headerIcons'>
-                <img src={SEARCH_ICON} alt={'SEARCH_ICON'} />
-            </span>
-            <span className='headerIcons'>
-                <img src={BELL_ICON} alt={'BELL_ICON'} />
-            </span>
-            <span className='headerIcons'>
-                <Link to={'/profile'} ><img src={PROFILE_ICON} alt={'PROFILE_ICON'} /></Link>
-            </span>
-
-        </div>
-        </div>
+          </div>
+        }
+        placement={"right"}
+        closable={false}
+        onClose={onClose}
+        visible={visible}
+        key={"right"}
+      >
+        <Link to={"/explore"}>
+          <h2 onClick={onClose}>Explore</h2>
+        </Link>
+        <Link to={"/createNft"}>
+          <h2 onClick={onClose}>Create</h2>
+        </Link>
+      </Drawer>
     </div>
-  )
-}
+  );
+};
 
-export default AppHeader
+export default AppHeader;

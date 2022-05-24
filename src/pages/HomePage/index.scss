@@ -15,12 +15,20 @@
       align-items: center;
       background-size:cover !important;
       padding: 0% 5%;
+      @include mobile{
+        flex-direction: column;
+        height: auto;
+        padding: 5% 5%;
+      }
       .leftSide {
         width: 48%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         // margin-left: 250px;
+        @include mobile{
+          width:100%
+        }
         .leftHeading {
           font-family: "Rubik";
           font-style: normal;
@@ -28,6 +36,12 @@
           font-size: 64px;
           line-height: 75px;
           color: $textColor;
+          @include mobile{
+            font-size: 34px;
+            text-align: center;
+            line-height: 1.25;
+            margin-top: 20%;
+          }
         }
         .leftSubHeading {
           font-family: "Rubik";
@@ -36,16 +50,23 @@
           font-size: 20px;
           line-height: 35px;
           color: $textColor;
+          @include mobile{
+            display: none;
+          }
         }
-      }
-      .rightSide {
-        // margin-right: 25
-        width: 32%;
       }
       .btnSection {
         display: flex;
         align-items: center;
         margin-top: 22px;
+        @include mobile{
+          width: 100%;
+        }
+        .link{
+          @include mobile{
+            width: 48%;
+          }
+        }
         .explore {
           width: 250px;
           height: 75px;
@@ -61,6 +82,11 @@
           line-height: 28px;
           text-transform: capitalize;
           color: $textColor;
+          @include mobile{
+            width: 100%;
+            padding: 15px;
+            height: unset;
+          }
         }
         .create {
           width: 250px;
@@ -78,6 +104,11 @@
           text-transform: capitalize;
           color: $CreateBtnBg;
           margin-left: 12px;
+          @include mobile{
+            width: 100%;
+            padding: 15px;
+            height: unset;
+          }
         }
       }
     }
@@ -85,6 +116,14 @@
       margin-top: -19px;
       width: 100%;
       height: auto;
+    }
+  }
+  .rightSide {
+    // margin-right: 25
+    width: 32%;
+    @include mobile{
+      width:100%;
+      padding: 0 5%;
     }
   }
 }

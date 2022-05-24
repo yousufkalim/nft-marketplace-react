@@ -18,13 +18,24 @@
         width: 70%;
         padding: 0% 5%;
         margin-top: -180px;
+        @include mobile{
+          margin-top: 10px;
+          flex-direction: column;
+          width: 100%;
+        }
         .profileCard{
           width: 40%;
+          @include mobile{
+            width: 100%;
+          }
         }
     }
     .profilecardFotterSection {
       margin-top: 30px;
       width: 50%;
+      @include mobile{
+        width: 100%;
+      }
       .unsetBorder{
           border-bottom: unset !important;
       }

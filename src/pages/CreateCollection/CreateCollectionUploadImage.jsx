@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Input, Form, Button, Select, Switch, Upload, Radio } from "antd";
 import { UploadOutlined, InboxOutlined } from "@ant-design/icons";
 import PAGE_HEADER from "../../images/PageHeader.png";
+import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import DropZone from "../../components/Smart/DropZone/DropZone";
 import {
   createCollectionAPI,
@@ -11,6 +12,8 @@ import { useSelector } from "react-redux";
 import { openNotification } from "../../components/Smart/Notification";
 import "./CreateCollectionUploadImage.scss";
 import Spin from "../../components/presentational/Spin";
+import useWindowSize from "../../helpers/hooks";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const CreateCollectionUploadImage = () => {
   const [smallImage, setSmallImage] = useState("");
@@ -18,6 +21,8 @@ const CreateCollectionUploadImage = () => {
   const [bannerImage, setBannerImage] = useState("");
   const [isAgree, setIsAgree] = useState(false);
   const [loading, setIsLoading] = useState(false);
+  const [browserWidth]=useWindowSize();
+  const history=useHistory()
 
   const formData = useSelector((state) => state?.collectionData?.data);
 
@@ -38,7 +43,8 @@ const CreateCollectionUploadImage = () => {
           };
           const res = await createCollectionAPI(data);
           console.log("res", res);
-          openNotification("Success", "Collection created successfully");
+          openNotification("Success", "Collection created successfully , Lets Add some NFTs to your collection");
+          history.push("/createNft");
           setIsLoading(false);
         } catch (err) {
           setIsLoading(false);
@@ -55,7 +61,7 @@ const CreateCollectionUploadImage = () => {
   return (
     <div className="CreateCollectionUploadImage">
       <div className="CreateCollectionHeader">
-        <img src={PAGE_HEADER} alt={"PAGE_HEADER"} />
+        <img src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER} alt={"PAGE_HEADER"} />
         <div className="CreateCollectionHeadingSection">
           <span className="CreateCollectionText">
             Become an NFT artist with NFTdepot
@@ -68,7 +74,7 @@ const CreateCollectionUploadImage = () => {
           <div className="step2Header">
             <span className="step2">Step 2</span>
             <span className="desc">Upload Media</span>
-            <span className="desc2">Accepted file formats: JPG, PNG, SVG</span>
+            <span className="desc2">Accepted file formats: JPG, JPEG,PNG</span>
           </div>
           <div className="uploadForm">
             <div className="collectionImages">
@@ -106,7 +112,13 @@ const CreateCollectionUploadImage = () => {
               </div>
             </div>
             <div className="submitBtn" onClick={handleSubmit}>
-              {loading ? <span><Spin /></span> : <span className="submit">Submit</span>}
+              {loading ? (
+                <span>
+                  <Spin />
+                </span>
+              ) : (
+                <span className="submit">Submit</span>
+              )}
             </div>
           </div>
         </div>

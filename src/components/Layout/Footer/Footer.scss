@@ -35,9 +35,13 @@
       line-height: 22px;
       text-align: center;
       color: $textColor;
-      width: 418px;
+      width: 70%;
+      text-align: center;
       flex-flow: row wrap;
       // margin-top: 16px;
+      @include mobile{
+        width: 100%;
+      }
     }
     .socialIcons {
       display: flex;

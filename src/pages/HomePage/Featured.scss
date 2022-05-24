@@ -2,9 +2,13 @@
 @import "../../styles/mixins.scss";
 
 .featured {
-  height: 961px;
+  height: auto;
+  padding: 5% 0%;
   background: $FeaturedBg;
   margin-top: 180px;
+  @include mobile{
+    margin-top: 50px;
+  }
   .cardGrid {
     margin-top: 20px;
     padding: 0% 5%;
@@ -12,6 +16,9 @@
     // margin-right: 237px;
     .ant-col {
       margin-top: 30px !important;
+    }
+    @include mobile{
+      display: none;
     }
   }
   .heading {
@@ -36,5 +43,22 @@
       color: $TopHitsHeadingColor;
       padding-right: 12px;
     }
+  }
+  .ant-carousel .slick-dots {
+    position: unset;
+  }
+  .ant-carousel .slick-dots li button  {
+    background: #c4c4c4;
+    border-radius: 21px;
+    margin-top: 20px;
+    position: unset !important;
+   
+  }
+  .ant-carousel .slick-dots li.slick-active button {
+    background: #f37342 !important;
+    border-radius: 21px;
+  }
+  .ant-carousel{
+    padding: 0% 5%;
   }
 }

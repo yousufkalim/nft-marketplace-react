@@ -4,6 +4,9 @@
 .NftrightSectionWrapper {
   margin-top: 60px;
   width: 65%;
+  @include mobile{
+    width:100%
+  }
   .RightHeader {
     display: flex;
     flex-direction: column;

@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import FeaturedCard from "../../components/presentational/FeaturedCard/FeaturedCard";
 import PAGE_HEADER_IMG from "../../images/collection_detail_header.svg";
 import FILTER_IMG from "../../images/filter_icon.svg";
@@ -9,83 +9,26 @@ import { Row, Col, AutoComplete, Input, Menu, Dropdown, Space } from "antd";
 import { UserOutlined, DownOutlined, SearchOutlined } from "@ant-design/icons";
 
 import "./CollectionDetails.scss";
+import { collectionDetailsApi } from "../../services/collectionServices";
 
-const CollectionDetails = () => {
-  const renderTitle = (title) => (
-    <span>
-      {title}
-      <a
-        style={{
-          float: "right",
-        }}
-        href="https://www.google.com/search?q=antd"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        more
-      </a>
-    </span>
-  );
+const CollectionDetails = ({match}) => {
 
-  const renderItem = (title, count) => ({
-    value: title,
-    label: (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        {title}
-        <span>
-          <UserOutlined /> {count}
-        </span>
-      </div>
-    ),
-  });
+  const [colectionDetails,setCollectionsDetails]=useState([]);
 
-  const options = [
-    {
-      label: renderTitle("Libraries"),
-      options: [
-        renderItem("AntDesign", 10000),
-        renderItem("AntDesign UI", 10600),
-      ],
-    },
-    {
-      label: renderTitle("Solutions"),
-      options: [
-        renderItem("AntDesign UI FAQ", 60100),
-        renderItem("AntDesign FAQ", 30010),
-      ],
-    },
-    {
-      label: renderTitle("Articles"),
-      options: [renderItem("AntDesign design language", 100000)],
-    },
-  ];
+  useEffect(()=>{
+    const getCollectionDetails = async () => {
+      try{
+      const res=await collectionDetailsApi(match.params.id);
+      setCollectionsDetails(res?.data?.body);
+      }catch(err){
+      console.log("err",err);
+      }
+    }
+    getCollectionDetails();
+  },[])
 
-  const menu = (
-    <Menu
-      items={[
-        {
-          label: <a href="https://www.antgroup.com">1st menu item</a>,
-          key: "0",
-        },
-        {
-          label: <a href="https://www.aliyun.com">2nd menu item</a>,
-          key: "1",
-        },
-        {
-          type: "divider",
-        },
-        {
-          label: "3rd menu item",
-          key: "3",
-        },
-      ]}
-    />
-  );
+
+  console.log("test",colectionDetails);
 
   return (
     <div className="CollectionPageWrapper">
@@ -94,30 +37,17 @@ const CollectionDetails = () => {
       </div>
       <div className="selectedCollection">
         <div className="CollectionDetailsSubHeader">
-          <LeftSection />
-          <RightSection />
+          <LeftSection data={colectionDetails} />
+          <RightSection data={colectionDetails}  />
         </div>
       </div>
       <div className="searchBar">
         <div className="inputSection">
           <div className="searchInput">
-            <AutoComplete
-              dropdownClassName="certain-category-search-dropdown"
-              dropdownMatchSelectWidth={500}
-              style={{
-                width: "100%",
-              }}
-              options={options}
-            >
-              <Input
-                suffix={<SearchOutlined />}
-                size="large"
-                placeholder="input here"
-              />
-            </AutoComplete>
+           <Input/>
           </div>
           <div className="filterDropdown">
-            <Dropdown overlay={menu} trigger={["click"]}>
+            <Dropdown overlay={''} trigger={["click"]}>
               <a onClick={(e) => e.preventDefault()}>
                 <span>
                   Click me

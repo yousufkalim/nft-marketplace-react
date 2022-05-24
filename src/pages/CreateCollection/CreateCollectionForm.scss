@@ -35,8 +35,14 @@
       justify-content: space-between;
       align-items: center;
       flex-flow: row wrap;
+      @include mobile{
+        flex-direction: column;
+      }
       .mediaAndDiscordLinks {
         width: 48%;
+        @include mobile{
+          width: 100%;
+        }
         .ant-form-item {
           width: 100%;
         }
@@ -45,16 +51,26 @@
         display: flex;
         justify-content: space-around;
         align-items: flex-start;
+        @include mobile{
+          width: 100%;
+          justify-content: space-between;
+        }
         .firstSwitch {
           margin-left: unset !important;
         }
         .ant-form-item {
           width: unset !important;
           margin-left: 14px;
+          @include mobile{
+            margin-left: unset;
+          }
         }
       }
       .ant-form-item {
         width: 48%;
+        @include mobile{
+          width: 100%;
+        }
       }
       .ant-input-group-addon {
         background: $InputBg !important;

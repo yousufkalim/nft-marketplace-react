@@ -19,6 +19,9 @@
     align-items: center;
     margin-top: 60px;
     padding: 0% 5%;
+    @include mobile{
+      display: none;
+    }
     .filterItem {
       .highlighted {
         background: $OrangeShadeColor;
