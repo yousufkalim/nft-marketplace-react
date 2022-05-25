@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Card } from "antd";
 import FRAME_ICON from "../../../images/frame.svg";
 import TEST_IMG from "../../../images/test_img.png";
@@ -6,7 +6,6 @@ import TEST_IMG from "../../../images/test_img.png";
 import TEST_ICON from "../../../images/test_footer.svg";
 import { Tooltip } from "antd";
 import "./Card.scss";
-import { getImageUrl } from "../../../services/createCollectionServices";
 import { Link } from "react-router-dom";
 
 const { Meta } = Card;

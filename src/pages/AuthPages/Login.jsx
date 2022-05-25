@@ -3,12 +3,10 @@ import PAGE_HEADER from "../../images/PageHeader.png";
 import AUTH_ICON from "../../images/auth_icon.svg";
 import { Input, Form, Button, Checkbox } from "antd";
 import { Link } from "react-router-dom";
-import { LoginAPI, SignUpAPI } from "../../services/authServices";
-import { useHistory } from "react-router-dom";
+import { LoginAPI } from "../../services/authServices";
 import { openNotification } from "../../components/Smart/Notification";
 import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import Spin from "../../components/presentational/Spin";
-import Footer from "../../components/Layout/Footer/Footer";
 import "./Login.scss";
 import { useDispatch } from "react-redux";
 import {
@@ -21,7 +19,6 @@ import useWindowSize from "../../helpers/hooks";
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [isRemember, setIsRemember] = useState(false);
-  const history = useHistory();
   const dispatch = useDispatch();
   const onFinish = async (values) => {
     setLoading(true);

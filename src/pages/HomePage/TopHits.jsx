@@ -4,7 +4,6 @@ import { Row, Col,Carousel } from "antd";
 import NftCard from "../../components/presentational/Card/Card";
 import "./TopHits.scss";
 import { getTopHitsAPI } from "../../services/homePageServices";
-import { getImageUrl } from "../../services/createCollectionServices";
 import { Link } from "react-router-dom";
 import useWindowSize from "../../helpers/hooks";
 import { openNotification } from "../../components/Smart/Notification";

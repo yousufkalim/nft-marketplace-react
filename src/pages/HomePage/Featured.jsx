@@ -7,7 +7,6 @@ import './Featured.scss';
 import { getFeaturedAPI } from '../../services/homePageServices';
 import { Link } from 'react-router-dom';
 import useWindowSize from '../../helpers/hooks';
-import ExploreCard from '../../components/presentational/ExploreCard/ExploreCard';
 import FeatureMobileCard from '../../components/presentational/FeatureMobileCard/FeatureMobileCard';
 import { openNotification } from '../../components/Smart/Notification';
 

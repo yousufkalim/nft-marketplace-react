@@ -4,7 +4,6 @@ import AuthRouter from "./HOC/AuthRouter";
 import PrivateRouter from "./HOC/PrivateRouter";
 import AuthRoutes from "./Routes/AuthRoutes";
 import { Switch } from "react-router-dom";
-import "antd/dist/antd.css";
 import { useDispatch, useSelector } from "react-redux";
 import { VerifyUser } from "./services/authServices";
 import {
@@ -13,6 +12,7 @@ import {
   LoginFail,
   removeProfile,
 } from "./store/auth/authActions";
+import 'antd/dist/antd.min.css';
 import "./App.scss";
 
 function App() {

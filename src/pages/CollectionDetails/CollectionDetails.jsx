@@ -5,8 +5,8 @@ import FILTER_IMG from "../../images/filter_icon.svg";
 import LeftSection from "./LeftSection";
 import RightSection from "./RightSection";
 import NewsLetter from "../../components/presentational/NewsLetter/NewsLetter";
-import { Row, Col, AutoComplete, Input, Menu, Dropdown, Space } from "antd";
-import { UserOutlined, DownOutlined, SearchOutlined } from "@ant-design/icons";
+import { Row, Col, Input, Dropdown } from "antd";
+import { DownOutlined } from "@ant-design/icons";
 
 import "./CollectionDetails.scss";
 import { collectionDetailsApi } from "../../services/collectionServices";
@@ -27,8 +27,6 @@ const CollectionDetails = ({match}) => {
     getCollectionDetails();
   },[])
 
-
-  console.log("test",colectionDetails);
 
   return (
     <div className="CollectionPageWrapper">

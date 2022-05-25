@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Input, Form, Button, Select, Switch, InputNumber } from "antd";
-import { Link } from "react-router-dom";
 import RightArrow from "../../images/rightIcon.svg";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";

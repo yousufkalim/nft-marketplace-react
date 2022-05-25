@@ -1,19 +1,14 @@
 import React, { useState } from "react";
-import { Input, Form, Button, Select, Switch, Upload, Radio } from "antd";
-import { UploadOutlined, InboxOutlined } from "@ant-design/icons";
+import { Radio } from "antd";
 import PAGE_HEADER from "../../images/PageHeader.png";
 import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
-import DropZone from "../../components/Smart/DropZone/DropZone";
 import {
-  createCollectionAPI,
   uploadAPI,
 } from "../../services/createCollectionServices";
-import { useSelector } from "react-redux";
 import { openNotification } from "../../components/Smart/Notification";
 import Spin from "../../components/presentational/Spin";
 import "./UploadNft.scss";
 import ZipDropZone from "../../components/Smart/ZipDropdown/ZipDropZone";
-import { uploadNft } from "../../services/createNftServices";
 import useWindowSize from "../../helpers/hooks";
 
 
@@ -29,7 +24,7 @@ const UploadNft = () => {
       if (isAgree) {
         setIsLoading(true);
         try {
-          const nftFileLocation = await uploadNft(nftFile[0]);
+          const nftFileLocation = await uploadAPI(nftFile[0]);
           openNotification("Success", "Nft created successfully");
           setIsLoading(false);
         } catch (error) {

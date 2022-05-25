@@ -1,9 +1,6 @@
 import React from "react";
 import PAGE_HEADER from "../../images/PageHeader.png";
 import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
-import { Input, Form, Button, Col, Row } from "antd";
-import Spin from "../../components/presentational/Spin";
-import { Link } from "react-router-dom";
 import "./Profile.scss";
 import ProfileCard from "../../components/presentational/ProfileCard/ProfieCard";
 import ProfileCollections from "./ProfileCollections";

@@ -1,8 +1,5 @@
 import React from "react";
 import { Card } from "antd";
-import FRAME_ICON from "../../../images/frame.svg";
-import TEST_ICON from "../../../images/test_footer.svg";
-import { Tooltip } from "antd";
 import "./CollectionDetailCard.scss";
 
 const { Meta } = Card;

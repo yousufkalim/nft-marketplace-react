@@ -5,10 +5,8 @@ import { userRoutes } from "../../Routes/userRoutes";
 import AppHeader from "./Header/Header";
 import AppFooter from "./Footer/Footer";
 import { Layout } from "antd";
-import useWindowSize from "../../helpers/hooks";
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Footer, Content } = Layout;
 const MainLayout = () => {
-  const [browserWidth] = useWindowSize();
   return (
     <Layout>
       <Header>

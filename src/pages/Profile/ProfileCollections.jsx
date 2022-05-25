@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
-import ExploreCard from "../../components/presentational/ExploreCard/ExploreCard";
-import PAGE_HEADER from "../../images/PageHeader.png";
 import { Row, Col } from "antd";
 import NewsLetter from "../../components/presentational/NewsLetter/NewsLetter";
 import { allCollectionsAPI } from "../../services/explorePageServices";
-import InfiniteScroll from "react-infinite-scroll-component";
 import "./ProfileCollections.scss";
 import FeaturedCard from "../../components/presentational/FeaturedCard/FeaturedCard";
 import useWindowSize from "../../helpers/hooks";

@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
-import Flicking, { MoveEvent, WillChangeEvent } from "@egjs/react-flicking";
-import FlickerCard from "../../components/presentational/FlickerCard/FlickerCard";
+import Flicking from "@egjs/react-flicking";
 import LEFT_ARROW from "../../images/left_icon_gray.svg";
 import RIGHT_ARROW from "../../images/right_icon_gray.svg";
 import "@egjs/react-flicking/dist/flicking.css";

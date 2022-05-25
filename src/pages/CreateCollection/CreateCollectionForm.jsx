@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Input, Form, Button, Select, Switch, InputNumber,Radio } from "antd";
-import { Link } from "react-router-dom";
+import { Input, Form, Button, Select, Switch, InputNumber } from "antd";
 import RightArrow from "../../images/rightIcon.svg";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,8 +15,10 @@ const CreateCollectionForm = () => {
   // const [isActive, setIsActive] = useState(false);
   const [categoryCodes, setCategoryCodes] = useState([]);
   const [layoutCodes, setLayoutCodes] = useState([]);
+  const [mintingCoin, setMintingCoin] = useState([]);
+  const [whoPaysFee, setWhoPaysFee] = useState([]);
+
   const [isLoading, setIsLoading] = useState(false);
-  const [isStoreNameAvailable, setIsStoreNameAvailable] = useState(true);
 
   const history = useHistory();
 
@@ -32,6 +33,10 @@ const CreateCollectionForm = () => {
         setCategoryCodes(res.data);
         const response = await codesAPI("layoutCodes");
         setLayoutCodes(response?.data);
+        const respons = await codesAPI("Minting Coin");
+        setMintingCoin(respons?.data);
+        const feeData = await codesAPI("WhoPaysFees");
+        setWhoPaysFee(feeData?.data);
       } catch (error) {
         console.log("error", error?.response?.data?.message);
       }
@@ -54,7 +59,7 @@ const CreateCollectionForm = () => {
       after_1st_purchase_text: values.afterPurchaseMessage ?? "",
       minting_supply_count: values.mintingSupply ?? 0,
       minting_coin: values.mintingCoin ?? "",
-      mint_locked: 0,
+      mint_locked: values.mintLocked ?? 0,
       layout_style_code: values?.layoutCode ?? "",
       is_explicit: isExplicit ? 1 : 0,
       mintable: isMintable ? 1 : 0,
@@ -63,21 +68,19 @@ const CreateCollectionForm = () => {
       created_date: new Date().toLocaleString(),
       category_code: values.category ?? "",
       url_name: "",
-      delay_days: 0,
-      royalty_percent: 0,
-      third_party_royalty_percent: 0,
-      third_party_wallet_id: "0xE7b3D35c1939592332735E6300b4DC00d3A3E5B0",
+      delay_days: values.delayDays ?? 0,
+      royalty_percent: values.royaltyPercent ?? 0,
+      third_party_royalty_percent: values.thirdPartyRoyaltyPercent ?? 0,
+      third_party_wallet_id: values.thirdPartyWalletId ?? "",
       who_pays_fees: values?.whoPayFee ?? "",
     };
     try {
       const res=await checkStroeNameAvailability(values.storename);
       if(res?.data?.body?.exists){
         openNotification("Oops", "Store name already exists");
-        setIsStoreNameAvailable(false);
         setIsLoading(false);
       }
       else{
-      setIsStoreNameAvailable(true);
       dispatch(collectionDataSuccess(data));
       history.push("/createCollectionUploadImage");
       setIsLoading(false);
@@ -242,7 +245,7 @@ const CreateCollectionForm = () => {
                   },
                 ]}
               >
-                <InputNumber placeholder="Minting supply" controls={false} />
+                <InputNumber placeholder="Minting supply Count" controls={false} />
               </Form.Item>
 
               <Form.Item
@@ -250,12 +253,92 @@ const CreateCollectionForm = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Please input Minting coin!",
+                    message: "Please select a Minting Coin!",
                   },
                 ]}
               >
-                <Input placeholder="Minting coin" />
+                <Select placeholder="Minting Coin">
+                  {mintingCoin?.body?.map((item) => {
+                    return (
+                      <Select.Option value={item?.code}>
+                        {item?.code}
+                      </Select.Option>
+                    );
+                  })}
+                </Select>
               </Form.Item>
+
+               <Form.Item
+                name="mintLocked"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input mint Locked!",
+                  },
+                ]}
+              >
+                <InputNumber placeholder="Mint Locked" controls={false} />
+              </Form.Item>
+
+               <Form.Item
+                name="mintable"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input mintable!",
+                  },
+                ]}
+              >
+                <InputNumber placeholder="mintable" controls={false} />
+              </Form.Item>
+
+              <Form.Item
+                name="delayDays"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input Delay Days!",
+                  },
+                ]}
+              >
+                <InputNumber placeholder="Delay Days" controls={false} />
+              </Form.Item>   
+
+              <Form.Item
+                name="royaltyPercent"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input Royalty Percent!",
+                  },
+                ]}
+              >
+                <InputNumber placeholder="Royalty Percent" controls={false} />
+              </Form.Item>    
+
+              <Form.Item
+                name="thirdPartyRoyaltyPercent"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input third Party Royalty Percent!",
+                  },
+                ]}
+              >
+                <InputNumber placeholder="Third Party Royalty Percent" controls={false} />
+              </Form.Item>    
+
+              <Form.Item
+                name="thirdPartyWalletId"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input Third party wallet id!",
+                  },
+                ]}
+              >
+                <Input placeholder="Third party wallet id" />
+              </Form.Item>           
 
               <Form.Item
                 name="layoutCode"
@@ -279,12 +362,24 @@ const CreateCollectionForm = () => {
 
 
 
-              <Form.Item name="whoPayFee" label={<b>Who Pay Gas Fee</b>}>
-                <Radio.Group>
-                  <Radio value="buyer">Buyer</Radio>
-                  <Radio value="Creator">Creator</Radio>
-                  <Radio value="Both">Both</Radio>
-                </Radio.Group>
+              <Form.Item
+                name="whoPayFee"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please select a role who pays fee!",
+                  },
+                ]}
+              >
+                <Select placeholder="Who Pay Fee">
+                  {whoPaysFee?.body?.map((item) => {
+                    return (
+                      <Select.Option value={item?.code}>
+                        {item?.code}
+                      </Select.Option>
+                    );
+                  })}
+                </Select>
               </Form.Item>
 
               <span className="dFlex">

@@ -7,7 +7,7 @@ import SignUp from "../pages/AuthPages/SignUp";
 import ForgotPassword from "../pages/AuthPages/ForgotPassword";
 import { Layout } from "antd";
 import '../components/Layout/Layout.scss';
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Footer, Content } = Layout;
 
 const AuthRoutes = () => {
   return (

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ExploreCard from "../../components/presentational/ExploreCard/ExploreCard";
-import PAGE_HEADER from "../../images/PageHeader.png";
 import { Row, Col } from "antd";
 import { allCollectionsAPI } from "../../services/explorePageServices";
-import InfiniteScroll from "react-infinite-scroll-component";
 import "./CollectionNftView.scss";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import useWindowSize from "../../helpers/hooks";

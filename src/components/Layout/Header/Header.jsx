@@ -6,7 +6,7 @@ import SEARCH_ICON from "../../../images/search_icon.svg";
 import TOGGLE_ICON from "../../../images/toggle_icon.png";
 
 import { Link } from "react-router-dom";
-import { AutoComplete, Drawer, message, Tooltip, Dropdown, Menu } from "antd";
+import { AutoComplete, Drawer, Tooltip, Dropdown, Menu } from "antd";
 import { searchApi } from "../../../services/searchServices";
 import useWindowSize from "../../../helpers/hooks";
 import "./Header.scss";
@@ -31,10 +31,6 @@ const AppHeader = () => {
 
   const onSelect = (data) => {
     console.log("onSelect", data);
-  };
-
-  const showDrawer = () => {
-    setVisible(true);
   };
 
   const onClose = () => {

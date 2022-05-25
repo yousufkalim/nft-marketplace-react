@@ -1,6 +1,4 @@
-import { useEffect,useState } from "react";
-
-import { Button } from "antd";
+import { useEffect } from "react";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useDropzone } from "react-dropzone";
@@ -18,7 +16,7 @@ const ZipDropZone = ({
   imgSrc=selectedImage?.length && Zip_Icon,
   isUploading,
 }) => {
-  const { acceptedFiles, getRootProps, getInputProps,isDragActive } = useDropzone({
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
       "application/zip": [".zip"],
     },
@@ -70,7 +68,7 @@ const ZipDropZone = ({
                 className="blurBg"
                 style={{ backgroundImage: `url(${selectedImage[0]?.preview})` }}
               />
-              <img src={selectedImage?.length && Zip_Icon} />
+              <img src={selectedImage?.length && Zip_Icon} alt={'zip_folder'} />
             </>
           )}
         </div>
@@ -80,7 +78,7 @@ const ZipDropZone = ({
             className="blurBg"
             style={{ backgroundImage: `url(${selectedImage?.length && Zip_Icon})` }}
           />
-          <img src={selectedImage?.length && Zip_Icon} />
+          <img src={selectedImage?.length && Zip_Icon} alt={'zip_folder'} />
         </div>
       ) : (
         ""

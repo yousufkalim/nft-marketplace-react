@@ -1,5 +1,3 @@
-import axios from "axios";
-import { apiConfig, restrictedConfig } from "../helpers/utils";
 
 export const uploadNft = async (selectedImage) => {
     const data = new FormData();

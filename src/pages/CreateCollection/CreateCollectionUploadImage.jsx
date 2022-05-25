@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Input, Form, Button, Select, Switch, Upload, Radio } from "antd";
-import { UploadOutlined, InboxOutlined } from "@ant-design/icons";
+import { Radio } from "antd";
 import PAGE_HEADER from "../../images/PageHeader.png";
 import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import DropZone from "../../components/Smart/DropZone/DropZone";
@@ -42,7 +41,7 @@ const CreateCollectionUploadImage = () => {
             image_banner_location: bannerImageLocation?.body?.url,
           };
           const res = await createCollectionAPI(data);
-          console.log("res", res);
+          console.log("newlyRes", res);
           openNotification("Success", "Collection created successfully , Lets Add some NFTs to your collection");
           history.push("/createNft");
           setIsLoading(false);

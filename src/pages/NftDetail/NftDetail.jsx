@@ -1,12 +1,10 @@
 import React from "react";
 import FeaturedCard from "../../components/presentational/FeaturedCard/FeaturedCard";
 import PAGE_HEADER_IMG from "../../images/PageHeader.png";
-import FILTER_IMG from "../../images/filter_icon.svg";
 import RIGHT_ARROW from "../../images/right_arrow.svg";
 import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import NewsLetter from "../../components/presentational/NewsLetter/NewsLetter";
-import { Row, Col, AutoComplete, Input, Menu, Dropdown, Space, Carousel } from "antd";
-import { UserOutlined, DownOutlined, SearchOutlined } from "@ant-design/icons";
+import { Row, Col ,Carousel } from "antd";
 import "./NftDetail.scss";
 import NftLeftSection from "./NftLeftSection";
 import NftRightSection from "./NftRightSection";
@@ -17,82 +15,6 @@ import useWindowSize from "../../helpers/hooks";
 
 const NftDetails = () => {
   const arr=[1,2,3,4,5,6]
-  const renderTitle = (title) => (
-    <span>
-      {title}
-      <a
-        style={{
-          float: "right",
-        }}
-        href="https://www.google.com/search?q=antd"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        more
-      </a>
-    </span>
-  );
-
-  const renderItem = (title, count) => ({
-    value: title,
-    label: (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        {title}
-        <span>
-          <UserOutlined /> {count}
-        </span>
-      </div>
-    ),
-  });
-
-  const options = [
-    {
-      label: renderTitle("Libraries"),
-      options: [
-        renderItem("AntDesign", 10000),
-        renderItem("AntDesign UI", 10600),
-      ],
-    },
-    {
-      label: renderTitle("Solutions"),
-      options: [
-        renderItem("AntDesign UI FAQ", 60100),
-        renderItem("AntDesign FAQ", 30010),
-      ],
-    },
-    {
-      label: renderTitle("Articles"),
-      options: [renderItem("AntDesign design language", 100000)],
-    },
-  ];
-
-  const menu = (
-    <Menu
-      items={[
-        {
-          label: <a href="https://www.antgroup.com">1st menu item</a>,
-          key: "0",
-        },
-        {
-          label: <a href="https://www.aliyun.com">2nd menu item</a>,
-          key: "1",
-        },
-        {
-          type: "divider",
-        },
-        {
-          label: "3rd menu item",
-          key: "3",
-        },
-      ]}
-    />
-  );
-
   const [browserWidth] = useWindowSize();
 
   return (

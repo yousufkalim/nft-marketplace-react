@@ -44,7 +44,7 @@ const OffersTable = () => {
       title: 'Bidder',
       dataIndex: 'name',
       key: 'name',
-      render: (value,image) => <><img src={image?.image} width={40} height={25} />{value}</>,
+      render: (value,image) => <><img src={image?.image} width={40} height={25} alt={'not found'} />{value}</>,
     //   width: 150,
     },
     {

@@ -15,7 +15,7 @@ const ExplorePage = () => {
   const [exploreData, setExploreData] = useState([]);
   const [extraData, setExtraData] = useState({
     has_more: true,
-    next_page: 0,
+    next_page: 1,
   });
   const [browserWidth] = useWindowSize();
 

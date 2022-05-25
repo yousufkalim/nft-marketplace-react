@@ -1,9 +1,5 @@
 import React from "react";
 import PAGE_HEADER from "../../images/PageHeader.png";
-import { Input, Form, Button, Col, Row } from "antd";
-import Spin from "../../components/presentational/Spin";
-import { Link } from "react-router-dom";
-
 import "./CreateNft.scss";
 import CreateNftForm from "./CreateNftForm";
 

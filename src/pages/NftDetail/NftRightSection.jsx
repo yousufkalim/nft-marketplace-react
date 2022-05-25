@@ -1,12 +1,9 @@
 import React from "react";
-import TEST_ICON from "../../images/test_footer.svg";
 import DISCORD_ICON from "../../images/discord_icon.svg";
 import M_ICON from "../../images/M_icon.svg";
 import TWITTER_ICON from "../../images/twitter_icon.svg";
 import WHITE_FRAME_ICON from "../../images/white_frame_icon.svg";
 import SHARE_ICON from "../../images/share.svg";
-import EYE_ICON from "../../images/eye_icon.svg";
-import ORANGE_FRAME from "../../images/orange_frame.svg";
 import PRICE_ICON from "../../images/price_icon.svg";
 import { Tooltip } from "antd";
 

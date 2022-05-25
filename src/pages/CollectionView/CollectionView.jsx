@@ -5,13 +5,14 @@ import FILTER_IMG from "../../images/filter_icon.svg";
 
 import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import FlickerComp from "./Flicker";
-import { Input, Dropdown } from "antd";
+import { Input } from "antd";
 import { SearchOutlined, DownOutlined } from "@ant-design/icons";
 import "./CollectionView.scss";
 import CollectionNftView from "./CollectionNftView";
 import NewsLetter from "../../components/presentational/NewsLetter/NewsLetter";
 import useWindowSize from "../../helpers/hooks";
 import { collectionDetailsApi } from "../../services/collectionServices";
+import { openNotification } from "../../components/Smart/Notification";
 
 const CollectionView = ({match}) => {
 
@@ -19,9 +20,8 @@ const CollectionView = ({match}) => {
     const getCollectionDetails = async () => {
       try{
       const res=await collectionDetailsApi(match.params.id);
-      console.log("res",res);
       }catch(error){
-      console.log("err",error?.response?.data?.message);
+      openNotification("Oops",error?.response?.data?.message);
       }
     }
     getCollectionDetails();

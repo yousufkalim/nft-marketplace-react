@@ -2,7 +2,6 @@ import CollectionDetails from "../pages/CollectionDetails/CollectionDetails";
 import CollectionView from "../pages/CollectionView/CollectionView";
 import CreateCollection from "../pages/CreateCollection/CreateCollection";
 import CreateCollectionUploadImage from "../pages/CreateCollection/CreateCollectionUploadImage";
-import CreateNft from "../pages/CreateNft/CreateNft";
 import UploadNft from "../pages/CreateNft/UploadNft";
 import ExplorePage from "../pages/ExplorePage/ExplorePage";
 import FilterCollections from "../pages/FilterCollections/FilterCollections";

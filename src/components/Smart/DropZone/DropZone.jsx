@@ -1,7 +1,6 @@
-import { useEffect,useState } from "react";
+import { useEffect } from "react";
 
 import "./DropZone.scss";
-import { Button } from "antd";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useDropzone } from "react-dropzone";
@@ -16,7 +15,7 @@ const DropZone = ({
   imgSrc,
   isUploading,
 }) => {
-  const { acceptedFiles, getRootProps, getInputProps,isDragActive } = useDropzone({
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
       "image/png": [".png", ".jpg", ".jpeg"],
     },
@@ -68,7 +67,7 @@ const DropZone = ({
                 className="blurBg"
                 style={{ backgroundImage: `url(${selectedImage[0]?.preview})` }}
               />
-              <img src={selectedImage[0].preview} />
+              <img src={selectedImage[0].preview} alt={'not found'} />
             </>
           )}
         </div>
@@ -78,7 +77,7 @@ const DropZone = ({
             className="blurBg"
             style={{ backgroundImage: `url(${imgSrc})` }}
           />
-          <img src={imgSrc} />
+          <img src={imgSrc} alt={'not found'} />
         </div>
       ) : (
         ""

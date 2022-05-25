@@ -1,5 +1,5 @@
 import axios from "axios";
-import { apiConfig, restrictedConfig } from "../helpers/utils";
+import { apiConfig } from "../helpers/utils";
 
 export const getTopHitsAPI = async () => {
     return await axios.get(
