@@ -1,10 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Input, Form, Button, Select, Switch, InputNumber } from "antd";
+import {
+  Input,
+  Form,
+  Button,
+  Select,
+  Switch,
+  InputNumber,
+  Tooltip,
+} from "antd";
 import RightArrow from "../../images/rightIcon.svg";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { collectionDataSuccess } from "../../store/collectionForm/collectionActions";
-import { checkStroeNameAvailability, codesAPI } from "../../services/createCollectionServices";
+import {
+  checkStroeNameAvailability,
+  codesAPI,
+} from "../../services/createCollectionServices";
 import "./CreateCollectionForm.scss";
 import { openNotification } from "../../components/Smart/Notification";
 import Spin from "../../components/presentational/Spin";
@@ -13,11 +24,12 @@ const CreateCollectionForm = () => {
   const [isExplicit, setIsExplicit] = useState(false);
   const [isMintable, setIsMintable] = useState(false);
   // const [isActive, setIsActive] = useState(false);
+  const [delayDays, setDelayDays] = useState(5);
   const [categoryCodes, setCategoryCodes] = useState([]);
   const [layoutCodes, setLayoutCodes] = useState([]);
   const [mintingCoin, setMintingCoin] = useState([]);
   const [whoPaysFee, setWhoPaysFee] = useState([]);
-
+  const [isMintLocked, setIsMintLocked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const history = useHistory();
@@ -29,9 +41,9 @@ const CreateCollectionForm = () => {
   useEffect(() => {
     const getCode = async () => {
       try {
-        const res = await codesAPI("categoryCodes");
+        const res = await codesAPI("CategoryCode");
         setCategoryCodes(res.data);
-        const response = await codesAPI("layoutCodes");
+        const response = await codesAPI("LayoutCodes");
         setLayoutCodes(response?.data);
         const respons = await codesAPI("Minting Coin");
         setMintingCoin(respons?.data);
@@ -44,7 +56,6 @@ const CreateCollectionForm = () => {
     getCode();
   }, []);
 
-
   const onFinish = async (values) => {
     setIsLoading(true);
     const data = {
@@ -53,13 +64,13 @@ const CreateCollectionForm = () => {
       description_short: values.shortDescription ?? "",
       description_long: values.longDescription ?? "",
       url_personal: values.personalLink ?? "",
-      url_medium: values.mediaLink ?? "",
+      url_medium: values.mediumLink ?? "",
       url_discord: values.discordLink ?? "",
-      url_telegram: "",
+      url_telegram: values.telegramLink ?? "",
       after_1st_purchase_text: values.afterPurchaseMessage ?? "",
       minting_supply_count: values.mintingSupply ?? 0,
       minting_coin: values.mintingCoin ?? "",
-      mint_locked: values.mintLocked ?? 0,
+      mint_locked: isMintLocked ? 1 : 0,
       layout_style_code: values?.layoutCode ?? "",
       is_explicit: isExplicit ? 1 : 0,
       mintable: isMintable ? 1 : 0,
@@ -68,22 +79,21 @@ const CreateCollectionForm = () => {
       created_date: new Date().toLocaleString(),
       category_code: values.category ?? "",
       url_name: "",
-      delay_days: values.delayDays ?? 0,
+      delay_days: delayDays,
       royalty_percent: values.royaltyPercent ?? 0,
       third_party_royalty_percent: values.thirdPartyRoyaltyPercent ?? 0,
       third_party_wallet_id: values.thirdPartyWalletId ?? "",
-      who_pays_fees: values?.whoPayFee ?? "",
+      who_pays_fees: "Seller",
     };
     try {
-      const res=await checkStroeNameAvailability(values.storename);
-      if(res?.data?.body?.exists){
+      const res = await checkStroeNameAvailability(values.storename);
+      if (res?.data?.body?.exists) {
         openNotification("Oops", "Store name already exists");
         setIsLoading(false);
-      }
-      else{
-      dispatch(collectionDataSuccess(data));
-      history.push("/createCollectionUploadImage");
-      setIsLoading(false);
+      } else {
+        dispatch(collectionDataSuccess(data));
+        history.push("/createCollectionUploadImage");
+        setIsLoading(false);
       }
     } catch (error) {
       console.log("error", error);
@@ -106,10 +116,18 @@ const CreateCollectionForm = () => {
         <div className="CreateCollectionForm">
           <Form
             name="basic"
+            layout="vertical"
             initialValues={{
               remember: true,
-              layout: "inline",
+              delayDays: 5,
+              thirdPartyRoyaltyPercent: 0.0,
+              instagramLink: "https://www.instagram.com/",
+              personalLink: "yourSite.io",
+              mediumLink: "https://medium.com/",
+              discordLink: "https://discord.com/",
+              telegramLink: "https://telegram.com/",
             }}
+            scrollToFirstError="true"
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="on"
@@ -119,6 +137,7 @@ const CreateCollectionForm = () => {
                 name="storename"
                 // validateStatus={isStoreNameAvailable ? "success" : "error"}
                 // help="Store name should be unique"
+                label="Store Name"
                 rules={[
                   {
                     required: true,
@@ -130,6 +149,7 @@ const CreateCollectionForm = () => {
               </Form.Item>
               <Form.Item
                 name="instagramLink"
+                label="Instagram Link"
                 // rules={[
                 //   {
                 //     required: true,
@@ -141,6 +161,7 @@ const CreateCollectionForm = () => {
               </Form.Item>
               <Form.Item
                 name="shortDescription"
+                label="Short Description"
                 rules={[
                   {
                     required: true,
@@ -153,6 +174,7 @@ const CreateCollectionForm = () => {
 
               <Form.Item
                 name="personalLink"
+                label="Personal Link"
                 // rules={[
                 //   {
                 //     required: true,
@@ -163,24 +185,17 @@ const CreateCollectionForm = () => {
                 <Input placeholder="Personal link" />
               </Form.Item>
 
-              <Form.Item
-                name="longDescription"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your Long description!",
-                  },
-                ]}
-              >
+              <Form.Item name="longDescription" label="Long Description">
                 <Input.TextArea
                   placeholder="Long description"
-                  style={{ height: 120 }}
+                  style={{ height: 150 }}
                 />
               </Form.Item>
 
               <span className="mediaAndDiscordLinks">
                 <Form.Item
-                  name="mediaLink"
+                  name="mediumLink"
+                  label="Medium Link"
                   // rules={[
                   //   {
                   //     required: true,
@@ -193,6 +208,7 @@ const CreateCollectionForm = () => {
 
                 <Form.Item
                   name="discordLink"
+                  label="Discord Link"
                   // rules={[
                   //   {
                   //     required: true,
@@ -206,6 +222,7 @@ const CreateCollectionForm = () => {
 
               <Form.Item
                 name="category"
+                label="Category"
                 rules={[
                   {
                     required: true,
@@ -217,7 +234,7 @@ const CreateCollectionForm = () => {
                   {categoryCodes?.body?.map((item) => {
                     return (
                       <Select.Option value={item?.code}>
-                        {item?.code}
+                        {item?.code} ({item?.description})
                       </Select.Option>
                     );
                   })}
@@ -225,7 +242,15 @@ const CreateCollectionForm = () => {
               </Form.Item>
 
               <Form.Item
+                  name="telegramLink"
+                  label="Telegram Link"
+                >
+                  <Input placeholder="Telegram link" />
+                </Form.Item>
+
+              <Form.Item
                 name="afterPurchaseMessage"
+                label="After 1st Purchase Message"
                 // rules={[
                 //   {
                 //     required: true,
@@ -238,6 +263,7 @@ const CreateCollectionForm = () => {
 
               <Form.Item
                 name="mintingSupply"
+                label="Minting Supply"
                 rules={[
                   {
                     required: true,
@@ -245,11 +271,15 @@ const CreateCollectionForm = () => {
                   },
                 ]}
               >
-                <InputNumber placeholder="Minting supply Count" controls={false} />
+                <InputNumber
+                  placeholder="Minting supply Count"
+                  controls={false}
+                />
               </Form.Item>
 
               <Form.Item
                 name="mintingCoin"
+                label="Minting Coin"
                 rules={[
                   {
                     required: true,
@@ -261,27 +291,16 @@ const CreateCollectionForm = () => {
                   {mintingCoin?.body?.map((item) => {
                     return (
                       <Select.Option value={item?.code}>
-                        {item?.code}
+                        {item?.code} ({item?.description})
                       </Select.Option>
                     );
                   })}
                 </Select>
               </Form.Item>
 
-               <Form.Item
-                name="mintLocked"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input mint Locked!",
-                  },
-                ]}
-              >
-                <InputNumber placeholder="Mint Locked" controls={false} />
-              </Form.Item>
-
-               <Form.Item
+              {/* <Form.Item
                 name="mintable"
+                label="Mintable"
                 rules={[
                   {
                     required: true,
@@ -290,10 +309,11 @@ const CreateCollectionForm = () => {
                 ]}
               >
                 <InputNumber placeholder="mintable" controls={false} />
-              </Form.Item>
+              </Form.Item> */}
 
               <Form.Item
                 name="delayDays"
+                label="Delay Days"
                 rules={[
                   {
                     required: true,
@@ -301,11 +321,16 @@ const CreateCollectionForm = () => {
                   },
                 ]}
               >
-                <InputNumber placeholder="Delay Days" controls={false} />
-              </Form.Item>   
+                <InputNumber
+                  placeholder="Days to delay before showing next level"
+                  controls={false}
+                  // value={delayDays} onChange={()=>setDelayDays(e.target.value)}
+                />
+              </Form.Item>
 
               <Form.Item
                 name="royaltyPercent"
+                label="Royalty Percent"
                 rules={[
                   {
                     required: true,
@@ -314,10 +339,11 @@ const CreateCollectionForm = () => {
                 ]}
               >
                 <InputNumber placeholder="Royalty Percent" controls={false} />
-              </Form.Item>    
+              </Form.Item>
 
               <Form.Item
                 name="thirdPartyRoyaltyPercent"
+                label="Third Party Royalty Percent"
                 rules={[
                   {
                     required: true,
@@ -325,11 +351,15 @@ const CreateCollectionForm = () => {
                   },
                 ]}
               >
-                <InputNumber placeholder="Third Party Royalty Percent" controls={false} />
-              </Form.Item>    
+                <InputNumber
+                  placeholder="Third Party Royalty Percent"
+                  controls={false}
+                />
+              </Form.Item>
 
               <Form.Item
                 name="thirdPartyWalletId"
+                label="Third Party Wallet Id"
                 rules={[
                   {
                     required: true,
@@ -337,11 +367,12 @@ const CreateCollectionForm = () => {
                   },
                 ]}
               >
-                <Input placeholder="Third party wallet id" />
-              </Form.Item>           
+                <Input placeholder="Wallet to get Royalty Payments" />
+              </Form.Item>
 
               <Form.Item
                 name="layoutCode"
+                label="Layout Code"
                 rules={[
                   {
                     required: true,
@@ -353,17 +384,16 @@ const CreateCollectionForm = () => {
                   {layoutCodes?.body?.map((item) => {
                     return (
                       <Select.Option value={item?.code}>
-                        {item?.code}
+                        {item?.code} ({item?.description})
                       </Select.Option>
                     );
                   })}
                 </Select>
               </Form.Item>
 
-
-
-              <Form.Item
+              {/* <Form.Item
                 name="whoPayFee"
+                label="Who Pay Fee"
                 rules={[
                   {
                     required: true,
@@ -380,11 +410,37 @@ const CreateCollectionForm = () => {
                     );
                   })}
                 </Select>
+              </Form.Item> */}
+
+              <Form.Item
+                label="Mint Locked"
+                labelAlign="left"
+                valuePropName="checked"
+                className="firstSwitch"
+              >
+                <Switch
+                  size="small"
+                  checked={isMintLocked}
+                  onChange={() => setIsMintLocked(!isMintLocked)}
+                />
               </Form.Item>
 
-              <span className="dFlex">
+              <div className="dFlex">
                 <Form.Item
-                  label="Explicit"
+                  label={
+                    <div>
+                      Explicit
+                      <Tooltip
+                        title={
+                          "Enable this if your items may contain harmful, sexual, or violent  content. This will help users to safely limit their searches."
+                        }
+                        color={"#303549"}
+                        overlayClassName="favouriteToolTip"
+                      >
+                        <span className="infoIcon">?</span>
+                      </Tooltip>
+                    </div>
+                  }
                   labelAlign="left"
                   valuePropName="checked"
                   className="firstSwitch"
@@ -397,7 +453,20 @@ const CreateCollectionForm = () => {
                 </Form.Item>
 
                 <Form.Item
-                  label="Mintable"
+                  label={
+                    <div>
+                      Mintable
+                      <Tooltip
+                        title={
+                          "Enabling this will create your contract on the blockchain. This may entail gas fees depending on the blockchain you have selected."
+                        }
+                        color={"#303549"}
+                        overlayClassName="favouriteToolTip"
+                      >
+                        <span className="infoIcon">?</span>
+                      </Tooltip>
+                    </div>
+                  }
                   labelAlign="left"
                   valuePropName="checked"
                 >
@@ -419,7 +488,7 @@ const CreateCollectionForm = () => {
                     onChange={() => setIsActive(!isActive)}
                   />
                 </Form.Item> */}
-              </span>
+              </div>
             </div>
 
             <span className="nextButton">

@@ -4,12 +4,10 @@ import "./LoadingCard.scss";
 
 const { Meta } = Card;
 
-const LoadingCard = ({data}) => {
-  console.log("data",data)
+const LoadingCard = () => {
   return (
     <div className="LoadingCard">
       <Card
-        hoverable
         cover={
           <div className="LoadingCardWrapper">
             <div

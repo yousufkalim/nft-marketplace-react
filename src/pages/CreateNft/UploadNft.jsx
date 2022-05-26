@@ -10,13 +10,15 @@ import Spin from "../../components/presentational/Spin";
 import "./UploadNft.scss";
 import ZipDropZone from "../../components/Smart/ZipDropdown/ZipDropZone";
 import useWindowSize from "../../helpers/hooks";
+import { uploadNft } from "../../services/createNftServices";
+import { useHistory } from "react-router-dom";
 
 
-const UploadNft = () => {
+const UploadNft = ({match}) => {
   const [nftFile, setNftFile] = useState("");
   const [isAgree, setIsAgree] = useState(false);
   const [loading, setIsLoading] = useState(false);
-
+  const history=useHistory();
   const [browserWidth]=useWindowSize()
 
   const handleSubmit = async () => {
@@ -24,9 +26,10 @@ const UploadNft = () => {
       if (isAgree) {
         setIsLoading(true);
         try {
-          const nftFileLocation = await uploadAPI(nftFile[0]);
-          openNotification("Success", "Nft created successfully");
+          const nftFileLocation = await uploadNft(nftFile[0],match.params.id);
+          openNotification("Success", "Nft Uploaded created successfully");
           setIsLoading(false);
+          history.push('/myCollections')
         } catch (error) {
           setIsLoading(false);
           openNotification("Oops", error?.response?.data?.message);

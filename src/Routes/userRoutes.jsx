@@ -4,7 +4,7 @@ import CreateCollection from "../pages/CreateCollection/CreateCollection";
 import CreateCollectionUploadImage from "../pages/CreateCollection/CreateCollectionUploadImage";
 import UploadNft from "../pages/CreateNft/UploadNft";
 import ExplorePage from "../pages/ExplorePage/ExplorePage";
-import FilterCollections from "../pages/FilterCollections/FilterCollections";
+import MyCollections from "../pages/FilterCollections/MyCollections";
 import HomePage from "../pages/HomePage";
 import NftDetail from "../pages/NftDetail/NftDetail";
 import Profile from "../pages/Profile/Profile";
@@ -28,7 +28,7 @@ export const userRoutes = [
         component:CollectionDetails
     },
     {
-        path:"/createNft",
+        path:"/createNft/:id",
         component:UploadNft
     },
     {
@@ -52,8 +52,8 @@ export const userRoutes = [
         component:Profile
     },
     {
-        path:"/filterCollections",
-        component:FilterCollections
+        path:"/myCollections",
+        component:MyCollections,
     }
 
 

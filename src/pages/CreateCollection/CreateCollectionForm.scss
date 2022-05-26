@@ -49,8 +49,8 @@
       }
       .dFlex {
         display: flex;
-        justify-content: space-around;
         align-items: flex-start;
+        width: 48%;
         @include mobile{
           width: 100%;
           justify-content: space-between;
@@ -162,5 +162,9 @@
         }
       }
     }
+  }
+  .infoIcon{
+    margin-left:6px;
+    cursor: pointer;
   }
 }

@@ -18,7 +18,6 @@ import "./App.scss";
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
-
   const isRemember = useSelector((state) => state.auth.isRemember);
 
   useEffect(() => {

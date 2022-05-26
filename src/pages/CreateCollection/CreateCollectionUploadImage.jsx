@@ -43,7 +43,7 @@ const CreateCollectionUploadImage = () => {
           const res = await createCollectionAPI(data);
           console.log("newlyRes", res);
           openNotification("Success", "Collection created successfully , Lets Add some NFTs to your collection");
-          history.push("/createNft");
+          history.push(`/createNft/${res?.data?.body?.collection_id}`);
           setIsLoading(false);
         } catch (error) {
           setIsLoading(false);
@@ -79,7 +79,7 @@ const CreateCollectionUploadImage = () => {
           <div className="step2Header">
             <span className="step2">Step 2</span>
             <span className="desc">Upload Media</span>
-            <span className="desc2">Accepted file formats: JPG, JPEG,PNG</span>
+            <span className="desc2">Accepted file formats: JPG, JPEG,PNG,GIF</span>
           </div>
           <div className="uploadForm">
             <div className="collectionImages">

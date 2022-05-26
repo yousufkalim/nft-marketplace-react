@@ -1,5 +1,5 @@
 import axios from "axios";
-import { apiConfig } from "../helpers/utils";
+import { apiConfig, restrictedConfig } from "../helpers/utils";
 
 export const ChangePasswordAPI = async (userInfo) => {
   const body = {
@@ -14,3 +14,11 @@ export const ChangePasswordAPI = async (userInfo) => {
     apiConfig
   );
 };
+
+
+export const myCollectionsAPI = async (pageNumber) => {
+    return await axios.get(
+      `https://nftdepot-api.azurewebsites.net/collections/my_collections/${pageNumber}`,
+      restrictedConfig
+    );
+  };

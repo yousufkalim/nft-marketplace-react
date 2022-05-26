@@ -59,9 +59,7 @@ const TopHits = () => {
             ?.map((item, index) => {
               return (
                 <Col className="gutter-row" span={6} key={index}>
-                  {/* <Link to={"/collectionView/"}> */}
                     <NftCard data={item} />
-                  {/* </Link> */}
                 </Col>
               );
             })}

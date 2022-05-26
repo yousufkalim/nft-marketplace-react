@@ -17,7 +17,7 @@ const DropZone = ({
 }) => {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "image/png": [".png", ".jpg", ".jpeg"],
+      "image/png": [".png", ".jpg", ".jpeg",".gif"],
     },
     onDrop: (acceptedFiles) =>
       acceptedFiles.map((file) =>
@@ -36,7 +36,7 @@ const DropZone = ({
   }
   : imageType === "banner" ?
   {
-    heading: "Upload Banner Image",
+    heading: "This image will display on the top of your Storefront/Collection Page. Recommended dimension 1400 X 400.",
   }
   : imageType === "zip" ?
   {

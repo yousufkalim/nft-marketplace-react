@@ -10,9 +10,14 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { Link } from "react-router-dom";
 import LoadingCard from "../../components/presentational/LoadingCard/LoadingCard";
 import useWindowSize from "../../helpers/hooks";
+import { openNotification } from "../../components/Smart/Notification";
+import CategoryFlicker from "../FilterCollections/CategoryFlicker";
 
 const ExplorePage = () => {
+  const arr = [1, 2, 3, 4, 5, 5, 6, 7];
   const [exploreData, setExploreData] = useState([]);
+  const [category,setCategory]=useState('');
+
   const [extraData, setExtraData] = useState({
     has_more: true,
     next_page: 1,
@@ -28,7 +33,7 @@ const ExplorePage = () => {
         has_more: res?.data?.body?.has_more,
       });
     } catch (error) {
-      console.log("err", error?.response?.data?.message);
+      openNotification("Oops", error?.response?.data?.message);
       // setExploreData([]);
     }
   };
@@ -50,6 +55,15 @@ const ExplorePage = () => {
     return false;
   };
 
+  const filterCategory = (data) => {
+    if (category==='') {
+      return true
+    }
+    else{
+      return data?.category_code===category
+    }
+  };
+
   return (
     <>
       <div className="ExplorePageWrapper">
@@ -65,7 +79,7 @@ const ExplorePage = () => {
             <span className="exploreHeading">Explore Collections</span>
           </div>
         </div>
-
+        <CategoryFlicker category={category} setCategory={setCategory} />
         <div className="ExplorecardGrid">
           <InfiniteScroll
             dataLength={exploreData?.length} //This is important field to render the next data
@@ -73,20 +87,17 @@ const ExplorePage = () => {
             hasMore={extraData?.has_more}
             loader={
               <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
-                {exploreData
-                  ?.filter(filterExplore)
-                  ?.slice(0, 6)
-                  ?.map((item, index) => {
-                    return (
-                      <Col
-                        className="gutter-row"
-                        span={browserWidth < 620 ? 24 : 8}
-                        key={index}
-                      >
-                        <LoadingCard />
-                      </Col>
-                    );
-                  })}
+                {arr?.map((item, index) => {
+                  return (
+                    <Col
+                      className="gutter-row"
+                      span={browserWidth < 620 ? 24 : 8}
+                      key={index}
+                    >
+                      <LoadingCard />
+                    </Col>
+                  );
+                })}
               </Row>
             }
             endMessage={
@@ -96,9 +107,13 @@ const ExplorePage = () => {
             }
           >
             <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
-              {exploreData?.filter(filterExplore)?.map((item, index) => {
+              {exploreData?.filter(filterExplore)?.filter(filterCategory)?.map((item, index) => {
                 return (
-                  <Col className="gutter-row" span={browserWidth < 620 ? 24 : 8} key={index}>
+                  <Col
+                    className="gutter-row"
+                    span={browserWidth < 620 ? 24 : 8}
+                    key={index}
+                  >
                     <Link to={"/collectionView"}>
                       <ExploreCard data={item} />
                     </Link>
