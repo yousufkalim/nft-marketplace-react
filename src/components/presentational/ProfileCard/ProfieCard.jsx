@@ -6,10 +6,12 @@ import TEST_ICON from "../../../images/test_footer.svg";
 import ORANGE_FRAME from "../../../images/orange_frame.svg";
 import { Tooltip } from "antd";
 import "./ProfileCard.scss";
+import { useSelector } from "react-redux";
 
 const { Meta } = Card;
 
 const ProfileCard = () => {
+  const data=useSelector(state=>state?.auth?.user);
   return (
     <div className="ProfileCard">
       <Card
@@ -19,24 +21,24 @@ const ProfileCard = () => {
             <span className="ProfileCardImage">
               <img
                 alt="example"
-                src="https://cdn.pixabay.com/photo/2021/11/13/23/06/tree-6792528__340.jpg"
+                src={data?.image_profile_location ? data?.image_profile_location : "https://cdn.pixabay.com/photo/2021/11/13/23/06/tree-6792528__340.jpg"}
               />
             </span>
-            <Tooltip title="Add to favourites" color={"#303549"}>
+            {/* <Tooltip title="Add to favourites" color={"#303549"}>
               <span className="frame">
                 <img src={FRAME_ICON} alt={"FRAME_ICON"} />
               </span>
-            </Tooltip>
+            </Tooltip> */}
 
-            <span
+            {/* <span
               className="footer"
               style={{ background: `url(${TEST_ICON}) no-repeat` }}
-            ></span>
+            ></span> */}
           </span>
         }
       >
-        <Meta title="Europe Street beat" description="www.instagram.com" />
-        <div className="ProfileCardFooter">
+        <Meta title={data?.first_name+data?.last_name}/>
+        {/* <div className="ProfileCardFooter">
           <span className="priceHeading">
             Price <span className="priceHeading">$$ ETH</span>
           </span>
@@ -50,7 +52,7 @@ const ProfileCard = () => {
               <span className="tagPrice">33</span>
             </span>
           </span>
-        </div>
+        </div> */}
       </Card>
     </div>
   );

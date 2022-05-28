@@ -8,7 +8,6 @@ export const collectionDetailsApi = async (id) => {
   );
 };
 
-
 export const followCollection = async (collectionId) => {
   const res = await fetch(
     `https://nftdepot-api.azurewebsites.net/collections/${collectionId}/follow`,
@@ -19,7 +18,8 @@ export const followCollection = async (collectionId) => {
       },
     }
   );
-  return res;
+  const resKey = await res.json();
+  return resKey;
 };
 
 export const unFollowCollection = async (collectionId) => {
@@ -32,11 +32,11 @@ export const unFollowCollection = async (collectionId) => {
       },
     }
   );
-  return res;
+  const resKey = await res.json();
+  return resKey;
 };
 
-
-export const likeCollectionOrNft = async (id) => {
+export const likeNfts = async (id) => {
   const res = await fetch(
     `https://nftdepot-api.azurewebsites.net/nft/${id}/like`,
     {
@@ -46,10 +46,11 @@ export const likeCollectionOrNft = async (id) => {
       },
     }
   );
-  return res;
+  const resKey = await res.json();
+  return resKey;
 };
 
-export const unLikeCollectionOrNft = async (id) => {
+export const unLikeNfts = async (id) => {
   const res = await fetch(
     `https://nftdepot-api.azurewebsites.net/nft/${id}/unlike`,
     {
@@ -59,5 +60,18 @@ export const unLikeCollectionOrNft = async (id) => {
       },
     }
   );
-  return res;
+  const resKey = await res.json();
+  return resKey;
+};
+export const getCollectionNft = async (id, pageNumber) => {
+  return await axios.get(
+    `https://nftdepot-api.azurewebsites.net/collections/${id}/nfts/${pageNumber}`,
+    apiConfig
+  );
+};
+export const collectionView = async (id) => {
+  return await axios.post(
+    `https://nftdepot-api.azurewebsites.net/collections/${id}/view`,
+    apiConfig
+  );
 };

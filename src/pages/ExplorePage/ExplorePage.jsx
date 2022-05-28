@@ -14,7 +14,7 @@ import { openNotification } from "../../components/Smart/Notification";
 import CategoryFlicker from "../FilterCollections/CategoryFlicker";
 
 const ExplorePage = () => {
-  const arr = [1, 2, 3, 4, 5, 5, 6, 7];
+  const arr = [1, 2, 3];
   const [exploreData, setExploreData] = useState([]);
   const [category,setCategory]=useState('');
 
@@ -114,9 +114,9 @@ const ExplorePage = () => {
                     span={browserWidth < 620 ? 24 : 8}
                     key={index}
                   >
-                    <Link to={"/collectionView"}>
+                    {/* <Link to={"/collectionView"}> */}
                       <ExploreCard data={item} />
-                    </Link>
+                    {/* </Link> */}
                   </Col>
                 );
               })}

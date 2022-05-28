@@ -9,7 +9,7 @@ import { Tooltip } from "antd";
 
 import "./NftRightSection.scss";
 
-const NftRightSection = () => {
+const NftRightSection = ({nftData}) => {
   return (
     <div className="NftrightSectionWrapper">
       <div className="RightHeader">
@@ -44,10 +44,7 @@ const NftRightSection = () => {
         </div>
         <div className="itemDetails">
           <span className="detail">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in.
+           {nftData?.description_short}
           </span>
         </div>
         <div className="offerBtn" >

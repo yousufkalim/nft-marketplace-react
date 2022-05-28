@@ -3,11 +3,14 @@ import PAGE_HEADER from "../../images/PageHeader.png";
 import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import "./Profile.scss";
 import ProfileCard from "../../components/presentational/ProfileCard/ProfieCard";
-import ProfileCollections from "./ProfileCollections";
 import useWindowSize from "../../helpers/hooks";
+import { useSelector } from "react-redux";
+import moment from "moment";
+import ProfileCollections from "./ProfileCollections/ProfileCollections";
 
 const Profile = () => {
   const [browserWidth]=useWindowSize();
+  const profileData=useSelector(state=>state?.auth?.user);
   return (
     <>
       <div className="ProfileWrapper">
@@ -21,7 +24,7 @@ const Profile = () => {
           <div className="profilecardFotterSection">
             <span className="flexStyle">
               <span className="key">Profile ID</span>
-              <span className="value changeColor">phill_lee</span>
+              <span className="value changeColor">{profileData?.username}</span>
             </span>
             <span className="flexStyle">
               <span className="key"> Joined</span>
@@ -29,13 +32,13 @@ const Profile = () => {
                 <span className="dFlex">
                   {/* <img src={PRICE_ICON} alt={"PRICE_ICON"} /> */}
                 </span>{" "}
-                April 2022
+                {moment(profileData?.created_at).format("MMM DD, YYYY")}
               </span>
             </span>
-            <span className="flexStyle unsetBorder">
+           {profileData?.url_personal && <span className="flexStyle unsetBorder">
               <span className="key"> Website</span>
-              <span className="value">www.nft.com</span>
-            </span>
+              <span className="value">{profileData?.url_personal}</span>
+            </span>}
           </div>
         </div>
         <ProfileCollections/>

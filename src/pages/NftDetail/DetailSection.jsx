@@ -3,13 +3,13 @@ import "./DetailSection.scss";
 import LineChart from "./LineChart";
 import OffersTable from "./OffersTable";
 
-const DetailSection = () => {
+const DetailSection = ({nftData}) => {
   return (
     <div className="detailSection">
       <div className="detailselectedCollection">
         <div className="detailCollectionDetailsSubHeader">
           <div className="leftSide">
-            <span className="aboutUser">About Phill Lee</span>
+            <span className="aboutUser">About {nftData?.created_by}</span>
             <span className="aboutUserDesc">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
@@ -34,7 +34,7 @@ const DetailSection = () => {
                 <span className="dFlex">
                   {/* <img src={PRICE_ICON} alt={"PRICE_ICON"} /> */}
                 </span>{" "}
-                142
+                {nftData?.token_id}
               </span>
             </span>
             <span className="flexStyle">
@@ -43,7 +43,7 @@ const DetailSection = () => {
             </span>
             <span className="flexStyle unsetBorder">
               <span className="key"> Blockchain</span>
-              <span className="value">Ethereum</span>
+              <span className="value">{nftData?.minting_coin}</span>
             </span>
           </div>
         </div>

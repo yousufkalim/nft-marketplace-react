@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PAGE_HEADER_IMG from "../../images/PageHeader.png";
 import BANNER_IMG from "../../images/banner_img.svg";
 import FILTER_IMG from "../../images/filter_icon.svg";
@@ -11,20 +11,32 @@ import "./CollectionView.scss";
 import CollectionNftView from "./CollectionNftView";
 import NewsLetter from "../../components/presentational/NewsLetter/NewsLetter";
 import useWindowSize from "../../helpers/hooks";
-import { collectionDetailsApi } from "../../services/collectionServices";
+import { collectionDetailsApi, collectionView } from "../../services/collectionServices";
 import { openNotification } from "../../components/Smart/Notification";
 
-const CollectionView = ({match}) => {
+const CollectionView = ({ match }) => {
+  const [collectionDetails, setCollectionDetails] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     const getCollectionDetails = async () => {
-      try{
-      const res=await collectionDetailsApi(match.params.id);
-      }catch(error){
-      openNotification("Oops",error?.response?.data?.message);
+      try {
+        const res = await collectionDetailsApi(match.params.id);
+        setCollectionDetails(res?.data?.body);
+        console.log("res", res);
+      } catch (error) {
+        openNotification("Oops", error?.response?.data?.message);
       }
-    }
+    };
     getCollectionDetails();
+  }, [match.params.id]);
+
+  useEffect(async()=>{
+    try{
+      await collectionView(match.params.id);
+    }
+    catch(error){
+      // openNotification("Oops", error?.response?.data?.message);
+    }
   },[])
 
   const [browserWidth] = useWindowSize();
@@ -32,14 +44,21 @@ const CollectionView = ({match}) => {
     <div className="CollectionViewPageWrapper">
       <div className="CollectionViewPageHeader">
         <img
-          src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER_IMG}
+          // src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER_IMG}
+          src={
+            collectionDetails?.image_banner_location?.includes("https")
+              ? collectionDetails?.image_banner_location
+              : PAGE_HEADER_IMG
+          }
           alt={"PAGE_HEADER_IMG"}
         />
         <div className="CollectionViewHeadingSection">
-          <span className="CollectionViewText">
+          {/* <span className="CollectionViewText">
             FIND, EXPLORE & FOLLOW DIGITAL ART NFTS.
+          </span> */}
+          <span className="CollectionViewHeading">
+            {collectionDetails?.store_name}
           </span>
-          <span className="CollectionViewHeading">GenOut Studios</span>
         </div>
       </div>
       {browserWidth < 620 ? (
@@ -47,7 +66,14 @@ const CollectionView = ({match}) => {
           <div className="mobileBannerDetails">
             <div className="banner">
               <div className="imageWrapper">
-                <img src={BANNER_IMG} alt={"BANNER_IMG"} />
+                <img
+                  src={
+                    collectionDetails?.image_large_location?.includes("https")
+                      ? collectionDetails?.image_large_location
+                      : BANNER_IMG
+                  }
+                  alt={"BANNER_IMG"}
+                />
               </div>
             </div>
             <div className="values">
@@ -56,15 +82,15 @@ const CollectionView = ({match}) => {
                 <span>$0.00</span>
               </div>
               <div className="mobileItemWrapper">
-                <span>FloorPrice</span>
+                <span>Volume Traded</span>
                 <span>$0.00</span>
               </div>
               <div className="mobileItemWrapper">
-                <span>FloorPrice</span>
+                <span>Items</span>
                 <span>$0.00</span>
               </div>
               <div className="mobileItemWrapper">
-                <span>FloorPrice</span>
+                <span>Owners</span>
                 <span>$0.00</span>
               </div>
             </div>
@@ -78,18 +104,25 @@ const CollectionView = ({match}) => {
               <span>$0.00</span>
             </div>
             <div className="itemWrapper">
-              <span>FloorPrice</span>
+              <span>Volume Traded</span>
               <span>$0.00</span>
             </div>
             <div className="imageWrapper">
-              <img src={BANNER_IMG} alt={"BANNER_IMG"} />
+              <img
+                src={
+                  collectionDetails?.image_large_location?.includes("https")
+                    ? collectionDetails?.image_large_location
+                    : BANNER_IMG
+                }
+                alt={"BANNER_IMG"}
+              />
             </div>
             <div className="itemWrapper">
-              <span>FloorPrice</span>
+              <span>Items</span>
               <span>$0.00</span>
             </div>
             <div className="itemWrapper">
-              <span>FloorPrice</span>
+              <span>Owners</span>
               <span>$0.00</span>
             </div>
           </div>
@@ -97,17 +130,10 @@ const CollectionView = ({match}) => {
       )}
       <div className="collectionDetailsWrapper">
         <div className="collectionDetails">
-          <span>
-            The GenOut Studios is a collection of 10,000 unique Animated NFTs—
-            unique digital collectibles living on the Ethereum blockchain. Your
-            GenOut Studios grants access to members-only benefits, the first of
-            which is access to the treasure chest, a stockpile of goodies.
-            Future areas and perks can be unlocked by the community through
-            other rewards.
-          </span>
+          <span>{collectionDetails?.description_short}</span>
         </div>
       </div>
-      <FlickerComp />
+      {/* <FlickerComp /> */}
       <div className="searchBar">
         <div className="inputSection">
           <div className="searchInput">
@@ -119,12 +145,12 @@ const CollectionView = ({match}) => {
           </div>
           <div className="filterDropdown">
             {/* <Dropdown overlay={true} trigger={["click"]}> */}
-              <a onClick={(e) => e.preventDefault()}>
-                <span>
-                  Price
-                  <DownOutlined className="downIcon" />
-                </span>
-              </a>
+            <a onClick={(e) => e.preventDefault()}>
+              <span>
+                Price
+                <DownOutlined className="downIcon" />
+              </span>
+            </a>
             {/* </Dropdown> */}
           </div>
           <div className="filterImage">
@@ -133,7 +159,7 @@ const CollectionView = ({match}) => {
         </div>
         <div className="reset">Showing 54 results</div>
       </div>
-      <CollectionNftView />
+      <CollectionNftView collectionid={match?.params?.id} />
       <NewsLetter />
     </div>
   );

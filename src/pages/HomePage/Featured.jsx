@@ -57,7 +57,7 @@ const Featured = () => {
             ?.slice(0,8)?.map((item, index) => {
               return (
                 <Col className="gutter-row" span={12} key={index}>
-                  <Link to={'/explore'} ><FeaturedCard data={item}/></Link>
+                  <FeaturedCard data={item}/>
                 </Col>
               );
             })
@@ -70,7 +70,7 @@ const Featured = () => {
             ?.filter(filterFeatured)
             ?.slice(0,8)?.map((item, index) => {
               return (
-                  <Link to={'/explore'} key={index} ><FeatureMobileCard data={item}/></Link>
+                  <div key={index}><FeatureMobileCard data={item}/></div>
               );
             })
             }

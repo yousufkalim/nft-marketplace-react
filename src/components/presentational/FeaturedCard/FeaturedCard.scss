@@ -24,6 +24,7 @@
     }
     .coverImageWrapper {
       position: relative;
+      cursor: pointer;
       width: 40%;
       .coverImage {
         width: 100%;
@@ -58,7 +59,7 @@
         font-style: normal;
         font-weight: 700;
         font-size: 24px;
-        line-height: 28px;
+        line-height: 1;
         text-transform: capitalize;
         color: $CreateBtnBg;
       }
@@ -105,5 +106,8 @@
       top: 10px;
       right: 20px;
     }
+  }
+  .orangeFrame{
+    cursor: pointer;
   }
 }

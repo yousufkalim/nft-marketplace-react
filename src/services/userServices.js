@@ -15,10 +15,25 @@ export const ChangePasswordAPI = async (userInfo) => {
   );
 };
 
-
 export const myCollectionsAPI = async (pageNumber) => {
-    return await axios.get(
-      `https://nftdepot-api.azurewebsites.net/collections/my_collections/${pageNumber}`,
-      restrictedConfig
-    );
-  };
+  return await axios.get(
+    `https://nftdepot-api.azurewebsites.net/collections/my_collections/${pageNumber}`,
+    restrictedConfig
+  );
+};
+
+export const myCollectedNfts = async (pageNumber) => {
+  return await axios.get(
+    `https://nftdepot-api.azurewebsites.net/nfts/21/collected/${pageNumber}`,
+    apiConfig
+  );
+};
+
+export const myFollowingCollectionsAPI = async (pageNumber) => {
+  return await axios.get(
+    `https://nftdepot-api.azurewebsites.net/collections/following/${pageNumber}`,
+    restrictedConfig
+  );
+};
+
+

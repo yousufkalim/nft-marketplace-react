@@ -3,11 +3,11 @@ import NftDetailCard from "../../components/presentational/NftDetailCard/NftDeta
 
 import "./NftLeftSection.scss";
 
-const NftLeftSection = () => {
+const NftLeftSection = ({nftData}) => {
   return (
     <div className="NftleftSideSection">
       <span className="searchedCard">
-        <NftDetailCard />
+        <NftDetailCard nftData={nftData} />
       </span>
     </div>
   );

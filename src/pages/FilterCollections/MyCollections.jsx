@@ -13,7 +13,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import LoadingCard from "../../components/presentational/LoadingCard/LoadingCard";
 
 const MyCollections = () => {
-  const arr = [1, 2, 3, 4, 5, 5, 6, 7];
+  const arr = [1, 2, 3];
   const [category,setCategory]=useState('');
 
   const [browserWidth] = useWindowSize();
@@ -23,7 +23,6 @@ const MyCollections = () => {
     has_more: true,
     next_page: 1,
   });
-
 
   const fetchMyCollections = async () => {
     try {
@@ -117,7 +116,7 @@ const MyCollections = () => {
                   span={browserWidth < 620 ? 24 : 8}
                   key={index}
                 >
-                  <Link to={"/collectionView"}>
+                  <Link to={`/collectionView/${item?.guid}`}>
                     <ExploreCard data={item} />
                   </Link>
                 </Col>

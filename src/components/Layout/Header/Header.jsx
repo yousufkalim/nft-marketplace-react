@@ -12,6 +12,7 @@ import useWindowSize from "../../../helpers/hooks";
 import "./Header.scss";
 import { useDispatch } from "react-redux";
 import { Logout } from "../../../store/auth/authActions";
+import { useHistory } from "react-router-dom";
 
 const { Option } = AutoComplete;
 
@@ -19,8 +20,9 @@ const AppHeader = () => {
   const [collections, setCollections] = useState([]);
   const [browserWidth] = useWindowSize();
   const [visible, setVisible] = useState(false);
+  const history=useHistory()
 
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
   const handleSearch = async (value) => {
     if (value) {
@@ -46,11 +48,15 @@ const AppHeader = () => {
         },
         {
           key: "2",
-          label: <span onClick={()=>dispatch(Logout())}>Logout</span>,
+          label: <span onClick={() => dispatch(Logout())}>Logout</span>,
         },
       ]}
     />
   );
+
+  const handleClick=(id)=>{
+    history.push(`/collectionView/${id}`)
+  }
 
   return (
     <div className="header">
@@ -94,8 +100,8 @@ const AppHeader = () => {
               >
                 {collections?.length ? (
                   collections?.map((location) => (
-                    <Option key={location.guid} value={location.store_name}>
-                      {location.store_name}
+                    <Option key={location.guid} value={location.store_name} >
+                       <div  onClick={()=>handleClick(location?.guid)}>{location.store_name}</div> 
                     </Option>
                   ))
                 ) : (
@@ -115,7 +121,7 @@ const AppHeader = () => {
           </span>
           <Dropdown overlay={menu} placement="bottomLeft" arrow>
             <span className="headerIcons">
-                <img src={PROFILE_ICON} alt={"PROFILE_ICON"} />
+              <img src={PROFILE_ICON} alt={"PROFILE_ICON"} />
             </span>
           </Dropdown>
         </div>

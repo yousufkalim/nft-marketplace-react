@@ -7,7 +7,7 @@ import "./NftDetailCard.scss";
 
 const { Meta } = Card;
 
-const NftDetailCard = () => {
+const NftDetailCard = ({nftData}) => {
   return (
     <div className="NftDetailCard">
       <Card
@@ -17,7 +17,7 @@ const NftDetailCard = () => {
             <span className="ExploreCardImage">
               <img
                 alt="example"
-                src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+                src={nftData?.nft_data?.image_location?.includes("https") ?  nftData?.nft_data?.image_location : "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"}
               />
             </span>
           </span>
@@ -31,7 +31,7 @@ const NftDetailCard = () => {
             </span>
             <span className="textSection">
               <span className="createdBy">created by</span>
-              <span className="creatorName">Phil Lee</span>
+              <span className="creatorName">{nftData?.created_by}</span>
             </span>
           </div>
           <span className="rightSection">

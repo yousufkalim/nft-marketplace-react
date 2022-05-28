@@ -40,7 +40,7 @@ export const userRoutes = [
         component:CreateCollectionUploadImage
     },
     {
-        path:"/nftDetail",
+        path:"/nftDetail/:id",
         component:NftDetail
     },
     {

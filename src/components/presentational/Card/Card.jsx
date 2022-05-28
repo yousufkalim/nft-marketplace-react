@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import { Card } from "antd";
 import FRAME_ICON from "../../../images/frame.svg";
 import TEST_IMG from "../../../images/test_img.png";
@@ -13,7 +13,6 @@ import { followCollection, unFollowCollection } from "../../../services/collecti
 const { Meta } = Card;
 
 const NftCard = ({ showTopPick = false, data }) => {
-  console.log("token",localStorage.getItem("token"));
   const [isFollowed, setIsFollowed] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const followCollections = async () => {
@@ -32,6 +31,22 @@ const NftCard = ({ showTopPick = false, data }) => {
       openNotification("Oops", error?.response?.data?.message);
     }
   };
+
+  const likeCollection = async () => {
+    try {
+      const res = await followCollection(data?.guid);
+      setIsLiked(res?.data?.body?.liked);
+    } catch (error) {
+      openNotification("Oops", error?.response?.data?.message);
+    }
+  };
+
+  // useEffect(()=>{
+  //   const getCollectionFollwers=()=>{
+
+  //   }
+  // })
+
   return (
     <div className="imageCard">
       <Card

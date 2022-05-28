@@ -1,21 +1,33 @@
-import React from "react";
+import React, { useEffect,useState } from "react";
 import FeaturedCard from "../../components/presentational/FeaturedCard/FeaturedCard";
 import PAGE_HEADER_IMG from "../../images/PageHeader.png";
 import RIGHT_ARROW from "../../images/right_arrow.svg";
 import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import NewsLetter from "../../components/presentational/NewsLetter/NewsLetter";
 import { Row, Col ,Carousel } from "antd";
-import "./NftDetail.scss";
 import NftLeftSection from "./NftLeftSection";
 import NftRightSection from "./NftRightSection";
 import DetailSection from "./DetailSection";
 import { Link } from "react-router-dom";
 import useWindowSize from "../../helpers/hooks";
 // import DetailSection from "./DetailSection";
+import "./NftDetail.scss";
+import { nftDetailsApi } from "../../services/nftServices";
 
-const NftDetails = () => {
+
+const NftDetails = ({match}) => {
   const arr=[1,2,3,4,5,6]
   const [browserWidth] = useWindowSize();
+  const [nftData,setNftData] =useState([]);
+
+  useEffect(()=>{
+    const getNftDetail = async () => {
+      const res=await nftDetailsApi(match?.params?.id);
+      console.log("res",res);
+      setNftData(res?.data?.body);
+    }
+    getNftDetail();
+  },[])
 
   return (
     <div className="NftDetailPageWrapper">
@@ -27,19 +39,19 @@ const NftDetails = () => {
       </div>
       <div className="selectedCollection">
         <div className="CollectionDetailsSubHeader">
-          <NftLeftSection />
-          <NftRightSection />
+          <NftLeftSection  nftData={nftData}/>
+          <NftRightSection nftData={nftData} />
         </div>
-        <DetailSection />
+        <DetailSection  nftData={nftData} />
       </div>
       <div className="resultCardsGrid">
         <div className="heading">
           <span className="seeMore">More from this collection</span>
           <span>
             <span className="view">View all</span>{" "}
-            <Link to={"/collectionView"}>
+            {/* <Link to={"/collectionView"}> */}
               <img src={RIGHT_ARROW} alt="RIGHT_ARROW" />
-            </Link>{" "}
+            {/* </Link>{" "} */}
           </span>
         </div>
         {browserWidth < 620 ? (

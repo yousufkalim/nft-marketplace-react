@@ -6,20 +6,32 @@ import "./CollectionNftView.scss";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import useWindowSize from "../../helpers/hooks";
 import { openNotification } from "../../components/Smart/Notification";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { getCollectionNft } from "../../services/collectionServices";
+import LoadingCard from "../../components/presentational/LoadingCard/LoadingCard";
 
+const CollectionNftView = ({ collectionid }) => {
 
-const CollectionNftView = () => {
+  const arr = [1, 2, 3];
+
   const [exploreData, setExploreData] = useState([]);
+  const [extraData, setExtraData] = useState({
+    has_more: true,
+    next_page: 1,
+  });
+  const fetchExploreData = async () => {
+    try {
+      const res = await getCollectionNft(collectionid, extraData?.next_page);
+      setExploreData([...exploreData, ...res?.data?.body?.data]);
+      setExtraData({
+        next_page: res?.data?.body?.next_page,
+        has_more: res?.data?.body?.has_more,
+      });
+    } catch (error) {
+      // openNotification("Oops", error?.response?.data?.message);
+    }
+  };
   useEffect(() => {
-    const fetchExploreData = async () => {
-      try{
-      const res = await allCollectionsAPI(0);
-      setExploreData(res?.data?.body?.data);
-      }
-      catch(error){
-        openNotification("Oops",error?.response?.data?.message)
-      }
-    };
     fetchExploreData();
   }, []);
 
@@ -36,48 +48,59 @@ const CollectionNftView = () => {
     return false;
   };
 
-  const [browserWidth]=useWindowSize();
+  const [browserWidth] = useWindowSize();
 
   return (
     <>
       <div className="collectionNftViewWrapper">
+        {exploreData.length > 0 ? (
         <div className="collectionNftViewCardGrid">
-          {/* <InfiniteScroll
+          <InfiniteScroll
             dataLength={exploreData.length} //This is important field to render the next data
             next={fetchExploreData}
-            hasMore={true}
-            loader={<h4>Loading...</h4>}
+            hasMore={extraData?.has_more}
+            loader={
+              <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
+                {arr?.map((item, index) => {
+                  return (
+                    <Col
+                      className="gutter-row"
+                      span={browserWidth < 620 ? 24 : 8}
+                      key={index}
+                    >
+                      <LoadingCard />
+                    </Col>
+                  );
+                })}
+              </Row>
+            }
             endMessage={
               <p style={{ textAlign: "center" }}>
                 <b>Yay! You have seen it all</b>
               </p>
             }
-            below props only if you need pull down functionality
-            refreshFunction={fetchExploreData}
-            pullDownToRefresh
-            pullDownToRefreshThreshold={50}
-            pullDownToRefreshContent={
-              <h3 style={{ textAlign: "center" }}>
-                &#8595; Pull down to refresh
-              </h3>
-            }
-            releaseToRefreshContent={
-              <h3 style={{ textAlign: "center" }}>
-                &#8593; Release to refresh
-              </h3>
-            }
-          > */}
+          >
             <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
               {exploreData?.filter(filterCollections)?.map((item, index) => {
                 return (
-                  <Col className="gutter-row" span={browserWidth < 620 ? 24 : 8} key={index}>
-                   <Link to={'/nftDetail'} ><ExploreCard data={item} /></Link> 
+                  <Col
+                    className="gutter-row"
+                    span={browserWidth < 620 ? 24 : 8}
+                    key={index}
+                  >
+                    <Link to={"/nftDetail"}>
+                      <ExploreCard data={item} />
+                    </Link>
                   </Col>
                 );
               })}
             </Row>
-          {/* </InfiniteScroll> */}
+          </InfiniteScroll>
         </div>
+        ) : (
+          <div style={{textAlign:'center'}}>No Nfts found for this collection</div>
+        )
+        }
       </div>
     </>
   );
