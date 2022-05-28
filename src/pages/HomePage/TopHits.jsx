@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from "react";
 import RIGHT_ARROW from "../../images/right_arrow.svg";
-import { Row, Col,Carousel } from "antd";
+import { Row, Col, Carousel } from "antd";
 import NftCard from "../../components/presentational/Card/Card";
 import "./TopHits.scss";
 import { getTopHitsAPI } from "../../services/homePageServices";
 import { Link } from "react-router-dom";
 import useWindowSize from "../../helpers/hooks";
 import { openNotification } from "../../components/Smart/Notification";
+import LoadingCard from "../../components/presentational/LoadingCard/LoadingCard";
 
 const TopHits = () => {
   const [topHits, setTopHits] = useState([]);
-  const [browserWidth]=useWindowSize()
+  const arr = [0, 1, 2, 3];
+  const [browserWidth] = useWindowSize();
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const topHits = async () => {
-      try{
-      const res = await getTopHitsAPI();
-      setTopHits(res?.data?.body);
-      }
-      catch(error){
-        openNotification("Oops",error?.response?.data?.message)
+      try {
+        setLoading(true);
+        const res = await getTopHitsAPI();
+        setTopHits(res?.data?.body);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        openNotification("Oops", error?.response?.data?.message);
       }
     };
 
@@ -38,8 +43,6 @@ const TopHits = () => {
     return false;
   };
 
-
-
   return (
     <div className="TopHits">
       <div className="heading">
@@ -53,33 +56,44 @@ const TopHits = () => {
       </div>
       <div className="cardGrid">
         <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
-          {topHits
-            ?.filter(filterTopHits)
-            ?.slice(0, 8)
-            ?.map((item, index) => {
-              return (
-                <Col className="gutter-row" span={6} key={index}>
-                    <NftCard data={item} />
-                </Col>
-              );
-            })}
+          {loading
+            ? arr?.map((item, index) => {
+                return (
+                  <Col className="gutter-row" span={6} key={index}>
+                    <LoadingCard />
+                  </Col>
+                );
+              })
+            : topHits
+                ?.filter(filterTopHits)
+                ?.slice(0, 8)
+                ?.map((item, index) => {
+                  return (
+                    <Col className="gutter-row" span={6} key={index}>
+                      <NftCard data={item} />
+                    </Col>
+                  );
+                })}
         </Row>
       </div>
-      {browserWidth <620  && (
-         <Carousel  dotPosition={"bottom"}>
-         {topHits
-            ?.filter(filterTopHits)
-            ?.slice(0, 8)
-            ?.map((item, index) => {
-              return (
-                  <Link to={"/collectionView"} key={index}>
+      {browserWidth < 620 && (
+        <Carousel dotPosition={"bottom"}>
+          {loading ? (
+            <LoadingCard />
+          ) : (
+            topHits
+              ?.filter(filterTopHits)
+              ?.slice(0, 8)
+              ?.map((item, index) => {
+                return (
+                  <div key={index}>
                     <NftCard data={item} />
-                  </Link>
-              );
-            })}
-       </Carousel>
-      )
-      }
+                  </div>
+                );
+              })
+          )}
+        </Carousel>
+      )}
     </div>
   );
 };

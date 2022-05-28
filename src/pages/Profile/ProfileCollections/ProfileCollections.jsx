@@ -5,6 +5,7 @@ import MyCollections from "./MyCollections";
 import CollectedNfts from "./CollectedNfts";
 import "./ProfileCollections.scss";
 import Followed from "./Followed";
+import ProfileCollectionsFlicker from "../ProfileCollectionsFlicker";
 
 const ProfileCollections = () => {
   const arr = [0, 1, 2];
@@ -67,6 +68,7 @@ const ProfileCollections = () => {
             <span className="value">{myCollectionItemsCount}</span>
           </div>
         </div>
+        {browserWidth < 620 && <ProfileCollectionsFlicker currentTab={currentTab} setCurrentTab={setCurrentTab}  />  }
         {currentTab == "MY COLLECTION" ? (
           <MyCollections setMyCollectionItemsCount={setMyCollectionItemsCount} />
         ) : currentTab == "COLLECTED Nfts" ? (
