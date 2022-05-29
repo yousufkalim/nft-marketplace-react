@@ -8,6 +8,7 @@ import "./ExploreCard.scss";
 import { useHistory } from "react-router-dom";
 import { followCollection, unFollowCollection } from "../../../services/collectionServices";
 import { openNotification } from "../../Smart/Notification";
+import { truncate } from "../../../helpers/utils";
 
 const { Meta } = Card;
 
@@ -67,7 +68,7 @@ const ExploreCard = ({ data }) => {
           </span>
         }
       >
-        <Meta title={data?.store_name} description={data?.description_short} />
+        <Meta title={data?.store_name} description={truncate(data?.description_short)} />
         <div className="exploreCardFooter">
           {/* <span className="priceHeading">Price <span className="priceHeading">$$ ETH</span></span> */}
           <span className="rightSection">

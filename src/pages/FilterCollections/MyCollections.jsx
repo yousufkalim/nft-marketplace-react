@@ -24,6 +24,8 @@ const MyCollections = () => {
     next_page: 1,
   });
 
+  console.log("myCollections",myCollections)
+
   const fetchMyCollections = async () => {
     try {
       const res = await myCollectionsAPI(extraData?.next_page);

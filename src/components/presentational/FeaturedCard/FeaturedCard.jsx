@@ -15,6 +15,7 @@ import {
   unLikeNfts,
 } from "../../../services/collectionServices";
 import "./FeaturedCard.scss";
+import { truncate } from "../../../helpers/utils";
 
 const FeaturedCard = ({ data, isNft }) => {
   const history = useHistory();
@@ -49,9 +50,8 @@ const FeaturedCard = ({ data, isNft }) => {
   const likeNft = async () => {
     try {
       const res = await likeNfts(data?.guid);
-      console.log("res", res);
-      setIsLiked(res?.body?.like);
-      if (res?.body?.like) {
+      console.log("test",res?.body?.like);
+      if (res?.body?.like=='1' || res?.body?.like==true) {
         openNotification("Success", "Liked Successfully");
       }
     } catch (error) {
@@ -99,7 +99,7 @@ const FeaturedCard = ({ data, isNft }) => {
                 {data ? data?.store_name : "test store_name"}
               </span>
               <span className="desc">
-                {data ? data?.description_short : "test description"}
+                {data ? truncate(data?.description_short) : "test description"}
               </span>
               <span className="StatsSection">
                 <span className="avgSection">

@@ -234,19 +234,16 @@ const CreateCollectionForm = () => {
                   {categoryCodes?.body?.map((item) => {
                     return (
                       <Select.Option value={item?.code}>
-                        {item?.code} ({item?.description})
+                        {item?.description}
                       </Select.Option>
                     );
                   })}
                 </Select>
               </Form.Item>
 
-              <Form.Item
-                  name="telegramLink"
-                  label="Telegram Link"
-                >
-                  <Input placeholder="Telegram link" />
-                </Form.Item>
+              <Form.Item name="telegramLink" label="Telegram Link">
+                <Input placeholder="Telegram link" />
+              </Form.Item>
 
               <Form.Item
                 name="afterPurchaseMessage"
@@ -288,10 +285,10 @@ const CreateCollectionForm = () => {
                 ]}
               >
                 <Select placeholder="Minting Coin">
-                  {mintingCoin?.body?.map((item) => {
+                  {mintingCoin?.body?.slice(0,2)?.map((item) => {
                     return (
                       <Select.Option value={item?.code}>
-                        {item?.code} ({item?.description})
+                        {item?.description}
                       </Select.Option>
                     );
                   })}
@@ -384,7 +381,7 @@ const CreateCollectionForm = () => {
                   {layoutCodes?.body?.map((item) => {
                     return (
                       <Select.Option value={item?.code}>
-                        {item?.code} ({item?.description})
+                        {item?.description}
                       </Select.Option>
                     );
                   })}

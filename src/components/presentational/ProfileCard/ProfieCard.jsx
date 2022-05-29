@@ -37,7 +37,7 @@ const ProfileCard = () => {
           </span>
         }
       >
-        <Meta title={data?.first_name+data?.last_name}/>
+        <Meta title={data?.first_name+" "+data?.last_name}/>
         {/* <div className="ProfileCardFooter">
           <span className="priceHeading">
             Price <span className="priceHeading">$$ ETH</span>

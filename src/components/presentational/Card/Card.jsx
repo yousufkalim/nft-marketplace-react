@@ -9,6 +9,7 @@ import "./Card.scss";
 import { Link } from "react-router-dom";
 import { openNotification } from "../../Smart/Notification";
 import { followCollection, unFollowCollection } from "../../../services/collectionServices";
+import { truncate } from "../../../helpers/utils";
 
 const { Meta } = Card;
 
@@ -89,7 +90,7 @@ const NftCard = ({ showTopPick = false, data }) => {
       >
         <Meta
           title={data ? data?.store_name : "Test Title"}
-          description={data ? data?.description_short : "test description"}
+          description={data ? truncate(data?.description_short) : "test description"}
         />
       </Card>
     </div>

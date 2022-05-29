@@ -16,3 +16,9 @@ export const restrictedConfig = {
       "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization",
   },
 };
+
+export const truncate = (text = "", [h, t] = [30, 6]) => {
+  const head = text.slice(0, h)
+  const tail = text.slice(-1 * t, text.length)
+  return text.length > h + t ? [head, tail].join("...") : text
+}

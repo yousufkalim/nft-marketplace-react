@@ -35,9 +35,9 @@ const FeatureMobileCard = ({data}) => {
           </span>
         }
       >
-        <Meta title={data?.store_name} description={data?.description_short} />
+        <Meta title={data?.store_name} description={truncate(data?.description_short)} />
         <div className="exploreCardFooter">
-            <span className="priceHeading">Price <span className="priceHeading">$$ ETH</span></span>
+            {/* <span className="priceHeading">Price <span className="priceHeading">$$ ETH</span></span> */}
             <span className="rightSection" >
                 <span>
                 <img src={EYE_ICON} alt={'EYE_ICON'} />
