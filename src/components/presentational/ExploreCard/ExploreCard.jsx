@@ -6,15 +6,22 @@ import ORANGE_FRAME from "../../../images/orange_frame.svg";
 import { Tooltip } from "antd";
 import "./ExploreCard.scss";
 import { useHistory } from "react-router-dom";
-import { followCollection, unFollowCollection } from "../../../services/collectionServices";
+import { followCollection, getCollectionFollowers, unFollowCollection } from "../../../services/collectionServices";
 import { openNotification } from "../../Smart/Notification";
 import { truncate } from "../../../helpers/utils";
+import { useSelector } from "react-redux";
 
 const { Meta } = Card;
 
 const ExploreCard = ({ data }) => {
   const history = useHistory();
   const [followed,setIsFollowed] = useState(false);
+  const user = useSelector((state) => state?.auth?.user);
+  const [collectionFollowers, setCollectionFollowers] = useState([]);
+  const [extraData, setExtraData] = useState({
+    has_more: true,
+    next_page: 1,
+  });
 
   const handleClick = () => {
     history.push(`/collectionView/${data?.guid}`);
@@ -38,10 +45,51 @@ const ExploreCard = ({ data }) => {
   const unFollowCollections = async () => {
     try {
       const res = await unFollowCollection(data?.guid);
+      setIsFollowed(res?.body?.followed);
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
     }
   };
+
+  const getcollectionFollowers = async () => {
+    try {
+      if (extraData?.has_more) {
+        const res = await getCollectionFollowers(
+          data?.guid,
+          extraData?.next_page
+        );
+        if (res?.data?.body?.followers?.length) {
+          setCollectionFollowers([
+            ...collectionFollowers,
+            ...res?.data?.body?.followers,
+          ]);
+          setExtraData({
+            has_more: res?.data?.body?.has_more,
+            next_page: res?.data?.body?.next_page,
+          });
+        }
+        if (res?.data?.body?.has_more) {
+          await getcollectionFollowers();
+        } else {
+          return;
+        }
+      }
+    } catch (error) {
+      openNotification("Oops", error?.response?.data?.message);
+      return;
+    }
+  };
+
+  useEffect(async () => {
+    await getcollectionFollowers();
+    const isUserFollowing = collectionFollowers.find(
+      (item) => item.guid === user?.guid
+    );
+    if (isUserFollowing) {
+      setIsFollowed(true);
+    }
+  }, [collectionFollowers]);
+
 
 
   return (
@@ -53,8 +101,8 @@ const ExploreCard = ({ data }) => {
             <span className="ExploreCardImage" onClick={handleClick}>
               <img alt="example" src={data?.image_large_location} />
             </span>
-            <Tooltip title="Follow" color={"#303549"}>
-              <span className="frame" onClick={followTheCollection}  >
+            <Tooltip title={followed ? "UnFollow" : "Follow"} color={"#303549"}>
+              <span className="frame" onClick={followed ? unFollowCollections : followTheCollection}  >
                 <img src={FRAME_ICON} alt={"FRAME_ICON"} />
               </span>
             </Tooltip>

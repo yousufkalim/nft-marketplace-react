@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ExploreCard from "../../components/presentational/ExploreCard/ExploreCard";
 import { Row, Col } from "antd";
-import { allCollectionsAPI } from "../../services/explorePageServices";
 import "./CollectionNftView.scss";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import useWindowSize from "../../helpers/hooks";
@@ -22,13 +21,15 @@ const CollectionNftView = ({ collectionid }) => {
   const fetchExploreData = async () => {
     try {
       const res = await getCollectionNft(collectionid, extraData?.next_page);
+     if(res?.data?.body?.data?.length){
       setExploreData([...exploreData, ...res?.data?.body?.data]);
       setExtraData({
         next_page: res?.data?.body?.next_page,
         has_more: res?.data?.body?.has_more,
       });
+     }
     } catch (error) {
-      // openNotification("Oops", error?.response?.data?.message);
+      openNotification("Oops", error?.response?.data?.message);
     }
   };
   useEffect(() => {

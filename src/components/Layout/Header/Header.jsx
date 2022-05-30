@@ -20,7 +20,8 @@ const AppHeader = () => {
   const [collections, setCollections] = useState([]);
   const [browserWidth] = useWindowSize();
   const [visible, setVisible] = useState(false);
-  const history=useHistory()
+  const history = useHistory();
+  const isLoggedIn = localStorage.getItem("token");
 
   const dispatch = useDispatch();
 
@@ -39,7 +40,7 @@ const AppHeader = () => {
     setVisible(false);
   };
 
-  const menu = (
+  const menu = isLoggedIn ? (
     <Menu
       items={[
         {
@@ -52,11 +53,20 @@ const AppHeader = () => {
         },
       ]}
     />
+  ) : (
+    <Menu
+      items={[
+        {
+          key: "1",
+          label: <Link to={"/auth/login"}>Login</Link>,
+        },
+      ]}
+    />
   );
 
-  const handleClick=(id)=>{
-    history.push(`/collectionView/${id}`)
-  }
+  const handleClick = (id) => {
+    history.push(`/collectionView/${id}`);
+  };
 
   return (
     <div className="header">
@@ -100,8 +110,10 @@ const AppHeader = () => {
               >
                 {collections?.length ? (
                   collections?.map((location) => (
-                    <Option key={location.guid} value={location.store_name} >
-                       <div  onClick={()=>handleClick(location?.guid)}>{location.store_name}</div> 
+                    <Option key={location.guid} value={location.store_name}>
+                      <div onClick={() => handleClick(location?.guid)}>
+                        {location.store_name}
+                      </div>
                     </Option>
                   ))
                 ) : (

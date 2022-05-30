@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "antd";
 import FRAME_ICON from "../../../images/frame.svg";
 import TEST_IMG from "../../../images/test_img.png";
@@ -8,18 +8,30 @@ import { Tooltip } from "antd";
 import "./Card.scss";
 import { Link } from "react-router-dom";
 import { openNotification } from "../../Smart/Notification";
-import { followCollection, unFollowCollection } from "../../../services/collectionServices";
+import {
+  followCollection,
+  getCollectionFollowers,
+  unFollowCollection,
+} from "../../../services/collectionServices";
 import { truncate } from "../../../helpers/utils";
+import { useSelector } from "react-redux";
 
 const { Meta } = Card;
 
 const NftCard = ({ showTopPick = false, data }) => {
   const [isFollowed, setIsFollowed] = useState(false);
+  const user = useSelector((state) => state?.auth?.user);
   const [isLiked, setIsLiked] = useState(false);
+  const [collectionFollowers, setCollectionFollowers] = useState([]);
+  const [extraData, setExtraData] = useState({
+    has_more: true,
+    next_page: 1,
+  });
   const followCollections = async () => {
     try {
       const res = await followCollection(data?.guid);
       setIsFollowed(res?.data?.body?.followed);
+      openNotification("Success", "Followed Successfully");
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
     }
@@ -28,25 +40,51 @@ const NftCard = ({ showTopPick = false, data }) => {
     try {
       const res = await unFollowCollection(data?.guid);
       setIsFollowed(res?.data?.body?.followed);
+      openNotification("Success", "UnFollowed Successfully");
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
     }
   };
 
-  const likeCollection = async () => {
+
+  const getcollectionFollowers = async () => {
     try {
-      const res = await followCollection(data?.guid);
-      setIsLiked(res?.data?.body?.liked);
+      if (extraData?.has_more) {
+        const res = await getCollectionFollowers(
+          data?.guid,
+          extraData?.next_page
+        );
+        if (res?.data?.body?.followers?.length) {
+          setCollectionFollowers([
+            ...collectionFollowers,
+            ...res?.data?.body?.followers,
+          ]);
+          setExtraData({
+            has_more: res?.data?.body?.has_more,
+            next_page: res?.data?.body?.next_page,
+          });
+        }
+        if (res?.data?.body?.has_more) {
+          await getcollectionFollowers();
+        } else {
+          return;
+        }
+      }
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
+      return;
     }
   };
 
-  // useEffect(()=>{
-  //   const getCollectionFollwers=()=>{
-
-  //   }
-  // })
+  useEffect(async () => {
+    await getcollectionFollowers();
+    const isUserFollowing = collectionFollowers.find(
+      (item) => item.guid === user?.guid
+    );
+    if (isUserFollowing) {
+      setIsFollowed(true);
+    }
+  }, [collectionFollowers]);
 
   return (
     <div className="imageCard">
@@ -64,7 +102,7 @@ const NftCard = ({ showTopPick = false, data }) => {
             </Link>
 
             <Tooltip
-              title={isFollowed ? 'UNFOLLOW' : "FOLLOW"}
+              title={isFollowed ? "UNFOLLOW" : "FOLLOW"}
               color={"#303549"}
               overlayClassName="favouriteToolTip"
             >
@@ -90,7 +128,9 @@ const NftCard = ({ showTopPick = false, data }) => {
       >
         <Meta
           title={data ? data?.store_name : "Test Title"}
-          description={data ? truncate(data?.description_short) : "test description"}
+          description={
+            data ? truncate(data?.description_short) : "test description"
+          }
         />
       </Card>
     </div>

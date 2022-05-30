@@ -26,9 +26,26 @@ export const createCollectionAPI = async (collectionInfo) => {
   return await axios.post(
     `https://nftdepot-api.azurewebsites.net/collections/create`,
     body,
-    restrictedConfig,
+    restrictedConfig
   );
 };
+
+// export const createCollectionAPI = async (collectionInfo) => {
+//   const body = collectionInfo;
+//   console.log("body", body);
+//   const res = await fetch(
+//     `https://nftdepot-api.azurewebsites.net/collections/create`,
+//     {
+//       method: "POST",
+//       body,
+//       headers: {
+//         Authorization: `Bearer ${localStorage.getItem("token")}`,
+//       },
+//     }
+//   );
+//   const resKey = await res.json();
+//   return resKey;
+// };
 
 export const codesAPI = async (codes) => {
   return await axios.get(

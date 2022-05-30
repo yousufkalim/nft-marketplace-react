@@ -75,3 +75,9 @@ export const collectionView = async (id) => {
     apiConfig
   );
 };
+export const getCollectionFollowers = async (id,pageNumber) => {
+  return await axios.get(
+    `https://nftdepot-api.azurewebsites.net/collections/${id}/followers/${pageNumber}`,
+    apiConfig
+  );
+};

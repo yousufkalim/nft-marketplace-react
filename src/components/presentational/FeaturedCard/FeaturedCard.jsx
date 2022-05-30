@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card } from "antd";
 import TEST_ICON from "../../../images/test_footer.svg";
 import TEST_IMG from "../../../images/test_img.png";
@@ -10,16 +10,25 @@ import { useHistory } from "react-router-dom";
 import { openNotification } from "../../Smart/Notification";
 import {
   followCollection,
+  getCollectionFollowers,
   likeNfts,
   unFollowCollection,
   unLikeNfts,
 } from "../../../services/collectionServices";
 import "./FeaturedCard.scss";
 import { truncate } from "../../../helpers/utils";
+import { useSelector } from "react-redux";
 
 const FeaturedCard = ({ data, isNft }) => {
   const history = useHistory();
   const [isFollowed, setIsFollowed] = useState(false);
+  const user = useSelector((state) => state?.auth?.user);
+  const [isLiked, setIsLiked] = useState(false);
+  const [collectionFollowers, setCollectionFollowers] = useState([]);
+  const [extraData, setExtraData] = useState({
+    has_more: true,
+    next_page: 1,
+  });
   const handleClick = () => {
     if (isNft) {
       history.push(`/nftDetail/${data?.guid}`);
@@ -43,6 +52,8 @@ const FeaturedCard = ({ data, isNft }) => {
     try {
       const res = await unFollowCollection(data?.guid);
       setIsFollowed(res?.data?.body?.followed);
+      openNotification("Success", "UnFollowed Successfully");
+
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
     }
@@ -50,8 +61,8 @@ const FeaturedCard = ({ data, isNft }) => {
   const likeNft = async () => {
     try {
       const res = await likeNfts(data?.guid);
-      console.log("test",res?.body?.like);
-      if (res?.body?.like=='1' || res?.body?.like==true) {
+      console.log("test", res?.body?.like);
+      if (res?.body?.like == "1" || res?.body?.like == true) {
         openNotification("Success", "Liked Successfully");
       }
     } catch (error) {
@@ -66,6 +77,47 @@ const FeaturedCard = ({ data, isNft }) => {
       openNotification("Oops", error?.response?.data?.message);
     }
   };
+
+  const getcollectionFollowers = async () => {
+    try {
+      if (extraData?.has_more) {
+        const res = await getCollectionFollowers(
+          data?.guid,
+          extraData?.next_page
+        );
+        if (res?.data?.body?.followers?.length) {
+          setCollectionFollowers([
+            ...collectionFollowers,
+            ...res?.data?.body?.followers,
+          ]);
+          setExtraData({
+            has_more: res?.data?.body?.has_more,
+            next_page: res?.data?.body?.next_page,
+          });
+        }
+        if (res?.data?.body?.has_more) {
+          await getcollectionFollowers();
+        } else {
+          return;
+        }
+      }
+    } catch (error) {
+      openNotification("Oops", error?.response?.data?.message);
+      return;
+    }
+  };
+
+  useEffect(async () => {
+    await getcollectionFollowers();
+    const isUserFollowing = collectionFollowers.find(
+      (item) => item.guid === user?.guid
+    );
+    if (isUserFollowing) {
+      setIsFollowed(true);
+    }
+  }, [collectionFollowers]);
+
+  console.log(collectionFollowers);
 
   return (
     <div className="featuredCard">
@@ -113,10 +165,29 @@ const FeaturedCard = ({ data, isNft }) => {
               </span>
             </div>
             <div className="frameIconSection">
-              <Tooltip title={isNft ? "Like" : "Follow"} color={"#303549"}>
+              <Tooltip
+                title={
+                  isNft
+                    ? isLiked
+                      ? "Unlike"
+                      : "Like"
+                    : isFollowed
+                    ? "Unfollow"
+                    : "Follow"
+                }
+                color={"#303549"}
+              >
                 <span
                   className="orangeFrame"
-                  onClick={isNft ? likeNft : followCollections}
+                  onClick={
+                    isNft
+                    ? isLiked
+                      ? unLikeNft
+                      : likeNft
+                    : isFollowed
+                    ? unFollowCollections
+                    : followCollections
+                  }
                 >
                   <img
                     src={isNft ? LIKE_ICON : ORANGE_FRAME}

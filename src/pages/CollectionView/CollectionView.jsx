@@ -61,7 +61,7 @@ const CollectionView = ({ match }) => {
                   ? collectionDetails?.image_banner_location
                   : PAGE_HEADER_IMG
               }
-              alt={"PAGE_HEADER_IMG"}
+              alt={"COLLECTION_BANNER_IMG"}
             />
             <div className="CollectionViewHeadingSection">
               {/* <span className="CollectionViewText">
