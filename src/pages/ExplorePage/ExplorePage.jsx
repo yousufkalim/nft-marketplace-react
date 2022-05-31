@@ -45,7 +45,6 @@ const ExplorePage = () => {
     fetchExploreData();
   }, []);
 
-  console.log("testData",testData)
 
   const filterExplore = (exploreData) => {
     if (exploreData?.image_large_location?.includes("https")) {
@@ -92,7 +91,10 @@ const ExplorePage = () => {
               hasMore={extraData?.has_more}
               loader={
                 <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
-                  {arr?.map((item, index) => {
+                  {browserWidth < 620 ? (
+                     <LoadingCard />
+                  ) : 
+                  arr?.map((item, index) => {
                     return (
                       <Col
                         className="gutter-row"
@@ -103,6 +105,8 @@ const ExplorePage = () => {
                       </Col>
                     );
                   })}
+                  
+                
                 </Row>
               }
               endMessage={

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import ExploreCard from "../../components/presentational/ExploreCard/ExploreCard";
 import { Row, Col } from "antd";
 import "./CollectionNftView.scss";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
@@ -8,6 +7,7 @@ import { openNotification } from "../../components/Smart/Notification";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { getCollectionNft } from "../../services/collectionServices";
 import LoadingCard from "../../components/presentational/LoadingCard/LoadingCard";
+import CollectionNftCard from "../../components/presentational/CollectionNftCard/CollectionNftCard";
 
 const CollectionNftView = ({ collectionid }) => {
 
@@ -35,6 +35,8 @@ const CollectionNftView = ({ collectionid }) => {
   useEffect(() => {
     fetchExploreData();
   }, []);
+
+  console.log("exploreData",exploreData,extraData)
 
   const filterCollections = (topHits) => {
     if (topHits?.image_large_location?.includes("https")) {
@@ -82,16 +84,14 @@ const CollectionNftView = ({ collectionid }) => {
             }
           >
             <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
-              {exploreData?.filter(filterCollections)?.map((item, index) => {
+              {exploreData?.map((item, index) => {
                 return (
                   <Col
                     className="gutter-row"
                     span={browserWidth < 620 ? 24 : 8}
                     key={index}
                   >
-                    <Link to={"/nftDetail"}>
-                      <ExploreCard data={item} />
-                    </Link>
+                      <CollectionNftCard data={item} />
                   </Col>
                 );
               })}

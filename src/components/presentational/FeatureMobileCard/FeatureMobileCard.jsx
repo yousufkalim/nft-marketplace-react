@@ -5,6 +5,7 @@ import EYE_ICON from "../../../images/eye_icon.svg";
 import ORANGE_FRAME from "../../../images/orange_frame.svg";
 import { Tooltip } from "antd";
 import "./FeatureMobileCard.scss";
+import { truncate } from "../../../helpers/utils";
 
 const { Meta } = Card;
 

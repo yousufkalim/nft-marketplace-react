@@ -15,7 +15,6 @@ const ProfileCard = () => {
   return (
     <div className="ProfileCard">
       <Card
-        hoverable
         cover={
           <span className="ProfileCardWrapper">
             <span className="ProfileCardImage">
