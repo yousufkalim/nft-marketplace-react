@@ -32,8 +32,9 @@ const FeaturedCard = ({ data, isNft }) => {
   const handleClick = () => {
     if (isNft) {
       history.push(`/nftDetail/${data?.guid}`);
+    } else {
+      history.push(`/collectionView/${data?.guid}`);
     }
-    history.push(`/collectionView/${data?.guid}`);
   };
 
   const followCollections = async () => {
@@ -53,7 +54,6 @@ const FeaturedCard = ({ data, isNft }) => {
       const res = await unFollowCollection(data?.guid);
       setIsFollowed(res?.data?.body?.followed);
       openNotification("Success", "UnFollowed Successfully");
-
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
     }
@@ -181,12 +181,12 @@ const FeaturedCard = ({ data, isNft }) => {
                   className="orangeFrame"
                   onClick={
                     isNft
-                    ? isLiked
-                      ? unLikeNft
-                      : likeNft
-                    : isFollowed
-                    ? unFollowCollections
-                    : followCollections
+                      ? isLiked
+                        ? unLikeNft
+                        : likeNft
+                      : isFollowed
+                      ? unFollowCollections
+                      : followCollections
                   }
                 >
                   <img

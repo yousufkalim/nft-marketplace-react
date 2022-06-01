@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from "react";
 import { Card } from "antd";
-import FRAME_ICON from "../../../images/frame.svg";
+import LIKE_ICON from "../../../images/like_icon.svg";
 import EYE_ICON from "../../../images/eye_icon.svg";
 import ORANGE_FRAME from "../../../images/orange_frame.svg";
 import { Tooltip } from "antd";
@@ -28,68 +28,68 @@ const CollectionNftCard = ({ data }) => {
     history.push(`/nftDetail/${data?.guid}`);
   };
 
-  const followTheCollection = async () => {
-    try {
-      const res = await followCollection(data?.guid);
-      setIsFollowed(res?.body?.followed);
-      if(res?.body?.followed)
-      {
-      openNotification("Success","Followed Successfully");
-      }
+  // const followTheCollection = async () => {
+  //   try {
+  //     const res = await followCollection(data?.guid);
+  //     setIsFollowed(res?.body?.followed);
+  //     if(res?.body?.followed)
+  //     {
+  //     openNotification("Success","Followed Successfully");
+  //     }
 
-    } catch (error) {
-      openNotification("Oops", error?.response?.data?.message);
-      return error;
+  //   } catch (error) {
+  //     openNotification("Oops", error?.response?.data?.message);
+  //     return error;
 
-    }
-  };
-  const unFollowCollections = async () => {
-    try {
-      const res = await unFollowCollection(data?.guid);
-      setIsFollowed(res?.body?.followed);
-    } catch (error) {
-      openNotification("Oops", error?.response?.data?.message);
-    }
-  };
+  //   }
+  // };
+  // const unFollowCollections = async () => {
+  //   try {
+  //     const res = await unFollowCollection(data?.guid);
+  //     setIsFollowed(res?.body?.followed);
+  //   } catch (error) {
+  //     openNotification("Oops", error?.response?.data?.message);
+  //   }
+  // };
 
-  const getcollectionFollowers = async () => {
-    try {
-      if (extraData?.has_more) {
-        const res = await getCollectionFollowers(
-          data?.guid,
-          extraData?.next_page
-        );
-        if (res?.data?.body?.followers?.length) {
-          setCollectionFollowers([
-            ...collectionFollowers,
-            ...res?.data?.body?.followers,
-          ]);
-          setExtraData({
-            has_more: res?.data?.body?.has_more,
-            next_page: res?.data?.body?.next_page,
-          });
-        }
-        if (res?.data?.body?.has_more) {
-          await getcollectionFollowers();
-        } else {
-          return;
-        }
-      }
-    } catch (error) {
-      openNotification("Oops", error?.response?.data?.message);
-      return;
-    }
-  };
+  // const getcollectionFollowers = async () => {
+  //   try {
+  //     if (extraData?.has_more) {
+  //       const res = await getCollectionFollowers(
+  //         data?.guid,
+  //         extraData?.next_page
+  //       );
+  //       if (res?.data?.body?.followers?.length) {
+  //         setCollectionFollowers([
+  //           ...collectionFollowers,
+  //           ...res?.data?.body?.followers,
+  //         ]);
+  //         setExtraData({
+  //           has_more: res?.data?.body?.has_more,
+  //           next_page: res?.data?.body?.next_page,
+  //         });
+  //       }
+  //       if (res?.data?.body?.has_more) {
+  //         await getcollectionFollowers();
+  //       } else {
+  //         return;
+  //       }
+  //     }
+  //   } catch (error) {
+  //     openNotification("Oops", error?.response?.data?.message);
+  //     return;
+  //   }
+  // };
 
-  useEffect(async () => {
-    await getcollectionFollowers();
-    const isUserFollowing = collectionFollowers.find(
-      (item) => item.guid === user?.guid
-    );
-    if (isUserFollowing) {
-      setIsFollowed(true);
-    }
-  }, [collectionFollowers]);
+  // useEffect(async () => {
+  //   await getcollectionFollowers();
+  //   const isUserFollowing = collectionFollowers.find(
+  //     (item) => item.guid === user?.guid
+  //   );
+  //   if (isUserFollowing) {
+  //     setIsFollowed(true);
+  //   }
+  // }, [collectionFollowers]);
 
 
 
@@ -103,8 +103,10 @@ const CollectionNftCard = ({ data }) => {
               <img alt="example" src={data?.nft_data?.image_location} />
             </span>
             <Tooltip title={followed ? "UnFollow" : "Follow"} color={"#303549"}>
-              <span className="frame" onClick={followed ? unFollowCollections : followTheCollection}  >
-                <img src={FRAME_ICON} alt={"FRAME_ICON"} />
+              <span className="frame" 
+              // onClick={followed ? unFollowCollections : followTheCollection} 
+               >
+                <img src={LIKE_ICON} alt={"LIKE_ICON"} />
               </span>
             </Tooltip>
 

@@ -18,7 +18,6 @@ const CollectedNfts = ({ setMyCollectedNftsCount }) => {
   });
   const [collections, setCollections] = useState([]);
 
-  console.log("collect", collections)
 
   const fetchCollections = async () => {
     try {
@@ -52,7 +51,7 @@ const CollectedNfts = ({ setMyCollectedNftsCount }) => {
                 return (
                   <Col
                     className="gutter-row"
-                    span={browserWidth < 620 ? 24 : 8}
+                    span={browserWidth < 620 ? 24 : 12}
                     key={index}
                   >
                     <FeaturedLoadingCard isNft={true} />

@@ -80,7 +80,7 @@ const CreateCollectionForm = () => {
       category_code: values.category ?? "",
       url_name: "",
       delay_days: delayDays,
-      royalty_percent: values.royaltyPercent ?? 0,
+      royalty_percent: values.royaltyPercent ?? 2,
       third_party_royalty_percent: values.thirdPartyRoyaltyPercent ?? 0,
       third_party_wallet_id: values.thirdPartyWalletId ?? "",
       who_pays_fees: "Seller",
@@ -325,7 +325,7 @@ const CreateCollectionForm = () => {
                 />
               </Form.Item>
 
-              <Form.Item
+              {/* <Form.Item
                 name="royaltyPercent"
                 label="Royalty Percent"
                 rules={[
@@ -336,35 +336,49 @@ const CreateCollectionForm = () => {
                 ]}
               >
                 <InputNumber placeholder="Royalty Percent" controls={false} />
-              </Form.Item>
+              </Form.Item> */}
 
               <Form.Item
                 name="thirdPartyRoyaltyPercent"
-                label="Third Party Royalty Percent"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input third Party Royalty Percent!",
-                  },
-                ]}
+                label={<div>Royalty Percent
+                  <Tooltip title=" This is the “Royalty Percentage” you will receive for each resale after the 1st sale. This will be deducted from the sale price and paid to the “Payout Wallet”."
+                  color={"#303549"}
+                  overlayClassName="favouriteToolTip"
+                  >
+                   <span className="infoIcon"> ? </span>
+                    </Tooltip>
+                </div>}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: "Please input third Party Royalty Percent!",
+                //   },
+                // ]}
               >
                 <InputNumber
-                  placeholder="Third Party Royalty Percent"
+                  placeholder="Royalty Percent"
                   controls={false}
                 />
               </Form.Item>
 
               <Form.Item
                 name="thirdPartyWalletId"
-                label="Third Party Wallet Id"
+                label={<div>Payout Wallet
+                  <Tooltip title="This is the Wallet ID that will receive the first sale and future royalty payments (if applicable) for this collection."
+                  color={"#303549"}
+                  overlayClassName="favouriteToolTip"
+                  >
+                   <span className="infoIcon"> ? </span>
+                    </Tooltip>
+                </div>}
                 rules={[
                   {
                     required: true,
-                    message: "Please input Third party wallet id!",
+                    message: "Please input Payout Wallet id!",
                   },
                 ]}
               >
-                <Input placeholder="Wallet to get Royalty Payments" />
+                <Input placeholder="Wallet ID we will payout the royalty to" />
               </Form.Item>
 
               <Form.Item

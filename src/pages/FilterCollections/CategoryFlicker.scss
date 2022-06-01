@@ -48,4 +48,42 @@
   .changeCursor{
     cursor: pointer;
   }
+  .resetFilters{
+    font-family: "Rubik";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: $GrayColor;
+    // margin-left: 27px;
+    cursor: pointer;
+    @include mobile {
+      // margin-left: unset;
+      // margin-top: 12px;
+    }
+  }
+}
+.resetWrapper{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 63%;
+  margin: 0 auto;
+  @include mobile{
+    // display: none;
+  }
+  .resetFilters{
+    font-family: "Rubik";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: $GrayColor;
+    // margin-left: 27px;
+    cursor: pointer;
+    @include mobile {
+      // margin-left: unset;
+      // margin-top: 12px;
+    }
+  }
 }

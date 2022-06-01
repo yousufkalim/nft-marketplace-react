@@ -13,18 +13,24 @@ import useWindowSize from "../../helpers/hooks";
 // import DetailSection from "./DetailSection";
 import "./NftDetail.scss";
 import { nftDetailsApi } from "../../services/nftServices";
+import CollectionNftView from "../CollectionView/CollectionNftView";
+import Spin from "../../components/presentational/Spin";
 
 
 const NftDetails = ({match}) => {
   const arr=[1,2,3,4,5,6]
   const [browserWidth] = useWindowSize();
   const [nftData,setNftData] =useState([]);
+  const [loading,setLoading] = useState(false);
+  const [count,setCount]=useState(0);
 
   useEffect(()=>{
     const getNftDetail = async () => {
+      setLoading(true);
       const res=await nftDetailsApi(match?.params?.id);
       console.log("res",res);
       setNftData(res?.data?.body);
+      setLoading(false);
     }
     getNftDetail();
   },[])
@@ -48,13 +54,20 @@ const NftDetails = ({match}) => {
         <div className="heading">
           <span className="seeMore">More from this collection</span>
           <span>
-            <span className="view">View all</span>{" "}
+            {/* <span className="view">View all</span>{" "} */}
             {/* <Link to={"/collectionView"}> */}
-              <img src={RIGHT_ARROW} alt="RIGHT_ARROW" />
+              {/* <img src={RIGHT_ARROW} alt="RIGHT_ARROW" /> */}
             {/* </Link>{" "} */}
           </span>
         </div>
-        {browserWidth < 620 ? (
+        {loading ?
+        <Spin/>
+        :
+        <CollectionNftView collectionid={nftData?.store_front_guid} setCount={setCount}/>
+
+        }
+        {/* <CollectionNftView collectionid={nftData?.store_front_guid}/> */}
+        {/* {browserWidth < 620 ? (
            <Carousel  dotPosition={"bottom"}>
             {arr.map(() => {
                 return (
@@ -74,7 +87,7 @@ const NftDetails = ({match}) => {
               })}
             </Row>
           </div>
-        )}
+        )} */}
       </div>
       <NewsLetter />
     </div>

@@ -12,6 +12,7 @@ import "./index.scss";
 import useWindowSize from "../../helpers/hooks";
 import { getTopHitsAPI } from "../../services/homePageServices";
 import { openNotification } from "../../components/Smart/Notification";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const HomePage = () => {
   const [browserWidth] = useWindowSize();
@@ -29,6 +30,7 @@ const HomePage = () => {
 
     topHits();
   }, []);
+
   return (
     <div className="homePage">
       <div className="subHeader">
@@ -50,10 +52,10 @@ const HomePage = () => {
               of talented artists from around the world
             </span>
             <span className="btnSection">
-              <Link to="/explore" className="link">
+              <a href="/explore" target={'_self'} className="link">
                 {" "}
                 <span className="explore">Explore</span>
-              </Link>
+              </a>
               <Link to="/createCollection" className="link">
                 <span className="create">Create</span>
               </Link>

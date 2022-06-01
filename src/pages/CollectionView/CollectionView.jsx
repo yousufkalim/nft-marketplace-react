@@ -20,6 +20,7 @@ import { openNotification } from "../../components/Smart/Notification";
 const CollectionView = ({ match }) => {
   const [collectionDetails, setCollectionDetails] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [count,setCount]=useState(0);
 
   useEffect(() => {
     const getCollectionDetails = async () => {
@@ -170,9 +171,9 @@ const CollectionView = ({ match }) => {
                 <img src={FILTER_IMG} alt={"FILTER_IMG"} />
               </div>
             </div>
-            <div className="reset">Showing 54 results</div>
+            <div className="reset">Showing {count} results</div>
           </div>
-          <CollectionNftView collectionid={match?.params?.id} />
+          <CollectionNftView collectionid={match?.params?.id} setCount={setCount} />
           <NewsLetter />
         </div>
       )}
