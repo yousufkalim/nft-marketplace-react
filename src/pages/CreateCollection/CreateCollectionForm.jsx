@@ -86,7 +86,7 @@ const CreateCollectionForm = () => {
       who_pays_fees: "Seller",
     };
     try {
-      const res = await checkStroeNameAvailability(values.storename);
+      const res = await checkStroeNameAvailability(values?.storename);
       if (res?.data?.body?.exists) {
         openNotification("Oops", "Store name already exists");
         setIsLoading(false);
@@ -231,9 +231,9 @@ const CreateCollectionForm = () => {
                 ]}
               >
                 <Select placeholder="Category">
-                  {categoryCodes?.body?.map((item) => {
+                  {categoryCodes?.body?.map((item,index) => {
                     return (
-                      <Select.Option value={item?.code}>
+                      <Select.Option value={item?.code} key={item+index}>
                         {item?.description}
                       </Select.Option>
                     );
@@ -285,9 +285,9 @@ const CreateCollectionForm = () => {
                 ]}
               >
                 <Select placeholder="Minting Coin">
-                  {mintingCoin?.body?.slice(0,2)?.map((item) => {
+                  {mintingCoin?.body?.slice(0,2)?.map((item,index) => {
                     return (
-                      <Select.Option value={item?.code}>
+                      <Select.Option value={item?.code} key={item+index}>
                         {item?.description}
                       </Select.Option>
                     );
@@ -392,9 +392,9 @@ const CreateCollectionForm = () => {
                 ]}
               >
                 <Select placeholder="layout">
-                  {layoutCodes?.body?.map((item) => {
+                  {layoutCodes?.body?.map((item,index) => {
                     return (
-                      <Select.Option value={item?.code}>
+                      <Select.Option value={item?.code} key={item+index}>
                         {item?.description}
                       </Select.Option>
                     );

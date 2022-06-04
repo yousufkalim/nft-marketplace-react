@@ -41,9 +41,8 @@ const CreateCollectionUploadImage = () => {
             image_banner_location: bannerImageLocation?.body?.url,
           };
           const res = await createCollectionAPI(data);
-          console.log("newlyRes", res);
           openNotification("Success", "Collection created successfully , Lets Add some NFTs to your collection");
-          history.push(`/createNft/${res?.data?.body?.collection_id}`);
+          history.push(`/createNft/${res?.body?.collection_id}`);
           setIsLoading(false);
         } catch (error) {
           setIsLoading(false);
