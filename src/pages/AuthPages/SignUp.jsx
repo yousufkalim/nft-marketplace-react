@@ -102,7 +102,7 @@ const SignUp = () => {
                     },
                   ]}
                 >
-                  <Input placeholder="LirstName" />
+                  <Input placeholder="LastName" />
                 </Form.Item>
 
                 <Form.Item
