@@ -117,7 +117,6 @@ const FeaturedCard = ({ data, isNft }) => {
     }
   }, [collectionFollowers]);
 
-  console.log(collectionFollowers);
 
   return (
     <div className="featuredCard">

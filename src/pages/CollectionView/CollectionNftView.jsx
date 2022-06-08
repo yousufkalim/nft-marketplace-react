@@ -20,8 +20,9 @@ const CollectionNftView = ({ collectionid, setCount }) => {
     next_page: 1,
   });
   const fetchExploreData = async () => {
-    // try {
+    try {
       const res = await getCollectionNft(collectionid, extraData?.next_page);
+      console.log("res",res)
       if (res?.data?.body?.data?.length) {
         setExploreData([...exploreData, ...res?.data?.body?.data]);
         setExtraData({
@@ -30,9 +31,9 @@ const CollectionNftView = ({ collectionid, setCount }) => {
         });
         setCount(exploreData?.length);
       }
-    // } catch (error) {
-    //   openNotification("Oops", error?.response?.data?.message);
-    // }
+    } catch (error) {
+      openNotification("Oops", error?.response?.data?.message);
+    }
   };
   useEffect(async () => {
     await fetchExploreData();
