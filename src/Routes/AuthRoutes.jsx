@@ -22,7 +22,6 @@ const AuthRoutes = () => {
             <Route path="/auth/login" exact component={Login} />
             <Route path="/auth/signup" exact component={SignUp} />
             <Route path="/auth/forgotPassword" exact component={ForgotPassword}/>
-            <Route path="/auth/TermsAndCondition" exact component={TermsAndCondition}/>
             <Redirect from="/auth" to="/auth/login" />
           </Switch>
       </Content>

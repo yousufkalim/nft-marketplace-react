@@ -14,10 +14,13 @@ import useWindowSize from "../../helpers/hooks";
 
 const SignUp = () => {
   const [loading,setLoading]=useState(false);
+  const [isAgree, setIsAgree] = useState(false);
+  const [newsTeller, setNewsTeller] = useState(false);
 
   const history=useHistory()
   const onFinish = async (values) => {
-    debugger
+  if(isAgree)
+  {
     setLoading(true);
     try{
     const data = {
@@ -37,8 +40,11 @@ const SignUp = () => {
     catch(error){
       setLoading(false);
       openNotification("Oops",error?.response?.data?.message);
-
     }
+  }
+  else{
+    openNotification("Error",'Please agree to the terms & conditions.');
+  }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -190,19 +196,16 @@ const SignUp = () => {
                 </Form.Item >
                 <Form.Item 
                 name="termsAndCondition"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please agree to the terms & conditions.",
-                  },
-                ]}
-                valuePropName = "checked"
+                
                 >
-                  <Radio >I agreee to the <a href="/auth/TermsAndCondition" target="_blank">Terms  & Conditions</a></Radio>
+                  <Radio checked={isAgree}
+                onClick={() => setIsAgree((prev) => !prev)}>I agreee to the <a href="/TermsAndCondition" target="_blank" style={{color:'#F37342'}}>Terms  & Conditions</a></Radio>
                   </Form.Item> 
 
                   <Form.Item name="newsTeller">
-                    <Radio >
+                    <Radio checked={newsTeller}
+                onClick={() => setNewsTeller((prev) => !prev)}>
+
                     I want to subscribe to the newsletter and other updates 
                     </Radio>
                   </Form.Item>

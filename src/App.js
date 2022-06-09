@@ -3,7 +3,7 @@ import MainLayout from "./components/Layout/Layout";
 import AuthRouter from "./HOC/AuthRouter";
 import PrivateRouter from "./HOC/PrivateRouter";
 import AuthRoutes from "./Routes/AuthRoutes";
-import { Switch } from "react-router-dom";
+import { Switch,Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { VerifyUser } from "./services/authServices";
 import {
@@ -14,6 +14,7 @@ import {
 } from "./store/auth/authActions";
 import 'antd/dist/antd.min.css';
 import "./App.scss";
+import TermsAndCondition from "./pages/AuthPages/TermsAndCondition";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -55,6 +56,7 @@ function App() {
     <>
       {!isLoading ? (
         <Switch>
+          <Route path="/TermsAndCondition" component={TermsAndCondition}/>
           <AuthRouter path="/auth" component={AuthRoutes} />
           <PrivateRouter path="/" component={MainLayout} />
         </Switch>
