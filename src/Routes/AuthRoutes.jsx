@@ -7,6 +7,7 @@ import SignUp from "../pages/AuthPages/SignUp";
 import ForgotPassword from "../pages/AuthPages/ForgotPassword";
 import { Layout } from "antd";
 import '../components/Layout/Layout.scss';
+import TermsAndCondition from "../pages/AuthPages/TermsAndCondition";
 const { Header, Footer, Content } = Layout;
 
 const AuthRoutes = () => {
@@ -21,6 +22,7 @@ const AuthRoutes = () => {
             <Route path="/auth/login" exact component={Login} />
             <Route path="/auth/signup" exact component={SignUp} />
             <Route path="/auth/forgotPassword" exact component={ForgotPassword}/>
+            <Route path="/auth/TermsAndCondition" exact component={TermsAndCondition}/>
             <Redirect from="/auth" to="/auth/login" />
           </Switch>
       </Content>
