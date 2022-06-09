@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PAGE_HEADER from "../../images/PageHeader.png";
 import AUTH_ICON from "../../images/auth_icon.svg";
-import { Input, Form, Button } from "antd";
+import { Input, Form, Button,Radio } from "antd";
 import { Link } from "react-router-dom";
 import { SignUpAPI } from "../../services/authServices";
 import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
@@ -14,8 +14,10 @@ import useWindowSize from "../../helpers/hooks";
 
 const SignUp = () => {
   const [loading,setLoading]=useState(false);
+
   const history=useHistory()
   const onFinish = async (values) => {
+    debugger
     setLoading(true);
     try{
     const data = {
@@ -25,6 +27,7 @@ const SignUp = () => {
       password: values.password,
       confirm_password: values.confirmPassword,
       wallet_id: values.wallet_id || "0xE7b3D35c1939592332735E6300b4DC00d3A3E5B0",
+      // newsTeller:values.newsTeller
     };
     const res = await SignUpAPI(data);
     setLoading(false);
@@ -83,6 +86,9 @@ const SignUp = () => {
               >
                 <Form.Item
                   name="firstName"
+                  label="First Name"
+                  labelCol={{span:24}}
+                  wrapperCol={{span:24}}
                   rules={[
                     {
                       required: true,
@@ -95,6 +101,9 @@ const SignUp = () => {
 
                 <Form.Item
                   name="lastName"
+                  label="Last Name"
+                  labelCol={{span:24}}
+                  wrapperCol={{span:24}}
                   rules={[
                     {
                       required: true,
@@ -107,6 +116,9 @@ const SignUp = () => {
 
                 <Form.Item
                   name="email"
+                  label="Email"
+                  labelCol={{span:24}}
+                  wrapperCol={{span:24}}
                   rules={[
                     {
                       type: 'email',
@@ -138,6 +150,9 @@ const SignUp = () => {
 
                 <Form.Item
                   name="password"
+                  label="Password"
+                  labelCol={{span:24}}
+                  wrapperCol={{span:24}}
                   rules={[
                     {
                       required: true,
@@ -150,6 +165,9 @@ const SignUp = () => {
 
                 <Form.Item
                   name="confirmPassword"
+                  label="Confirm Password"
+                  labelCol={{span:24}}
+                  wrapperCol={{span:24}}
                   dependencies={['password']}
                   rules={[
                     {
@@ -169,9 +187,26 @@ const SignUp = () => {
                   ]}
                 >
                   <Input.Password placeholder="Confirm Password" />
-                </Form.Item>
+                </Form.Item >
+                <Form.Item 
+                name="termsAndCondition"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please agree to the terms & conditions.",
+                  },
+                ]}
+                valuePropName = "checked"
+                >
+                  <Radio >I agreee to the <a href="/auth/TermsAndCondition" target="_blank">Terms  & Conditions</a></Radio>
+                  </Form.Item> 
 
-                <Form.Item>
+                  <Form.Item name="newsTeller">
+                    <Radio >
+                    I want to subscribe to the newsletter and other updates 
+                    </Radio>
+                  </Form.Item>
+                  <Form.Item>
                   <Button type="primary" htmlType="submit">
                     {loading ? <Spin/> :  'Sign Up'}
                   </Button>

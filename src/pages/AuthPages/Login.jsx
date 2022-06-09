@@ -76,6 +76,9 @@ const Login = () => {
               >
                 <Form.Item
                   name="email"
+                  label="Email"
+                  labelCol={{span:24}}
+                  wrapperCol={{span:24}}
                   rules={[
                     {
                       type: "email",
@@ -92,6 +95,9 @@ const Login = () => {
 
                 <Form.Item
                   name="password"
+                  label="Password"
+                  labelCol={{span:24}}
+                  wrapperCol={{span:24}}
                   rules={[
                     {
                       required: true,

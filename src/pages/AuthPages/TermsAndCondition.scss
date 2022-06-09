@@ -1,0 +1,51 @@
+@import "../../styles/mixins";
+@import "../../styles/variables";
+
+.TermsWrapper {
+  width: 100%;
+  padding-bottom: 30px;
+  .termsPageHeader {
+    width: 100%;
+    margin-bottom: 5px;
+    img {
+      width: 100%;
+      height: inherit;
+    }
+  }
+}
+  .TermsViewWrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: -170px;
+    @include mobile {
+      margin-top: -50px;
+      padding: 0% 5%;
+    }
+  
+  }
+  .contentStyling{
+      font-family: 'Rubik';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 35px;
+/* or 194% */
+margin-bottom: 10px;
+
+color: #303549;
+  }
+  .headingStyling{
+    font-family: 'Rubik';
+    margin-top: 70px;
+    margin-bottom: 30px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px ;
+    line-height: 36px;
+    /* identical to box height */
+    
+    text-transform: capitalize;
+    
+    color: #303549;
+  }
+
