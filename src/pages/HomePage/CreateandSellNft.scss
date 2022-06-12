@@ -3,7 +3,7 @@
 
 .instructionSection {
     margin-top: 180px;
-    padding: 0% 5%;
+    padding: 0% 60px;
     padding-bottom: 60px;
   .headingText {
     font-family: "Rubik";
@@ -15,5 +15,12 @@
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
+  }
+}
+
+
+@media screen and (max-width:1100px) {
+  .instructionSection {
+      padding: 0 30px;
   }
 }

@@ -48,6 +48,7 @@ const Featured = () => {
 
   return (
     <div className="featured">
+      <div className="main_page_width">
       <div className="heading">
         <span className="feature">Featured</span>
         <span>
@@ -78,6 +79,7 @@ const Featured = () => {
                   );
                 })}
         </Row>
+      </div>
       </div>
       {browserWidth < 620 && (
         <Carousel dotPosition={"bottom"}>
