@@ -16,6 +16,7 @@ import {
   collectionView,
 } from "../../services/collectionServices";
 import { openNotification } from "../../components/Smart/Notification";
+import BreadCrumb from "../../components/Smart/Breadcrumb";
 
 const CollectionView = ({ match }) => {
   const [collectionDetails, setCollectionDetails] = useState([]);
@@ -48,6 +49,7 @@ const CollectionView = ({ match }) => {
   const [browserWidth] = useWindowSize();
   return (
     <>
+      {/* <BreadCrumb match={match} /> */}
       {loading ? (
         <div className="antdSpinContainer">
           <Spin />

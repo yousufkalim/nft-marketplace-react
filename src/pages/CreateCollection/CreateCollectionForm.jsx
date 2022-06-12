@@ -21,20 +21,43 @@ import { openNotification } from "../../components/Smart/Notification";
 import Spin from "../../components/presentational/Spin";
 
 const CreateCollectionForm = () => {
-  const [isExplicit, setIsExplicit] = useState(false);
-  const [isMintable, setIsMintable] = useState(false);
+  const formData = useSelector((state) => state?.collectionData?.data);
+
+  const [isExplicit, setIsExplicit] = useState(formData?.is_explicit ?? false);
+  const [isMintable, setIsMintable] = useState(formData?.mintable ?? false);
   // const [isActive, setIsActive] = useState(false);
   const [delayDays, setDelayDays] = useState(5);
   const [categoryCodes, setCategoryCodes] = useState([]);
   const [layoutCodes, setLayoutCodes] = useState([]);
   const [mintingCoin, setMintingCoin] = useState([]);
   const [whoPaysFee, setWhoPaysFee] = useState([]);
-  const [isMintLocked, setIsMintLocked] = useState(false);
+  const [isMintLocked, setIsMintLocked] = useState(formData?.mint_locked ?? false);
   const [isLoading, setIsLoading] = useState(false);
+  const [storename,setStoreName]=useState("");
+  const [storenameStatus,setStoreNameStatus]=useState("");
 
   const history = useHistory();
 
   const user = useSelector((state) => state?.auth?.user);
+ 
+
+  const handleStorename=async(storename)=>{
+    setIsLoading(true);
+    setStoreNameStatus("validating");
+    setStoreName(storename);
+    try {
+      const res = await checkStroeNameAvailability(storename);
+      if (res?.data?.body?.exists) {
+        setStoreNameStatus("error")
+      } else {
+        setStoreNameStatus("success")
+      }
+    } catch (error) {
+      console.log("error", error);
+      openNotification("Oops", "Something went wrong");
+    }
+  }
+
 
   const dispatch = useDispatch();
 
@@ -57,7 +80,6 @@ const CreateCollectionForm = () => {
   }, []);
 
   const onFinish = async (values) => {
-    setIsLoading(true);
     const data = {
       store_name: values.storename ?? "",
       url_instagram: values.instagramLink ?? "",
@@ -79,32 +101,26 @@ const CreateCollectionForm = () => {
       created_date: new Date().toLocaleString(),
       category_code: values.category ?? "",
       url_name: "",
-      delay_days: delayDays,
+      delay_days: values.delayDays ?? 5,
       royalty_percent: values.royaltyPercent ?? 2,
       third_party_royalty_percent: values.thirdPartyRoyaltyPercent ?? 0,
       third_party_wallet_id: values.thirdPartyWalletId ?? "",
       who_pays_fees: "Seller",
     };
-    try {
-      const res = await checkStroeNameAvailability(values?.storename);
-      if (res?.data?.body?.exists) {
-        openNotification("Oops", "Store name already exists");
-        setIsLoading(false);
-      } else {
+      if (storenameStatus=="success") {
         dispatch(collectionDataSuccess(data));
         history.push("/createCollectionUploadImage");
-        setIsLoading(false);
-      }
-    } catch (error) {
-      console.log("error", error);
-      setIsLoading(false);
-      openNotification("Oops", "Something went wrong");
-    }
+      } else {
+        openNotification("Oops", "Store name already exists");
+      } 
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
+
+  console.log("storenameStatus",storenameStatus);
 
   return (
     <>
@@ -119,13 +135,27 @@ const CreateCollectionForm = () => {
             layout="vertical"
             initialValues={{
               remember: true,
-              delayDays: 5,
-              thirdPartyRoyaltyPercent: 0.0,
-              instagramLink: "https://www.instagram.com/",
-              personalLink: "yourSite.io",
-              mediumLink: "https://medium.com/",
-              discordLink: "https://discord.com/",
-              telegramLink: "https://telegram.com/",
+              storename: formData?.store_name ?? "",
+              instagramLink: formData?.url_instagram ?? "https://www.instagram.com/",
+              shortDescription: formData?.description_short ?? "",
+              longDescription: formData?.description_long ?? "",
+              personalLink: formData?.url_personal ?? "yourSite.io",
+              mediumLink: formData?.url_medium ?? "https://medium.com/",
+              category:formData?.category_code ?? "",
+              delayDays: formData?.delay_days ??  5,
+              thirdPartyRoyaltyPercent: formData?.third_party_royalty_percent ?? 0.0,
+              discordLink: formData?.url_discord ?? "https://discord.com/",
+              telegramLink: formData?.url_telegram ?? "https://telegram.com/",
+              afterPurchaseMessage: formData?.after_1st_purchase_text ?? "",
+              mintingSupply: formData?.minting_supply_count ?? null,
+              mintingCoin: formData?.minting_coin ?? "",
+              layoutCode: formData?.layout_style_code ?? "",
+              isExplicit: formData?.is_explicit ?? isExplicit,
+              isMintable: formData?.mintable ?? isMintable,
+              isMintLocked: formData?.mint_locked ?? isMintLocked,
+              royaltyPercent: formData?.royalty_percent ?? 0,
+              thirdPartyWalletId: formData?.third_party_wallet_id ?? "",
+              whoPaysFee: formData?.who_pays_fees ?? "Seller",
             }}
             scrollToFirstError="true"
             onFinish={onFinish}
@@ -135,9 +165,10 @@ const CreateCollectionForm = () => {
             <div className="CreateCollectionFormItemWrapper">
               <Form.Item
                 name="storename"
-                // validateStatus={isStoreNameAvailable ? "success" : "error"}
-                // help="Store name should be unique"
                 label="Store Name"
+                help={storenameStatus=="error"?"Store name already exists":""}
+                hasFeedback={storename !=="" ? true : false}
+                validateStatus={storenameStatus}
                 rules={[
                   {
                     required: true,
@@ -145,7 +176,7 @@ const CreateCollectionForm = () => {
                   },
                 ]}
               >
-                <Input placeholder="Store name" />
+                <Input placeholder="Store name" value={storename} onChange={(e)=>handleStorename(e.target.value)} />
               </Form.Item>
               <Form.Item
                 name="instagramLink"
@@ -505,7 +536,7 @@ const CreateCollectionForm = () => {
             <span className="nextButton">
               <Form.Item>
                 <Button type="primary" htmlType="submit">
-                  {isLoading ? <Spin /> : "Next"}
+                  {"Next"}
                   <img src={RightArrow} alt={"RightArrow"} />
                 </Button>
               </Form.Item>

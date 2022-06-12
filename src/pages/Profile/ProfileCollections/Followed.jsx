@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col } from "antd";
-import NewsLetter from "../../../components/presentational/NewsLetter/NewsLetter";
 import FeaturedCard from "../../../components/presentational/FeaturedCard/FeaturedCard";
 import useWindowSize from "../../../helpers/hooks";
 import { myFollowingCollectionsAPI } from "../../../services/userServices";
@@ -82,7 +81,6 @@ const Followed = ({ setMyFollowedCount }) => {
           </Row>
         </InfiniteScroll>
       </div>
-      <NewsLetter />
     </>
   );
 };

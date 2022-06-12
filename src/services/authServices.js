@@ -42,15 +42,15 @@ export const ForgotPasswordAPI = async (userInfo) => {
 
 export const VerifyUserAPI = async () => {
   return await axios({
+    method: "GET",
+    url: `https://nftdepot-api.azurewebsites.net/me`,
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Access-Control-Allow-Origin": `${window.location.origin}/`,
       "Access-Control-Allow-Headers":
-        "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization",
+      "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization",
     },
-    method: "GET",
-    url: `https://nftdepot-api.azurewebsites.net/me`,
   });
 };
 
