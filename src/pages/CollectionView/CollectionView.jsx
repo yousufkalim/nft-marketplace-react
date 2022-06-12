@@ -149,7 +149,7 @@ const CollectionView = ({ match }) => {
               <span>{collectionDetails?.description_short}</span>
             </div>
           </div>
-          {/* <FlickerComp /> */}
+          <FlickerComp />
           <div className="searchBar">
             <div className="inputSection">
               <div className="searchInput">

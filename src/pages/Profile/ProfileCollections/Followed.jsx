@@ -28,7 +28,11 @@ const Followed = ({ setMyFollowedCount }) => {
         next_page: res?.data?.body?.next_page,
         has_more: res?.data?.body?.has_more,
       });
-      setMyFollowedCount(collections?.length);
+      if (collections?.length > 0) {
+        setMyFollowedCount(collections?.length);
+      } else {
+        setMyFollowedCount(res?.data?.body?.collections?.length);
+      }
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
       //   setExploreData([]);

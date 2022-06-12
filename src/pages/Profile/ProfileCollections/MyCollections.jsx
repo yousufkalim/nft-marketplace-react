@@ -21,15 +21,18 @@ const MyCollections = ({ setMyCollectionItemsCount }) => {
 
   const fetchCollections = async () => {
     try {
-    const res = await myCollectionsAPI(extraData?.next_page);
-    console.log("res", res);
+      const res = await myCollectionsAPI(extraData?.next_page);
 
-    setCollections([...collections, ...res?.data?.body?.data]);
-    setExtraData({
-      next_page: res?.data?.body?.next_page,
-      has_more: res?.data?.body?.has_more,
-    });
-    setMyCollectionItemsCount(collections?.length);
+      setCollections([...collections, ...res?.data?.body?.data]);
+      setExtraData({
+        next_page: res?.data?.body?.next_page,
+        has_more: res?.data?.body?.has_more,
+      });
+      if (collections?.length > 0) {
+        setMyCollectionItemsCount(collections?.length);
+      } else {
+        setMyCollectionItemsCount(res?.data?.body?.data?.length);
+      }
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
       // setExploreData([]);

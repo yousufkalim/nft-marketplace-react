@@ -23,7 +23,7 @@ const NftDetailCard = ({nftData}) => {
           </span>
         }
       >
-        <Meta description={nftData?.description_short} />
+        {/* <Meta description={nftData?.description_short} />
         <div className="exploreCardFooter">
           <div className="creatorDetails">
             <span className="imageSection">
@@ -35,16 +35,16 @@ const NftDetailCard = ({nftData}) => {
             </span>
           </div>
           <span className="rightSection">
-            {/* <span>
+            <span>
               <img src={EYE_ICON} alt={"EYE_ICON"} />
               <span className="beliefPrice">456</span>
             </span>
             <span className="tagImage">
               <img src={ORANGE_FRAME} alt={"ORANGE_FRAME"} />
               <span className="tagPrice">33</span>
-            </span> */}
+            </span>
           </span>
-        </div>
+        </div> */}
       </Card>
     </div>
   );

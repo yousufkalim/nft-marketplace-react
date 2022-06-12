@@ -10,8 +10,9 @@ import LoadingCard from "../../components/presentational/LoadingCard/LoadingCard
 import CollectionNftCard from "../../components/presentational/CollectionNftCard/CollectionNftCard";
 import FeaturedCard from "../../components/presentational/FeaturedCard/FeaturedCard";
 import FeaturedLoadingCard from "../../components/presentational/FeaturedLoadingCard/FeaturedLoadingCard";
+import Spin from "../../components/presentational/Spin";
 
-const CollectionNftView = ({ collectionid, setCount }) => {
+const CollectionNftView = ({ collectionid, currentNftId }) => {
   const arr = [1, 2];
 
   const [exploreData, setExploreData] = useState([]);
@@ -19,37 +20,48 @@ const CollectionNftView = ({ collectionid, setCount }) => {
     has_more: true,
     next_page: 1,
   });
+  const [loading, setLoading] = useState(false);
+  const [browserWidth] = useWindowSize();
   const fetchExploreData = async () => {
     try {
+      setLoading(true);
       const res = await getCollectionNft(collectionid, extraData?.next_page);
-      console.log("res",res)
       if (res?.data?.body?.data?.length) {
         setExploreData([...exploreData, ...res?.data?.body?.data]);
         setExtraData({
           next_page: res?.data?.body?.next_page,
           has_more: res?.data?.body?.has_more,
         });
-        setCount(exploreData?.length);
       }
+      setLoading(false);
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
+      setLoading(false);
     }
   };
   useEffect(async () => {
     await fetchExploreData();
   }, []);
 
-  const [browserWidth] = useWindowSize();
+  const filterNft = (data) => {
+    if (data?.guid === currentNftId) {
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   return (
     <>
       <div className="collectionNftViewWrapper">
-        {exploreData.length > 0 ? (
+        {loading ? (
+          <Spin />
+        ) : exploreData.length > 0 ? (
           <div className="collectionNftViewCardGrid">
             <InfiniteScroll
               dataLength={exploreData.length} //This is important field to render the next data
               next={fetchExploreData}
-              hasMore={extraData?.has_more}
+              hasMore={extraData?.has_more && exploreData.length < 21}
               loader={
                 <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
                   {arr?.map((item, index) => {
@@ -72,17 +84,20 @@ const CollectionNftView = ({ collectionid, setCount }) => {
               }
             >
               <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
-                {exploreData?.map((item, index) => {
-                  return (
-                    <Col
-                      className="gutter-row"
-                      span={browserWidth < 620 ? 24 : 12}
-                      key={index}
-                    >
-                      <FeaturedCard isNft={true} data={item} />
-                    </Col>
-                  );
-                })}
+                {exploreData
+                  ?.filter?.(filterNft)
+                  ?.slice(0, 20)
+                  ?.map((item, index) => {
+                    return (
+                      <Col
+                        className="gutter-row"
+                        span={browserWidth < 620 ? 24 : 12}
+                        key={index}
+                      >
+                        <FeaturedCard isNft={true} data={item} />
+                      </Col>
+                    );
+                  })}
               </Row>
             </InfiniteScroll>
           </div>

@@ -15,9 +15,6 @@ const ProfileCollections = () => {
   const [myCollectedNftsCount,setMyCollectedNftsCount]=useState(0);
   const [myFollowedCount,setMyFollowedCount]=useState(0);
 
-
-  console.log("currentTab", currentTab);
-
   return (
     <>
       <div className="ProfileCollectionWrapper">
