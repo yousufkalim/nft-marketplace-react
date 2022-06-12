@@ -44,7 +44,7 @@ const TopHits = () => {
   };
 
   return (
-    <div className="TopHits">
+    <div className="TopHits main_page_width">
       <div className="heading">
         <span className="topHits">Top Hits</span>
         <span>
