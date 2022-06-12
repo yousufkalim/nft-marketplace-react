@@ -44,7 +44,7 @@ const CreateandSellNft = () => {
   ];
 
   return (
-    <div className="instructionSection">
+    <div className="instructionSection main_page_width">
       <div className="headingText">Create and sell your NFTs</div>
       <div>
           {

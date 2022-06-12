@@ -6,13 +6,13 @@ import './NewsLetter.scss';
 
 const NewsLetter = () => {
   return (
-    <div className='newsLetterWrapper'>
+    <div className='newsLetterWrapper main_page_width'>
     <div className='newsLetterContainer'>
     <span className='subscribeHeading'>
     Subscribe for Newsletter
     </span>
     <span className='subscribeDesc'>
-    Receive early discount offers, updates and
+    Receive early discount offers, updates and 
     </span>
     <span className='subscribeDesc unsetMargin'>
     new products info.
