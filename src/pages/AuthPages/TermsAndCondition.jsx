@@ -3,10 +3,21 @@ import { Row,Col } from "antd";
 import PAGE_HEADER from "../../images/PageHeader.png";
 import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import "./TermsAndCondition.scss";
+import useWindowSize from "../../helpers/hooks";
+import AppFooter from '../../components/Layout/Footer/Footer';
+
 const TermsAndCondition = () => {
+  const [browserWidth]=useWindowSize();
+
   return (
     <div className="termsWrapper">
-    <Row justify='center' align='center'>
+       <div className="TermsAndConditionHeader">
+        <img src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER} alt={"PAGE_HEADER"} />
+        <div className="TermsAndConditionHeadingSection">
+          <span className="TermsAndConditionHeading">Terms & Conditions</span>
+        </div>
+      </div>
+    <Row justify='center' align='center' className='mb50'>
         <Col xs={20} sm={20} md={20} lg={20}>
            <div>
            <h1 className='headingStyling'>About Company</h1>
@@ -28,8 +39,15 @@ const TermsAndCondition = () => {
            </div>
         </Col>
     </Row>
+    <AppFooter />
     </div>    
   )
 }
 
 export default TermsAndCondition
+
+
+
+
+
+
