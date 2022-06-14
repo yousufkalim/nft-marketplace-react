@@ -12,6 +12,7 @@ import RightArrow from "../../images/rightIcon.svg";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { collectionDataSuccess } from "../../store/collectionForm/collectionActions";
+import QUESTION_MARK from "../../images/questionMark.png";
 import {
   checkStroeNameAvailability,
   codesAPI,
@@ -32,21 +33,23 @@ const CreateCollectionForm = () => {
   const [mintingCoin, setMintingCoin] = useState([]);
   const [whoPaysFee, setWhoPaysFee] = useState([]);
   const [isMintLocked, setIsMintLocked] = useState(formData?.mint_locked ?? false);
-  const [isLoading, setIsLoading] = useState(false);
   const [storename,setStoreName]=useState("");
-  const [storenameStatus,setStoreNameStatus]=useState("");
+  const [storenameStatus,setStoreNameStatus]=useState(null);
 
   const history = useHistory();
 
   const user = useSelector((state) => state?.auth?.user);
  
 
-  const handleStorename=async(storename)=>{
-    setIsLoading(true);
+  const handleStorename=async(storeName)=>{
+    if(storeName===""){
+    setStoreNameStatus(null);
+    }
+    else{
     setStoreNameStatus("validating");
-    setStoreName(storename);
+    setStoreName(storeName);
     try {
-      const res = await checkStroeNameAvailability(storename);
+      const res = await checkStroeNameAvailability(storeName);
       if (res?.data?.body?.exists) {
         setStoreNameStatus("error")
       } else {
@@ -56,6 +59,7 @@ const CreateCollectionForm = () => {
       console.log("error", error);
       openNotification("Oops", "Something went wrong");
     }
+  }
   }
 
 
@@ -167,8 +171,9 @@ const CreateCollectionForm = () => {
                 name="storename"
                 label="Store Name"
                 help={storenameStatus=="error"?"Store name already exists":""}
-                hasFeedback={storename !=="" ? true : false}
+                hasFeedback={true}
                 validateStatus={storenameStatus}
+              
                 rules={[
                   {
                     required: true,
@@ -376,7 +381,9 @@ const CreateCollectionForm = () => {
                   color={"#303549"}
                   overlayClassName="favouriteToolTip"
                   >
-                   <span className="infoIcon"> ? </span>
+                   <span className="infoIcon"> 
+                   <img src={QUESTION_MARK} alt={"QUESTION_MARK"}/>
+                    </span>
                     </Tooltip>
                 </div>}
                 // rules={[
@@ -399,7 +406,9 @@ const CreateCollectionForm = () => {
                   color={"#303549"}
                   overlayClassName="favouriteToolTip"
                   >
-                   <span className="infoIcon"> ? </span>
+                   <span className="infoIcon"> 
+                   <img src={QUESTION_MARK} alt={"QUESTION_MARK"}/>
+                   </span>
                     </Tooltip>
                 </div>}
                 rules={[
@@ -479,7 +488,9 @@ const CreateCollectionForm = () => {
                         color={"#303549"}
                         overlayClassName="favouriteToolTip"
                       >
-                        <span className="infoIcon">?</span>
+                        <span className="infoIcon">
+                        <img src={QUESTION_MARK} alt={"QUESTION_MARK"}/>
+                        </span>
                       </Tooltip>
                     </div>
                   }
@@ -505,7 +516,9 @@ const CreateCollectionForm = () => {
                         color={"#303549"}
                         overlayClassName="favouriteToolTip"
                       >
-                        <span className="infoIcon">?</span>
+                        <span className="infoIcon">
+                          <img src={QUESTION_MARK} alt={"QUESTION_MARK"}/>
+                        </span>
                       </Tooltip>
                     </div>
                   }
