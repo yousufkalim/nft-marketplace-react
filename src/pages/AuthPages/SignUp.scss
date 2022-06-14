@@ -12,6 +12,17 @@
       height: inherit;
     }
   }
+  .ant-radio-checked .ant-radio-inner{
+  border-color: $OrangeColor !important ;
+}
+
+.ant-radio-checked .ant-radio-inner:after{
+  background-color: $OrangeColor !important;
+}
+
+.ant-radio:hover .ant-radio-inner {
+  border-color: $OrangeColor  !important;
+}
   .registerFormWrapper {
     display: flex;
     justify-content: center;
