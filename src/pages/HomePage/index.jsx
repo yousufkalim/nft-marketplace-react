@@ -13,8 +13,9 @@ import useWindowSize from "../../helpers/hooks";
 import { getTopHitsAPI } from "../../services/homePageServices";
 import { openNotification } from "../../components/Smart/Notification";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import BreadCrumb from "../../components/Smart/Breadcrumb";
 
-const HomePage = () => {
+const HomePage = ({match}) => {
   const [browserWidth] = useWindowSize();
   const [topPick,setTopPick] = useState([]);
   useEffect(() => {
@@ -30,6 +31,8 @@ const HomePage = () => {
 
     topHits();
   }, []);
+
+  console.log("match",match);
 
   return (
     <div className="homePage">

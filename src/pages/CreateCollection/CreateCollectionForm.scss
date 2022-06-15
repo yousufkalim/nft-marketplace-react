@@ -172,5 +172,12 @@
   .infoIcon{
     margin-left:6px;
     cursor: pointer;
+    width: 18px;
+    height: 18px;
+    img{
+      width: inherit;
+      height: inherit;
+      object-fit: contain;
+    }
   }
 }

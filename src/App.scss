@@ -57,6 +57,7 @@ p {
 .ant-drawer-header {
   background: #030e31 !important;
 }
+<<<<<<< HEAD
 
 // container custom
 
@@ -86,3 +87,26 @@ p {
 .searchBar_wrapper_outer {
   background: #F2FAFC;
 }
+=======
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+>>>>>>> 7363a1c8f65220b9ff1601e20fb2cce8cbdc5b03

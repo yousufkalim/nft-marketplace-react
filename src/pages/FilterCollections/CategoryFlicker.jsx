@@ -6,8 +6,9 @@ import "@egjs/react-flicking/dist/flicking.css";
 import "./CategoryFlicker.scss";
 import { codesAPI } from "../../services/createCollectionServices";
 import { openNotification } from "../../components/Smart/Notification";
+import { StringParam, useQueryParams } from "use-query-params";
 
-const CategoryFlicker = ({category,setCategory}) => {
+const CategoryFlicker = ({ category, setCategory }) => {
   const flickinfRef = useRef();
   const [categories, setCategories] = useState([]);
 
@@ -32,39 +33,84 @@ const CategoryFlicker = ({category,setCategory}) => {
     getCategories();
   }, []);
 
+  const [query, setQuery] = useQueryParams({
+    SelectedCategory: StringParam,
+  });
+
+  const handleCategory=(code)=>{
+    setCategory(code);
+    setQuery({ SelectedCategory: code });
+    window.location.reload();
+
+  }
+
+  const handleReset=()=>{
+    setCategory("");
+    setQuery({ SelectedCategory: null });
+  }
+
+  // useEffect(()=>{
+  //   const query=new URLSearchParams(window?.location?.search);
+  //   if(query?.get('SelectedCategory')){
+  //     setCategory(query.get('SelectedCategory'));
+  //   }
+  // },[])
+
   return (
     <>
+<<<<<<< HEAD
     <div className="CategoryFlickerWrapper main_page_width padding_add">
       <div onClick={onClickLeft} className="arrow leftArrow">
         <img src={LEFT_ARROW} alt={"LEFT_ARROW"} />
+=======
+      <div className="CategoryFlickerWrapper">
+        <div onClick={onClickLeft} className="arrow leftArrow">
+          <img src={LEFT_ARROW} alt={"LEFT_ARROW"} />
+        </div>
+        <Flicking
+          horizontal
+          bound
+          viewportTag={"div"}
+          defaultIndex={0}
+          align={"prev"}
+          circular
+          ref={flickinfRef}
+        >
+          {categories?.map((item, index) => {
+            return (
+              <div
+                key={index}
+                onClick={() => handleCategory(item.code)}
+                className="changeCursor"
+              >
+                <div
+                  className={item?.code == category ? "active" : "notActive"}
+                >
+                  {item?.code}
+                </div>
+              </div>
+            );
+          })}
+        </Flicking>
+        <div onClick={onClickRight} className="arrow rightArrow">
+          <img src={RIGHT_ARROW} alt={"RIGHT_ARROW"} />
+        </div>
+>>>>>>> 7363a1c8f65220b9ff1601e20fb2cce8cbdc5b03
       </div>
-      <Flicking
-        horizontal
-        bound
-        viewportTag={"div"}
-        defaultIndex={0}
-        align={"prev"}
-        circular
-        ref={flickinfRef}
-      >
-        {categories?.map((item, index) => {
-          return (
-            <div key={index} onClick={()=>setCategory(item?.code)} className="changeCursor" >
-              <div className={item?.code==category ?  'active' : 'notActive'}>{item?.code}</div>
-            </div>
-          );
-        })
-      
-        }
-      </Flicking>
-      <div onClick={onClickRight} className="arrow rightArrow">
-        <img src={RIGHT_ARROW} alt={"RIGHT_ARROW"} />
+      <div className="resetWrapper">
+        <div className="resetFilters" onClick={handleReset}>
+          Reset Filters
+        </div>
       </div>
+<<<<<<< HEAD
     </div>
     <div className="resetWrapper main_page_width padding_add">
     <div className="resetFilters" onClick={()=>setCategory('')}>Reset Filters</div>
   </div>
   </>
+=======
+    </>
+>>>>>>> 7363a1c8f65220b9ff1601e20fb2cce8cbdc5b03
   );
 };
 

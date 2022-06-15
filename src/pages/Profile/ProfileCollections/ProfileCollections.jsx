@@ -15,15 +15,12 @@ const ProfileCollections = () => {
   const [myCollectedNftsCount,setMyCollectedNftsCount]=useState(0);
   const [myFollowedCount,setMyFollowedCount]=useState(0);
 
-
-  console.log("currentTab", currentTab);
-
   return (
     <>
       <div className="ProfileCollectionWrapper">
         <div className="filterHeader main_page_width">
           <div
-            className="filterItem"
+            className="filterItem"  
             onClick={() => setCurrentTab("CREATED")}
           >
             <span
@@ -70,7 +67,7 @@ const ProfileCollections = () => {
         </div>
         {browserWidth < 620 && <ProfileCollectionsFlicker currentTab={currentTab} setCurrentTab={setCurrentTab}  />  }
         {currentTab == "MY COLLECTION" ? (
-          <MyCollections setMyCollectionItemsCount={setMyCollectionItemsCount} />
+          <MyCollections setMyCollectionItemsCount={setMyCollectionItemsCount}  />
         ) : currentTab == "COLLECTED Nfts" ? (
           <CollectedNfts setMyCollectedNftsCount={setMyCollectedNftsCount} />
         ) : currentTab == "FOLLOWED" ? (

@@ -15,7 +15,7 @@ import LoadingCard from "../../components/presentational/LoadingCard/LoadingCard
 const MyCollections = () => {
   const arr = [1, 2, 3];
   const [category,setCategory]=useState('');
-
+    
   const [browserWidth] = useWindowSize();
 
   const [myCollections, setMyCollections] = useState([]);

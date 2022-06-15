@@ -13,24 +13,36 @@ import useWindowSize from "../../helpers/hooks";
 import { openNotification } from "../../components/Smart/Notification";
 import CategoryFlicker from "../FilterCollections/CategoryFlicker";
 import Spin from "../../components/presentational/Spin";
+import { StringParam, useQueryParams } from "use-query-params";
 
 const ExplorePage = () => {
   const arr = [1, 2, 3];
   const [exploreData, setExploreData] = useState([]);
-  const [testData,setTestData]=useState([]);
   const [category, setCategory] = useState("");
-
+  const [loading, setLoading] = useState(false);
+  const [currCategory, setCurrCategory] = useState("");
   const [extraData, setExtraData] = useState({
     has_more: true,
     next_page: 1,
   });
   const [browserWidth] = useWindowSize();
 
+  console.log("category", category);
+  
+  useEffect(() => {
+    const query=new URLSearchParams(window?.location?.search);
+    if(query?.get('SelectedCategory')!==""){
+      setCategory(query.get('SelectedCategory'));
+    }
+    else{
+      setCategory("");
+    }
+  }, [window.location.search]);
+
   const fetchExploreData = async () => {
     try {
       const res = await allCollectionsAPI(extraData?.next_page);
       setExploreData([...exploreData, ...res?.data?.body?.data]);
-      setTestData([...exploreData, ...res?.data?.body?.data]);
       setExtraData({
         next_page: res?.data?.body?.next_page,
         has_more: res?.data?.body?.has_more,
@@ -41,10 +53,9 @@ const ExplorePage = () => {
     }
   };
 
-  useEffect(() => {
-    fetchExploreData();
+  useEffect(async () => {
+    await fetchExploreData();
   }, []);
-
 
   const filterExplore = (exploreData) => {
     if (exploreData?.image_large_location?.includes("https")) {
@@ -60,7 +71,9 @@ const ExplorePage = () => {
   };
 
   const filterCategory = (data) => {
-    if (category === "") {
+    console.log("data",data);
+    if (category === "" || category === null) {
+      console.log("i am returning true");
       return true;
     } else {
       return data?.category_code === category;
@@ -92,21 +105,20 @@ const ExplorePage = () => {
               loader={
                 <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
                   {browserWidth < 620 ? (
-                     <LoadingCard />
-                  ) : 
-                  arr?.map((item, index) => {
-                    return (
-                      <Col
-                        className="gutter-row"
-                        span={browserWidth < 620 ? 24 : 8}
-                        key={index}
-                      >
-                        <LoadingCard />
-                      </Col>
-                    );
-                  })}
-                  
-                
+                    <LoadingCard />
+                  ) : (
+                    arr?.map((item, index) => {
+                      return (
+                        <Col
+                          className="gutter-row"
+                          span={browserWidth < 620 ? 24 : 8}
+                          key={index}
+                        >
+                          <LoadingCard />
+                        </Col>
+                      );
+                    })
+                  )}
                 </Row>
               }
               endMessage={
@@ -126,9 +138,7 @@ const ExplorePage = () => {
                         span={browserWidth < 620 ? 24 : 8}
                         key={index}
                       >
-                        {/* <Link to={"/collectionView"}> */}
                         <ExploreCard data={item} />
-                        {/* </Link> */}
                       </Col>
                     );
                   })}
@@ -136,7 +146,7 @@ const ExplorePage = () => {
             </InfiniteScroll>
           </div>
         ) : (
-          <div style={{textAlign:'center'}} >No Such Collection Found</div>
+          <div style={{ textAlign: "center" }}>No Such Collection Found</div>
         )}
         <NewsLetter />
       </div>

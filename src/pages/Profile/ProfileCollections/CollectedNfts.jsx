@@ -10,15 +10,13 @@ import FeaturedLoadingCard from "../../../components/presentational/FeaturedLoad
 import "./CollectedNfts.scss";
 
 const CollectedNfts = ({ setMyCollectedNftsCount }) => {
-  const arr = [0, 1, 2];
+  const arr = [0, 1];
   const [browserWidth] = useWindowSize();
   const [extraData, setExtraData] = useState({
     has_more: true,
     next_page: 1,
   });
   const [collections, setCollections] = useState([]);
-
-
   const fetchCollections = async () => {
     try {
       const res = await myCollectedNfts(extraData?.next_page);
@@ -28,7 +26,11 @@ const CollectedNfts = ({ setMyCollectedNftsCount }) => {
         next_page: res?.data?.body?.next_page,
         has_more: res?.data?.body?.has_more,
       });
-      setMyCollectedNftsCount(collections?.length);
+      if (collections?.length > 0) {
+        setMyCollectedNftsCount(collections?.length);
+      } else {
+        setMyCollectedNftsCount(res?.data?.body?.data?.length);
+      }
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
       //   setExploreData([]);

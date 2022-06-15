@@ -10,7 +10,7 @@ import { openNotification } from "../../../components/Smart/Notification";
 import FeaturedLoadingCard from "../../../components/presentational/FeaturedLoadingCard/FeaturedLoadingCard";
 import "./MyCollections.scss";
 
-const MyCollections = ({setMyCollectionItemsCount}) => {
+const MyCollections = ({ setMyCollectionItemsCount }) => {
   const arr = [0, 1, 2];
   const [browserWidth] = useWindowSize();
   const [extraData, setExtraData] = useState({
@@ -28,10 +28,14 @@ const MyCollections = ({setMyCollectionItemsCount}) => {
         next_page: res?.data?.body?.next_page,
         has_more: res?.data?.body?.has_more,
       });
-      setMyCollectionItemsCount(collections?.length)
+      if (collections?.length > 0) {
+        setMyCollectionItemsCount(collections?.length);
+      } else {
+        setMyCollectionItemsCount(res?.data?.body?.data?.length);
+      }
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
-      //   setExploreData([]);
+      // setExploreData([]);
     }
   };
 
@@ -40,48 +44,60 @@ const MyCollections = ({setMyCollectionItemsCount}) => {
   }, []);
   return (
     <>
+<<<<<<< HEAD
       <div className="MyCollectionCardsGrid main_page_width">
         <InfiniteScroll
           dataLength={collections.length} //This is important field to render the next data
           next={fetchCollections}
           hasMore={extraData?.has_more}
           loader={
+=======
+      <div className="MyCollectionCardsGrid">
+        {collections?.length > 0 ? (
+          <InfiniteScroll
+            dataLength={collections?.length} //This is important field to render the next data
+            next={fetchCollections}
+            hasMore={extraData?.has_more}
+            loader={
+              <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
+                {arr?.map((item, index) => {
+                  return (
+                    <Col
+                      className="gutter-row"
+                      span={browserWidth < 620 ? 24 : 8}
+                      key={index}
+                    >
+                      <FeaturedLoadingCard isNft={true} />
+                    </Col>
+                  );
+                })}
+              </Row>
+            }
+            endMessage={
+              <p style={{ textAlign: "center" }}>
+                <b>Yay! You have seen it all</b>
+              </p>
+            }
+          >
+>>>>>>> 7363a1c8f65220b9ff1601e20fb2cce8cbdc5b03
             <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
-              {arr?.map((item, index) => {
+              {collections?.map((item, index) => {
                 return (
                   <Col
                     className="gutter-row"
-                    span={browserWidth < 620 ? 24 : 8}
+                    span={browserWidth < 620 ? 24 : 12}
                     key={index}
                   >
-                    <FeaturedLoadingCard isNft={true} />
+                    <FeaturedCard data={item} isNft={false} />
                   </Col>
                 );
               })}
             </Row>
-          }
-          endMessage={
-            <p style={{ textAlign: "center" }}>
-              <b>Yay! You have seen it all</b>
-            </p>
-          }
-        >
-          <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
-            {collections?.map((item, index) => {
-              return (
-                <Col
-                  className="gutter-row"
-                  span={browserWidth < 620 ? 24 : 12}
-                  key={index}
-                >
-                  <FeaturedCard data={item} isNft={false} />
-                </Col>
-              );
-            })}
-          </Row>
-        </InfiniteScroll>
+          </InfiniteScroll>
+        ) : (
+          <div>Create Some Collections here</div>
+        )}
       </div>
-      <NewsLetter />
     </>
   );
 };
