@@ -56,7 +56,7 @@ const Login = () => {
             alt={"PAGE_HEADER"}
           />
         </div>
-        <div className="loginFormWrapper">
+        <div className="loginFormWrapper main_page_width">
           <div className="loginForm">
             <div className="form">
               <span className="formHeadingWrapper">

@@ -73,7 +73,7 @@ const CreateCollectionUploadImage = () => {
           <span className="CreateCollectionHeading">Create a Collection</span>
         </div>
       </div>
-      <div className="CreateCollectionUploadImageWrapper">
+      <div className="CreateCollectionUploadImageWrapper main_page_width">
         <div className="dropZoneHeader">
           <div className="step2Header">
             <span className="step2">Step 2</span>

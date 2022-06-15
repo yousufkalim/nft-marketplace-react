@@ -63,7 +63,7 @@ const SignUp = () => {
         <div className="SignUpPageHeader">
           <img src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER} alt={"PAGE_HEADER"} />
         </div>
-        <div className="registerFormWrapper">
+        <div className="registerFormWrapper main_page_width">
         <div className="registerForm">
             <div className="form">
               <span className="formHeadingWrapper">

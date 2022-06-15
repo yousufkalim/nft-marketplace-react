@@ -43,7 +43,7 @@ const NftDetails = ({match}) => {
           alt={"PAGE_HEADER_IMG"}
         />
       </div>
-      <div className="selectedCollection">
+      <div className="selectedCollection main_page_width">
         <div className="CollectionDetailsSubHeader">
           <NftLeftSection  nftData={nftData}/>
           <NftRightSection nftData={nftData} />
@@ -51,7 +51,7 @@ const NftDetails = ({match}) => {
         <DetailSection  nftData={nftData} />
       </div>
       <div className="resultCardsGrid">
-        <div className="heading">
+        <div className="heading main_page_width">
           <span className="seeMore">More from this collection</span>
           <span>
             {/* <span className="view">View all</span>{" "} */}

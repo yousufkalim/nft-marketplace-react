@@ -21,7 +21,7 @@ const ProfileCollections = () => {
   return (
     <>
       <div className="ProfileCollectionWrapper">
-        <div className="filterHeader">
+        <div className="filterHeader main_page_width">
           <div
             className="filterItem"
             onClick={() => setCurrentTab("CREATED")}

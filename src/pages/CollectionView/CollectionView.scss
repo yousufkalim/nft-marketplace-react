@@ -171,7 +171,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.2% 5%;
+    padding: 1.2% 60px;
+    @media screen and (max-width:1100px){
+      padding: 1.2% 30px;
+    }
     margin-bottom: 12px;
     margin-top: 12px;
 

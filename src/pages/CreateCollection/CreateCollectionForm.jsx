@@ -108,7 +108,7 @@ const CreateCollectionForm = () => {
 
   return (
     <>
-      <div className="CreateCollectionFormWrapper">
+      <div className="CreateCollectionFormWrapper main_page_width">
         <div className="step1Header">
           <span className="step1">Step 1</span>
           <span className="desc">Fill the following fields</span>

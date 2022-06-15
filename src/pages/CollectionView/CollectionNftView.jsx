@@ -42,7 +42,7 @@ const CollectionNftView = ({ collectionid, setCount }) => {
 
   return (
     <>
-      <div className="collectionNftViewWrapper">
+      <div className="collectionNftViewWrapper main_page_width">
         {exploreData.length > 0 ? (
           <div className="collectionNftViewCardGrid">
             <InfiniteScroll

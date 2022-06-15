@@ -15,8 +15,10 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
-        width: 70%;
-        padding: 0% 5%;
+        padding: 0% 60px;
+        @media screen and (max-width:1100px) {
+          padding: 0% 30px;
+        }
         margin-top: -180px;
         @include mobile{
           margin-top: 10px;

@@ -69,7 +69,7 @@ const AppHeader = () => {
   };
 
   return (
-    <div className="header">
+    <div className="header main_page_width">
       <div className="logo">
         <Link to="/">
           <img src={HEADER_LOGO} alt={"HEADER_LOGO"} />

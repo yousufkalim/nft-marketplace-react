@@ -34,7 +34,7 @@ const CategoryFlicker = ({category,setCategory}) => {
 
   return (
     <>
-    <div className="CategoryFlickerWrapper">
+    <div className="CategoryFlickerWrapper main_page_width padding_add">
       <div onClick={onClickLeft} className="arrow leftArrow">
         <img src={LEFT_ARROW} alt={"LEFT_ARROW"} />
       </div>
@@ -61,7 +61,7 @@ const CategoryFlicker = ({category,setCategory}) => {
         <img src={RIGHT_ARROW} alt={"RIGHT_ARROW"} />
       </div>
     </div>
-    <div className="resetWrapper">
+    <div className="resetWrapper main_page_width padding_add">
     <div className="resetFilters" onClick={()=>setCategory('')}>Reset Filters</div>
   </div>
   </>
