@@ -32,7 +32,6 @@ const HomePage = ({match}) => {
     topHits();
   }, []);
 
-  console.log("match",match);
 
   return (
     <div className="homePage">

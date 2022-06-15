@@ -1,5 +1,6 @@
 import {
     COLLECTION_DATA_SUCCESS,
+    COLLECTION_NAME_STATUS
   } from "./collectionActionTypes";
   
   export const collectionDataSuccess = (data) => {
@@ -9,3 +10,9 @@ import {
     };
   };
   
+  export const collectionNameStatus = (data) => {
+    return {
+      type: COLLECTION_NAME_STATUS,
+      payload: data,
+    };
+  };
