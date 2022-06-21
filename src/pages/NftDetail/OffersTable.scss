@@ -1,0 +1,66 @@
+@import "../../styles/mixins";
+@import "../../styles/variables";
+
+.offersWrapper {
+  margin-top: 30px;
+  .ant-table-wrapper {
+    margin-top: 20px;
+  }
+  .ant-table-pagination.ant-pagination {
+    display: none;
+  }
+  .ant-table-cell {
+    padding: 2px 0px !important;
+    border: unset !important;
+  }
+  .ant-table-tbody > tr > td {
+    padding: 18px 0px !important;
+  }
+  .ant-table-thead > tr > th {
+    background: unset !important;
+    font-family: "Rubik";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    color: $GrayColor;
+  }
+  .ant-table-thead > tr > th::before {
+    display: none;
+  }
+  .changeColor {
+    background: $CreateBtnBg;
+  }
+  .title {
+    font-family: "Rubik";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 36px;
+    text-transform: capitalize;
+    color: $CreateBtnBg;
+    margin-bottom: 12px;
+  }
+  .columns {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    span {
+      font-family: "Rubik";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 21px;
+      color: $GrayColor;
+    }
+  }
+  .columnData {
+    display: flex;
+    justify-content: space-between;
+    img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+    }
+  }
+}

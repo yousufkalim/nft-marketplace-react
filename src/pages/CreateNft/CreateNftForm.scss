@@ -1,0 +1,140 @@
+@import "../../styles/mixins";
+@import "../../styles/variables";
+
+.CreateCollectionFormWrapper {
+  width: 100%;
+  .header {
+    padding: 0% 5%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    .step1 {
+      font-family: "Rubik";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 28px;
+      color: #f37342;
+    }
+    .desc {
+      font-family: "Rubik";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 28px;
+      color: #303549;
+      margin-top: 19px;
+    }
+  }
+  .CreateNftForm {
+    padding: 0% 5%;
+    .CreateNftFormItemWrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-flow: row wrap;
+      .mediaAndDiscordLinks {
+        width: 48%;
+        .ant-form-item {
+          width: 100%;
+        }
+      }
+      .dFlex {
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        .firstSwitch {
+          margin-left: unset !important;
+        }
+        .ant-form-item {
+          width: unset !important;
+          margin-left: 14px;
+        }
+      }
+      .ant-form-item {
+        width: 48%;
+      }
+      .ant-input-group-addon {
+        background: $InputBg !important;
+        line-height: 2.9715;
+        border-radius: 10px !important;
+        border: none !important;
+      }
+      .ant-input-affix-wrapper {
+        line-height: 2.9715;
+        background: $InputBg !important;
+        border-radius: 10px !important;
+        border: none !important;
+      }
+      .ant-input-number {
+        line-height: 2.9715;
+        background: $InputBg !important;
+        border-radius: 10px !important;
+        border: none !important;
+        width: 100%;
+      }
+      .ant-input {
+        line-height: 2.9715;
+        background: $InputBg !important;
+        border-radius: 10px !important;
+        border: none !important;
+      }
+      .ant-input-number-input {
+        line-height: 2.9715;
+        background: $InputBg !important;
+        border-radius: 10px !important;
+        border: none !important;
+      }
+      .ant-select {
+        line-height: 2.9715;
+      }
+      .ant-select-selector {
+        background: $InputBg !important;
+        line-height: 2.9715;
+        background: $InputBg !important;
+        border-radius: 10px !important;
+        border: none !important;
+        height: 48px !important;
+        align-items: center;
+      }
+      .ant-switch {
+        background: rgba(243, 115, 66, 0.14) !important;
+        border-radius: 100px !important;
+        height: 17px;
+      }
+      .ant-switch-handle::before {
+        background: #facbb9 !important;
+      }
+      .ant-switch-handle::after {
+        background: #f37342 !important;
+      }
+    }
+    .submitButton {
+      .ant-form-item {
+        border-top: 1px dashed rgba(48, 53, 73, 0.25);
+        padding-top: 49px;
+      }
+      .ant-btn-primary {
+        width: 180px;
+        height: 66px;
+        background: #f37342;
+        border-radius: 10px;
+        border: unset !important;
+        font-family: "Rubik";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 24px;
+        text-transform: capitalize;
+        color: #ffffff;
+        margin-bottom: 60px;
+
+        img {
+          margin-left: 20px;
+        }
+      }
+    }
+  }
+}

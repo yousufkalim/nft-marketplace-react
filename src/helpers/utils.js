@@ -1,0 +1,24 @@
+export const apiConfig = {
+  headers: {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": `${window.location.origin}/`,
+    "Access-Control-Allow-Headers":
+      "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization",
+  },
+};
+
+export const restrictedConfig = {
+  headers: {
+    "Content-Type": "application/json",
+     Authorization: `Bearer ${localStorage.getItem("token")}`,
+    "Access-Control-Allow-Origin": `${window.location.origin}/`,
+    "Access-Control-Allow-Headers":
+      "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization",
+  },
+};
+
+export const truncate = (text = "", [h, t] = [12, 5]) => {
+  const head = text.slice(0, h)
+  const tail = text.slice(-1 * t, text.length)
+  return text.length > h + t ? [head, tail].join("...") : text
+}

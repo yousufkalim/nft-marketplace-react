@@ -1,0 +1,78 @@
+import React, { useEffect, useRef, useState } from "react";
+import Flicking from "@egjs/react-flicking";
+import LEFT_ARROW from "../../images/left_icon_gray.svg";
+import RIGHT_ARROW from "../../images/right_icon_gray.svg";
+import "@egjs/react-flicking/dist/flicking.css";
+import "./CategoryFlicker.scss";
+import { codesAPI } from "../../services/createCollectionServices";
+import { openNotification } from "../../components/Smart/Notification";
+import { StringParam, useQueryParams } from "use-query-params";
+
+const CategoryFlicker = ({ category, setCategory }) => {
+  const flickinfRef = useRef();
+  const [categories, setCategories] = useState([]);
+
+  const onClickLeft = () => {
+    flickinfRef.current.prev();
+  };
+
+  const onClickRight = () => {
+    flickinfRef.current.next();
+  };
+
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const res = await codesAPI("categoryCode");
+        setCategories(res?.data?.body);
+      } catch (error) {
+        openNotification("Oops", error?.response?.data?.message);
+      }
+    };
+
+    getCategories();
+  }, []);
+
+  const [query, setQuery] = useQueryParams({
+    SelectedCategory: StringParam,
+  });
+
+  const handleCategory=(code)=>{
+    setCategory(code);
+    setQuery({ SelectedCategory: code });
+    window.location.reload();
+
+  }
+
+  const handleReset=()=>{
+    setCategory("");
+    setQuery({ SelectedCategory: null });
+  }
+
+  // useEffect(()=>{
+  //   const query=new URLSearchParams(window?.location?.search);
+  //   if(query?.get('SelectedCategory')){
+  //     setCategory(query.get('SelectedCategory'));
+  //   }
+  // },[])
+
+  return (
+    <>
+    <div className="CategoryFlickerWrapper main_page_width padding_add">
+      <div onClick={onClickLeft} className="arrow leftArrow">
+        <img src={LEFT_ARROW} alt={"LEFT_ARROW"} />
+      </div>
+      <div className="resetWrapper">
+        <div className="resetFilters" onClick={handleReset}>
+          Reset Filters
+        </div>
+      </div>
+    </div>
+    <div className="resetWrapper main_page_width padding_add">
+    <div className="resetFilters" onClick={()=>setCategory('')}>Reset Filters</div>
+  </div>
+  </>
+  );
+};
+
+export default CategoryFlicker;

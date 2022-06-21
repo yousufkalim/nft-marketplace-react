@@ -1,0 +1,56 @@
+{
+  "name": "nft-drop",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@egjs/react-flicking": "^4.7.0",
+    "@testing-library/jest-dom": "^5.16.3",
+    "@testing-library/react": "^12.1.4",
+    "@testing-library/user-event": "^13.5.0",
+    "antd": "^4.19.5",
+    "axios": "^0.26.1",
+    "chart.js": "^3.7.1",
+    "dotenv": "^16.0.1",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.3",
+    "node-sass": "^7.0.1",
+    "query-string": "^7.1.1",
+    "react": "^17.0.2",
+    "react-bootstrap": "^2.2.2",
+    "react-chartjs-2": "^4.1.0",
+    "react-dom": "^17.0.2",
+    "react-dropzone": "^14.2.1",
+    "react-flicker": "^1.1.1",
+    "react-infinite-scroll-component": "^6.1.0",
+    "react-redux": "^7.2.8",
+    "react-router-dom": "^5.2.2",
+    "react-scripts": "5.0.0",
+    "redux": "^4.1.2",
+    "redux-thunk": "^2.4.1",
+    "use-query-params": "^1.2.3",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
