@@ -53,7 +53,7 @@ const UploadNft = ({match}) => {
           <span className="UploadNftHeading">Upload Zip</span>
         </div>
       </div>
-      <div className="UploadNftUploadImageWrapper">
+      <div className="UploadNftUploadImageWrapper main_page_width">
         <div className="dropZoneHeader">
           <div className="uploadForm">
             <div className="bannerImage">

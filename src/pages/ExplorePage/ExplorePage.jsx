@@ -95,7 +95,7 @@ const ExplorePage = () => {
         </div>
         <CategoryFlicker category={category} setCategory={setCategory} />
         {exploreData.length > 0 ? (
-          <div className="ExplorecardGrid">
+          <div className="ExplorecardGrid main_page_width">
             <InfiniteScroll
               dataLength={exploreData?.length} //This is important field to render the next data
               next={fetchExploreData}

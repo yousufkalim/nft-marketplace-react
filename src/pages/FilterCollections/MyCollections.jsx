@@ -15,7 +15,7 @@ import LoadingCard from "../../components/presentational/LoadingCard/LoadingCard
 const MyCollections = () => {
   const arr = [1, 2, 3];
   const [category,setCategory]=useState('');
-
+    
   const [browserWidth] = useWindowSize();
 
   const [myCollections, setMyCollections] = useState([]);
@@ -84,7 +84,7 @@ const MyCollections = () => {
         </div>
       </div>
       <CategoryFlicker category={category} setCategory={setCategory} />
-      <div className="filterCollectionscardGrid">
+      <div className="filterCollectionscardGrid main_page_width">
         <InfiniteScroll
           dataLength={myCollections?.length} //This is important field to render the next data
           next={fetchMyCollections}

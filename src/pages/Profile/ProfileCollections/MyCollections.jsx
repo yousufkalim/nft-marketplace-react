@@ -44,7 +44,7 @@ const MyCollections = ({ setMyCollectionItemsCount }) => {
   }, []);
   return (
     <>
-      <div className="MyCollectionCardsGrid">
+      <div className="MyCollectionCardsGrid main_page_width">
         {collections?.length > 0 ? (
           <InfiniteScroll
             dataLength={collections?.length} //This is important field to render the next data

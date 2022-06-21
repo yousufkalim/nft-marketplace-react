@@ -44,7 +44,7 @@ const Followed = ({ setMyFollowedCount }) => {
   }, []);
   return (
     <>
-      <div className="FollowedCardsGrid">
+      <div className="FollowedCardsGrid main_page_width">
         <InfiniteScroll
           dataLength={collections.length} //This is important field to render the next data
           next={fetchCollections}

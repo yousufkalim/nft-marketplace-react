@@ -40,7 +40,7 @@ const ForgotPassword = () => {
         <div className="ForgotPasswordPageHeader">
           <img src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER} alt={"PAGE_HEADER"} />
         </div>
-        <div className="ForgotPasswordFormWrapper" >
+        <div className="ForgotPasswordFormWrapper main_page_width" >
         <div className="ForgotPasswordForm">
           <div className="form">
             <span className="formHeadingWrapper">

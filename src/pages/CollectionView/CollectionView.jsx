@@ -113,7 +113,7 @@ const CollectionView = ({ match }) => {
               </div>
             </div>
           ) : (
-            <div className="bannerDetailsWrapper">
+            <div className="bannerDetailsWrapper main_page_width">
               <div className="bannerDetails">
                 <div className="itemWrapper">
                   <span>FloorPrice</span>
@@ -144,36 +144,38 @@ const CollectionView = ({ match }) => {
               </div>
             </div>
           )}
-          <div className="collectionDetailsWrapper">
+          <div className="collectionDetailsWrapper main_page_width">
             <div className="collectionDetails">
               <span>{collectionDetails?.description_short}</span>
             </div>
           </div>
-          <FlickerComp />
-          <div className="searchBar">
-            <div className="inputSection">
-              <div className="searchInput">
-                <Input
-                  suffix={<SearchOutlined />}
-                  size="large"
-                  placeholder="Search here"
-                />
-              </div>
-              <div className="filterDropdown">
-                {/* <Dropdown overlay={true} trigger={["click"]}> */}
-                <a onClick={(e) => e.preventDefault()}>
-                  <span>
-                    Price
-                    <DownOutlined className="downIcon" />
-                  </span>
-                </a>
-                {/* </Dropdown> */}
-              </div>
-              <div className="filterImage">
-                <img src={FILTER_IMG} alt={"FILTER_IMG"} />
-              </div>
+          {/* <FlickerComp /> */}
+          <div className="searchBar_wrapper_outer">
+            <div className="searchBar main_page_width">
+              <div className="inputSection">
+                <div className="searchInput">
+                  <Input
+                    suffix={<SearchOutlined />}
+                    size="large"
+                    placeholder="Search here"
+                  />
+                </div>
+                <div className="filterDropdown">
+                  {/* <Dropdown overlay={true} trigger={["click"]}> */}
+                  <a onClick={(e) => e.preventDefault()}>
+                    <span>
+                      Price
+                      <DownOutlined className="downIcon" />
+                    </span>
+                  </a>
+                  {/* </Dropdown> */}
+                </div>
+                <div className="filterImage">
+                  <img src={FILTER_IMG} alt={"FILTER_IMG"} />
+                </div>
+                </div>
+              <div className="reset">Showing {count} results</div>
             </div>
-            <div className="reset">Showing {count} results</div>
           </div>
           <CollectionNftView collectionid={match?.params?.id} setCount={setCount} />
           <NewsLetter />

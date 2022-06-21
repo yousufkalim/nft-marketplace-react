@@ -37,17 +37,16 @@ const CategoryFlicker = ({ category, setCategory }) => {
     SelectedCategory: StringParam,
   });
 
-  const handleCategory=(code)=>{
+  const handleCategory = (code) => {
     setCategory(code);
     setQuery({ SelectedCategory: code });
     window.location.reload();
+  };
 
-  }
-
-  const handleReset=()=>{
+  const handleReset = () => {
     setCategory("");
     setQuery({ SelectedCategory: null });
-  }
+  };
 
   // useEffect(()=>{
   //   const query=new URLSearchParams(window?.location?.search);
@@ -58,7 +57,7 @@ const CategoryFlicker = ({ category, setCategory }) => {
 
   return (
     <>
-      <div className="CategoryFlickerWrapper">
+      <div className="CategoryFlickerWrapper main_page_width padding_add ">
         <div onClick={onClickLeft} className="arrow leftArrow">
           <img src={LEFT_ARROW} alt={"LEFT_ARROW"} />
         </div>
@@ -91,7 +90,7 @@ const CategoryFlicker = ({ category, setCategory }) => {
           <img src={RIGHT_ARROW} alt={"RIGHT_ARROW"} />
         </div>
       </div>
-      <div className="resetWrapper">
+      <div className="resetWrapper main_page_width padding_add">
         <div className="resetFilters" onClick={handleReset}>
           Reset Filters
         </div>

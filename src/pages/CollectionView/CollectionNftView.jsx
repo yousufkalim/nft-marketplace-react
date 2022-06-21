@@ -49,7 +49,7 @@ const CollectionNftView = ({ collectionid, currentNftId }) => {
 
   return (
     <>
-      <div className="collectionNftViewWrapper">
+      <div className="collectionNftViewWrapper main_page_width">
         {loading ? (
           <div style={{textAlign:'center'}}>
           <Spin />

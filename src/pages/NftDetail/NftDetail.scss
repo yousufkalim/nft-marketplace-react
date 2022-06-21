@@ -56,7 +56,10 @@
       justify-content: space-between;
       align-items: center;
       // margin-left: 257px;
-      padding: 0% 5%;
+      padding: 0% 60px;
+      @media screen and (max-width:1100px) {
+        padding: 0% 30px;
+      }
       margin-top: 40px;
       .seeMore {
         font-family: "Rubik";
@@ -90,7 +93,10 @@
   }
   .selectedCollection {
     margin-top: -167px;
-    padding: 0% 5%;
+    padding: 0% 60px;
+    @media screen and (max-width:1100px) {
+      padding: 0% 30px;
+    }
     display: flex;
     flex-direction: column;
     @include mobile{
