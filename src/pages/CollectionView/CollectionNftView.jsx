@@ -108,3 +108,5 @@ const CollectionNftView = ({ collectionid, currentNftId }) => {
     </>
   );
 };
+
+export default CollectionNftView;
