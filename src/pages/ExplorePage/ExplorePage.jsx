@@ -27,7 +27,6 @@ const ExplorePage = () => {
   });
   const [browserWidth] = useWindowSize();
 
-  console.log("category", category);
   
   useEffect(() => {
     const query=new URLSearchParams(window?.location?.search);
@@ -71,7 +70,6 @@ const ExplorePage = () => {
   };
 
   const filterCategory = (data) => {
-    console.log("data",data);
     if (category === "" || category === null) {
       console.log("i am returning true");
       return true;
@@ -146,7 +144,8 @@ const ExplorePage = () => {
             </InfiniteScroll>
           </div>
         ) : (
-          <div style={{ textAlign: "center" }}>No Such Collection Found</div>
+          <></>
+          // <div style={{ textAlign: "center" }}>No Such Collection Found</div>
         )}
         <NewsLetter />
       </div>

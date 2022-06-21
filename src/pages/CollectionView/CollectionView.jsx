@@ -149,7 +149,6 @@ const CollectionView = ({ match }) => {
               <span>{collectionDetails?.description_short}</span>
             </div>
           </div>
-<<<<<<< HEAD
           {/* <FlickerComp /> */}
           <div className="searchBar_wrapper_outer">
             <div className="searchBar main_page_width">
@@ -174,31 +173,7 @@ const CollectionView = ({ match }) => {
                 <div className="filterImage">
                   <img src={FILTER_IMG} alt={"FILTER_IMG"} />
                 </div>
-=======
-          <FlickerComp />
-          <div className="searchBar">
-            <div className="inputSection">
-              <div className="searchInput">
-                <Input
-                  suffix={<SearchOutlined />}
-                  size="large"
-                  placeholder="Search here"
-                />
-              </div>
-              <div className="filterDropdown">
-                {/* <Dropdown overlay={true} trigger={["click"]}> */}
-                <a onClick={(e) => e.preventDefault()}>
-                  <span>
-                    Price
-                    <DownOutlined className="downIcon" />
-                  </span>
-                </a>
-                {/* </Dropdown> */}
-              </div>
-              <div className="filterImage">
-                <img src={FILTER_IMG} alt={"FILTER_IMG"} />
->>>>>>> 7363a1c8f65220b9ff1601e20fb2cce8cbdc5b03
-              </div>
+                </div>
               <div className="reset">Showing {count} results</div>
             </div>
           </div>

@@ -28,7 +28,6 @@ const NftDetails = ({ match }) => {
       try {
         setLoading(true);
         const res = await nftDetailsApi(match?.params?.id);
-        console.log("res", res);
         setNftData(res?.data?.body);
         setLoading(false);
       } catch (error) {
@@ -39,7 +38,6 @@ const NftDetails = ({ match }) => {
     getNftDetail();
   }, []);
 
-  console.log("nftData", nftData);
 
   return (
     <div className="NftDetailPageWrapper">

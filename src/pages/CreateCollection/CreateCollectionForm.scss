@@ -41,12 +41,12 @@
       justify-content: space-between;
       align-items: center;
       flex-flow: row wrap;
-      @include mobile{
+      @include mobile {
         flex-direction: column;
       }
       .mediaAndDiscordLinks {
         width: 48%;
-        @include mobile{
+        @include mobile {
           width: 100%;
         }
         .ant-form-item {
@@ -57,7 +57,7 @@
         display: flex;
         align-items: flex-start;
         width: 48%;
-        @include mobile{
+        @include mobile {
           width: 100%;
           justify-content: space-between;
         }
@@ -67,14 +67,14 @@
         .ant-form-item {
           width: unset !important;
           margin-left: 14px;
-          @include mobile{
+          @include mobile {
             margin-left: unset;
           }
         }
       }
       .ant-form-item {
         width: 48%;
-        @include mobile{
+        @include mobile {
           width: 100%;
         }
       }
@@ -109,15 +109,13 @@
         border-radius: 10px !important;
         border: none !important;
       }
-      .ant-radio-checked .ant-radio-inner{
-        border-color:rgba(243, 115, 66, 0.14) !important ;
+      .ant-radio-checked .ant-radio-inner {
+        border-color: rgba(243, 115, 66, 0.14) !important ;
         // background: #f37342 !important;
-
       }
-      .ant-radio-inner{
-        border-color:rgba(243, 115, 66, 0.14) !important ;
+      .ant-radio-inner {
+        border-color: rgba(243, 115, 66, 0.14) !important ;
         background: #facbb9 !important;
-
       }
       .ant-select {
         line-height: 2.9715;
@@ -169,15 +167,21 @@
       }
     }
   }
-  .infoIcon{
-    margin-left:6px;
+  .infoIcon {
+    margin-left: 6px;
     cursor: pointer;
     width: 18px;
     height: 18px;
-    img{
+    img {
       width: inherit;
       height: inherit;
       object-fit: contain;
     }
+  }
+  .prefixColor {
+    color: #566c8e;
+  }
+  .ant-input-prefix {
+    margin-right: unset !important;
   }
 }

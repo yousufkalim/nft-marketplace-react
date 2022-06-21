@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col } from "antd";
 import "./CollectionNftView.scss";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import useWindowSize from "../../helpers/hooks";
 import { openNotification } from "../../components/Smart/Notification";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { getCollectionNft } from "../../services/collectionServices";
-import LoadingCard from "../../components/presentational/LoadingCard/LoadingCard";
-import CollectionNftCard from "../../components/presentational/CollectionNftCard/CollectionNftCard";
 import FeaturedCard from "../../components/presentational/FeaturedCard/FeaturedCard";
 import FeaturedLoadingCard from "../../components/presentational/FeaturedLoadingCard/FeaturedLoadingCard";
 import Spin from "../../components/presentational/Spin";
@@ -24,7 +21,6 @@ const CollectionNftView = ({ collectionid, currentNftId }) => {
   const [browserWidth] = useWindowSize();
   const fetchExploreData = async () => {
     try {
-      setLoading(true);
       const res = await getCollectionNft(collectionid, extraData?.next_page);
       if (res?.data?.body?.data?.length) {
         setExploreData([...exploreData, ...res?.data?.body?.data]);
@@ -33,14 +29,14 @@ const CollectionNftView = ({ collectionid, currentNftId }) => {
           has_more: res?.data?.body?.has_more,
         });
       }
-      setLoading(false);
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
-      setLoading(false);
     }
   };
   useEffect(async () => {
+    setLoading(true);
     await fetchExploreData();
+    setLoading(false);
   }, []);
 
   const filterNft = (data) => {
@@ -53,15 +49,12 @@ const CollectionNftView = ({ collectionid, currentNftId }) => {
 
   return (
     <>
-<<<<<<< HEAD
       <div className="collectionNftViewWrapper main_page_width">
-        {exploreData.length > 0 ? (
-=======
-      <div className="collectionNftViewWrapper">
         {loading ? (
+          <div style={{textAlign:'center'}}>
           <Spin />
+          </div>
         ) : exploreData.length > 0 ? (
->>>>>>> 7363a1c8f65220b9ff1601e20fb2cce8cbdc5b03
           <div className="collectionNftViewCardGrid">
             <InfiniteScroll
               dataLength={exploreData.length} //This is important field to render the next data
@@ -115,5 +108,3 @@ const CollectionNftView = ({ collectionid, currentNftId }) => {
     </>
   );
 };
-
-export default CollectionNftView;
