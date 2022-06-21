@@ -41,10 +41,10 @@ const ExplorePage = () => {
   const fetchExploreData = async () => {
     try {
       const res = await allCollectionsAPI(extraData?.next_page);
-      setExploreData([...exploreData, ...res?.data?.body?.data]);
+      setExploreData([...exploreData, ...res?.body?.data]);
       setExtraData({
-        next_page: res?.data?.body?.next_page,
-        has_more: res?.data?.body?.has_more,
+        next_page: res?.body?.next_page,
+        has_more: res?.body?.has_more,
       });
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);

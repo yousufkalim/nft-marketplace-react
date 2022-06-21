@@ -71,6 +71,7 @@ const NftDetails = ({ match }) => {
             collectionid={nftData?.store_front_guid}
             currentNftId={nftData?.guid}
             setCount={setCount}
+            sliceItem={true}
           />
         )}
         {/* <CollectionNftView collectionid={nftData?.store_front_guid}/> */}

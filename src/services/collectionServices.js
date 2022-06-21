@@ -2,10 +2,17 @@ import axios from "axios";
 import { apiConfig, restrictedConfig } from "../helpers/utils";
 
 export const collectionDetailsApi = async (id) => {
-  return await axios.get(
+  const res = await fetch(
     `https://nftdepot-api.azurewebsites.net/collections/${id}`,
-    apiConfig
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
   );
+  const resKey = await res.json();
+  return resKey;
 };
 
 export const followCollection = async (collectionId) => {

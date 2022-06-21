@@ -129,6 +129,7 @@ const CreateCollectionForm = () => {
     console.log("Failed:", errorInfo);
   };
 
+  console.log("storename",storename)
 
   return (
     <>
@@ -217,7 +218,7 @@ const CreateCollectionForm = () => {
                 label="Personal Link"
                 
               >
-                <Input  prefix={<span className="prefixColor">{window.location.origin+'/collectionView/'+formData?.store_name??storename}</span>} readOnly />
+                <Input  prefix={<span className="prefixColor">{window.location.origin+'/collectionView/'+(formData?.store_name ? +formData?.store_name : storename)}</span>} readOnly />
               </Form.Item>
 
               <Form.Item name="longDescription" label="Long Description">

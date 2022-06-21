@@ -9,7 +9,7 @@ import FeaturedCard from "../../components/presentational/FeaturedCard/FeaturedC
 import FeaturedLoadingCard from "../../components/presentational/FeaturedLoadingCard/FeaturedLoadingCard";
 import Spin from "../../components/presentational/Spin";
 
-const CollectionNftView = ({ collectionid, currentNftId }) => {
+const CollectionNftView = ({ collectionid, currentNftId,searchParam,sliceItem }) => {
   const arr = [1, 2];
 
   const [exploreData, setExploreData] = useState([]);
@@ -45,6 +45,17 @@ const CollectionNftView = ({ collectionid, currentNftId }) => {
     } else {
       return true;
     }
+  };
+
+  const searchNft = (data) => {
+    if(!sliceItem){
+    if (data?.description_short?.toLowerCase()?.includes(searchParam?.toLowerCase()) || data?.description_long?.toLowerCase()?.includes(searchParam?.toLowerCase())  ) {
+      return true;
+    } else {
+      return false;
+    }
+    }
+    return true;
   };
 
   return (
@@ -84,7 +95,8 @@ const CollectionNftView = ({ collectionid, currentNftId }) => {
               <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
                 {exploreData
                   ?.filter?.(filterNft)
-                  ?.slice(0, 20)
+                  ?.filter?.(searchNft)
+                  ?.slice(sliceItem && 0,sliceItem && 20)
                   ?.map((item, index) => {
                     return (
                       <Col

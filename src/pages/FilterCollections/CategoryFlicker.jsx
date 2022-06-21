@@ -40,7 +40,7 @@ const CategoryFlicker = ({ category, setCategory }) => {
   const handleCategory = (code) => {
     setCategory(code);
     setQuery({ SelectedCategory: code });
-    window.location.reload();
+    // window.location.reload();
   };
 
   const handleReset = () => {

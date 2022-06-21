@@ -22,13 +22,15 @@ const CollectionView = ({ match }) => {
   const [collectionDetails, setCollectionDetails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [count,setCount]=useState(0);
+  const [searchParam,setSearchParam]=useState('');
 
   useEffect(() => {
     const getCollectionDetails = async () => {
       try {
         setLoading(true);
         const res = await collectionDetailsApi(match.params.id);
-        setCollectionDetails(res?.data?.body);
+        console.log("res",res)
+        setCollectionDetails(res?.body);
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -158,6 +160,8 @@ const CollectionView = ({ match }) => {
                     suffix={<SearchOutlined />}
                     size="large"
                     placeholder="Search here"
+                    value={searchParam}
+                    onChange={(e)=>setSearchParam(e.target.value)}
                   />
                 </div>
                 <div className="filterDropdown">
@@ -177,7 +181,7 @@ const CollectionView = ({ match }) => {
               <div className="reset">Showing {count} results</div>
             </div>
           </div>
-          <CollectionNftView collectionid={match?.params?.id} setCount={setCount} />
+          <CollectionNftView collectionid={match?.params?.id} setCount={setCount} searchParam={searchParam} />
           <NewsLetter />
         </div>
       )}
