@@ -84,6 +84,7 @@
       flex-direction: column;
       align-items: center;
       width: 80%;
+    z-index: 10;
       .values {
         display: flex;
         justify-content: space-between;
@@ -256,6 +257,39 @@
       }
     }
   }
+  .socialIconsSection{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    .socialIcons{
+      width: 13%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      @include mobile{
+        width: 50%;
+      }
+      .socialIcon{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 36px;
+        height: 36px;
+        background: $textColor;
+        border: 1px solid rgba(124, 150, 182, 0.34);
+        box-sizing: border-box;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    }
+  }
+  .display_none{
+    @include mobile{
+    display: none;
+    }
+  }
 }
 .antdSpinContainer {
   inset: 0;
@@ -276,4 +310,5 @@
       }
     }
   }
+  
 }

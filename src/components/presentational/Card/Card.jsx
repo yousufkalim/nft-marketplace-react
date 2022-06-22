@@ -18,7 +18,7 @@ import { useSelector } from "react-redux";
 
 const { Meta } = Card;
 
-const NftCard = ({ showTopPick = false, data }) => {
+const NftCard = ({ showTopPick = false, data, showFollowIcon = true }) => {
   const [isFollowed, setIsFollowed] = useState(false);
   const user = useSelector((state) => state?.auth?.user);
   const [isLiked, setIsLiked] = useState(false);
@@ -45,7 +45,6 @@ const NftCard = ({ showTopPick = false, data }) => {
       openNotification("Oops", error?.response?.data?.message);
     }
   };
-
 
   const getcollectionFollowers = async () => {
     try {
@@ -96,7 +95,7 @@ const NftCard = ({ showTopPick = false, data }) => {
               <span className="coverImage">
                 <img
                   alt="example"
-                  src={showTopPick ? TEST_IMG : data?.image_large_location}
+                  src={data?.image_large_location}
                 />
               </span>
             </Link>
@@ -106,12 +105,14 @@ const NftCard = ({ showTopPick = false, data }) => {
               color={"#303549"}
               overlayClassName="favouriteToolTip"
             >
-              <span
-                className="frame"
-                onClick={isFollowed ? unFollowCollections : followCollections}
-              >
-                <img src={FRAME_ICON} alt={"FRAME_ICON"} />
-              </span>
+              {showFollowIcon && (
+                <span
+                  className="frame"
+                  onClick={isFollowed ? unFollowCollections : followCollections}
+                >
+                  <img src={FRAME_ICON} alt={"FRAME_ICON"} />
+                </span>
+              )}
             </Tooltip>
 
             <span
@@ -126,12 +127,14 @@ const NftCard = ({ showTopPick = false, data }) => {
           </span>
         }
       >
-        <Meta
-          title={data ? data?.store_name : "Test Title"}
-          description={
-            data ? truncate(data?.description_short) : "test description"
-          }
-        />
+        <Link to={`/collectionView/${data?.guid}`}>
+          <Meta
+            title={data ? data?.store_name : "Test Title"}
+            description={
+              data ? truncate(data?.description_short) : "test description"
+            }
+          />
+        </Link>
       </Card>
     </div>
   );

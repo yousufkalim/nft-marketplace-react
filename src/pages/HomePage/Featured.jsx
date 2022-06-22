@@ -74,7 +74,7 @@ const Featured = () => {
                 ?.map((item, index) => {
                   return (
                     <Col className="gutter-row" span={12} key={index}>
-                      <FeaturedCard data={item} />
+                      <FeaturedCard data={item} showFollowIcon={false} />
                     </Col>
                   );
                 })}
@@ -92,7 +92,7 @@ const Featured = () => {
               ?.map((item, index) => {
                 return (
                   <div key={index}>
-                    <FeatureMobileCard data={item} />
+                    <FeatureMobileCard data={item} showFollowIcon={false} />
                   </div>
                 );
               })

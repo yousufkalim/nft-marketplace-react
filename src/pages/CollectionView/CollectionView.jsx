@@ -7,7 +7,6 @@ import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import FlickerComp from "./Flicker";
 import { Input, Spin } from "antd";
 import { SearchOutlined, DownOutlined } from "@ant-design/icons";
-import "./CollectionView.scss";
 import CollectionNftView from "./CollectionNftView";
 import NewsLetter from "../../components/presentational/NewsLetter/NewsLetter";
 import useWindowSize from "../../helpers/hooks";
@@ -17,6 +16,15 @@ import {
 } from "../../services/collectionServices";
 import { openNotification } from "../../components/Smart/Notification";
 import BreadCrumb from "../../components/Smart/Breadcrumb";
+import FB from "../../images/facebook.svg";
+import INSTAGRAM from "../../images/instagram.svg";
+import LINKEDIN from "../../images/linkedin.svg";
+import YOUTUBE from "../../images/youtube.svg";
+import DISCORD from "../../images/discord_icon.svg";
+import MEDIUM from "../../images/M_icon.svg";
+import TWITTER from "../../images/twitter_icon.svg";
+import "./CollectionView.scss";
+
 
 const CollectionView = ({ match }) => {
   const [collectionDetails, setCollectionDetails] = useState([]);
@@ -29,7 +37,6 @@ const CollectionView = ({ match }) => {
       try {
         setLoading(true);
         const res = await collectionDetailsApi(match.params.id);
-        console.log("res",res)
         setCollectionDetails(res?.body);
         setLoading(false);
       } catch (error) {
@@ -47,6 +54,8 @@ const CollectionView = ({ match }) => {
       // openNotification("Oops", error?.response?.data?.message);
     }
   }, []);
+
+  console.log("collectionDetails",collectionDetails);
 
   const [browserWidth] = useWindowSize();
   return (
@@ -94,6 +103,25 @@ const CollectionView = ({ match }) => {
                     />
                   </div>
                 </div>
+                <div className="socialIconsSection">
+                <div className="socialIcons">
+            {/* <span className="socialIcon">
+              <img src={FB} alt="FB" />
+            </span> */}
+            <a className="socialIcon" href={collectionDetails?.url_twitter ?? 'https://twitter.com/'} target='_blank'>
+              <img src={TWITTER} alt="TWITTER" />
+            </a>
+            {/* <span className="socialIcon">
+              <img src={INSTAGRAM} alt="INSTAGRAM" />
+            </span> */}
+            <a className="socialIcon" href={collectionDetails?.url_discord} target='_blank'>
+              <img src={DISCORD} alt="DISCORD" />
+            </a>
+            <a className="socialIcon" href={collectionDetails?.url_medium} target='_blank'>
+              <img src={MEDIUM} alt="MEDIUM" />
+            </a>
+          </div>
+          </div>
                 <div className="values">
                   <div className="mobileItemWrapper">
                     <span>FloorPrice</span>
@@ -146,6 +174,25 @@ const CollectionView = ({ match }) => {
               </div>
             </div>
           )}
+          <div className="socialIconsSection main_page_width display_none">
+          <div className="socialIcons">
+            {/* <span className="socialIcon">
+              <img src={FB} alt="FB" />
+            </span> */}
+            <a className="socialIcon" href={collectionDetails?.url_twitter ?? 'https://twitter.com/'} target='_blank'>
+              <img src={TWITTER} alt="TWITTER" />
+            </a>
+            {/* <span className="socialIcon">
+              <img src={INSTAGRAM} alt="INSTAGRAM" />
+            </span> */}
+            <a className="socialIcon" href={collectionDetails?.url_discord} target='_blank'>
+              <img src={DISCORD} alt="DISCORD" />
+            </a>
+            <a className="socialIcon" href={collectionDetails?.url_medium} target='_blank'>
+              <img src={MEDIUM} alt="MEDIUM" />
+            </a>
+          </div>      
+          </div>
           <div className="collectionDetailsWrapper main_page_width">
             <div className="collectionDetails">
               <span>{collectionDetails?.description_short}</span>

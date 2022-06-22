@@ -19,7 +19,7 @@ import "./FeaturedCard.scss";
 import { truncate } from "../../../helpers/utils";
 import { useSelector } from "react-redux";
 
-const FeaturedCard = ({ data, isNft }) => {
+const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
   const history = useHistory();
   const [isFollowed, setIsFollowed] = useState(false);
   const user = useSelector((state) => state?.auth?.user);
@@ -144,7 +144,7 @@ const FeaturedCard = ({ data, isNft }) => {
               </div>
             )}
           </div>
-          <div className="content">
+          <div className="content" onClick={handleClick}>
             <div className="description">
               <span className="head">
                 {data ? data?.store_name : "test store_name"}
@@ -176,6 +176,7 @@ const FeaturedCard = ({ data, isNft }) => {
                 }
                 color={"#303549"}
               >
+                {showFollowIcon && 
                 <span
                   className="orangeFrame"
                   onClick={
@@ -193,6 +194,7 @@ const FeaturedCard = ({ data, isNft }) => {
                     alt={"ORANGE_FRAME"}
                   />
                 </span>
+              }
               </Tooltip>
             </div>
           </div>
