@@ -36,32 +36,9 @@ const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
       history.push(`/collectionView/${data?.guid}`);
     }
   };
-
-  const followCollections = async () => {
-    try {
-      const res = await followCollection(data?.guid);
-      setIsFollowed(res?.body?.followed);
-      if (res?.body?.followed) {
-        openNotification("Success", "Followed Successfully");
-      }
-    } catch (error) {
-      openNotification("Oops", error?.response?.data?.message);
-      return error;
-    }
-  };
-  const unFollowCollections = async () => {
-    try {
-      const res = await unFollowCollection(data?.guid);
-      setIsFollowed(res?.data?.body?.followed);
-      openNotification("Success", "UnFollowed Successfully");
-    } catch (error) {
-      openNotification("Oops", error?.response?.data?.message);
-    }
-  };
   const likeNft = async () => {
     try {
       const res = await likeNfts(data?.guid);
-      console.log("test", res?.body?.like);
       if (res?.body?.like == "1" || res?.body?.like == true) {
         openNotification("Success", "Liked Successfully");
       }
@@ -77,46 +54,6 @@ const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
       openNotification("Oops", error?.response?.data?.message);
     }
   };
-
-  const getcollectionFollowers = async () => {
-    try {
-      if (extraData?.has_more) {
-        const res = await getCollectionFollowers(
-          data?.guid,
-          extraData?.next_page
-        );
-        if (res?.data?.body?.followers?.length) {
-          setCollectionFollowers([
-            ...collectionFollowers,
-            ...res?.data?.body?.followers,
-          ]);
-          setExtraData({
-            has_more: res?.data?.body?.has_more,
-            next_page: res?.data?.body?.next_page,
-          });
-        }
-        if (res?.data?.body?.has_more) {
-          await getcollectionFollowers();
-        } else {
-          return;
-        }
-      }
-    } catch (error) {
-      openNotification("Oops", error?.response?.data?.message);
-      return;
-    }
-  };
-
-  useEffect(async () => {
-    await getcollectionFollowers();
-    const isUserFollowing = collectionFollowers.find(
-      (item) => item.guid === user?.guid
-    );
-    if (isUserFollowing) {
-      setIsFollowed(true);
-    }
-  }, [collectionFollowers]);
-
 
   return (
     <div className="featuredCard">
@@ -167,7 +104,7 @@ const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
               <Tooltip
                 title={
                   isNft
-                    ? isLiked
+                    ? data?.is_liked
                       ? "Unlike"
                       : "Like"
                     : isFollowed
@@ -181,7 +118,7 @@ const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
                   className="orangeFrame"
                   onClick={
                     isNft
-                      ? isLiked
+                      ? data?.is_liked
                         ? unLikeNft
                         : likeNft
                       : isFollowed

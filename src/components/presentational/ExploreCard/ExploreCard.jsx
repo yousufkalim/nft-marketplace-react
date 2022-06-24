@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 
 const { Meta } = Card;
 
-const ExploreCard = ({ data }) => {
+const ExploreCard = ({ data,showFollowIcon=true }) => {
   const history = useHistory();
 
   const handleClick = () => {
@@ -42,46 +42,6 @@ const ExploreCard = ({ data }) => {
     }
   };
 
-  // const getcollectionFollowers = async () => {
-  //   try {
-  //     if (extraData?.has_more) {
-  //       const res = await getCollectionFollowers(
-  //         data?.guid,
-  //         extraData?.next_page
-  //       );
-  //       if (res?.data?.body?.followers?.length) {
-  //         setCollectionFollowers([
-  //           ...collectionFollowers,
-  //           ...res?.data?.body?.followers,
-  //         ]);
-  //         setExtraData({
-  //           has_more: res?.data?.body?.has_more,
-  //           next_page: res?.data?.body?.next_page,
-  //         });
-  //       }
-  //       if (res?.data?.body?.has_more) {
-  //         await getcollectionFollowers();
-  //       } else {
-  //         return;
-  //       }
-  //     }
-  //   } catch (error) {
-  //     openNotification("Oops", error?.response?.data?.message);
-  //     return;
-  //   }
-  // };
-
-  // useEffect(async () => {
-  //   await getcollectionFollowers();
-  //   const isUserFollowing = collectionFollowers.find(
-  //     (item) => item.guid === user?.guid
-  //   );
-  //   if (isUserFollowing) {
-  //     setIsFollowed(true);
-  //   }
-  // }, [collectionFollowers]);
-
-
 
   return (
     <div className="ExploreCard">
@@ -93,9 +53,11 @@ const ExploreCard = ({ data }) => {
               <img alt="example" src={data?.image_large_location} />
             </span>
             <Tooltip title={data?.is_followed ? "UnFollow" : "Follow"} color={"#303549"}>
+              {showFollowIcon && 
               <span className="frame" onClick={data?.is_followed ? unFollowCollections : followTheCollection}  >
                 <img src={FRAME_ICON} alt={"FRAME_ICON"} />
               </span>
+              }
             </Tooltip>
 
             <span

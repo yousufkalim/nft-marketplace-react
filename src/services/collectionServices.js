@@ -71,10 +71,17 @@ export const unLikeNfts = async (id) => {
   return resKey;
 };
 export const getCollectionNft = async (id, pageNumber) => {
-  return await axios.get(
+  const res = await fetch(
     `https://nftdepot-api.azurewebsites.net/collections/${id}/nfts/${pageNumber}`,
-    apiConfig
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
   );
+  const resKey = await res.json();
+  return resKey;
 };
 export const collectionView = async (id) => {
   return await axios.post(

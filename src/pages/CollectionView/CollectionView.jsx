@@ -55,8 +55,6 @@ const CollectionView = ({ match }) => {
     }
   }, []);
 
-  console.log("collectionDetails",collectionDetails);
-
   const [browserWidth] = useWindowSize();
   return (
     <>
