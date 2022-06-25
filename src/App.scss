@@ -42,6 +42,9 @@ p {
   width: 100%;
   height: 67px !important;
   position: absolute;
+  @media screen and (max-width:620px) {
+    height: 57px !important;
+  }
 }
 .ant-layout-footer {
   padding: unset !important;
@@ -86,24 +89,6 @@ p {
 .searchBar_wrapper_outer {
   background: #F2FAFC;
 }
-.container {
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
-}
-@media (min-width: 768px) {
-  .container {
-    width: 750px;
-  }
-}
-@media (min-width: 992px) {
-  .container {
-    width: 970px;
-  }
-}
-@media (min-width: 1200px) {
-  .container {
-    width: 1170px;
-  }
+.all_seen_txt {
+  margin-top: 20px;
 }

@@ -68,6 +68,9 @@
         font-size: 40px;
         line-height: 75px;
         color: $CreateBtnBg;
+        @media screen and (max-width:900px) {
+          font-size: 25px;
+        }
         @include mobile{
           font-size: 20px;
         }
@@ -82,7 +85,7 @@
         margin-right: 8px;
 
       }
-    }
+    }  
     .cardGrid {
       margin-top: 2px;
       padding: 0% 5%;
@@ -96,6 +99,9 @@
     padding: 0% 60px;
     @media screen and (max-width:1100px) {
       padding: 0% 30px;
+    }
+    @media screen and (max-width:900px) {
+      margin-top: -77px;
     }
     display: flex;
     flex-direction: column;

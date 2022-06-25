@@ -15,6 +15,13 @@
       line-height: 28px;
       text-transform: capitalize;
       color: $CreateBtnBg;
+      @include mobile {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 19px;
+        text-transform: capitalize;
+        color: #303549;
+      }
     }
     .ant-card-meta-description {
       font-family: "Rubik";
@@ -23,6 +30,12 @@
       font-size: 18px;
       line-height: 24px;
       color: $CreateBtnBg;
+      @include mobile {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 35px;
+        color: #303549;
+      }
     }
   }
   .exploreCardFooter {

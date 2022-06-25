@@ -24,6 +24,11 @@
       font-size: 40px;
       line-height: 55px;
       color: $CreateBtnBg;
+      @include mobile {
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 24px;
+      }
     }
     .subscribeDesc {
       font-family: "Rubik";
@@ -33,6 +38,12 @@
       line-height: 35px;
       color: $CreateBtnBg;
       margin-top: 20px;
+      @include mobile {
+        margin-top: 10px;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 20px;
+      }
     }
     .unsetMargin {
       margin-top: unset;
@@ -46,9 +57,19 @@
         background:$InputBg  !important;
         border-radius: 10px !important;
         border: none !important;
+        @include mobile {
+          padding: 0;
+        }
       }
       .ant-input{
         background: $InputBg !important;
+        @include mobile {
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 19px;
+          color: #566C8E;
+          padding: 18px 25px;
+        }
       }
       .arrowContainer{
         padding: 20px;
@@ -57,6 +78,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        img {
+          height: 12px;
+        }
       }
     }
   }

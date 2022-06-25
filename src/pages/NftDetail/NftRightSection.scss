@@ -5,7 +5,8 @@
   margin-top: 152px;
   width: 65%;
   @include mobile{
-    width:100%
+    width:100%;
+    margin-top: 40px;
   }
   .RightHeader {
     display: flex;
@@ -96,7 +97,7 @@
         background: #000000;
       }
       .changebgColor {
-        background: #fff;
+        background: $ExploreBtnBg;
         cursor: pointer;
       }
     }

@@ -46,45 +46,6 @@ const NftCard = ({ showTopPick = false, data, showFollowIcon = true }) => {
     }
   };
 
-  const getcollectionFollowers = async () => {
-    try {
-      if (extraData?.has_more) {
-        const res = await getCollectionFollowers(
-          data?.guid,
-          extraData?.next_page
-        );
-        if (res?.data?.body?.followers?.length) {
-          setCollectionFollowers([
-            ...collectionFollowers,
-            ...res?.data?.body?.followers,
-          ]);
-          setExtraData({
-            has_more: res?.data?.body?.has_more,
-            next_page: res?.data?.body?.next_page,
-          });
-        }
-        if (res?.data?.body?.has_more) {
-          await getcollectionFollowers();
-        } else {
-          return;
-        }
-      }
-    } catch (error) {
-      openNotification("Oops", error?.response?.data?.message);
-      return;
-    }
-  };
-
-  useEffect(async () => {
-    await getcollectionFollowers();
-    const isUserFollowing = collectionFollowers.find(
-      (item) => item.guid === user?.guid
-    );
-    if (isUserFollowing) {
-      setIsFollowed(true);
-    }
-  }, [collectionFollowers]);
-
   return (
     <div className="imageCard">
       <Card

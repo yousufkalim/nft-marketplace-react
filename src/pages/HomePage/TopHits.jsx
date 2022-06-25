@@ -23,7 +23,7 @@ const TopHits = () => {
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        openNotification("Oops", error?.response?.data?.message);
+        openNotification("Oops Error in getting Top Hits", error?.response?.data?.message);
       }
     };
 

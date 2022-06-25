@@ -18,9 +18,21 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      @media screen and (max-width:1500px) {
+        top: 22%;
+      }
+      @media screen and (max-width:1200px) {
+        top: 16%;
+      }
+      @media screen and (max-width:850px) {
+        top: 19%;
+      }
       @include mobile {
-        top: 10%;
+        top: 28%;
         width: 100%;
+      }
+      @media screen and (max-width:400px) {
+          top: 25%;
       }
       .CreateCollectionText {
         font-family: "Rubik";
@@ -45,6 +57,10 @@
         line-height: 75px;
         text-align: center;
         color: $textColor;
+        @media screen and (max-width:1150px) {
+          font-size: 34px;
+          line-height: 45px;
+        }
         @include mobile {
           line-height: 1.25;
           font-size: 24px;

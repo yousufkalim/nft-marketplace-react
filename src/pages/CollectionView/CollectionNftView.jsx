@@ -87,7 +87,7 @@ const CollectionNftView = ({ collectionid, currentNftId,searchParam,sliceItem })
                 </Row>
               }
               endMessage={
-                <p style={{ textAlign: "center" }}>
+                <p className="all_seen_txt" style={{ textAlign: "center" }}>
                   <b>Yay! You have seen it all</b>
                 </p>
               }

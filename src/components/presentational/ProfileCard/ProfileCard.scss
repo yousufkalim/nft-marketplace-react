@@ -15,6 +15,9 @@
       line-height: 28px;
       text-transform: capitalize;
       color: $CreateBtnBg;
+      @media screen and (max-width:800px) {
+        font-size: 20px;
+      }
     }
     .ant-card-meta-description {
       font-family: "Rubik";

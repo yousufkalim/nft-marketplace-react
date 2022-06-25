@@ -8,6 +8,9 @@
     background: $textColor;
     box-shadow: 0px 4px 16px -7px rgba(83, 82, 237, 0.57);
     border-radius: 10px;
+    @include mobile {
+      height: 110px;
+    }
     .ant-card-body {
       padding: unset !important;
     }
@@ -16,12 +19,14 @@
     position: relative;
     display: flex;
     .content {
-      display: flex;
-      justify-content: space-between;
+      display: flex; 
+      justify-content: space-between;  
+      align-items: center;  
       width: 100%;
       padding: 30px;
-      cursor: pointer;
-      // padding-top: 10px;
+      @include mobile {
+        padding: 16px 30px;
+      }
     }
     .coverImageWrapper {
       position: relative;
@@ -34,6 +39,9 @@
           height: 172px;
           object-fit: cover;
           border-radius: 10px 0px 0px 10px;
+          @media screen and (max-width:620px) {
+            height: 110px;
+          }
         }
       }
       .tagImage {
@@ -63,6 +71,13 @@
         line-height: 1;
         text-transform: capitalize;
         color: $CreateBtnBg;
+        @include mobile {
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 19px;
+          text-transform: capitalize;
+          color: #303549;
+        }
       }
       .desc {
         font-family: "Rubik";
@@ -73,6 +88,12 @@
         color: $CreateBtnBg;
         margin-top: 8px;
         flex-flow: row wrap;
+        @include mobile {
+          margin-top: 0px;
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 35px;
+        }
       }
       .StatsSection {
         display: flex;

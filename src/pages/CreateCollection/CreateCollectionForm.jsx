@@ -86,7 +86,6 @@ const CreateCollectionForm = () => {
     getCode();
   }, []);
 
-
   const onFinish = async (values) => {
     const data = {
       store_name: values.storename ?? "",

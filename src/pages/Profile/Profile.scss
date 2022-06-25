@@ -16,27 +16,36 @@
         justify-content: space-between;
         align-items: flex-end;
         padding: 0% 60px;
+        margin-top: -180px;
         @media screen and (max-width:1100px) {
           padding: 0% 30px;
+          margin-top: -120px;
         }
-        margin-top: -180px;
         @include mobile{
           margin-top: 10px;
           flex-direction: column;
           width: 100%;
         }
         .profileCard{
-          width: 40%;
+          width: 32%;
+          @media screen and (max-width:1000px) {
+            width: 40%;
+          }
           @include mobile{
             width: 100%;
           }
         }
     }
     .profilecardFotterSection {
-      margin-top: 30px;
-      width: 50%;
+      width: 30%;
+      margin: 0 auto;
+      margin-left: 60px;
+      @media screen and (max-width:1000px) {
+        width: 50%;
+      }
       @include mobile{
         width: 100%;
+        margin-left: 0px;
       }
       .unsetBorder{
           border-bottom: unset !important;
@@ -48,7 +57,7 @@
         align-items: center;
         padding-bottom: 20px;
         border-bottom: 1px dashed rgba(48, 53, 73, 0.25);
-        margin-top: 22px;
+        margin-top: 30px;
         .key {
           font-family: "Rubik";
           font-style: normal;
