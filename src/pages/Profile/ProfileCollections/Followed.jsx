@@ -7,11 +7,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { openNotification } from "../../../components/Smart/Notification";
 import FeaturedLoadingCard from "../../../components/presentational/FeaturedLoadingCard/FeaturedLoadingCard";
 import "./Followed.scss";
-<<<<<<< HEAD
-=======
 import LoadingCard from "../../../components/presentational/LoadingCard/LoadingCard";
 import ExploreCard from "../../../components/presentational/ExploreCard/ExploreCard";
->>>>>>> 4a6e683f1d465db765299bad1f98408309fd19eb
 
 const Followed = ({ setMyFollowedCount }) => {
   const arr = [0, 1, 2];

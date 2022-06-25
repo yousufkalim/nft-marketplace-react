@@ -26,7 +26,7 @@ const Featured = () => {
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        openNotification("Oops", error?.response?.data?.message);
+        openNotification("Oops Error in getting Featured", error?.response?.data?.message);
       }
     };
 
