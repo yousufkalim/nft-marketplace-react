@@ -54,13 +54,12 @@ const ProfileCollectionsFlicker = ({ currentTab, setCurrentTab }) => {
       >
         {arr.map((item, index) => {
           return (
-            <div key={index}
-            className={
-              currentTab == item?.name ? "selected dFlex" : "notSelected dFlex"
-            }
-            onClick={() => setCurrentTab(item?.name)}
-            >
+            <div key={index} className="dFlex">
               <div
+                className={
+                  currentTab == item?.name ? "selected" : "notSelected"
+                }
+                onClick={() => setCurrentTab(item?.name)}
               > {item?.name}</div>
               <span>{item.value}</span>
             </div>

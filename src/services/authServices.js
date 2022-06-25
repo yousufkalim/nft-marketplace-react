@@ -54,6 +54,20 @@ export const VerifyUserAPI = async () => {
   });
 };
 
+export const VerifyEmailAPI = async (email) => {
+  return await axios({
+    method: "POST",
+    url: `https://nftdepot-api.azurewebsites.net/check_email/?email=${email}`,
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": `${window.location.origin}/`,
+      "Access-Control-Allow-Headers":
+      "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization",
+    },
+  });
+};
+
+
 export const VerifyUser = async () => {
   try {
     const { data } = await VerifyUserAPI();

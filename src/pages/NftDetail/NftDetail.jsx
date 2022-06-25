@@ -28,7 +28,6 @@ const NftDetails = ({ match }) => {
       try {
         setLoading(true);
         const res = await nftDetailsApi(match?.params?.id);
-        console.log("res", res);
         setNftData(res?.data?.body);
         setLoading(false);
       } catch (error) {
@@ -39,7 +38,6 @@ const NftDetails = ({ match }) => {
     getNftDetail();
   }, []);
 
-  console.log("nftData", nftData);
 
   return (
     <div className="NftDetailPageWrapper">
@@ -73,6 +71,7 @@ const NftDetails = ({ match }) => {
             collectionid={nftData?.store_front_guid}
             currentNftId={nftData?.guid}
             setCount={setCount}
+            sliceItem={true}
           />
         )}
         {/* <CollectionNftView collectionid={nftData?.store_front_guid}/> */}

@@ -7,6 +7,11 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { openNotification } from "../../../components/Smart/Notification";
 import FeaturedLoadingCard from "../../../components/presentational/FeaturedLoadingCard/FeaturedLoadingCard";
 import "./Followed.scss";
+<<<<<<< HEAD
+=======
+import LoadingCard from "../../../components/presentational/LoadingCard/LoadingCard";
+import ExploreCard from "../../../components/presentational/ExploreCard/ExploreCard";
+>>>>>>> 4a6e683f1d465db765299bad1f98408309fd19eb
 
 const Followed = ({ setMyFollowedCount }) => {
   const arr = [0, 1, 2];
@@ -20,18 +25,15 @@ const Followed = ({ setMyFollowedCount }) => {
   const fetchCollections = async () => {
     try {
       const res = await myFollowingCollectionsAPI(extraData?.next_page);
-
-      console.log(res)
-
-      setCollections([...collections, ...res?.data?.body?.collections]);
+      setCollections([...collections, ...res?.body?.collections]);
       setExtraData({
-        next_page: res?.data?.body?.next_page,
-        has_more: res?.data?.body?.has_more,
+        next_page: res?.body?.next_page,
+        has_more: res?.body?.has_more,
       });
       if (collections?.length > 0) {
         setMyFollowedCount(collections?.length);
       } else {
-        setMyFollowedCount(res?.data?.body?.collections?.length);
+        setMyFollowedCount(res?.body?.collections?.length);
       }
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
@@ -58,7 +60,7 @@ const Followed = ({ setMyFollowedCount }) => {
                     span={browserWidth < 620 ? 24 : 8}
                     key={index}
                   >
-                    <FeaturedLoadingCard isNft={true} />
+                    <LoadingCard />
                   </Col>
                 );
               })}
@@ -75,10 +77,10 @@ const Followed = ({ setMyFollowedCount }) => {
               return (
                 <Col
                   className="gutter-row"
-                  span={browserWidth < 620 ? 24 : 12}
+                  span={browserWidth < 620 ? 24 : 8}
                   key={index}
                 >
-                  <FeaturedCard data={item} isNft={false} />
+                  <ExploreCard data={item}/>
                 </Col>
               );
             })}
