@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { openNotification } from "../../Smart/Notification";
 import {
   followCollection,
-  getCollectionFollowers,
+  getCollectionFollowers,  
   unFollowCollection,
 } from "../../../services/collectionServices";
 import { truncate } from "../../../helpers/utils";
@@ -48,32 +48,30 @@ const NftCard = ({ showTopPick = false, data, showFollowIcon = true }) => {
 
   return (
     <div className="imageCard">
+      <Link to={`/collectionView/${data?.guid}`}>
       <Card
         hoverable
         cover={
           <span className="coverWrapper">
-            <Link to={`/collectionView/${data?.guid}`}>
               <span className="coverImage">
                 <img
                   alt="example"
                   src={data?.image_large_location}
                 />
               </span>
-            </Link>
 
             <Tooltip
               title={isFollowed ? "UNFOLLOW" : "FOLLOW"}
               color={"#303549"}
               overlayClassName="favouriteToolTip"
             >
-              {showFollowIcon && (
-                <span
-                  className="frame"
-                  onClick={isFollowed ? unFollowCollections : followCollections}
-                >
-                  <img src={FRAME_ICON} alt={"FRAME_ICON"} />
-                </span>
-              )}
+              <span
+                className="frame"
+                style={{backgroundColor : isFollowed ? "blue" : ""}}
+                onClick={isFollowed ? unFollowCollections : followCollections}
+              >
+                <img src={FRAME_ICON} alt={"FRAME_ICON"} />
+              </span>
             </Tooltip>
 
             <span
@@ -97,6 +95,7 @@ const NftCard = ({ showTopPick = false, data, showFollowIcon = true }) => {
           />
         </Link>
       </Card>
+      </Link>
     </div>
   );
 };

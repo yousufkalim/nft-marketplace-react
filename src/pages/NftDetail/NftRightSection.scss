@@ -106,6 +106,9 @@
       justify-content: space-between;
       align-items: center;
       width: 100%;
+      @include mobile {
+        
+      }
       .priceDetails {
         display: flex;
         justify-content: space-between;
