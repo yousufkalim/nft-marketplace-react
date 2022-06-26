@@ -177,6 +177,7 @@ const FeaturedCard = ({ data, isNft }) => {
                 color={"#303549"}
               >
                 <span
+                // style={{backgroundColor : isFollowed ? "blue" : ""}}
                   className="orangeFrame"
                   onClick={
                     isNft

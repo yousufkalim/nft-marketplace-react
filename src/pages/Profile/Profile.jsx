@@ -21,9 +21,10 @@ const Profile = () => {
           <div className="profileCard">
             <ProfileCard />
           </div>
+          {console.log(profileData)}
           <div className="profilecardFotterSection">
             <span className="flexStyle">
-              <span className="key">Profile ID</span>
+              <span className="key">Username</span>
               <span className="value changeColor">{profileData?.username}</span>
             </span>
             <span className="flexStyle">

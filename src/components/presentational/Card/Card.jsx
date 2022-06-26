@@ -88,18 +88,17 @@ const NftCard = ({ showTopPick = false, data }) => {
 
   return (
     <div className="imageCard">
+      <Link to={`/collectionView/${data?.guid}`}>
       <Card
         hoverable
         cover={
           <span className="coverWrapper">
-            <Link to={`/collectionView/${data?.guid}`}>
               <span className="coverImage">
                 <img
                   alt="example"
                   src={showTopPick ? TEST_IMG : data?.image_large_location}
                 />
               </span>
-            </Link>
 
             <Tooltip
               title={isFollowed ? "UNFOLLOW" : "FOLLOW"}
@@ -108,6 +107,7 @@ const NftCard = ({ showTopPick = false, data }) => {
             >
               <span
                 className="frame"
+                style={{backgroundColor : isFollowed ? "blue" : ""}}
                 onClick={isFollowed ? unFollowCollections : followCollections}
               >
                 <img src={FRAME_ICON} alt={"FRAME_ICON"} />
@@ -133,6 +133,7 @@ const NftCard = ({ showTopPick = false, data }) => {
           }
         />
       </Card>
+      </Link>
     </div>
   );
 };
