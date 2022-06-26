@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { openNotification } from "../../Smart/Notification";
 import {
   followCollection,
-  getCollectionFollowers,
+  getCollectionFollowers,  
   unFollowCollection,
 } from "../../../services/collectionServices";
 import { truncate } from "../../../helpers/utils";
