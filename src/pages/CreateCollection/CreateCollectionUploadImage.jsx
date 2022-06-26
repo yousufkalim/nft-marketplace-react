@@ -20,8 +20,8 @@ const CreateCollectionUploadImage = () => {
   const [bannerImage, setBannerImage] = useState("");
   const [isAgree, setIsAgree] = useState(false);
   const [loading, setIsLoading] = useState(false);
-  const [browserWidth]=useWindowSize();
-  const history=useHistory()
+  const [browserWidth] = useWindowSize();
+  const history = useHistory();
 
   const formData = useSelector((state) => state?.collectionData?.data);
 
@@ -36,17 +36,25 @@ const CreateCollectionUploadImage = () => {
 
           const data = {
             ...formData,
+            url_discord: "https://discord.com/"+formData?.url_discord,
+            url_instagram: "https://www.instagram.com/"+formData?.url_instagram,
+            url_medium: "https://medium.com/"+formData?.url_medium,
+            url_personal: window.location.origin+'/collectionView/'+formData?.url_personal,
+            url_telegram: "https://telegram.com/"+formData?.url_telegram,
             image_small_location: smallImageLocation?.body?.url,
             image_large_location: largeImageLocation?.body?.url,
             image_banner_location: bannerImageLocation?.body?.url,
           };
           const res = await createCollectionAPI(data);
-          openNotification("Success", "Collection created successfully , Lets Add some NFTs to your collection");
+          openNotification(
+            "Success",
+            "Collection created successfully , Lets Add some NFTs to your collection"
+          );
           history.push(`/createNft/${res?.body?.collection_id}`);
           setIsLoading(false);
         } catch (error) {
           setIsLoading(false);
-          openNotification("Oops",error?.response?.data?.message);
+          openNotification("Oops", error?.response?.data?.message);
         }
       } else {
         openNotification("Oops", "Please agree to the terms and conditions");
@@ -56,16 +64,19 @@ const CreateCollectionUploadImage = () => {
     }
   };
 
-  useEffect(()=>{
-    if(!formData){
-      history.push('/createCollection')
+  useEffect(() => {
+    if (!formData) {
+      history.push("/createCollection");
     }
-  },[])
+  }, []);
 
   return (
     <div className="CreateCollectionUploadImage">
       <div className="CreateCollectionHeader">
-        <img src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER} alt={"PAGE_HEADER"} />
+        <img
+          src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER}
+          alt={"PAGE_HEADER"}
+        />
         <div className="CreateCollectionHeadingSection">
           <span className="CreateCollectionText">
             Become an NFT artist with NFTdepot
@@ -78,7 +89,9 @@ const CreateCollectionUploadImage = () => {
           <div className="step2Header">
             <span className="step2">Step 2</span>
             <span className="desc">Upload Media</span>
-            <span className="desc2">Accepted file formats: JPG, JPEG,PNG,GIF</span>
+            <span className="desc2">
+              Accepted file formats: JPG, JPEG,PNG,GIF
+            </span>
           </div>
           <div className="uploadForm">
             <div className="collectionImages">

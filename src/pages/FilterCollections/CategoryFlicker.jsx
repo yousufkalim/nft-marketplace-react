@@ -37,17 +37,16 @@ const CategoryFlicker = ({ category, setCategory }) => {
     SelectedCategory: StringParam,
   });
 
-  const handleCategory=(code)=>{
+  const handleCategory = (code) => {
     setCategory(code);
     setQuery({ SelectedCategory: code });
-    window.location.reload();
+    // window.location.reload();
+  };
 
-  }
-
-  const handleReset=()=>{
+  const handleReset = () => {
     setCategory("");
     setQuery({ SelectedCategory: null });
-  }
+  };
 
   // useEffect(()=>{
   //   const query=new URLSearchParams(window?.location?.search);
@@ -58,20 +57,45 @@ const CategoryFlicker = ({ category, setCategory }) => {
 
   return (
     <>
-    <div className="CategoryFlickerWrapper main_page_width padding_add">
-      <div onClick={onClickLeft} className="arrow leftArrow">
-        <img src={LEFT_ARROW} alt={"LEFT_ARROW"} />
+      <div className="CategoryFlickerWrapper main_page_width padding_add ">
+        <div onClick={onClickLeft} className="arrow leftArrow">
+          <img src={LEFT_ARROW} alt={"LEFT_ARROW"} />
+        </div>
+        <Flicking
+          horizontal
+          bound
+          viewportTag={"div"}
+          defaultIndex={0}
+          align={"prev"}
+          circular
+          ref={flickinfRef}
+        >
+          {categories?.map((item, index) => {
+            return (
+              <div
+                key={index}
+                onClick={() => handleCategory(item.code)}
+                className="changeCursor"
+              >
+                <div
+                  className={item?.code == category ? "active" : "notActive"}
+                >
+                  {item?.code}
+                </div>
+              </div>
+            );
+          })}
+        </Flicking>
+        <div onClick={onClickRight} className="arrow rightArrow">
+          <img src={RIGHT_ARROW} alt={"RIGHT_ARROW"} />
+        </div>
       </div>
-      <div className="resetWrapper">
+      <div className="resetWrapper main_page_width padding_add">
         <div className="resetFilters" onClick={handleReset}>
           Reset Filters
         </div>
       </div>
-    </div>
-    <div className="resetWrapper main_page_width padding_add">
-    <div className="resetFilters" onClick={()=>setCategory('')}>Reset Filters</div>
-  </div>
-  </>
+    </>
   );
 };
 

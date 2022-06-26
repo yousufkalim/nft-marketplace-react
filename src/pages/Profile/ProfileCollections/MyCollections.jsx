@@ -9,6 +9,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { openNotification } from "../../../components/Smart/Notification";
 import FeaturedLoadingCard from "../../../components/presentational/FeaturedLoadingCard/FeaturedLoadingCard";
 import "./MyCollections.scss";
+import ExploreCard from "../../../components/presentational/ExploreCard/ExploreCard";
+import LoadingCard from "../../../components/presentational/LoadingCard/LoadingCard";
 
 const MyCollections = ({ setMyCollectionItemsCount }) => {
   const arr = [0, 1, 2];
@@ -59,7 +61,7 @@ const MyCollections = ({ setMyCollectionItemsCount }) => {
                       span={browserWidth < 620 ? 24 : 8}
                       key={index}
                     >
-                      <FeaturedLoadingCard isNft={true} />
+                      <LoadingCard />
                     </Col>
                   );
                 })}
@@ -76,10 +78,10 @@ const MyCollections = ({ setMyCollectionItemsCount }) => {
                 return (
                   <Col
                     className="gutter-row"
-                    span={browserWidth < 620 ? 24 : 12}
+                    span={browserWidth < 620 ? 24 : 8}
                     key={index}
                   >
-                    <FeaturedCard data={item} isNft={false} />
+                    <ExploreCard data={item} showFollowIcon={false} />
                   </Col>
                 );
               })}

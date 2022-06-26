@@ -180,4 +180,10 @@
       object-fit: contain;
     }
   }
+  .prefixColor {
+    color: #566c8e;
+  }
+  .ant-input-prefix {
+    margin-right: unset !important;
+  }
 }

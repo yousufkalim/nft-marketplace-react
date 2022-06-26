@@ -11,7 +11,7 @@ import {
 import RightArrow from "../../images/rightIcon.svg";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { collectionDataSuccess } from "../../store/collectionForm/collectionActions";
+import { collectionDataSuccess, collectionNameStatus } from "../../store/collectionForm/collectionActions";
 import QUESTION_MARK from "../../images/questionMark.png";
 import {
   checkStroeNameAvailability,
@@ -23,6 +23,7 @@ import Spin from "../../components/presentational/Spin";
 
 const CreateCollectionForm = () => {
   const formData = useSelector((state) => state?.collectionData?.data);
+  const nameStatus = useSelector((state) => state?.collectionData?.collectionNameStatus);
 
   const [isExplicit, setIsExplicit] = useState(formData?.is_explicit ?? false);
   const [isMintable, setIsMintable] = useState(formData?.mintable ?? false);
@@ -34,7 +35,8 @@ const CreateCollectionForm = () => {
   const [whoPaysFee, setWhoPaysFee] = useState([]);
   const [isMintLocked, setIsMintLocked] = useState(formData?.mint_locked ?? false);
   const [storename,setStoreName]=useState("");
-  const [storenameStatus,setStoreNameStatus]=useState(null);
+  const [storenameStatus,setStoreNameStatus]=useState(nameStatus ?? null);
+  const [personalLink,setPersonalLink]=useState("");
 
   const history = useHistory();
 
@@ -42,8 +44,9 @@ const CreateCollectionForm = () => {
  
 
   const handleStorename=async(storeName)=>{
-    if(storeName===""){
+    if(!storeName){
     setStoreNameStatus(null);
+    setStoreName(storeName);
     }
     else{
     setStoreNameStatus("validating");
@@ -111,20 +114,21 @@ const CreateCollectionForm = () => {
       third_party_wallet_id: values.thirdPartyWalletId ?? "",
       who_pays_fees: "Seller",
     };
+    dispatch(collectionNameStatus(storenameStatus));
       if (storenameStatus=="success") {
         dispatch(collectionDataSuccess(data));
         history.push("/createCollectionUploadImage");
-      } else {
-        openNotification("Oops", "Store name already exists");
       } 
+      // else {
+      //   openNotification("Oops", "Store name already exists");
+      // } 
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
 
-
-  console.log("storenameStatus",storenameStatus);
+  console.log("storename",storename)
 
   return (
     <>
@@ -140,16 +144,16 @@ const CreateCollectionForm = () => {
             initialValues={{
               remember: true,
               storename: formData?.store_name ?? "",
-              instagramLink: formData?.url_instagram ?? "https://www.instagram.com/",
+              instagramLink: formData?.url_instagram ?? "",
               shortDescription: formData?.description_short ?? "",
               longDescription: formData?.description_long ?? "",
-              personalLink: formData?.url_personal ?? "yourSite.io",
-              mediumLink: formData?.url_medium ?? "https://medium.com/",
+              personalLink: formData?.url_personal ?? storename,
+              mediumLink: formData?.url_medium ?? "",
               category:formData?.category_code ?? "",
               delayDays: formData?.delay_days ??  5,
               thirdPartyRoyaltyPercent: formData?.third_party_royalty_percent ?? 0.0,
-              discordLink: formData?.url_discord ?? "https://discord.com/",
-              telegramLink: formData?.url_telegram ?? "https://telegram.com/",
+              discordLink: formData?.url_discord ?? "",
+              telegramLink: formData?.url_telegram ?? "",
               afterPurchaseMessage: formData?.after_1st_purchase_text ?? "",
               mintingSupply: formData?.minting_supply_count ?? null,
               mintingCoin: formData?.minting_coin ?? "",
@@ -171,7 +175,7 @@ const CreateCollectionForm = () => {
                 name="storename"
                 label="Store Name"
                 help={storenameStatus=="error"?"Store name already exists":""}
-                hasFeedback={true}
+                hasFeedback
                 validateStatus={storenameStatus}
               
                 rules={[
@@ -193,7 +197,7 @@ const CreateCollectionForm = () => {
                 //   },
                 // ]}
               >
-                <Input placeholder="Instagram link " />
+                <Input placeholder="Instagram link " prefix={<span className="prefixColor">https://www.instagram.com/</span>}/>
               </Form.Item>
               <Form.Item
                 name="shortDescription"
@@ -211,14 +215,9 @@ const CreateCollectionForm = () => {
               <Form.Item
                 name="personalLink"
                 label="Personal Link"
-                // rules={[
-                //   {
-                //     required: true,
-                //     message: "Please input your Personal link!",
-                //   },
-                // ]}
+                
               >
-                <Input placeholder="Personal link" />
+                <Input  prefix={<span className="prefixColor">{window.location.origin+'/collectionView/'+(formData?.store_name ? +formData?.store_name : storename)}</span>} readOnly />
               </Form.Item>
 
               <Form.Item name="longDescription" label="Long Description">
@@ -239,7 +238,7 @@ const CreateCollectionForm = () => {
                   //   },
                   // ]}
                 >
-                  <Input placeholder="Medium link" />
+                  <Input placeholder="Medium link" prefix={<span className="prefixColor">https://medium.com/</span>} />
                 </Form.Item>
 
                 <Form.Item
@@ -252,7 +251,7 @@ const CreateCollectionForm = () => {
                   //   },
                   // ]}
                 >
-                  <Input placeholder="Discord link" />
+                  <Input placeholder="Discord link"  prefix={<span className="prefixColor">https://discord.com/</span>} />
                 </Form.Item>
               </span>
 
@@ -278,7 +277,7 @@ const CreateCollectionForm = () => {
               </Form.Item>
 
               <Form.Item name="telegramLink" label="Telegram Link">
-                <Input placeholder="Telegram link" />
+                <Input placeholder="Telegram link"  prefix={<span className="prefixColor">https://telegram.com/</span>} />
               </Form.Item>
 
               <Form.Item

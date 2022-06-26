@@ -9,7 +9,7 @@ import { truncate } from "../../../helpers/utils";
 
 const { Meta } = Card;
 
-const FeatureMobileCard = ({data}) => {
+const FeatureMobileCard = ({data,showFollowIcon=true}) => {
   return (
     <div className="FeatureMobileCard">
       <Card
@@ -24,21 +24,23 @@ const FeatureMobileCard = ({data}) => {
             />
             </span>
             <Tooltip title="Add to favourites" color={'#303549'}>
+            {showFollowIcon &&
               <span className="frame">
                 <img src={FRAME_ICON} alt={"FRAME_ICON"} />
               </span>
+          }
             </Tooltip>
 
             <span
               className="footer"
               style={{ background: `url(${data?.image_small_location}) no-repeat` }}
             ></span>
-          </span>
+          </span> 
         }
       >
         <Meta title={data?.store_name} description={truncate(data?.description_short)} />
-        <div className="exploreCardFooter">
-            {/* <span className="priceHeading">Price <span className="priceHeading">$$ ETH</span></span> */}
+        {/* <div className="exploreCardFooter">
+            <span className="priceHeading">Price <span className="priceHeading">$$ ETH</span></span>
             <span className="rightSection" >
                 <span>
                 <img src={EYE_ICON} alt={'EYE_ICON'} />
@@ -49,7 +51,7 @@ const FeatureMobileCard = ({data}) => {
                 <span className="tagPrice">33</span>
                 </span>
             </span>
-        </div>
+        </div> */}
       </Card>
     </div>
   );

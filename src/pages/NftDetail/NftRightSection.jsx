@@ -5,6 +5,8 @@ import TWITTER_ICON from "../../images/twitter_icon.svg";
 import WHITE_FRAME_ICON from "../../images/white_frame_icon.svg";
 import SHARE_ICON from "../../images/share.svg";
 import PRICE_ICON from "../../images/price_icon.svg";
+import LIKE_ICON from "../../images/like_icon.svg";
+
 import { Tooltip } from "antd";
 
 import "./NftRightSection.scss";
@@ -32,12 +34,12 @@ const NftRightSection = ({nftData}) => {
               <img src={SHARE_ICON} alt={"SHARE_ICON"} />
             </span>
             <Tooltip
-              title="Add to favourites"
+              title="Like"
               color={"#303549"}
               overlayClassName="favouriteToolTip"
             >
               <span className="socialIconImage changebgColor ">
-                <img src={WHITE_FRAME_ICON} alt={"WHITE_FRAME_ICON"} />
+                <img src={LIKE_ICON} alt={"LIKE_ICON"} />
               </span>
             </Tooltip>
           </div>

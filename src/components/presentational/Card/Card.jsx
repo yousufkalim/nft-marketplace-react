@@ -18,7 +18,7 @@ import { useSelector } from "react-redux";
 
 const { Meta } = Card;
 
-const NftCard = ({ showTopPick = false, data }) => {
+const NftCard = ({ showTopPick = false, data, showFollowIcon = true }) => {
   const [isFollowed, setIsFollowed] = useState(false);
   const user = useSelector((state) => state?.auth?.user);
   const [isLiked, setIsLiked] = useState(false);
@@ -46,46 +46,6 @@ const NftCard = ({ showTopPick = false, data }) => {
     }
   };
 
-
-  const getcollectionFollowers = async () => {
-    try {
-      if (extraData?.has_more) {
-        const res = await getCollectionFollowers(
-          data?.guid,
-          extraData?.next_page
-        );
-        if (res?.data?.body?.followers?.length) {
-          setCollectionFollowers([
-            ...collectionFollowers,
-            ...res?.data?.body?.followers,
-          ]);
-          setExtraData({
-            has_more: res?.data?.body?.has_more,
-            next_page: res?.data?.body?.next_page,
-          });
-        }
-        if (res?.data?.body?.has_more) {
-          await getcollectionFollowers();
-        } else {
-          return;
-        }
-      }
-    } catch (error) {
-      openNotification("Oops", error?.response?.data?.message);
-      return;
-    }
-  };
-
-  useEffect(async () => {
-    await getcollectionFollowers();
-    const isUserFollowing = collectionFollowers.find(
-      (item) => item.guid === user?.guid
-    );
-    if (isUserFollowing) {
-      setIsFollowed(true);
-    }
-  }, [collectionFollowers]);
-
   return (
     <div className="imageCard">
       <Link to={`/collectionView/${data?.guid}`}>
@@ -96,7 +56,7 @@ const NftCard = ({ showTopPick = false, data }) => {
               <span className="coverImage">
                 <img
                   alt="example"
-                  src={showTopPick ? TEST_IMG : data?.image_large_location}
+                  src={data?.image_large_location}
                 />
               </span>
 
@@ -126,12 +86,14 @@ const NftCard = ({ showTopPick = false, data }) => {
           </span>
         }
       >
-        <Meta
-          title={data ? data?.store_name : "Test Title"}
-          description={
-            data ? truncate(data?.description_short) : "test description"
-          }
-        />
+        <Link to={`/collectionView/${data?.guid}`}>
+          <Meta
+            title={data ? data?.store_name : "Test Title"}
+            description={
+              data ? truncate(data?.description_short) : "test description"
+            }
+          />
+        </Link>
       </Card>
       </Link>
     </div>

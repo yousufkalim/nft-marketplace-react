@@ -30,10 +30,17 @@ export const myCollectedNfts = async (pageNumber) => {
 };
 
 export const myFollowingCollectionsAPI = async (pageNumber) => {
-  return await axios.get(
+  const res = await fetch(
     `https://nftdepot-api.azurewebsites.net/collections/following/${pageNumber}`,
-    restrictedConfig
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
   );
+  const resKey = await res.json();
+  return resKey;
 };
 
 

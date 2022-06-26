@@ -26,7 +26,7 @@
       justify-content: center;
       align-items: center;
       @include mobile {
-        top: 10%;
+        top: 30%;
         width: 100%;
       }
       .CollectionViewText {
@@ -84,7 +84,7 @@
       flex-direction: column;
       align-items: center;
       width: 80%;
-      z-index: 0;
+    z-index: 10;
       .values {
         display: flex;
         justify-content: space-between;

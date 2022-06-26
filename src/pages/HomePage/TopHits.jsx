@@ -23,7 +23,7 @@ const TopHits = () => {
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        openNotification("Oops", error?.response?.data?.message);
+        openNotification("Oops Error in getting Top Hits", error?.response?.data?.message);
       }
     };
 
@@ -70,7 +70,7 @@ const TopHits = () => {
                 ?.map((item, index) => {
                   return (
                     <Col className="gutter-row" span={6} key={index}>
-                      <NftCard data={item} />
+                      <NftCard data={item} showFollowIcon={false} />
                     </Col>
                   );
                 })}
@@ -87,7 +87,7 @@ const TopHits = () => {
               ?.map((item, index) => {
                 return (
                   <div key={index}>
-                    <NftCard data={item} />
+                    <NftCard data={item} showFollowIcon={false} />
                   </div>
                 );
               })

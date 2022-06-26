@@ -32,7 +32,6 @@ const HomePage = ({match}) => {
     topHits();
   }, []);
 
-  console.log("match",match);
 
   return (
     <div className="homePage">
@@ -67,7 +66,7 @@ const HomePage = ({match}) => {
             </div>
             {browserWidth > 620 && <div className="rightSide">
               <span className="leftHeading">
-                <NftCard showTopPick={true} data={topPick[0]} />
+                <NftCard showTopPick={true} data={topPick[0]} showFollowIcon={false} />
               </span>
             </div>}
           </div>

@@ -20,7 +20,7 @@ const ProfileCollections = () => {
       <div className="ProfileCollectionWrapper">
         <div className="filterHeader main_page_width">
           <div
-            className="filterItem"
+            className="filterItem"  
             onClick={() => setCurrentTab("CREATED")}
           >
             <span

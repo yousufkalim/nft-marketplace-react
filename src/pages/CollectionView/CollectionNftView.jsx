@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col } from "antd";
 import "./CollectionNftView.scss";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import useWindowSize from "../../helpers/hooks";
 import { openNotification } from "../../components/Smart/Notification";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { getCollectionNft } from "../../services/collectionServices";
-import LoadingCard from "../../components/presentational/LoadingCard/LoadingCard";
-import CollectionNftCard from "../../components/presentational/CollectionNftCard/CollectionNftCard";
 import FeaturedCard from "../../components/presentational/FeaturedCard/FeaturedCard";
 import FeaturedLoadingCard from "../../components/presentational/FeaturedLoadingCard/FeaturedLoadingCard";
 import Spin from "../../components/presentational/Spin";
 
-const CollectionNftView = ({ collectionid, currentNftId }) => {
+const CollectionNftView = ({ collectionid, currentNftId,searchParam,sliceItem }) => {
   const arr = [1, 2];
 
   const [exploreData, setExploreData] = useState([]);
@@ -24,23 +21,22 @@ const CollectionNftView = ({ collectionid, currentNftId }) => {
   const [browserWidth] = useWindowSize();
   const fetchExploreData = async () => {
     try {
-      setLoading(true);
       const res = await getCollectionNft(collectionid, extraData?.next_page);
-      if (res?.data?.body?.data?.length) {
-        setExploreData([...exploreData, ...res?.data?.body?.data]);
+      if (res?.body?.data?.length) {
+        setExploreData([...exploreData, ...res?.body?.data]);
         setExtraData({
-          next_page: res?.data?.body?.next_page,
-          has_more: res?.data?.body?.has_more,
+          next_page: res?.body?.next_page,
+          has_more: res?.body?.has_more,
         });
       }
-      setLoading(false);
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
-      setLoading(false);
     }
   };
   useEffect(async () => {
+    setLoading(true);
     await fetchExploreData();
+    setLoading(false);
   }, []);
 
   const filterNft = (data) => {
@@ -51,10 +47,25 @@ const CollectionNftView = ({ collectionid, currentNftId }) => {
     }
   };
 
+  const searchNft = (data) => {
+    if(!sliceItem){
+    if (data?.description_short?.toLowerCase()?.includes(searchParam?.toLowerCase()) || data?.description_long?.toLowerCase()?.includes(searchParam?.toLowerCase())  ) {
+      return true;
+    } else {
+      return false;
+    }
+    }
+    return true;
+  };
+
   return (
     <>
       <div className="collectionNftViewWrapper main_page_width">
-        {exploreData.length > 0 ? (
+        {loading ? (
+          <div style={{textAlign:'center'}}>
+          <Spin />
+          </div>
+        ) : exploreData.length > 0 ? (
           <div className="collectionNftViewCardGrid">
             <InfiniteScroll
               dataLength={exploreData.length} //This is important field to render the next data
@@ -84,7 +95,8 @@ const CollectionNftView = ({ collectionid, currentNftId }) => {
               <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
                 {exploreData
                   ?.filter?.(filterNft)
-                  ?.slice(0, 20)
+                  ?.filter?.(searchNft)
+                  ?.slice(sliceItem && 0,sliceItem && 20)
                   ?.map((item, index) => {
                     return (
                       <Col

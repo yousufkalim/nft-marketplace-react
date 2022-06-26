@@ -19,7 +19,7 @@ import "./FeaturedCard.scss";
 import { truncate } from "../../../helpers/utils";
 import { useSelector } from "react-redux";
 
-const FeaturedCard = ({ data, isNft }) => {
+const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
   const history = useHistory();
   const [isFollowed, setIsFollowed] = useState(false);
   const user = useSelector((state) => state?.auth?.user);
@@ -36,32 +36,9 @@ const FeaturedCard = ({ data, isNft }) => {
       history.push(`/collectionView/${data?.guid}`);
     }
   };
-
-  const followCollections = async () => {
-    try {
-      const res = await followCollection(data?.guid);
-      setIsFollowed(res?.body?.followed);
-      if (res?.body?.followed) {
-        openNotification("Success", "Followed Successfully");
-      }
-    } catch (error) {
-      openNotification("Oops", error?.response?.data?.message);
-      return error;
-    }
-  };
-  const unFollowCollections = async () => {
-    try {
-      const res = await unFollowCollection(data?.guid);
-      setIsFollowed(res?.data?.body?.followed);
-      openNotification("Success", "UnFollowed Successfully");
-    } catch (error) {
-      openNotification("Oops", error?.response?.data?.message);
-    }
-  };
   const likeNft = async () => {
     try {
       const res = await likeNfts(data?.guid);
-      console.log("test", res?.body?.like);
       if (res?.body?.like == "1" || res?.body?.like == true) {
         openNotification("Success", "Liked Successfully");
       }
@@ -77,46 +54,6 @@ const FeaturedCard = ({ data, isNft }) => {
       openNotification("Oops", error?.response?.data?.message);
     }
   };
-
-  const getcollectionFollowers = async () => {
-    try {
-      if (extraData?.has_more) {
-        const res = await getCollectionFollowers(
-          data?.guid,
-          extraData?.next_page
-        );
-        if (res?.data?.body?.followers?.length) {
-          setCollectionFollowers([
-            ...collectionFollowers,
-            ...res?.data?.body?.followers,
-          ]);
-          setExtraData({
-            has_more: res?.data?.body?.has_more,
-            next_page: res?.data?.body?.next_page,
-          });
-        }
-        if (res?.data?.body?.has_more) {
-          await getcollectionFollowers();
-        } else {
-          return;
-        }
-      }
-    } catch (error) {
-      openNotification("Oops", error?.response?.data?.message);
-      return;
-    }
-  };
-
-  useEffect(async () => {
-    await getcollectionFollowers();
-    const isUserFollowing = collectionFollowers.find(
-      (item) => item.guid === user?.guid
-    );
-    if (isUserFollowing) {
-      setIsFollowed(true);
-    }
-  }, [collectionFollowers]);
-
 
   return (
     <div className="featuredCard">
@@ -144,7 +81,7 @@ const FeaturedCard = ({ data, isNft }) => {
               </div>
             )}
           </div>
-          <div className="content">
+          <div className="content" onClick={handleClick}>
             <div className="description">
               <span className="head">
                 {data ? data?.store_name : "test store_name"}
@@ -167,7 +104,7 @@ const FeaturedCard = ({ data, isNft }) => {
               <Tooltip
                 title={
                   isNft
-                    ? isLiked
+                    ? data?.is_liked
                       ? "Unlike"
                       : "Like"
                     : isFollowed
@@ -176,12 +113,13 @@ const FeaturedCard = ({ data, isNft }) => {
                 }
                 color={"#303549"}
               >
+                {showFollowIcon && 
                 <span
                 // style={{backgroundColor : isFollowed ? "blue" : ""}}
                   className="orangeFrame"
                   onClick={
                     isNft
-                      ? isLiked
+                      ? data?.is_liked
                         ? unLikeNft
                         : likeNft
                       : isFollowed
@@ -194,6 +132,7 @@ const FeaturedCard = ({ data, isNft }) => {
                     alt={"ORANGE_FRAME"}
                   />
                 </span>
+              }
               </Tooltip>
             </div>
           </div>
