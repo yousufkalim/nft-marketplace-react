@@ -78,7 +78,7 @@ const NftCard = ({ showTopPick = false, data, showFollowIcon = true }) => {
               className="footer"
               style={{
                 background: `url(${
-                  showTopPick ? TEST_ICON : data?.image_small_location
+                  showTopPick ? data?.image_small_location : data?.image_small_location
                 }) no-repeat`,
               }}
             ></span>

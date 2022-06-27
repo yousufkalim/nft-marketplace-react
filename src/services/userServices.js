@@ -16,10 +16,17 @@ export const ChangePasswordAPI = async (userInfo) => {
 };
 
 export const myCollectionsAPI = async (pageNumber) => {
-  return await axios.get(
+  const res = await fetch(
     `https://nftdepot-api.azurewebsites.net/collections/my_collections/${pageNumber}`,
-    restrictedConfig
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
   );
+  const resKey = await res.json();
+  return resKey;
 };
 
 export const myCollectedNfts = async (pageNumber) => {
@@ -42,5 +49,3 @@ export const myFollowingCollectionsAPI = async (pageNumber) => {
   const resKey = await res.json();
   return resKey;
 };
-
-

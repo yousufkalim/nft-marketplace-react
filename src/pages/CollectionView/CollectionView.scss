@@ -286,6 +286,18 @@
       }
     }
   }
+  .socialIconsSection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .socialIcons{
+      width: 12%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+    }
+  }
 }
 .antdSpinContainer {
   inset: 0;

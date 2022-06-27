@@ -24,16 +24,17 @@ const MyCollections = ({ setMyCollectionItemsCount }) => {
   const fetchCollections = async () => {
     try {
       const res = await myCollectionsAPI(extraData?.next_page);
-
-      setCollections([...collections, ...res?.data?.body?.data]);
+      if(res?.data?.body?.length > 0){
+      setCollections([...collections, ...res?.body?.data]);
       setExtraData({
-        next_page: res?.data?.body?.next_page,
-        has_more: res?.data?.body?.has_more,
+        next_page: res?.body?.next_page,
+        has_more: res?.body?.has_more,
       });
       if (collections?.length > 0) {
         setMyCollectionItemsCount(collections?.length);
       } else {
-        setMyCollectionItemsCount(res?.data?.body?.data?.length);
+        setMyCollectionItemsCount(res?.body?.data?.length);
+      }
       }
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);

@@ -15,6 +15,7 @@ import "./NftDetail.scss";
 import { nftDetailsApi } from "../../services/nftServices";
 import CollectionNftView from "../CollectionView/CollectionNftView";
 import Spin from "../../components/presentational/Spin";
+import { openNotification } from "../../components/Smart/Notification";
 
 const NftDetails = ({ match }) => {
   const arr = [1, 2, 3, 4, 5, 6];
@@ -28,7 +29,7 @@ const NftDetails = ({ match }) => {
       try {
         setLoading(true);
         const res = await nftDetailsApi(match?.params?.id);
-        setNftData(res?.data?.body);
+        setNftData(res?.body);
         setLoading(false);
       } catch (error) {
         openNotification("Oops", error?.response?.data?.message);
