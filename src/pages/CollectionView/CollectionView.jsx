@@ -5,7 +5,7 @@ import FILTER_IMG from "../../images/filter_icon.svg";
 
 import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import FlickerComp from "./Flicker";
-import { Input, Spin } from "antd";
+import { Input, Select, Spin } from "antd";
 import { SearchOutlined, DownOutlined } from "@ant-design/icons";
 import CollectionNftView from "./CollectionNftView";
 import NewsLetter from "../../components/presentational/NewsLetter/NewsLetter";
@@ -24,6 +24,7 @@ import DISCORD from "../../images/discord_icon.svg";
 import MEDIUM from "../../images/M_icon.svg";
 import TWITTER from "../../images/twitter_icon.svg";
 import "./CollectionView.scss";
+import { codesAPI } from "../../services/createCollectionServices";
 
 
 const CollectionView = ({ match }) => {
@@ -31,6 +32,7 @@ const CollectionView = ({ match }) => {
   const [loading, setLoading] = useState(false);
   const [count,setCount]=useState(0);
   const [searchParam,setSearchParam]=useState('');
+  const [filterCodes,setFilterCodes]=useState([])
 
   useEffect(() => {
     const getCollectionDetails = async () => {
@@ -55,7 +57,24 @@ const CollectionView = ({ match }) => {
     }
   }, []);
 
+  useEffect(() => {
+    const getCode = async () => {
+      try {
+        const res = await codesAPI("SortTypeCodes");
+        setFilterCodes(res?.data?.body);
+      } catch (error) {
+        console.log("error", error?.response?.data?.message);
+      }
+    };
+    getCode();
+  }, []);
+
+  const handleChange = (value) => {
+    console.log(`selected ${value}`);
+  };
+
   const [browserWidth] = useWindowSize();
+
   return (
     <>
       {/* <BreadCrumb match={match} /> */}
@@ -210,14 +229,15 @@ const CollectionView = ({ match }) => {
                   />
                 </div>
                 <div className="filterDropdown">
-                  {/* <Dropdown overlay={true} trigger={["click"]}> */}
-                  <a onClick={(e) => e.preventDefault()}>
-                    <span>
-                      Price
-                      <DownOutlined className="downIcon" />
-                    </span>
-                  </a>
-                  {/* </Dropdown> */}
+                <Select placeholder="Minting Coin" allowClear onChange={handleChange}>
+                  {filterCodes?.map((item,index) => {
+                    return (
+                      <Select.Option value={item?.code} key={item+index}>
+                        {item?.description}
+                      </Select.Option>
+                    );
+                  })}
+                </Select>
                 </div>
                 <div className="filterImage">
                   <img src={FILTER_IMG} alt={"FILTER_IMG"} />

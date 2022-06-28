@@ -70,7 +70,7 @@ const CollectionNftView = ({ collectionid, currentNftId,searchParam,sliceItem })
             <InfiniteScroll
               dataLength={exploreData.length} //This is important field to render the next data
               next={fetchExploreData}
-              hasMore={extraData?.has_more && exploreData.length < 21}
+              hasMore={extraData?.has_more && (sliceItem ? exploreData.length < 21 : true)}
               loader={
                 <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
                   {arr?.map((item, index) => {

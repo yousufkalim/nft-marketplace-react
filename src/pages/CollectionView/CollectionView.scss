@@ -251,7 +251,7 @@
         }
       }
       .filterDropdown {
-        width: 110px;
+        width: 160px;
         height: 45px;
         background: $textColor;
         border-radius: 5px;
@@ -297,6 +297,14 @@
       align-items: center;
       margin-top: 12px;
     }
+  }
+  .ant-select{
+    width: inherit !important;
+  }
+  .ant-select:not(.ant-select-customize-input) .ant-select-selector{
+    background-color: unset !important;
+    border: unset !important;
+    box-shadow: unset !important;
   }
 }
 .antdSpinContainer {
