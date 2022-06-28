@@ -14,7 +14,7 @@ import {
   unFollowCollection,
 } from "../../../services/collectionServices";
 import { truncate } from "../../../helpers/utils";
-import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";  
 
 const { Meta } = Card;
 
