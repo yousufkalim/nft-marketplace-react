@@ -3,24 +3,21 @@ import ExploreCard from "../../components/presentational/ExploreCard/ExploreCard
 import PAGE_HEADER from "../../images/PageHeader.png";
 import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import { Row, Col } from "antd";
-import "./ExplorePage.scss";
 import NewsLetter from "../../components/presentational/NewsLetter/NewsLetter";
 import { allCollectionsAPI } from "../../services/explorePageServices";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Link } from "react-router-dom";
 import LoadingCard from "../../components/presentational/LoadingCard/LoadingCard";
 import useWindowSize from "../../helpers/hooks";
 import { openNotification } from "../../components/Smart/Notification";
 import CategoryFlicker from "../FilterCollections/CategoryFlicker";
-import Spin from "../../components/presentational/Spin";
-import { StringParam, useQueryParams } from "use-query-params";
+import "./ExplorePage.scss";
+
+
 
 const ExplorePage = () => {
   const arr = [1, 2, 3];
   const [exploreData, setExploreData] = useState([]);
   const [category, setCategory] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [currCategory, setCurrCategory] = useState("");
   const [extraData, setExtraData] = useState({
     has_more: true,
     next_page: 1,

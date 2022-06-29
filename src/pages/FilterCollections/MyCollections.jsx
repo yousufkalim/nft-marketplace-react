@@ -24,15 +24,13 @@ const MyCollections = () => {
     next_page: 1,
   });
 
-  console.log("myCollections",myCollections)
-
   const fetchMyCollections = async () => {
     try {
       const res = await myCollectionsAPI(extraData?.next_page);
-      setMyCollections([...myCollections, ...res?.data?.body?.data]);
+      setMyCollections([...myCollections, ...res?.body?.data]);
       setExtraData({
-        next_page: res?.data?.body?.next_page,
-        has_more: res?.data?.body?.has_more,
+        next_page: res?.body?.next_page,
+        has_more: res?.body?.has_more,
       });
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);

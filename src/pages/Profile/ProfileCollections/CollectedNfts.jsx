@@ -83,7 +83,6 @@ const CollectedNfts = ({ setMyCollectedNftsCount }) => {
           </Row>
         </InfiniteScroll>
       </div>
-      <NewsLetter />
     </>
   );
 };

@@ -9,7 +9,7 @@ import FeaturedCard from "../../components/presentational/FeaturedCard/FeaturedC
 import FeaturedLoadingCard from "../../components/presentational/FeaturedLoadingCard/FeaturedLoadingCard";
 import Spin from "../../components/presentational/Spin";
 
-const CollectionNftView = ({ collectionid, currentNftId,searchParam,sliceItem }) => {
+const CollectionNftView = ({ collectionid, currentNftId,searchParam,sliceItem,setCount }) => {
   const arr = [1, 2];
 
   const [exploreData, setExploreData] = useState([]);
@@ -28,6 +28,11 @@ const CollectionNftView = ({ collectionid, currentNftId,searchParam,sliceItem })
           next_page: res?.body?.next_page,
           has_more: res?.body?.has_more,
         });
+        if (exploreData?.length > 0) {
+          setCount(exploreData?.length);
+        } else {
+          setCount(res?.body?.data?.length);
+        }
       }
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);

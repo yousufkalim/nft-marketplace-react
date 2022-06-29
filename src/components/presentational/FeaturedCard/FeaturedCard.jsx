@@ -22,13 +22,7 @@ import { useSelector } from "react-redux";
 const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
   const history = useHistory();
   const [isFollowed, setIsFollowed] = useState(false);
-  const user = useSelector((state) => state?.auth?.user);
   const [isLiked, setIsLiked] = useState(false);
-  const [collectionFollowers, setCollectionFollowers] = useState([]);
-  const [extraData, setExtraData] = useState({
-    has_more: true,
-    next_page: 1,
-  });
   const handleClick = () => {
     if (isNft) {
       history.push(`/nftDetail/${data?.guid}`);
@@ -81,8 +75,8 @@ const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
               </div>
             )}
           </div>
-          <div className="content" onClick={handleClick}>
-            <div className="description">
+          <div className="content">
+            <div className="description" onClick={handleClick}>
               <span className="head">
                 {data ? data?.store_name : "test store_name"}
               </span>

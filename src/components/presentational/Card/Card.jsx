@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "antd";
 import FRAME_ICON from "../../../images/frame.svg";
-import TEST_IMG from "../../../images/test_img.png";
-
-import TEST_ICON from "../../../images/test_footer.svg";
 import { Tooltip } from "antd";
 import "./Card.scss";
 import { Link } from "react-router-dom";
@@ -15,18 +12,13 @@ import {
 } from "../../../services/collectionServices";
 import { truncate } from "../../../helpers/utils";
 import { useSelector } from "react-redux";  
+import { useHistory } from "react-router-dom";
 
 const { Meta } = Card;
 
 const NftCard = ({ showTopPick = false, data, showFollowIcon = true }) => {
   const [isFollowed, setIsFollowed] = useState(false);
-  const user = useSelector((state) => state?.auth?.user);
-  const [isLiked, setIsLiked] = useState(false);
-  const [collectionFollowers, setCollectionFollowers] = useState([]);
-  const [extraData, setExtraData] = useState({
-    has_more: true,
-    next_page: 1,
-  });
+  const history=useHistory()
   const followCollections = async () => {
     try {
       const res = await followCollection(data?.guid);
@@ -46,14 +38,17 @@ const NftCard = ({ showTopPick = false, data, showFollowIcon = true }) => {
     }
   };
 
+  const handleClick=()=>{
+    history.push(`/collectionView/${data?.guid}`)
+  }
+
   return (
     <div className="imageCard">
-      <Link to={`/collectionView/${data?.guid}`}>
       <Card
         hoverable
         cover={
           <span className="coverWrapper">
-              <span className="coverImage">
+              <span className="coverImage" onClick={handleClick}>
                 <img
                   alt="example"
                   src={data?.image_large_location}
@@ -65,13 +60,14 @@ const NftCard = ({ showTopPick = false, data, showFollowIcon = true }) => {
               color={"#303549"}
               overlayClassName="favouriteToolTip"
             >
-              <span
+             { showFollowIcon && 
+             <span
                 className="frame"
                 style={{backgroundColor : isFollowed ? "blue" : ""}}
                 onClick={isFollowed ? unFollowCollections : followCollections}
               >
                 <img src={FRAME_ICON} alt={"FRAME_ICON"} /> 
-              </span>
+              </span>}
             </Tooltip>
 
             <span
@@ -95,7 +91,6 @@ const NftCard = ({ showTopPick = false, data, showFollowIcon = true }) => {
           />
         </Link>
       </Card>
-      </Link>
     </div>
   );
 };

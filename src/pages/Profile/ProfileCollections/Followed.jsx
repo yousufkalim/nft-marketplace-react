@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col } from "antd";
-import FeaturedCard from "../../../components/presentational/FeaturedCard/FeaturedCard";
 import useWindowSize from "../../../helpers/hooks";
 import { myFollowingCollectionsAPI } from "../../../services/userServices";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { openNotification } from "../../../components/Smart/Notification";
-import FeaturedLoadingCard from "../../../components/presentational/FeaturedLoadingCard/FeaturedLoadingCard";
-import "./Followed.scss";
 import LoadingCard from "../../../components/presentational/LoadingCard/LoadingCard";
 import ExploreCard from "../../../components/presentational/ExploreCard/ExploreCard";
+import "./Followed.scss";
+
 
 const Followed = ({ setMyFollowedCount }) => {
   const arr = [0, 1, 2];
