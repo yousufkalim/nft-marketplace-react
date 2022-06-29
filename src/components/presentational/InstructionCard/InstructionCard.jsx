@@ -2,7 +2,7 @@ import React from "react";
 
 import "./InstructionCard.scss";
 
-const InstructionCard = ({title,description,changeDirection,imageUrl}) => {
+const InstructionCard = ({title,description,changeDirection,imageUrl}) => { 
   return (
     <div className="InstructionCard" style={changeDirection ? {direction:'rtl'} : {}}>
       <div className="shadowBg">

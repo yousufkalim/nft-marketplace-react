@@ -9,7 +9,7 @@ import { openNotification } from "../../../components/Smart/Notification";
 import FeaturedLoadingCard from "../../../components/presentational/FeaturedLoadingCard/FeaturedLoadingCard";
 import "./CollectedNfts.scss";
 
-const CollectedNfts = ({ setMyCollectedNftsCount }) => {
+const CollectedNfts = ({ setMyCollectedNftsCount }) => { 
   const arr = [0, 1];
   const [browserWidth] = useWindowSize();
   const [extraData, setExtraData] = useState({

@@ -70,7 +70,7 @@ const NftCard = ({ showTopPick = false, data, showFollowIcon = true }) => {
                 style={{backgroundColor : isFollowed ? "blue" : ""}}
                 onClick={isFollowed ? unFollowCollections : followCollections}
               >
-                <img src={FRAME_ICON} alt={"FRAME_ICON"} />
+                <img src={FRAME_ICON} alt={"FRAME_ICON"} /> 
               </span>
             </Tooltip>
 

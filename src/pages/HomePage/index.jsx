@@ -75,7 +75,7 @@ const HomePage = ({match}) => {
         <img src={IMAGE_FOOTER} alt={"IMAGE_FOOTER"} className="footerImage" />
       </div>
       {browserWidth < 620 && <div className="rightSide">
-            <span className="leftHeading">
+            <span className="leftHeading"> 
               <NftCard showTopPick={true} data={topPick[0]} />
             </span>
           </div>}

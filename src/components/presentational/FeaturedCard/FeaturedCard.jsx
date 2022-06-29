@@ -119,7 +119,7 @@ const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
                   className="orangeFrame"
                   onClick={
                     isNft
-                      ? data?.is_liked
+                      ? data?.is_liked 
                         ? unLikeNft
                         : likeNft
                       : isFollowed
