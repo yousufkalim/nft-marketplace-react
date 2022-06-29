@@ -27,7 +27,7 @@
       @media screen and (max-width:850px) {
         top: 19%;
       }
-      @include mobile {
+      @include mobile { 
         top: 28%;
         width: 100%;
       }

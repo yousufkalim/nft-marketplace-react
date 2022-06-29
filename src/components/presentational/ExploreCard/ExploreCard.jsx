@@ -51,7 +51,7 @@ const ExploreCard = ({ data,showFollowIcon=true }) => {
           <span className="ExploreCardWrapper">
             <span className="ExploreCardImage" onClick={handleClick}>
               <img alt="example" src={data?.image_large_location} />
-            </span>
+            </span> 
             <Tooltip title={data?.is_followed ? "UnFollow" : "Follow"} color={"#303549"}>
               {showFollowIcon && 
               <span className="frame" onClick={data?.is_followed ? unFollowCollections : followTheCollection}  >

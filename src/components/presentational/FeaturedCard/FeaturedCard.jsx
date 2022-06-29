@@ -115,11 +115,11 @@ const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
               >
                 {showFollowIcon && 
                 <span
-                // style={{backgroundColor : isFollowed ? "blue" : ""}}
+                style={{backgroundColor : isNft ? data?.is_liked ? "blue" : "" : isFollowed ? "blue" : "", padding : isNft ? data?.is_liked ? "9px 7px 13px" : "" : isFollowed ? "9px 7px 13px" : "", borderRadius : isNft ? data?.is_liked ? "7px" : "" : isFollowed ? "7px" : "" }}
                   className="orangeFrame"
                   onClick={
                     isNft
-                      ? data?.is_liked
+                      ? data?.is_liked 
                         ? unLikeNft
                         : likeNft
                       : isFollowed
@@ -128,6 +128,7 @@ const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
                   }
                 >
                   <img
+                  style={{filter : isNft ? data?.is_liked ? "brightness(10)" : "" : isFollowed ? "brightness(10)" : ""}}
                     src={isNft ? LIKE_ICON : ORANGE_FRAME}
                     alt={"ORANGE_FRAME"}
                   />

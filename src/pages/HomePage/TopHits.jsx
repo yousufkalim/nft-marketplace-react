@@ -65,7 +65,7 @@ const TopHits = () => {
                 );
               })
             : topHits
-                ?.filter(filterTopHits)
+                ?.filter(filterTopHits) 
                 ?.slice(0, 8)
                 ?.map((item, index) => {
                   return (
