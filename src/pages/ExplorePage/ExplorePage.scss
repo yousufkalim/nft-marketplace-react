@@ -14,8 +14,16 @@
     // margin-right: 237px;
     .ant-col {
       margin-top: 30px !important;
+      @media screen and (max-width:1200px) {
+        flex: 0 0 50%;
+        max-width: 50%;       
+      }
+      @media screen and (max-width:900px) {
+        flex: 0 0 100%;
+        max-width: 100%;       
+      }
     }
-    .infinite-scroll-component__outerdiv{ 
+    .infinite-scroll-component__outerdiv{
       .infinite-scroll-component {
         overflow: unset !important;
       }
@@ -31,15 +39,24 @@
     }
     .exploreHeadingSection {
       position: absolute;
-      top: 27%;
+      top: 25%;
       left: 50%;
       transform: translate(-50%, -50%);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      @media screen and (max-width: 1500px) {
+          top: 200px;
+      }
+      @media screen and (max-width: 1100px) {
+        top: 160px;
+    }
+    @media screen and (max-width: 900px) {
+        top: 143px;
+    }
       @include mobile{
-        top: 10%;
+        top: 27%;
         width: 100%;
       }
       .exploreText {
@@ -49,14 +66,16 @@
         font-size: 20px;
         line-height: 35px;
         color: $textColor;
+        @media screen and (max-width: 900px) {
+          font-size: 14px;
+          line-height: 14px;
+        }
         @include mobile{
           line-height: 1.25;
-          font-size: 18px;
+          font-size: 16px;
           text-align: center;
           display: inline-block;
           width: 100%;
-          margin-top: 30px;
-
         }
       }
       .exploreHeading {
@@ -67,6 +86,12 @@
         line-height: 75px;
         text-align: center;
         color: $textColor;
+        @media screen and (max-width: 1300px){
+            font-size: 44px;
+        }
+        @media screen and (max-width: 900px) {
+            font-size: 33px;
+        }
         @include mobile{
           line-height: 1.25;
           font-size: 24px;
