@@ -64,6 +64,7 @@ const ExploreCard = ({ data,showFollowIcon=true }) => {
               className="footer"
               style={{
                 background: `url(${data?.image_small_location}) no-repeat`,
+                backgroundSize : "contain"
               }}
             ></span>
           </span>
