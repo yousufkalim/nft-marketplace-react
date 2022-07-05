@@ -22,7 +22,7 @@ import { useSelector } from "react-redux";
 const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
   const history = useHistory();
   const [isFollowed, setIsFollowed] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(data?.is_liked);
   const handleClick = () => {
     if (isNft) {
       history.push(`/nftDetail/${data?.guid}`);
@@ -33,6 +33,7 @@ const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
   const likeNft = async () => {
     try {
       const res = await likeNfts(data?.guid);
+      setIsLiked(true);
       if (res?.body?.like == "1" || res?.body?.like == true) {
         openNotification("Success", "Liked Successfully");
       }
@@ -43,7 +44,7 @@ const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
   const unLikeNft = async () => {
     try {
       const res = await unLikeNfts(data?.guid);
-      setIsLiked(res?.data?.body?.liked);
+      setIsLiked(false);
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
     }
@@ -98,7 +99,7 @@ const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
               <Tooltip
                 title={
                   isNft
-                    ? data?.is_liked
+                    ? isLiked
                       ? "Unlike"
                       : "Like"
                     : isFollowed
@@ -109,11 +110,11 @@ const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
               >
                 {showFollowIcon && 
                 <span
-                style={{backgroundColor : isNft ? data?.is_liked ? "blue" : "" : isFollowed ? "blue" : "", padding : isNft ? data?.is_liked ? "9px 7px 13px" : "" : isFollowed ? "9px 7px 13px" : "", borderRadius : isNft ? data?.is_liked ? "7px" : "" : isFollowed ? "7px" : "" }}
+                style={{backgroundColor : isNft ? isLiked ? "blue" : "" : isFollowed ? "blue" : "", padding : isNft ? isLiked ? "9px 7px 13px" : "" : isFollowed ? "9px 7px 13px" : "", borderRadius : isNft ? isLiked ? "7px" : "" : isFollowed ? "7px" : "" }}
                   className="orangeFrame"
                   onClick={
                     isNft
-                      ? data?.is_liked 
+                      ? isLiked
                         ? unLikeNft
                         : likeNft
                       : isFollowed

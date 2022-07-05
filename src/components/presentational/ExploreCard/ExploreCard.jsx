@@ -13,9 +13,8 @@ import { useSelector } from "react-redux";
 
 const { Meta } = Card;
 
-const ExploreCard = ({ data,showFollowIcon=true }) => {
+const ExploreCard = ({ data,showFollowIcon=true,exploreData,setExploreData }) => {
   const history = useHistory();
-
   const handleClick = () => {
     history.push(`/collectionView/${data?.guid}`);
   };
@@ -25,6 +24,16 @@ const ExploreCard = ({ data,showFollowIcon=true }) => {
       const res = await followCollection(data?.guid);
       if(res?.body?.followed)
       {
+        const dataManipulated = exploreData.map((el)=>{
+          if(el.guid === data.guid) {
+            return {
+              ...el,
+              is_followed : true
+            }
+          }
+          return el;
+        })
+        setExploreData(dataManipulated);
       openNotification("Success","Followed Successfully");
       }
 
@@ -37,6 +46,16 @@ const ExploreCard = ({ data,showFollowIcon=true }) => {
   const unFollowCollections = async () => {
     try {
       const res = await unFollowCollection(data?.guid);
+      const dataManipulated = exploreData.map((el)=>{
+        if(el.guid === data.guid) {
+          return {
+            ...el,
+            is_followed : false
+          }
+        }
+        return el;
+      })
+      setExploreData(dataManipulated);
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
     }
