@@ -65,7 +65,6 @@ const ProfileCollections = () => {
             <span className="value">{myCollectionItemsCount}</span>
           </div>
         </div>
-        {browserWidth < 620 && <ProfileCollectionsFlicker currentTab={currentTab} setCurrentTab={setCurrentTab}  />  }
         {currentTab == "MY COLLECTION" ? (
           <MyCollections setMyCollectionItemsCount={setMyCollectionItemsCount}  />
         ) : currentTab == "COLLECTED Nfts" ? (

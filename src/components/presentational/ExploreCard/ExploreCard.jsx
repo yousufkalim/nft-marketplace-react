@@ -34,7 +34,7 @@ const ExploreCard = ({ data,showFollowIcon=true,exploreData,setExploreData }) =>
           return el;
         })
         setExploreData(dataManipulated);
-      openNotification("Success","Followed Successfully");
+      // openNotification("Success","Followed Successfully");
       }
 
     } catch (error) {
@@ -73,7 +73,7 @@ const ExploreCard = ({ data,showFollowIcon=true,exploreData,setExploreData }) =>
             </span> 
             <Tooltip title={data?.is_followed ? "UnFollow" : "Follow"} color={"#303549"}>
               {showFollowIcon && 
-              <span className="frame" onClick={data?.is_followed ? unFollowCollections : followTheCollection}  >
+              <span className={data?.is_followed ? "orangeFrame" :  "frame"} onClick={data?.is_followed ? unFollowCollections : followTheCollection}  >
                 <img src={FRAME_ICON} alt={"FRAME_ICON"} />
               </span>
               }

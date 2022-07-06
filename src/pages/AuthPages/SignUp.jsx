@@ -186,7 +186,7 @@ const SignUp = () => {
                   >
                     I agreee to the{" "}
                     <a
-                      href="/TermsAndCondition"
+                      href="https://app.termly.io/document/terms-of-use-for-website/815902d6-4654-4423-b671-bb7f1eee6468"
                       target="_blank"
                       style={{ color: "#F37342" }}
                     >

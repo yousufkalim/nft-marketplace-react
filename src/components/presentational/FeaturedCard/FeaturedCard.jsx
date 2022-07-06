@@ -35,7 +35,7 @@ const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
       const res = await likeNfts(data?.guid);
       setIsLiked(true);
       if (res?.body?.like == "1" || res?.body?.like == true) {
-        openNotification("Success", "Liked Successfully");
+        // openNotification("Success", "Liked Successfully");
       }
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);

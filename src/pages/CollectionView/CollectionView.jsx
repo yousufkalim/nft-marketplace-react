@@ -26,13 +26,12 @@ import TWITTER from "../../images/twitter_icon.svg";
 import "./CollectionView.scss";
 import { codesAPI } from "../../services/createCollectionServices";
 
-
 const CollectionView = ({ match }) => {
   const [collectionDetails, setCollectionDetails] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [count,setCount]=useState(0);
-  const [searchParam,setSearchParam]=useState('');
-  const [filterCodes,setFilterCodes]=useState([])
+  const [count, setCount] = useState(0);
+  const [searchParam, setSearchParam] = useState("");
+  const [filterCodes, setFilterCodes] = useState([]);
 
   useEffect(() => {
     const getCollectionDetails = async () => {
@@ -121,24 +120,19 @@ const CollectionView = ({ match }) => {
                   </div>
                 </div>
                 <div className="socialIconsSection">
-                <div className="socialIcons">
-            {/* <span className="socialIcon">
-              <img src={FB} alt="FB" />
-            </span> */}
+                  # {collectionDetails?.guid}
+                  {/* <div className="socialIcons">
             <a className="socialIcon" href={collectionDetails?.url_twitter ?? 'https://twitter.com/'} target='_blank'>
               <img src={TWITTER} alt="TWITTER" />
             </a>
-            {/* <span className="socialIcon">
-              <img src={INSTAGRAM} alt="INSTAGRAM" />
-            </span> */}
             <a className="socialIcon" href={collectionDetails?.url_discord} target='_blank'>
               <img src={DISCORD} alt="DISCORD" />
             </a>
             <a className="socialIcon" href={collectionDetails?.url_medium} target='_blank'>
               <img src={MEDIUM} alt="MEDIUM" />
             </a>
-          </div>
-          </div>
+          </div> */}
+                </div>
                 <div className="values">
                   <div className="mobileItemWrapper">
                     <span>FloorPrice</span>
@@ -192,16 +186,11 @@ const CollectionView = ({ match }) => {
             </div>
           )}
           <div className="socialIconsSection main_page_width display_none">
-          <div className="socialIcons">
-            {/* <span className="socialIcon">
-              <img src={FB} alt="FB" />
-            </span> */}
+            # {collectionDetails?.guid}
+            {/* <div className="socialIcons">
             <a className="socialIcon" href={collectionDetails?.url_twitter ?? 'https://twitter.com/'} target='_blank'>
               <img src={TWITTER} alt="TWITTER" />
             </a>
-            {/* <span className="socialIcon">
-              <img src={INSTAGRAM} alt="INSTAGRAM" />
-            </span> */}
             <a className="socialIcon" href={collectionDetails?.url_discord} target='_blank'>
               <img src={DISCORD} alt="DISCORD" />
             </a>
@@ -213,7 +202,7 @@ const CollectionView = ({ match }) => {
           <div className="collectionDetailsWrapper main_page_width">
             <div className="collectionDetails">
               <span>{collectionDetails?.description_short}</span>
-            </div>
+            </div> */}
           </div>
           {/* <FlickerComp /> */}
           <div className="searchBar_wrapper_outer">
@@ -225,28 +214,36 @@ const CollectionView = ({ match }) => {
                     size="large"
                     placeholder="Search here"
                     value={searchParam}
-                    onChange={(e)=>setSearchParam(e.target.value)}
+                    onChange={(e) => setSearchParam(e.target.value)}
                   />
                 </div>
                 <div className="filterDropdown">
-                <Select placeholder="Minting Coin" allowClear onChange={handleChange}>
-                  {filterCodes?.map((item,index) => {
-                    return (
-                      <Select.Option value={item?.code} key={item+index}>
-                        {item?.description}
-                      </Select.Option>
-                    );
-                  })}
-                </Select>
+                  <Select
+                    placeholder="Minting Coin"
+                    allowClear
+                    onChange={handleChange}
+                  >
+                    {filterCodes?.map((item, index) => {
+                      return (
+                        <Select.Option value={item?.code} key={item + index}>
+                          {item?.description}
+                        </Select.Option>
+                      );
+                    })}
+                  </Select>
                 </div>
                 <div className="filterImage">
                   <img src={FILTER_IMG} alt={"FILTER_IMG"} />
                 </div>
-                </div>
+              </div>
               <div className="reset">Showing {count} results</div>
             </div>
           </div>
-          <CollectionNftView collectionid={match?.params?.id} setCount={setCount} searchParam={searchParam} />
+          <CollectionNftView
+            collectionid={match?.params?.id}
+            setCount={setCount}
+            searchParam={searchParam}
+          />
           <NewsLetter />
         </div>
       )}

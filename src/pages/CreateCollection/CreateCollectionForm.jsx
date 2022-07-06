@@ -19,7 +19,6 @@ import {
 } from "../../services/createCollectionServices";
 import "./CreateCollectionForm.scss";
 import { openNotification } from "../../components/Smart/Notification";
-import Spin from "../../components/presentational/Spin";
 
 const CreateCollectionForm = () => {
   const formData = useSelector((state) => state?.collectionData?.data);
@@ -100,7 +99,6 @@ const CreateCollectionForm = () => {
       minting_supply_count: values.mintingSupply ?? 0,
       minting_coin: values.mintingCoin ?? "",
       mint_locked: isMintLocked ? 1 : 0,
-      layout_style_code: values?.layoutCode ?? "",
       is_explicit: isExplicit ? 1 : 0,
       mintable: isMintable ? 1 : 0,
       isActive: 1,
@@ -127,8 +125,6 @@ const CreateCollectionForm = () => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-
-  console.log("storename",storename)
 
   return (
     <>
@@ -157,7 +153,6 @@ const CreateCollectionForm = () => {
               afterPurchaseMessage: formData?.after_1st_purchase_text ?? "",
               mintingSupply: formData?.minting_supply_count ?? null,
               mintingCoin: formData?.minting_coin ?? "",
-              layoutCode: formData?.layout_style_code ?? "",
               isExplicit: formData?.is_explicit ?? isExplicit,
               isMintable: formData?.mintable ?? isMintable,
               isMintLocked: formData?.mint_locked ?? isMintLocked,
@@ -420,27 +415,6 @@ const CreateCollectionForm = () => {
                 <Input placeholder="Wallet ID we will payout the royalty to" />
               </Form.Item>
 
-              <Form.Item
-                name="layoutCode"
-                label="Layout Code"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please select a Layout_Code!",
-                  },
-                ]}
-              >
-                <Select placeholder="layout">
-                  {layoutCodes?.body?.map((item,index) => {
-                    return (
-                      <Select.Option value={item?.code} key={item+index}>
-                        {item?.description}
-                      </Select.Option>
-                    );
-                  })}
-                </Select>
-              </Form.Item>
-
               {/* <Form.Item
                 name="whoPayFee"
                 label="Who Pay Fee"
@@ -461,9 +435,17 @@ const CreateCollectionForm = () => {
                   })}
                 </Select>
               </Form.Item> */}
-
               <Form.Item
-                label="Mint Locked"
+                label={<div>Mint Locked
+                    <Tooltip title="Use this ONLY when you are sure there are to be no changes to any part of the collection. (Commonly when images are stored to IPFS, etc.)"
+                  color={"#303549"}
+                  overlayClassName="favouriteToolTip"
+                  >
+                   <span className="infoIcon"> 
+                   <img src={QUESTION_MARK} alt={"QUESTION_MARK"}/>
+                   </span>
+                    </Tooltip>
+                </div>}
                 labelAlign="left"
                 valuePropName="checked"
                 className="firstSwitch"
