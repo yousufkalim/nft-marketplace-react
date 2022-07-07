@@ -8,6 +8,7 @@ import MyCollections from "../pages/FilterCollections/MyCollections";
 import HomePage from "../pages/HomePage";
 import NftDetail from "../pages/NftDetail/NftDetail";
 import Profile from "../pages/Profile/Profile";
+import EditProfile from "../pages/Profile/editProfile";
 import ChangePassword from "../pages/UserPages/ChangePassword";
 
 export const userRoutes = [
@@ -50,6 +51,10 @@ export const userRoutes = [
     {
         path:"/profile",
         component:Profile
+    },
+    {
+        path:"/edit-profile",
+        component:EditProfile
     },
     {
         path:"/myCollections",
