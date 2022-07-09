@@ -3,28 +3,90 @@ import {
     Input,
     Form,
     Button,
-    Select,
     Switch,
-    InputNumber,
-    Tooltip,
   } from "antd";
-import FeaturedCard from "../../components/presentational/FeaturedCard/FeaturedCard";
+  import $ from 'jquery'; 
+// import FeaturedCard from "../../components/presentational/FeaturedCard/FeaturedCard";
 import "./editProfile.scss";
-
-if (window.location.pathname.includes('/edit-profile')) {
-
-}
-
+import useWindowSize from "../../helpers/hooks";
+import HEADER_EDIT_MOBILE from '../../images/PageHeader.png'
 const EditProfile = () => { 
-
+    const [browserWidth] = useWindowSize();
     const [activeIndex, setActiveIndex] = useState(1);
-    const handleClick = (index) => setActiveIndex(index);
+    const handleClick = (index) => {
+        setActiveIndex(index);
+    }
     const checkActive = (index, className) => activeIndex === index ? className : "";
-   
+    if ($(window).width() < 767) {
+        $('.edit_profile_1.main_page_width.padding_add, .editprofileHeader_main').addClass('active_mobile_function');
+        $('.active_mobile_function .edit_profile_wrapper .tabs_main p.tab').click(function(){
+            $('.active_mobile_function .edit_profile_wrapper .edit_profile_tabs_data').show();
+            $('.active_mobile_function .edit_profile_wrapper .edit_profile_tabs').hide();
+            $('.active_mobile_function .editprofileText').show();
+            var data_heading = $(this).children('.ac_t_mb').html();
+            $('.active_mobile_function .back_txt_pr_mb8 span').html(data_heading);
+        });
+        $('.active_mobile_function .editprofileText').click(function() {
+            $('.active_mobile_function .edit_profile_wrapper .edit_profile_tabs').show();
+            $('.active_mobile_function .editprofileText').hide();
+            $('.active_mobile_function .back_txt_pr_mb8 span').html('Edit profile');
+        });
+        $('.active_mobile_function .editprofileText').click(function(){
+            $('.active_mobile_function .edit_profile_wrapper .edit_profile_tabs_data').hide();
+            $('.active_mobile_function .edit_profile_wrapper .edit_profile_tabs').show();
+        });
+    }
+    else {
+        $('.edit_profile_1.main_page_width.padding_add, .editprofileHeader_main').removeClass('active_mobile_function');
+    }
+    
+    $( window ).resize(function() {
+        if ($(window).width() < 767) {
+            $('.edit_profile_1.main_page_width.padding_add, .editprofileHeader_main').addClass('active_mobile_function');
+            $('.active_mobile_function .edit_profile_wrapper .tabs_main p.tab').click(function(){
+                $('.active_mobile_function .edit_profile_wrapper .edit_profile_tabs_data').show();
+                $('.active_mobile_function .edit_profile_wrapper .edit_profile_tabs').hide();
+                $('.active_mobile_function .editprofileText').show();
+                var data_heading = $(this).children('.ac_t_mb').html();
+                $('.active_mobile_function .back_txt_pr_mb8 span').html(data_heading);
+            });
+            $('.active_mobile_function .editprofileText').click(function() {
+                $('.active_mobile_function .edit_profile_wrapper .edit_profile_tabs').show();
+                $('.active_mobile_function .editprofileText').hide();
+                $('.active_mobile_function .back_txt_pr_mb8 span').html('Edit profile');
+            });
+            $('.active_mobile_function .editprofileText').click(function(){
+                $('.active_mobile_function .edit_profile_wrapper .edit_profile_tabs_data').hide();
+                $('.active_mobile_function .edit_profile_wrapper .edit_profile_tabs').show();
+            });
+            $('.edit_profile_wrapper .edit_profile_tabs_data').hide();
+        }
+        else {
+            $('.edit_profile_1.main_page_width.padding_add, .editprofileHeader_main').removeClass('active_mobile_function');
+            $('.edit_profile_wrapper .edit_profile_tabs, .edit_profile_wrapper .edit_profile_tabs_data').show();
+        }
+      });
+
+
 
         return (
             <>
-            <div className="bg_banner_1"></div>
+           <div className="bg_banner_1"></div>
+
+            <div className="editprofileHeader_main">
+                <div className="editprofileHeader">
+                    <img src={HEADER_EDIT_MOBILE} alt={HEADER_EDIT_MOBILE}/>
+                    <div className="editprofileHeadingSection">
+                    <div className="editprofileText">
+                    <span class="chevron_icon_btn left_cev"></span> <span className="my_ac_mb_tx">Edit profile</span>
+                    </div>
+                        <div className="back_txt_pr_mb8">
+                            <span>Edit profile</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div className="back_profile_btn main_page_width">
                 <div className="flex_hr_ap padding_add">
                 <div className="back_btn_pr_wrapper">
@@ -32,45 +94,45 @@ const EditProfile = () => {
                         <span class="chevron_icon_btn left_cev"></span>
                     </div>
                     <div className="back_txt_pr">
-                            <span>Edit profile</span>
+                        <span>Edit profile</span>
                     </div>
                 </div>
                 <hr />
                 </div>
             </div>
-            <div className="edit_profile_1 main_page_width padding_add">
 
+            <div className="edit_profile_1 main_page_width padding_add">
                   <div className="edit_profile_wrapper">
                         <div className="edit_profile_tabs">
                             <div className="tabs_main">
                                 <p 
                                     className={`active_tabac tab ${checkActive(1, "active")}`}
                                     onClick={() => handleClick(1)}
-                                >Account</p>
+                                ><span className="ac_t_mb">Account</span><span class="chevron_icon_btn left_cev"></span></p>
                             </div>
                             <div className="tabs_main">
                                 <p
                                     className={`tab ${checkActive(2, "active")}`}
                                     onClick={() => handleClick(2)}
-                                >Security</p>
+                                ><span className="ac_t_mb">Security</span><span class="chevron_icon_btn left_cev"></span></p>
                             </div>
                             <div className="tabs_main">
                                 <p
                                     className={`tab ${checkActive(3, "active")}`}
                                     onClick={() => handleClick(3)}
-                                >Notifications</p>
+                                ><span className="ac_t_mb">Notifications</span><span class="chevron_icon_btn left_cev"></span></p>
                             </div>
                             <div className="tabs_main">
                                 <p
                                     className={`tab ${checkActive(4, "active")}`}
                                     onClick={() => handleClick(4)}
-                                >Collections</p>
+                                ><span className="ac_t_mb">Collections</span><span class="chevron_icon_btn left_cev"></span></p>
                             </div>
                             <div className="tabs_main">
                                 <p
                                     className={`tab ${checkActive(5, "active")}`}
                                     onClick={() => handleClick(5)}
-                                >Favourites</p>
+                                ><span className="ac_t_mb">Favourites</span><span class="chevron_icon_btn left_cev"></span></p>
                             </div>
                         </div>
                         <div className="edit_profile_tabs_data">
@@ -342,11 +404,6 @@ const EditProfile = () => {
                                         data 5
                                     </div>
                                 </div>
-
-
-
-
-
                             </div>
 
                         </div>
