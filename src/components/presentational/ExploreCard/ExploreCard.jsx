@@ -105,6 +105,11 @@ const ExploreCard = ({ data,showFollowIcon=true,exploreData,setExploreData }) =>
             </span>
           </span>
         </div>
+        <div className="idSection">
+            # {
+              data?.guid
+            }
+          </div>
       </Card>
     </div>
   );

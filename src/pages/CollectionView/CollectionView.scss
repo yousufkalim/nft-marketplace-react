@@ -294,6 +294,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    @include mobile{
+      font-size: 12px;
+    }
     .socialIcons{
       width: 12%;
       display: flex;
@@ -329,5 +332,10 @@
         height: 100%;
       }
     }
+  }
+}
+.display_none{
+  @include mobile{
+    display: none !important;
   }
 }

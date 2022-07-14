@@ -8,20 +8,12 @@ import LIKE_ICON from "../../../images/like_icon.svg";
 import { Tooltip } from "antd";
 import { useHistory } from "react-router-dom";
 import { openNotification } from "../../Smart/Notification";
-import {
-  followCollection,
-  getCollectionFollowers,
-  likeNfts,
-  unFollowCollection,
-  unLikeNfts,
-} from "../../../services/collectionServices";
+import { likeNfts, unLikeNfts } from "../../../services/collectionServices";
 import "./FeaturedCard.scss";
 import { truncate } from "../../../helpers/utils";
-import { useSelector } from "react-redux";
 
-const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
+const FeaturedCard = ({ data, isNft, showFollowIcon = true }) => {
   const history = useHistory();
-  const [isFollowed, setIsFollowed] = useState(false);
   const [isLiked, setIsLiked] = useState(data?.is_liked);
   const handleClick = () => {
     if (isNft) {
@@ -30,7 +22,8 @@ const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
       history.push(`/collectionView/${data?.guid}`);
     }
   };
-  const likeNft = async () => {
+  const likeNft = async (e) => {
+    e.stopPropagation();
     try {
       const res = await likeNfts(data?.guid);
       setIsLiked(true);
@@ -41,7 +34,8 @@ const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
       openNotification("Oops", error?.response?.data?.message);
     }
   };
-  const unLikeNft = async () => {
+  const unLikeNft = async (e) => {
+    e.stopPropagation();
     try {
       const res = await unLikeNfts(data?.guid);
       setIsLiked(false);
@@ -53,8 +47,8 @@ const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
   return (
     <div className="featuredCard">
       <Card>
-        <div className="cardContent">
-          <div className="coverImageWrapper" onClick={handleClick}>
+        <div className="cardContent" onClick={handleClick}>
+          <div className="coverImageWrapper">
             <div className="coverImage">
               <img
                 alt="example"
@@ -77,7 +71,7 @@ const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
             )}
           </div>
           <div className="content">
-            <div className="description" onClick={handleClick}>
+            <div className="description">
               <span className="head">
                 {data ? data?.store_name : "test store_name"}
               </span>
@@ -94,41 +88,29 @@ const FeaturedCard = ({ data, isNft,showFollowIcon=true}) => {
                   <span className="floor">Floor: 3872.44</span>
                 </span>
               </span>
+              <span className="idSection"># {data?.guid}</span>
             </div>
             <div className="frameIconSection">
-              <Tooltip
-                title={
-                  isNft
-                    ? isLiked
-                      ? "Unlike"
-                      : "Like"
-                    : isFollowed
-                    ? "Unfollow"
-                    : "Follow"
-                }
-                color={"#303549"}
-              >
-                {showFollowIcon && 
-                <span
-                style={{backgroundColor : isNft ? isLiked ? "blue" : "" : isFollowed ? "blue" : "", padding : isNft ? isLiked ? "9px 7px 13px" : "" : isFollowed ? "9px 7px 13px" : "", borderRadius : isNft ? isLiked ? "7px" : "" : isFollowed ? "7px" : "" }}
-                  className="orangeFrame"
-                  onClick={
-                    isNft
-                      ? isLiked
-                        ? unLikeNft
-                        : likeNft
-                      : isFollowed
-                      ? unFollowCollections
-                      : followCollections
-                  }
-                >
-                  <img
-                  style={{filter : isNft ? data?.is_liked ? "brightness(10)" : "" : isFollowed ? "brightness(10)" : ""}}
-                    src={isNft ? LIKE_ICON : ORANGE_FRAME}
-                    alt={"ORANGE_FRAME"}
-                  />
-                </span>
-              }
+              <Tooltip title={isLiked ? "Unlike" : "Like"} color={"#303549"}>
+                {showFollowIcon && (
+                  <span
+                    style={{
+                      backgroundColor: isLiked ? "blue" : "",
+                      padding: isLiked ? "9px 7px 13px" : "",
+                      borderRadius: isLiked ? "7px" : "",
+                    }}
+                    className="orangeFrame"
+                    onClick={isLiked ? (e) => unLikeNft(e) : (e) => likeNft(e)}
+                  >
+                    <img
+                      style={{
+                        filter: isLiked ? "brightness(10)" : "",
+                      }}
+                      src={LIKE_ICON}
+                      alt={"ORANGE_FRAME"}
+                    />
+                  </span>
+                )}
               </Tooltip>
             </div>
           </div>

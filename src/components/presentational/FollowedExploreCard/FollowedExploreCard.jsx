@@ -82,6 +82,11 @@ const FollowedExploreCard = ({ data, collections, setCollections }) => {
             </span>
           </span>
         </div>
+        <div className="idSection">
+          # {
+            data?.guid
+          }
+        </div>
       </Card>
     </div>
   );
