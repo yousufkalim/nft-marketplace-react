@@ -185,13 +185,13 @@ const SignUp = () => {
                     onClick={() => setIsAgree((prev) => !prev)}
                   >
                     I agreee to the{" "}
-                    <a
-                      href="https://app.termly.io/document/terms-of-use-for-website/815902d6-4654-4423-b671-bb7f1eee6468"
+                    <Link
+                      to="/TermsAndCondition"
                       target="_blank"
                       style={{ color: "#F37342" }}
                     >
                       Terms & Conditions
-                    </a>
+                    </Link>
                   </Radio>
                 </Form.Item>
 
