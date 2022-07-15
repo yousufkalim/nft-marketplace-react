@@ -7,6 +7,7 @@ import { openNotification } from "../../../components/Smart/Notification";
 import LoadingCard from "../../../components/presentational/LoadingCard/LoadingCard";
 import ExploreCard from "../../../components/presentational/ExploreCard/ExploreCard";
 import "./Followed.scss";
+import FollowedExploreCard from "../../../components/presentational/FollowedExploreCard/FollowedExploreCard";
 
 
 const Followed = ({ setMyFollowedCount }) => {
@@ -26,16 +27,20 @@ const Followed = ({ setMyFollowedCount }) => {
         next_page: res?.body?.next_page,
         has_more: res?.body?.has_more,
       });
-      if (collections?.length > 0) {
-        setMyFollowedCount(collections?.length);
-      } else {
-        setMyFollowedCount(res?.body?.collections?.length);
-      }
+      // if (collections?.length > 0) {
+      //   setMyFollowedCount(collections?.length);
+      // } else {
+      //   setMyFollowedCount(res?.body?.collections?.length);
+      // }
     } catch (error) {
-      openNotification("Oops", error?.response?.data?.message);
+      // openNotification("Oops", error?.response?.data?.message);
       //   setExploreData([]);
     }
   };
+
+  useEffect(()=>{
+    setMyFollowedCount(collections?.length);
+  },[collections])
 
   useEffect(() => {
     fetchCollections();
@@ -43,8 +48,10 @@ const Followed = ({ setMyFollowedCount }) => {
   return (
     <>
       <div className="FollowedCardsGrid main_page_width">
+       {collections?.length ?
+       <>
         <InfiniteScroll
-          dataLength={collections.length} //This is important field to render the next data
+          dataLength={collections?.length} //This is important field to render the next data
           next={fetchCollections}
           hasMore={extraData?.has_more}
           loader={
@@ -69,19 +76,26 @@ const Followed = ({ setMyFollowedCount }) => {
           }
         >
           <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
-            {collections?.map((item, index) => {
+            {collections?.length &&  collections?.map((item, index) => {
               return (
                 <Col
                   className="gutter-row"
                   span={browserWidth < 620 ? 24 : 8}
                   key={index}
                 >
-                  <ExploreCard data={item}/>
+                  <FollowedExploreCard data={item} collections={collections} setCollections={setCollections}/>
                 </Col>
               );
             })}
           </Row>
         </InfiniteScroll>
+       </>
+       :
+       (
+         <div>Follow Some Collections to see them here</div>
+       )
+
+       }
       </div>
     </>
   );

@@ -9,7 +9,7 @@
     box-shadow: 0px 4px 16px -7px rgba(83, 82, 237, 0.57);
     border-radius: 10px;
     @include mobile {
-      height: 110px;
+      height: 130px;
     }
     .ant-card-body {
       padding: unset !important;
@@ -18,6 +18,8 @@
   .cardContent {
     position: relative;
     display: flex;
+    cursor: pointer;
+    height: 100%;
     .content {
       display: flex; 
       justify-content: space-between;  
@@ -27,6 +29,12 @@
       @include mobile {
         padding: 16px 30px;
       }
+    }
+    .idSection{
+      color: $GrayColor;
+      font-weight: bold;
+      font-size: 12px;
+      margin-top: 12px;
     }
     .coverImageWrapper {
       position: relative;
@@ -40,7 +48,7 @@
           object-fit: cover;
           border-radius: 10px 0px 0px 10px;
           @media screen and (max-width:620px) {
-            height: 110px;
+            height: 130px;
           }
         }
       }
@@ -129,6 +137,7 @@
       position: absolute;
       top: 10px;
       right: 20px;
+      z-index: 999;
     }
   }
   .orangeFrame{

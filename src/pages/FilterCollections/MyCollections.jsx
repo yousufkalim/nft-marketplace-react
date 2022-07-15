@@ -116,9 +116,7 @@ const MyCollections = () => {
                   span={browserWidth < 620 ? 24 : 8}
                   key={index}
                 >
-                  <Link to={`/collectionView/${item?.guid}`}>
-                    <ExploreCard data={item} />
-                  </Link>
+                    <ExploreCard data={item} showFollowIcon={false}/>
                 </Col>
               );
             })}

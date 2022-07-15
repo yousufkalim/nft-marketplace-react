@@ -9,6 +9,11 @@ const NftLeftSection = ({nftData}) => {
       <span className="searchedCard">
         <NftDetailCard nftData={nftData} />
       </span>
+      <span className="idSection">
+       # {
+          nftData?.guid
+        }
+      </span>
     </div>
   );
 };

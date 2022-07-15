@@ -86,7 +86,14 @@ const NftCard = ({ showTopPick = false, data, showFollowIcon = true }) => {
           <Meta
             title={data ? data?.store_name : "Test Title"}
             description={
-              data ? truncate(data?.description_short) : "test description"
+              <div className="dFlex">
+              {data ? truncate(data?.description_short) : "test description"}
+              <div className="idSection">
+                # {
+                  data?.guid
+                }
+              </div>
+              </div>
             }
           />
         </Link>

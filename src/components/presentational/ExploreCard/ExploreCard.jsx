@@ -13,9 +13,8 @@ import { useSelector } from "react-redux";
 
 const { Meta } = Card;
 
-const ExploreCard = ({ data,showFollowIcon=true }) => {
+const ExploreCard = ({ data,showFollowIcon=true,exploreData,setExploreData }) => {
   const history = useHistory();
-
   const handleClick = () => {
     history.push(`/collectionView/${data?.guid}`);
   };
@@ -25,7 +24,17 @@ const ExploreCard = ({ data,showFollowIcon=true }) => {
       const res = await followCollection(data?.guid);
       if(res?.body?.followed)
       {
-      openNotification("Success","Followed Successfully");
+        const dataManipulated = exploreData.map((el)=>{
+          if(el.guid === data.guid) {
+            return {
+              ...el,
+              is_followed : true
+            }
+          }
+          return el;
+        })
+        setExploreData(dataManipulated);
+      // openNotification("Success","Followed Successfully");
       }
 
     } catch (error) {
@@ -37,6 +46,16 @@ const ExploreCard = ({ data,showFollowIcon=true }) => {
   const unFollowCollections = async () => {
     try {
       const res = await unFollowCollection(data?.guid);
+      const dataManipulated = exploreData.map((el)=>{
+        if(el.guid === data.guid) {
+          return {
+            ...el,
+            is_followed : false
+          }
+        }
+        return el;
+      })
+      setExploreData(dataManipulated);
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
     }
@@ -54,7 +73,7 @@ const ExploreCard = ({ data,showFollowIcon=true }) => {
             </span> 
             <Tooltip title={data?.is_followed ? "UnFollow" : "Follow"} color={"#303549"}>
               {showFollowIcon && 
-              <span className="frame" onClick={data?.is_followed ? unFollowCollections : followTheCollection}  >
+              <span className={data?.is_followed ? "orangeFrame" :  "frame"} onClick={data?.is_followed ? unFollowCollections : followTheCollection}  >
                 <img src={FRAME_ICON} alt={"FRAME_ICON"} />
               </span>
               }
@@ -64,6 +83,7 @@ const ExploreCard = ({ data,showFollowIcon=true }) => {
               className="footer"
               style={{
                 background: `url(${data?.image_small_location}) no-repeat`,
+                backgroundSize : "contain"
               }}
             ></span>
           </span>
@@ -85,6 +105,11 @@ const ExploreCard = ({ data,showFollowIcon=true }) => {
             </span>
           </span>
         </div>
+        <div className="idSection">
+            # {
+              data?.guid
+            }
+          </div>
       </Card>
     </div>
   );

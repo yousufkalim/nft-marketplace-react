@@ -28,7 +28,8 @@
       padding: 0% 30px;
     }
     @include mobile{
-      display: none;
+      width: 95%;
+      overflow: auto;
     }
     .filterItem {
       cursor: pointer;

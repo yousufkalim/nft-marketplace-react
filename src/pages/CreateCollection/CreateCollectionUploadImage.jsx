@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Radio } from "antd";
+import { Radio, Select } from "antd";
 import PAGE_HEADER from "../../images/PageHeader.png";
 import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import DropZone from "../../components/Smart/DropZone/DropZone";
 import {
+  codesAPI,
   createCollectionAPI,
   uploadAPI,
 } from "../../services/createCollectionServices";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openNotification } from "../../components/Smart/Notification";
 import "./CreateCollectionUploadImage.scss";
 import Spin from "../../components/presentational/Spin";
 import useWindowSize from "../../helpers/hooks";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { collectionDataSuccess } from "../../store/collectionForm/collectionActions";
 
 const CreateCollectionUploadImage = () => {
   const [smallImage, setSmallImage] = useState("");
@@ -20,13 +22,32 @@ const CreateCollectionUploadImage = () => {
   const [bannerImage, setBannerImage] = useState("");
   const [isAgree, setIsAgree] = useState(false);
   const [loading, setIsLoading] = useState(false);
+  const [layoutCodes, setLayoutCodes] = useState([]);
+  const [selectedCode,setSelectedCode]=useState(null)
   const [browserWidth] = useWindowSize();
   const history = useHistory();
+  const dispatch=useDispatch();
 
   const formData = useSelector((state) => state?.collectionData?.data);
 
+  useEffect(() => {
+    const getCode = async () => {
+      try {
+        const response = await codesAPI("LayoutCodes");
+        setLayoutCodes(response?.data);
+      } catch (error) {
+        console.log("error", error?.response?.data?.message);
+      }
+    };
+    getCode();
+  }, []);
+
+  const handleChange = (value) => {
+    setSelectedCode(value)
+  };
+
   const handleSubmit = async () => {
-    if (smallImage?.length && largeImage?.length && bannerImage?.length) {
+    if (smallImage?.length && largeImage?.length && bannerImage?.length && selectedCode ) {
       if (isAgree) {
         setIsLoading(true);
         try {
@@ -36,6 +57,7 @@ const CreateCollectionUploadImage = () => {
 
           const data = {
             ...formData,
+            layout_style_code:selectedCode,
             url_discord: "https://discord.com/"+formData?.url_discord,
             url_instagram: "https://www.instagram.com/"+formData?.url_instagram,
             url_medium: "https://medium.com/"+formData?.url_medium,
@@ -46,6 +68,7 @@ const CreateCollectionUploadImage = () => {
             image_banner_location: bannerImageLocation?.body?.url,
           };
           const res = await createCollectionAPI(data);
+          dispatch(collectionDataSuccess({}))
           openNotification(
             "Success",
             "Collection created successfully , Lets Add some NFTs to your collection"
@@ -92,6 +115,17 @@ const CreateCollectionUploadImage = () => {
             <span className="desc2">
               Accepted file formats: JPG, JPEG,PNG,GIF
             </span>
+          </div>
+          <div>
+          <Select placeholder="Select the style for the layout of your Small/Large images." onChange={handleChange}>
+                  {layoutCodes?.body?.map((item,index) => {
+                    return (
+                      <Select.Option value={item?.code} key={item+index}>
+                        {item?.description}
+                      </Select.Option>
+                    );
+                  })}
+                </Select>
           </div>
           <div className="uploadForm">
             <div className="collectionImages">

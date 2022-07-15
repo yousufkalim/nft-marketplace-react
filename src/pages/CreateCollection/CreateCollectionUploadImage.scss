@@ -179,4 +179,21 @@
       }
     }
   }
+  .ant-select {
+    line-height: 2.9715;
+    width: 48%;
+    @include mobile{
+      width: 100%;
+    }
+    margin-bottom: 12px;
+  }
+  .ant-select-selector {
+    background: $InputBg !important;
+    line-height: 2.9715;
+    background: $InputBg !important;
+    border-radius: 10px !important;
+    border: none !important;
+    height: 48px !important;
+    align-items: center;
+  }
 }

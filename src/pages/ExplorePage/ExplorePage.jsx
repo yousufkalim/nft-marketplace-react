@@ -133,7 +133,7 @@ const ExplorePage = () => {
                         span={browserWidth < 620 ? 24 : 8}
                         key={index}
                       >
-                        <ExploreCard data={item} />
+                        <ExploreCard data={item} exploreData = {exploreData} setExploreData={setExploreData} />
                       </Col>
                     );
                   })}
