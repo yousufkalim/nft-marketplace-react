@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import HEADER_LOGO from "../../../images/headerLogo.svg";
 import BELL_ICON from "../../../images/bell_icon.svg";
 import PROFILE_ICON from "../../../images/profile_icon.svg";
@@ -22,7 +22,6 @@ const AppHeader = () => {
   const [visible, setVisible] = useState(false);
   const history = useHistory();
   const isLoggedIn = localStorage.getItem("token");
-
   const dispatch = useDispatch();
 
   const handleSearch = async (value) => {
@@ -69,7 +68,7 @@ const AppHeader = () => {
   };
 
   return (
-    <div className="header main_page_width">
+    <div className="editpf header main_page_width">
       <div className="logo">
         <Link to="/">
           <img src={HEADER_LOGO} alt={"HEADER_LOGO"} />
