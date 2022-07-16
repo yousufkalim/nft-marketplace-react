@@ -48,6 +48,10 @@ const AppHeader = () => {
         },
         {
           key: "2",
+          label: <Link to={"/settings"}>Settings</Link>,
+        },
+        {
+          key: "3",
           label: <span onClick={() => dispatch(Logout())}>Logout</span>,
         },
       ]}
@@ -76,7 +80,7 @@ const AppHeader = () => {
       </div>
       <div className="tabs">
         <div className="centerTabs">
-        <a href="/explore" target={'_self'}>
+          <a href="/explore" target={"_self"}>
             <h3>Explore</h3>
           </a>
           {/* <h3>Stats</h3> */}
@@ -123,9 +127,11 @@ const AppHeader = () => {
               </AutoComplete>
             }
           >
-            {isLoggedIn && <span className="headerIcons">
-              <img src={SEARCH_ICON} alt={"SEARCH_ICON"} />
-            </span>}
+            {isLoggedIn && (
+              <span className="headerIcons">
+                <img src={SEARCH_ICON} alt={"SEARCH_ICON"} />
+              </span>
+            )}
           </Tooltip>
           <span className="headerIcons">
             <img src={BELL_ICON} alt={"BELL_ICON"} />
