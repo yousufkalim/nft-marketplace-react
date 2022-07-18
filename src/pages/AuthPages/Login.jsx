@@ -32,7 +32,7 @@ const Login = () => {
       localStorage.setItem("token", data?.body?.token);
       localStorage.setItem("saved", new Date().getTime());
       dispatch(LoginSuccess());
-      dispatch(setProfile(data?.user));
+      dispatch(setProfile(data?.body?.user));
       dispatch(rememberUser(isRemember));
       openNotification("Login Successfully", "Welcome to the app");
     } catch (error) {

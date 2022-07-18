@@ -5,6 +5,7 @@ import "./index.scss";
 import HEADER_EDIT_MOBILE from "../../../images/PageHeader.png";
 import Account from "./Account";
 import Security from "./Security";
+import Notification from "./Notification";
 const Settings = () => {
   const [activeIndex, setActiveIndex] = useState(1);
   const handleClick = (index) => {
@@ -148,6 +149,15 @@ const Settings = () => {
                 <span class="chevron_icon_btn left_cev"></span>
               </p>
             </div>
+            <div className="tabs_main">
+              <p
+                className={`tab ${checkActive(3, "active")}`}
+                onClick={() => handleClick(3)}
+              >
+                <span className="ac_t_mb">Notifications</span>
+                <span class="chevron_icon_btn left_cev"></span>
+              </p>
+            </div>
           </div>
           <div className="edit_profile_tabs_data">
             <div className="edit_profile_tabs_inner">
@@ -158,7 +168,7 @@ const Settings = () => {
                 )}`}
               >
                 <div className="fields_inner">
-                  <Account />
+                    <Account/>
                 </div>
               </div>
 
@@ -170,8 +180,18 @@ const Settings = () => {
               >
                 <div className="_space_inner_de">
                   <div className="fields_inner">
-                    <Security />
+                    <Security/>
                   </div>
+                </div>
+              </div>
+              <div
+                className={`notification_data_tab edit_profile_panel ${checkActive(
+                  3,
+                  "active"
+                )}`}
+              >
+                <div className="fields_inner">
+                  <Notification/>
                 </div>
               </div>
             </div>

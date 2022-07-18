@@ -6,29 +6,34 @@ import Login from "../pages/AuthPages/Login";
 import SignUp from "../pages/AuthPages/SignUp";
 import ForgotPassword from "../pages/AuthPages/ForgotPassword";
 import { Layout } from "antd";
-import '../components/Layout/Layout.scss';
-import TermsAndCondition from "../pages/AuthPages/TermsAndCondition";
+import "../components/Layout/Layout.scss";
+import ResetPassword from "../pages/AuthPages/ResetPassword";
 const { Header, Footer, Content } = Layout;
 
 const AuthRoutes = () => {
   return (
     <>
-     <Layout>
-      <Header>
-        <AppHeader />
-      </Header>
-      <Content>
-      <Switch>
+      <Layout>
+        <Header>
+          <AppHeader />
+        </Header>
+        <Content>
+          <Switch>
             <Route path="/auth/login" exact component={Login} />
             <Route path="/auth/signup" exact component={SignUp} />
-            <Route path="/auth/forgotPassword" exact component={ForgotPassword}/>
+            <Route path="/auth/reset-password" exact component={ResetPassword} />
+            <Route
+              path="/auth/forgotPassword"
+              exact
+              component={ForgotPassword}
+            />
             <Redirect from="/auth" to="/auth/login" />
           </Switch>
-      </Content>
-      <Footer>
-        <AppFooter />
-      </Footer>
-    </Layout>
+        </Content>
+        <Footer>
+          <AppFooter />
+        </Footer>
+      </Layout>
     </>
   );
 };
