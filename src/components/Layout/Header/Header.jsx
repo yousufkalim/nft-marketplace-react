@@ -6,13 +6,14 @@ import SEARCH_ICON from "../../../images/search_icon.svg";
 import TOGGLE_ICON from "../../../images/toggle_icon.png";
 
 import { Link } from "react-router-dom";
-import { AutoComplete, Drawer, Tooltip, Dropdown, Menu } from "antd";
+import { AutoComplete, Drawer, Tooltip, Dropdown, Menu, Button } from "antd";
 import { searchApi } from "../../../services/searchServices";
 import useWindowSize from "../../../helpers/hooks";
 import "./Header.scss";
 import { useDispatch } from "react-redux";
 import { Logout } from "../../../store/auth/authActions";
 import { useHistory } from "react-router-dom";
+import { Web3Connector } from "../../Smart/Web3/Web3Wrapper";
 
 const { Option } = AutoComplete;
 
@@ -88,8 +89,11 @@ const AppHeader = () => {
           <Link to={"/createCollection"}>
             <h3>Create</h3>
           </Link>
+         
         </div>
         <div className="icons">
+          <Web3Connector />
+
           {browserWidth < 620 && (
             <span
               className="toggleIcon"
