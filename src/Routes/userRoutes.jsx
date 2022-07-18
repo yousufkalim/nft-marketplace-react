@@ -8,17 +8,12 @@ import MyCollections from "../pages/FilterCollections/MyCollections";
 import HomePage from "../pages/HomePage";
 import NftDetail from "../pages/NftDetail/NftDetail";
 import Profile from "../pages/Profile/Profile";
-import ChangePassword from "../pages/UserPages/ChangePassword";
 import Settings from "../pages/Profile/Settings";
 
 export const userRoutes = [
     {
         path : "/",
         component : HomePage
-    },
-    {
-        path:"/changePassword",
-        component:ChangePassword
     },
     {
         path:"/explore",
