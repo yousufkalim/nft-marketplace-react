@@ -187,3 +187,13 @@
     margin-right: unset !important;
   }
 }
+
+.CreateCollectionFormWrapper .CreateCollectionForm .CreateCollectionFormItemWrapper .CreateCollectionFormIteminner1 .ant-form-item, .CreateCollectionFormWrapper .CreateCollectionForm .CreateCollectionFormItemWrapper .CreateCollectionFormIteminner2 .ant-form-item {
+  width: 100%;
+}
+.CreateCollectionFormIteminner1, .CreateCollectionFormIteminner2 {
+  width: 48%;
+  @include mobile {
+    width: 100%;
+  }
+}  

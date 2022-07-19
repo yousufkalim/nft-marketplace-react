@@ -166,13 +166,13 @@ const CreateCollectionForm = () => {
             autoComplete="on"
           >
             <div className="CreateCollectionFormItemWrapper">
+              <div className="CreateCollectionFormIteminner1">
               <Form.Item
-                name="storename"
+                name="storename" 
                 label="Store Name"
                 help={storenameStatus=="error"?"Store name already exists":""}
                 hasFeedback
                 validateStatus={storenameStatus}
-              
                 rules={[
                   {
                     required: true,
@@ -181,18 +181,6 @@ const CreateCollectionForm = () => {
                 ]}
               >
                 <Input placeholder="Store name" value={storename} onChange={(e)=>handleStorename(e.target.value)} />
-              </Form.Item>
-              <Form.Item
-                name="instagramLink"
-                label="Instagram Link"
-                // rules={[
-                //   {
-                //     required: true,
-                //     message: "Please input your Instagram link !",
-                //   },
-                // ]}
-              >
-                <Input placeholder="Instagram link " prefix={<span className="prefixColor">https://www.instagram.com/</span>}/>
               </Form.Item>
               <Form.Item
                 name="shortDescription"
@@ -206,50 +194,12 @@ const CreateCollectionForm = () => {
               >
                 <Input placeholder="Short Description" />
               </Form.Item>
-
-              <Form.Item
-                name="personalLink"
-                label="Personal Link"
-                
-              >
-                <Input  prefix={<span className="prefixColor">{window.location.origin+'/collectionView/'+(formData?.store_name ? +formData?.store_name : storename)}</span>} readOnly />
-              </Form.Item>
-
               <Form.Item name="longDescription" label="Long Description">
                 <Input.TextArea
                   placeholder="Long description"
                   style={{ height: 150 }}
                 />
               </Form.Item>
-
-              <span className="mediaAndDiscordLinks">
-                <Form.Item
-                  name="mediumLink"
-                  label="Medium Link"
-                  // rules={[
-                  //   {
-                  //     required: true,
-                  //     message: "Please input your Media link!",
-                  //   },
-                  // ]}
-                >
-                  <Input placeholder="Medium link" prefix={<span className="prefixColor">https://medium.com/</span>} />
-                </Form.Item>
-
-                <Form.Item
-                  name="discordLink"
-                  label="Discord Link"
-                  // rules={[
-                  //   {
-                  //     required: true,
-                  //     message: "Please input your Discord link!",
-                  //   },
-                  // ]}
-                >
-                  <Input placeholder="Discord link"  prefix={<span className="prefixColor">https://discord.com/</span>} />
-                </Form.Item>
-              </span>
-
               <Form.Item
                 name="category"
                 label="Category"
@@ -270,40 +220,12 @@ const CreateCollectionForm = () => {
                   })}
                 </Select>
               </Form.Item>
-
-              <Form.Item name="telegramLink" label="Telegram Link">
-                <Input placeholder="Telegram link"  prefix={<span className="prefixColor">https://telegram.com/</span>} />
-              </Form.Item>
-
               <Form.Item
                 name="afterPurchaseMessage"
                 label="After 1st Purchase Message"
-                // rules={[
-                //   {
-                //     required: true,
-                //     message: "Please input After purshase message!",
-                //   },
-                // ]}
               >
                 <Input placeholder="After purshase message" />
               </Form.Item>
-
-              <Form.Item
-                name="mintingSupply"
-                label="Minting Supply"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input Minting supply Count!",
-                  },
-                ]}
-              >
-                <InputNumber
-                  placeholder="Minting supply Count"
-                  controls={false}
-                />
-              </Form.Item>
-
               <Form.Item
                 name="mintingCoin"
                 label="Minting Coin"
@@ -324,50 +246,6 @@ const CreateCollectionForm = () => {
                   })}
                 </Select>
               </Form.Item>
-
-              {/* <Form.Item
-                name="mintable"
-                label="Mintable"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input mintable!",
-                  },
-                ]}
-              >
-                <InputNumber placeholder="mintable" controls={false} />
-              </Form.Item> */}
-
-              <Form.Item
-                name="delayDays"
-                label="Delay Days"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input Delay Days!",
-                  },
-                ]}
-              >
-                <InputNumber
-                  placeholder="Days to delay before showing next level"
-                  controls={false}
-                  // value={delayDays} onChange={()=>setDelayDays(e.target.value)}
-                />
-              </Form.Item>
-
-              {/* <Form.Item
-                name="royaltyPercent"
-                label="Royalty Percent"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input Royalty Percent!",
-                  },
-                ]}
-              >
-                <InputNumber placeholder="Royalty Percent" controls={false} />
-              </Form.Item> */}
-
               <Form.Item
                 name="thirdPartyRoyaltyPercent"
                 label={<div>Royalty Percent
@@ -380,61 +258,12 @@ const CreateCollectionForm = () => {
                     </span>
                     </Tooltip>
                 </div>}
-                // rules={[
-                //   {
-                //     required: true,
-                //     message: "Please input third Party Royalty Percent!",
-                //   },
-                // ]}
               >
                 <InputNumber
                   placeholder="Royalty Percent"
                   controls={false}
                 />
               </Form.Item>
-
-              <Form.Item
-                name="thirdPartyWalletId"
-                label={<div>Payout Wallet
-                  <Tooltip title="This is the Wallet ID that will receive the first sale and future royalty payments (if applicable) for this collection."
-                  color={"#303549"}
-                  overlayClassName="favouriteToolTip"
-                  >
-                   <span className="infoIcon"> 
-                   <img src={QUESTION_MARK} alt={"QUESTION_MARK"}/>
-                   </span>
-                    </Tooltip>
-                </div>}
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input Payout Wallet id!",
-                  },
-                ]}
-              >
-                <Input placeholder="Wallet ID we will payout the royalty to" />
-              </Form.Item>
-
-              {/* <Form.Item
-                name="whoPayFee"
-                label="Who Pay Fee"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please select a role who pays fee!",
-                  },
-                ]}
-              >
-                <Select placeholder="Who Pay Fee">
-                  {whoPaysFee?.body?.map((item) => {
-                    return (
-                      <Select.Option value={item?.code}>
-                        {item?.code}
-                      </Select.Option>
-                    );
-                  })}
-                </Select>
-              </Form.Item> */}
               <Form.Item
                 label={<div>Mint Locked
                     <Tooltip title="Use this ONLY when you are sure there are to be no changes to any part of the collection. (Commonly when images are stored to IPFS, etc.)"
@@ -456,7 +285,90 @@ const CreateCollectionForm = () => {
                   onChange={() => setIsMintLocked(!isMintLocked)}
                 />
               </Form.Item>
+              </div>
+              <div className="CreateCollectionFormIteminner2">
+              <Form.Item
+                name="instagramLink"
+                label="Instagram Link"
+              >
+                <Input placeholder="Instagram link " prefix={<span className="prefixColor">https://www.instagram.com/</span>}/>
+              </Form.Item>
+              <Form.Item
+                name="personalLink"
+                label="Personal Link"
+                
+              >
+                <Input  prefix={<span className="prefixColor">{window.location.origin+'/collectionView/'+(formData?.store_name ? +formData?.store_name : storename)}</span>} readOnly />
+              </Form.Item>
+              <span className="mediaAndDiscordLinks">
+                <Form.Item
+                  name="mediumLink"
+                  label="Medium Link"
+                >
+                  <Input placeholder="Medium link" prefix={<span className="prefixColor">https://medium.com/</span>} />
+                </Form.Item>
 
+                <Form.Item
+                  name="discordLink"
+                  label="Discord Link"
+                >
+                  <Input placeholder="Discord link"  prefix={<span className="prefixColor">https://discord.com/</span>} />
+                </Form.Item>
+              </span>
+              <Form.Item name="telegramLink" label="Telegram Link">
+                <Input placeholder="Telegram link"  prefix={<span className="prefixColor">https://telegram.com/</span>} />
+              </Form.Item>
+              <Form.Item
+                name="mintingSupply"
+                label="Minting Supply"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input Minting supply Count!",
+                  },
+                ]}
+              >
+                <InputNumber
+                  placeholder="Minting supply Count"
+                  controls={false}
+                />
+              </Form.Item>
+              <Form.Item
+                name="delayDays"
+                label="Delay Days"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input Delay Days!",
+                  },
+                ]}
+              >
+                <InputNumber
+                  placeholder="Days to delay before showing next level"
+                  controls={false}
+                />
+              </Form.Item>
+              <Form.Item
+                name="thirdPartyWalletId"
+                label={<div>Payout Wallet
+                  <Tooltip title="This is the Wallet ID that will receive the first sale and future royalty payments (if applicable) for this collection."
+                  color={"#303549"}
+                  overlayClassName="favouriteToolTip"
+                  >
+                   <span className="infoIcon"> 
+                   <img src={QUESTION_MARK} alt={"QUESTION_MARK"}/>
+                   </span>
+                    </Tooltip>
+                </div>}
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input Payout Wallet id!",
+                  },
+                ]}
+              >
+                <Input placeholder="Wallet ID we will payout the royalty to" />
+              </Form.Item>
               <div className="dFlex">
                 <Form.Item
                   label={
@@ -485,7 +397,6 @@ const CreateCollectionForm = () => {
                     onChange={() => setIsExplicit(!isExplicit)}
                   />
                 </Form.Item>
-
                 <Form.Item
                   label={
                     <div>
@@ -512,18 +423,7 @@ const CreateCollectionForm = () => {
                     onChange={() => setIsMintable(!isMintable)}
                   />
                 </Form.Item>
-
-                {/* <Form.Item
-                  label="Active"
-                  labelAlign="left"
-                  valuePropName="checked"
-                >
-                  <Switch
-                    size="small"
-                    checked={isActive}
-                    onChange={() => setIsActive(!isActive)}
-                  />
-                </Form.Item> */}
+              </div>
               </div>
             </div>
 

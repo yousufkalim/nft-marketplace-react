@@ -30,7 +30,7 @@ const ExploreCard = ({ data,showFollowIcon=true,exploreData,setExploreData }) =>
               ...el,
               is_followed : true
             }
-          }
+          } 
           return el;
         })
         setExploreData(dataManipulated);
