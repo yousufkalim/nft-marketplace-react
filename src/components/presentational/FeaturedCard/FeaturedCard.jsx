@@ -88,7 +88,7 @@ const FeaturedCard = ({ data, isNft, showFollowIcon = true }) => {
                   <span className="floor">Floor: 3872.44</span>
                 </span>
               </span>
-              <span className="idSection"># {data?.guid}</span>
+              <span className="idSection"># {data?.collection_id ?? data?.guid}</span>
             </div>
             <div className="frameIconSection">
               <Tooltip title={isLiked ? "Unlike" : "Like"} color={"#303549"}>

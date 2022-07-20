@@ -6,13 +6,14 @@ import SEARCH_ICON from "../../../images/search_icon.svg";
 import TOGGLE_ICON from "../../../images/toggle_icon.png";
 
 import { Link } from "react-router-dom";
-import { AutoComplete, Drawer, Tooltip, Dropdown, Menu } from "antd";
+import { AutoComplete, Drawer, Tooltip, Dropdown, Menu, Button } from "antd";
 import { searchApi } from "../../../services/searchServices";
 import useWindowSize from "../../../helpers/hooks";
 import "./Header.scss";
 import { useDispatch } from "react-redux";
 import { Logout } from "../../../store/auth/authActions";
 import { useHistory } from "react-router-dom";
+import { Web3Connector } from "../../Smart/Web3/Web3Wrapper";
 
 const { Option } = AutoComplete;
 
@@ -48,6 +49,10 @@ const AppHeader = () => {
         },
         {
           key: "2",
+          label: <Link to={"/settings"}>Settings</Link>,
+        },
+        {
+          key: "3",
           label: <span onClick={() => dispatch(Logout())}>Logout</span>,
         },
       ]}
@@ -76,7 +81,7 @@ const AppHeader = () => {
       </div>
       <div className="tabs">
         <div className="centerTabs">
-        <a href="/explore" target={'_self'}>
+          <a href="/explore" target={"_self"}>
             <h3>Explore</h3>
           </a>
           {/* <h3>Stats</h3> */}
@@ -86,6 +91,10 @@ const AppHeader = () => {
           </Link>
         </div>
         <div className="icons">
+          <div className="connectButton">
+            <Web3Connector />
+          </div>
+
           {browserWidth < 620 && (
             <span
               className="toggleIcon"
@@ -123,9 +132,11 @@ const AppHeader = () => {
               </AutoComplete>
             }
           >
-            {isLoggedIn && <span className="headerIcons">
-              <img src={SEARCH_ICON} alt={"SEARCH_ICON"} />
-            </span>}
+            {isLoggedIn && (
+              <span className="headerIcons">
+                <img src={SEARCH_ICON} alt={"SEARCH_ICON"} />
+              </span>
+            )}
           </Tooltip>
           <span className="headerIcons">
             <img src={BELL_ICON} alt={"BELL_ICON"} />
@@ -151,6 +162,9 @@ const AppHeader = () => {
         visible={visible}
         key={"right"}
       >
+        <div className="mobileConnectButton">
+          <Web3Connector/>
+        </div>
         <Link to={"/explore"}>
           <h2 onClick={onClose}>Explore</h2>
         </Link>

@@ -243,6 +243,7 @@ const CollectionView = ({ match }) => {
             collectionid={match?.params?.id}
             setCount={setCount}
             searchParam={searchParam}
+            count={count}
           />
           <NewsLetter />
         </div>

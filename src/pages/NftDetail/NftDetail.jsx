@@ -37,7 +37,7 @@ const NftDetails = ({ match }) => {
       }
     };
     getNftDetail();
-  }, []);
+  }, [match?.params?.id]);
 
 
   return (

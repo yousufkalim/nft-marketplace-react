@@ -23,7 +23,6 @@ const ExplorePage = () => {
     next_page: 1,
   });
   const [browserWidth] = useWindowSize();
-
   
   useEffect(() => {
     const query=new URLSearchParams(window?.location?.search);

@@ -17,7 +17,7 @@ const DropZone = ({
 }) => {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "image/png": [".png", ".jpg", ".jpeg",".gif"],
+      "image/png": [".png", ".jpg", ".jpeg", ".gif"],
     },
     onDrop: (acceptedFiles) =>
       acceptedFiles.map((file) =>
@@ -26,24 +26,30 @@ const DropZone = ({
         })
       ),
   });
-  const constantData = imageType === "small" ? 
-  {
-    heading: "Small Image",
-  }
-  : imageType === "large" ?
-  {
-    heading: "Large Image",
-  }
-  : imageType === "banner" ?
-  {
-    heading: "This image will display on the top of your Storefront/Collection Page. Recommended dimension 1400 X 400.",
-  }
-  : imageType === "zip" ?
-  {
-    heading: "Upload Zip File",
-  }
-  :null;
-  
+  const constantData =
+    imageType === "small"
+      ? {
+          heading: "Small Image",
+        }
+      : imageType === "large"
+      ? {
+          heading: "Large Image",
+        }
+      : imageType === "banner"
+      ? {
+          heading:
+            "This image will display on the top of your Storefront/Collection Page. Recommended dimension 1400 X 400.",
+        }
+      : imageType === "zip"
+      ? {
+          heading: "Upload Zip File",
+        }
+      : imageType == "profile"
+      ? {
+          heading: "Profile Image",
+        }
+      : null;
+
   const { heading } = constantData;
   const dropzoneOptions =
     selectedImage?.length || imgSrc
@@ -57,6 +63,19 @@ const DropZone = ({
   }, [acceptedFiles]);
   return (
     <section className="dropzone-style">
+      {/* {selectedImage && (
+        <>
+          <div
+            className={imageType == "profile" ? "" : "blurBg"}
+            style={
+              imageType == "profile"
+                ? {}
+                : { backgroundImage: `url(${selectedImage})` }
+            }
+          />
+          <img src={selectedImage} alt={"not found"} />
+        </>
+      )} */}
       {selectedImage && selectedImage.length ? (
         <div className="UploadedImg">
           {isUploading ? (
@@ -64,36 +83,51 @@ const DropZone = ({
           ) : (
             <>
               <div
-                className="blurBg"
-                style={{ backgroundImage: `url(${selectedImage[0]?.preview})` }}
+                className={imageType == "profile" ? "" : "blurBg"}
+                style={
+                  imageType == "profile"
+                    ? {}
+                    : { backgroundImage: `url(${selectedImage[0]?.preview})` }
+                }
               />
-              <img src={selectedImage[0].preview} alt={'not found'} />
+              <img src={selectedImage[0].preview} alt={"not found"} />
             </>
           )}
         </div>
       ) : imgSrc ? (
         <div className="UploadedImg">
           <div
-            className="blurBg"
-            style={{ backgroundImage: `url(${imgSrc})` }}
+            className={imageType == "profile" ? "" : "blurBg"}
+            style={
+              imageType == "profile"
+                ? {}
+                : { backgroundImage: `url(${imgSrc})` }
+            }
           />
-          <img src={imgSrc} alt={'not found'} />
+          <img src={imgSrc} alt={"not found"} />
         </div>
       ) : (
         ""
       )}
-      <div {...getRootProps()} style={{width:'100%',height:'100%',zIndex:'999',cursor:'pointer'}}>
-      <div style={{ zIndex: "550",width:'100%',height:'100%' }} className={dropzoneOptions}>
-        {/* <img src={UploadBtn} className="" /> */}
-        <p className="heading">
-          {heading}
-        </p>
-        
+      <div
+        {...getRootProps()}
+        style={{
+          width: "100%",
+          height: "100%",
+          zIndex: "999",
+          cursor: "pointer",
+        }}
+      >
+        <div
+          style={{ zIndex: "550", width: "100%", height: "100%" }}
+          className={dropzoneOptions}
+        >
+          {/* <img src={UploadBtn} className="" /> */}
+          <p className="heading">{heading}</p>
+
           <input {...getInputProps()} />
           {/* <Button className="browse-btn">{button}</Button> */}
-          {
-               <p className="desc">Drag n drop or choose file</p>
-          }
+          {<p className="desc">Drag n drop or choose file</p>}
         </div>
       </div>
     </section>

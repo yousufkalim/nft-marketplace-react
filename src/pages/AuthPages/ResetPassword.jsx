@@ -7,23 +7,26 @@ import Spin from "../../components/presentational/Spin";
 import { openNotification } from "../../components/Smart/Notification";
 import { useSelector } from "react-redux";
 import { ChangePasswordAPI } from "../../services/userServices";
-import "./ChangePassword.scss";
+import "./ResetPassword.scss";
 import useWindowSize from "../../helpers/hooks";
+import { useHistory } from "react-router-dom";
 
-const ChangePassword = () => {
+const ResetPassword = ({ match }) => {
   const [loading, setLoading] = useState(false);
-  const user = useSelector((state) => state.auth.user);
+  const history=useHistory();
   const onFinish = async (values) => {
     setLoading(true);
     try {
       const userData = {
-        new_password: values.password,
-        confirm_password: values.confirmPassword,
-        email: user.email,
-        token: localStorage.getItem("token"),
+        email: values?.email,
+        new_password: values?.password,
+        confirm_password: values?.confirmPassword,
+        token: match?.params?.token,
       };
-      const { data } = await ChangePasswordAPI(userData);
+      const  data  = await ChangePasswordAPI(userData);
+      history.push('/auth/login')
       setLoading(false);
+      
     } catch (error) {
       setLoading(false);
       openNotification("Oops", error?.response?.data?.message);
@@ -34,13 +37,16 @@ const ChangePassword = () => {
     console.log("Failed:", errorInfo);
   };
 
-  const [browserWidth]=useWindowSize();
+  const [browserWidth] = useWindowSize();
 
   return (
     <>
       <div className="ChangePasswordWrapper">
         <div className="ChangePasswordPageHeader">
-          <img src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER} alt={"PAGE_HEADER"} />
+          <img
+            src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER}
+            alt={"PAGE_HEADER"}
+          />
         </div>
         <div className="ChangePasswordFormWrapper">
           <div className="ChangePasswordForm">
@@ -56,16 +62,34 @@ const ChangePassword = () => {
                 initialValues={{
                   remember: true,
                 }}
+                layout="vertical"
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 autoComplete="on"
               >
                 <Form.Item
+                  name="email"
+                  label="Email"
+                  rules={[
+                    {
+                      type: "email",
+                      message: "The input is not valid E-mail!",
+                    },
+                    {
+                      required: true,
+                      message: "Please input your email!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Email" />
+                </Form.Item>
+                <Form.Item
                   name="password"
+                  label="New Password"
                   rules={[
                     {
                       required: true,
-                      message: "Please input your password!",
+                      message: "Please input your New password!",
                     },
                   ]}
                 >
@@ -74,6 +98,7 @@ const ChangePassword = () => {
 
                 <Form.Item
                   name="confirmPassword"
+                  label="Confirm Password"
                   dependencies={["password"]}
                   rules={[
                     {
@@ -117,4 +142,4 @@ const ChangePassword = () => {
   );
 };
 
-export default ChangePassword;
+export default ResetPassword;

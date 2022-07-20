@@ -62,9 +62,6 @@ const HomePage = ({match}) => {
                 <Link to="/createCollection" className="link">
                   <span className="create">Create</span>
                 </Link>
-                <Link to="/edit-profile" className="link">
-                  <span className="create">Edit Profile</span>
-                </Link>
               </span>
             </div>
             {browserWidth > 620 && <div className="rightSide">

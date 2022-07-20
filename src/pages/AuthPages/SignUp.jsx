@@ -7,6 +7,7 @@ import { SignUpAPI, VerifyEmailAPI } from "../../services/authServices";
 import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import "./SignUp.scss";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { openNotification } from "../../components/Smart/Notification";
 import Spin from "../../components/presentational/Spin";
 import useWindowSize from "../../helpers/hooks";
@@ -16,8 +17,14 @@ const SignUp = () => {
   const [isAgree, setIsAgree] = useState(false);
   const [newsTeller, setNewsTeller] = useState(false);
 
+  const wallet_id = useSelector(state=>state?.web3?.wallet);
+
   const history = useHistory();
   const onFinish = async (values) => {
+    if (!wallet_id) {
+      openNotification("Oops", "Please connect to your wallet");
+      return;
+    }
     if (isAgree) {
       setLoading(true);
       try {
@@ -27,8 +34,7 @@ const SignUp = () => {
           last_name: values.lastName,
           password: values.password,
           confirm_password: values.confirmPassword,
-          wallet_id:
-            values.wallet_id || "0xE7b3D35c1939592332735E6300b4DC00d3A3E5B0",
+          wallet_id:wallet_id,
           // newsTeller:values.newsTeller
         };
         const res = await SignUpAPI(data);
@@ -58,6 +64,9 @@ const SignUp = () => {
       return Promise.resolve(true);
     }
   };
+
+  // get state from Web3Wrapper > Web3Connector
+  
 
   return (
     <>
@@ -185,13 +194,13 @@ const SignUp = () => {
                     onClick={() => setIsAgree((prev) => !prev)}
                   >
                     I agreee to the{" "}
-                    <a
-                      href="https://app.termly.io/document/terms-of-use-for-website/815902d6-4654-4423-b671-bb7f1eee6468"
+                    <Link
+                      to="/TermsAndCondition"
                       target="_blank"
                       style={{ color: "#F37342" }}
                     >
                       Terms & Conditions
-                    </a>
+                    </Link>
                   </Radio>
                 </Form.Item>
 

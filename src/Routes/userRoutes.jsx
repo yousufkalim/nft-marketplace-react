@@ -8,17 +8,12 @@ import MyCollections from "../pages/FilterCollections/MyCollections";
 import HomePage from "../pages/HomePage";
 import NftDetail from "../pages/NftDetail/NftDetail";
 import Profile from "../pages/Profile/Profile";
-import EditProfile from "../pages/Profile/editProfile";
-import ChangePassword from "../pages/UserPages/ChangePassword";
+import Settings from "../pages/Profile/Settings";
 
 export const userRoutes = [
     {
         path : "/",
         component : HomePage
-    },
-    {
-        path:"/changePassword",
-        component:ChangePassword
     },
     {
         path:"/explore",
@@ -53,8 +48,8 @@ export const userRoutes = [
         component:Profile
     },
     {
-        path:"/edit-profile",
-        component:EditProfile
+        path:"/settings",
+        component:Settings
     },
     {
         path:"/myCollections",

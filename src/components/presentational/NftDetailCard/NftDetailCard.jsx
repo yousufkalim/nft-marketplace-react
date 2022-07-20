@@ -20,7 +20,7 @@ const NftDetailCard = ({nftData}) => {
   };
   return (
     <>
-    <Modal visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} footer={null} closable={false} width={600}>
+    <Modal visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} footer={null} closable={false}>
         <div className="modalImageWrapper">
           <img
           alt="example"

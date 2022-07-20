@@ -23,7 +23,6 @@ const ForgotPassword = () => {
       setLoading(false);
       setIsEmailSent(true);
       setEmail(values.email);
-      console.log("data", data);
     } catch (error) {
       setLoading(false);
       openNotification("Oops", error?.response?.data?.message);

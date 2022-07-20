@@ -11,7 +11,7 @@ const NftLeftSection = ({nftData}) => {
       </span>
       <span className="idSection">
        # {
-          nftData?.guid
+          nftData?.collection_id ?? nftData?.guid
         }
       </span>
     </div>
