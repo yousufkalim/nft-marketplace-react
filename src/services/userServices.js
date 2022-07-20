@@ -64,6 +64,22 @@ export const updateProfileAPI = async (updatedInfo) => {
         "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization",
     },
   });
-  console.log("data", data);
+  return data;
+};
+
+export const updatePasswordAPI = async (updatedInfo) => {
+  const { data } = await axios({
+    method: "POST",
+    url: `https://nftdepot-api.azurewebsites.net/update_password`,
+    data: JSON.stringify(updatedInfo),
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": `${window.location.origin}/`,
+      "Access-Control-Allow-Headers":
+        "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization",
+    },
+  });
   return data;
 };

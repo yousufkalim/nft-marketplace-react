@@ -1,18 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Form, Input, Switch } from "antd";
+import { updatePasswordAPI } from "../../../services/userServices";
+import Spin from "../../../components/presentational/Spin";
+import { openNotification } from "../../../components/Smart/Notification";
 
 const Security = () => {
+  const [loading, setLoading] = useState(false);
+  const onFinish = async (values) => {
+    setLoading(true);
+    const updatedData = {
+      old_password: values?.old_password,
+      new_password: values?.new_password,
+      confirm_password: values?.confirm_password,
+    };
+
+    try {
+      const res = await updatePasswordAPI(updatedData);
+      setLoading(false);
+      openNotification("Success", "Password Updated Successfully");
+    } catch (e) {
+      setLoading(false);
+      openNotification("Oops", e?.response?.data?.message);
+    }
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+
   return (
     <div>
-      <Form name="basic" layout="horizontal">
+      <Form
+        name="basic"
+        layout="horizontal"
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+      >
         <div className="tabform_part_1">
           <div className="_field_out">
             <div className="fields_input_data">
               <Form.Item
-                name="curr_passowrd"
+                name="old_password"
                 label="Current Password"
-                // labelCol={{span:24}}
-                // wrapperCol={{span:24}}
                 rules={[
                   {
                     required: true,
@@ -27,10 +56,8 @@ const Security = () => {
           <div className="_field_out">
             <div className="fields_input_data">
               <Form.Item
-                name="new_passowrd"
+                name="new_password"
                 label="New Password"
-                // labelCol={{span:24}}
-                // wrapperCol={{span:24}}
                 rules={[
                   {
                     required: true,
@@ -45,45 +72,35 @@ const Security = () => {
           <div className="_field_out">
             <div className="fields_input_data">
               <Form.Item
-                name="confirm_passowrd"
+                name="confirm_password"
                 label="Confirm Password"
-                // labelCol={{span:24}}
-                // wrapperCol={{span:24}}
                 rules={[
                   {
                     required: true,
                     message: "Please confirm new password!",
                   },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue("new_password") === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(
+                        new Error(
+                          "The two passwords that you entered do not match!"
+                        )
+                      );
+                    },
+                  }),
                 ]}
               >
                 <Input.Password placeholder="" />
               </Form.Item>
             </div>
           </div>
-          <div className="_field_out">
-            <div className="fields_input_data">
-              <Form.Item
-                name="phone_number"
-                label="Phone number"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your phone number!",
-                  },
-                ]}
-              >
-                <Input
-                  style={{
-                    width: "100%",
-                  }}
-                />
-              </Form.Item>
-            </div>
-          </div>
           <span className="nextButton">
             <Form.Item>
               <Button type="primary" htmlType="submit">
-                {"Save changes"}
+                {loading ? <Spin /> : "Save changes"}
               </Button>
             </Form.Item>
           </span>

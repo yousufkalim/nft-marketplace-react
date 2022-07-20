@@ -13,4 +13,15 @@
       }
     }
   }
+  .profileImageWrapper {
+    width: 100%;
+    height: 170px;
+    border: 1px dashed #C4C4C4;
+    img {
+      width: inherit;
+      height: inherit;
+      object-fit: contain;
+    }
+  }
+  
 }

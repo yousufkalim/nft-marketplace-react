@@ -1,39 +1,71 @@
-import { Button, Form, Input, Switch } from "antd";
+import { Button, Form, Input } from "antd";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DropZone from "../../../components/Smart/DropZone/DropZone";
 import { openNotification } from "../../../components/Smart/Notification";
+import { uploadAPI } from "../../../services/createCollectionServices";
 import { updateProfileAPI } from "../../../services/userServices";
+import Spin from "../../../components/presentational/Spin";
 import "./Account.scss";
+import { setProfile } from "../../../store/auth/authActions";
 
 const Account = () => {
   const user = useSelector((state) => state?.auth?.user);
   const [loading, setLoading] = useState(false);
-
-  const [profileImage, setProfileImage] = useState(
-    user?.image_profile_location
-  );
+  const [profileImage, setProfileImage] = useState(null);
+  const dispatch=useDispatch()
 
   const onFinish = async (values) => {
     setLoading(true);
+    let profileImageLocation = null;
+    if (profileImage?.length) {
+      profileImageLocation = await uploadAPI(profileImage[0]);
+    }
     const updatedData = {
-      ...user,
-      first_name: values?.first_name ?? user?.first_name,
-      last_name: values?.last_name ?? user?.last_name,
-      username: values?.valuesname ?? user?.username,
-      email: values?.email ?? user?.email,
-      address1: values?.address1 ?? user?.address1,
-      address2: values?.address2 ?? user?.address2,
-      country: values?.country ?? user?.country,
-      phone1: values?.phone1 ?? user?.phone1,
-      company: values?.company ?? user?.company,
+      answer1: user?.answer1 ?? "",
+      answer2: user?.answer2 ?? "",
+      answer3: user?.answer3 ?? "",
+      answer4: user?.answer4 ?? "",
+      city: user?.city ?? "",
+      guid: user?.guid ?? "",
+      irs1099: user?.irs1099 ?? "",
+      notification_auction_expired: user?.notification_auction_expired ?? "",
+      notification_bid_activity: user?.notification_bid_activity ?? "",
+      notification_bid_minimum_met_amount:
+        user?.notification_bid_minimum_met_amount ?? "",
+      notification_bid_minimum_met_coin_type:
+        user?.notification_bid_minimum_met_coin_type ?? "",
+      notification_item_sold: user?.notification_item_sold ?? "",
+      notification_marketing: user?.notification_marketing ?? 0,
+      notification_out_bid: user?.notification_out_bid ?? "",
+      notification_owned_item_updated:
+        user?.notification_owned_item_updated ?? "",
+      notification_price_change: user?.notification_price_change ?? "",
+      notification_purchase_successful:
+        user?.notification_purchase_successful ?? "",
+      phone2: user?.phone2 ?? "",
+      postal_code: user?.postal_code ?? "",
+      provence: user?.provence ?? "",
+      show_explicit: user?.show_explicit ?? "",
+      state: user?.state ?? "",
+      image_profile_location: profileImageLocation?.body?.url ?? user?.image_profile_location,
+      first_name:
+        values?.first_name === "" ? user?.first_name : values?.first_name,
+      last_name: values?.last_name === "" ? user?.last_name : values?.last_name,
+      address1: values?.address1 === "" ? user?.address1 : values?.address1,
+      address2: values?.address2 === "" ? user?.address2 : values?.address2,
+      country: values?.country === "" ? user?.country : values?.country,
+      phone1: values?.phone1 === "" ? user?.phone1 : values?.phone1,
+      company: values?.company === "" ? user?.company : values?.company,
     };
 
     try {
       const res = await updateProfileAPI(updatedData);
       setLoading(false);
-      openNotification("Success",'Data Updated Successfully')
+      dispatch(setProfile({...user,updatedData}));
+      openNotification("Success", "Data Updated Successfully");
     } catch (e) {
+      setLoading(false);
       openNotification("Oops", e?.response?.data?.message);
     }
   };
@@ -45,11 +77,12 @@ const Account = () => {
     <div className="accSettingWrapper">
       <div className="dropZoneWrapper">
         <div className="dropZoneSection">
-          <DropZone
-            selectedImage={profileImage}
-            setSelectedImage={setProfileImage}
-            imageType="profile"
-          />
+            <DropZone
+              selectedImage={profileImage}
+              setSelectedImage={setProfileImage}
+              imageType="profile"
+              imgSrc={user?.image_profile_location}
+            />
         </div>
       </div>
       <Form
@@ -151,7 +184,7 @@ const Account = () => {
           <span className="nextButton">
             <Form.Item>
               <Button type="primary" htmlType="submit">
-                {"Save changes"}
+                {loading ? <Spin /> : "Save changes"}
               </Button>
             </Form.Item>
           </span>

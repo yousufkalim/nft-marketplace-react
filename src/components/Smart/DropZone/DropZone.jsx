@@ -63,6 +63,19 @@ const DropZone = ({
   }, [acceptedFiles]);
   return (
     <section className="dropzone-style">
+      {/* {selectedImage && (
+        <>
+          <div
+            className={imageType == "profile" ? "" : "blurBg"}
+            style={
+              imageType == "profile"
+                ? {}
+                : { backgroundImage: `url(${selectedImage})` }
+            }
+          />
+          <img src={selectedImage} alt={"not found"} />
+        </>
+      )} */}
       {selectedImage && selectedImage.length ? (
         <div className="UploadedImg">
           {isUploading ? (

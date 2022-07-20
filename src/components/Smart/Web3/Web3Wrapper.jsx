@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Tooltip } from "antd";
+import { Button, Popover } from "antd";
 import { useDispatch } from "react-redux";
 
 import { networkParams } from "./networks";
@@ -32,7 +32,6 @@ const Web3Connector = ({}) => {
   const [verified, setVerified] = useState();
 
   const dispatch = useDispatch();
-
 
   const connectWallet = async () => {
     try {
@@ -123,7 +122,6 @@ const Web3Connector = ({}) => {
     await web3Modal.clearCachedProvider();
     refreshState();
     dispatch(walletConnectionFailure(null));
-
   };
 
   useEffect(() => {
@@ -168,16 +166,25 @@ const Web3Connector = ({}) => {
   return (
     <div style={{ color: "white" }}>
       {!account ? (
-        <Button onClick={connectWallet} type={"primary"}>
+        <Button
+          onClick={connectWallet}
+          type={"primary"}
+          className="connectButton"
+        >
           Connect Wallet
         </Button>
       ) : (
-        <Tooltip label={account} placement="right">
-          <span>{`Connected: ${truncateAddress(account)}`}</span>
-          <Button onClick={disconnect} type={"dashed"}>
-            Disconnect
-          </Button>
-        </Tooltip>
+        <Popover
+          placement="bottomRight"
+          content={
+              <Button onClick={disconnect} type={"dashed"}>
+                Disconnect
+              </Button>
+          }
+          trigger="click"
+        >
+          <div className="walletBtn">Connected: {truncateAddress(account)}</div>
+        </Popover>
       )}
       {/* <div>
         <span>{error ? error.message : null}</span>

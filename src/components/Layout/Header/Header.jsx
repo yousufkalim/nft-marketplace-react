@@ -89,10 +89,11 @@ const AppHeader = () => {
           <Link to={"/createCollection"}>
             <h3>Create</h3>
           </Link>
-         
         </div>
         <div className="icons">
-          <Web3Connector />
+          <div className="connectButton">
+            <Web3Connector />
+          </div>
 
           {browserWidth < 620 && (
             <span
@@ -161,6 +162,9 @@ const AppHeader = () => {
         visible={visible}
         key={"right"}
       >
+        <div className="mobileConnectButton">
+          <Web3Connector/>
+        </div>
         <Link to={"/explore"}>
           <h2 onClick={onClose}>Explore</h2>
         </Link>

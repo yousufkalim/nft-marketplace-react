@@ -54,6 +54,11 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
+      .connectButton{
+        @include mobile{
+          display: none;
+        }
+      }
       .headerIcons {
         width: 36px;
         height: 36px;
@@ -88,6 +93,17 @@
           display: none;
         }
       }
+    }
+  }
+}
+.mobileConnectButton{
+  width: 100%;
+  border-radius: 10px !important;
+  box-shadow: 0px 4px 16px -7px rgba(83, 82, 237, 0.57);
+  margin-bottom: 12px;
+  .ant-btn-primary {
+    @include mobile {
+      width: 100%;
     }
   }
 }
