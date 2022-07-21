@@ -7,16 +7,17 @@ import { SignUpAPI, VerifyEmailAPI } from "../../services/authServices";
 import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import "./SignUp.scss";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openNotification } from "../../components/Smart/Notification";
 import Spin from "../../components/presentational/Spin";
 import useWindowSize from "../../helpers/hooks";
+import { registerEmail } from "../../store/auth/authActions";
 
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [isAgree, setIsAgree] = useState(false);
   const [newsTeller, setNewsTeller] = useState(false);
-
+  const dispatch=useDispatch()
   const wallet_id = useSelector(state=>state?.web3?.wallet);
 
   const history = useHistory();
@@ -35,12 +36,13 @@ const SignUp = () => {
           password: values.password,
           confirm_password: values.confirmPassword,
           wallet_id:wallet_id,
-          // newsTeller:values.newsTeller
+          notification_marketing:newsTeller
         };
         const res = await SignUpAPI(data);
         setLoading(false);
-        openNotification("SignUp Successfully", "You can login now");
-        history.push("/auth/login");
+        openNotification("SignUp Successfully", "");
+        dispatch(registerEmail(values.email))
+        history.push("/auth/emailVerification");
       } catch (error) {
         setLoading(false);
         openNotification("Oops", error?.response?.data?.message);

@@ -9,6 +9,7 @@ export const SignUpAPI = async (userInfo) => {
     confirm_password: userInfo.confirm_password,
     wallet_id: userInfo.wallet_id,
     email: userInfo.email,
+    notification_marketing:userInfo.notification_marketing
   };
   return await axios.post(
     `https://nftdepot-api.azurewebsites.net/signup`,
@@ -36,6 +37,24 @@ export const ForgotPasswordAPI = async (userInfo) => {
   return await axios.post(
     `https://nftdepot-api.azurewebsites.net/reset_password_request`,
     body,
+    apiConfig
+  );
+};
+
+export const VerifyUserEmailAPI = async (token) => {
+  const body = {
+    token: token,
+  };
+  return await axios.post(
+    `https://nftdepot-api.azurewebsites.net/verify_email/`,
+    body,
+    apiConfig
+  );
+};
+
+export const ResendUserEmailAPI = async (email) => {
+  return await axios.post(
+    `https://nftdepot-api.azurewebsites.net/resend_verification_email/?email=${email}`,
     apiConfig
   );
 };

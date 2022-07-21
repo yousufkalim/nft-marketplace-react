@@ -122,11 +122,26 @@ const Login = () => {
                     {loading ? <Spin /> : "Login"}
                   </Button>
                 </Form.Item>
+                <div>
                 <Form.Item>
                   <Link to={"/auth/forgotPassword"}>
                     <span className="toLoginText">Forgot password?</span>
                   </Link>
                 </Form.Item>
+                <Form.Item>
+                    <Link to={"/auth/login"}>
+                      <span className="toLoginText">
+                        Account Not Verified Yet?. Click
+                        <span style={{margin:'0px 4px'}}>
+                        <Link to="/auth/resendEmail" >
+                        here
+                        </Link>
+                        </span>
+                        for Verification
+                      </span>
+                    </Link>
+                  </Form.Item>
+                </div>
               </Form>
             </div>
             <div className="orText">

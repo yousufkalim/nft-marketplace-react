@@ -3,7 +3,8 @@ import {
   AUTH_FAILURE,
   SET_PROFILE,
   REMOVE_PROFILE,
-  REMEMBER_PROFILE
+  REMEMBER_PROFILE,
+  REGISTER_EMAIL
 } from "./authActionTypes";
 
 export const LoginSuccess = () => {
@@ -34,6 +35,14 @@ export const setProfile = (data) => {
     payload: data,
   };
 };
+
+export const registerEmail = (data) => {
+  return {
+    type: REGISTER_EMAIL,
+    payload: data,
+  };
+};
+
 export const removeProfile = () => {
   return {
     type: REMOVE_PROFILE,

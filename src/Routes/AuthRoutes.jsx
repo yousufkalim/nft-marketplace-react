@@ -8,6 +8,9 @@ import ForgotPassword from "../pages/AuthPages/ForgotPassword";
 import { Layout } from "antd";
 import "../components/Layout/Layout.scss";
 import ResetPassword from "../pages/AuthPages/ResetPassword";
+import VerificationEmail from "../pages/AuthPages/VerificationEmail";
+import VerifiedEmail from "../pages/AuthPages/VerifiedEmail";
+import ResendEmail from "../pages/AuthPages/ResendEmail";
 const { Header, Footer, Content } = Layout;
 
 const AuthRoutes = () => {
@@ -26,6 +29,21 @@ const AuthRoutes = () => {
               path="/auth/forgotPassword"
               exact
               component={ForgotPassword}
+            />
+             <Route
+              path="/auth/emailVerification"
+              exact
+              component={VerificationEmail}
+            />
+            <Route
+              path="/auth/verify-email"
+              exact
+              component={VerifiedEmail}
+            />
+            <Route
+              path="/auth/resendEmail"
+              exact
+              component={ResendEmail}
             />
             <Redirect from="/auth" to="/auth/login" />
           </Switch>

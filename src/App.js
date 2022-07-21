@@ -15,6 +15,7 @@ import {
 import 'antd/dist/antd.min.css';
 import "./App.scss";
 import TermsAndCondition from "./pages/AuthPages/TermsAndCondition";
+import HomePage from "./pages/HomePage";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);

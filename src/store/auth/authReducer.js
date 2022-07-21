@@ -4,6 +4,7 @@ import {
   SET_PROFILE,
   REMOVE_PROFILE,
   REMEMBER_PROFILE,
+  REGISTER_EMAIL
 } from "./authActionTypes";
 
 const initialState = {
@@ -11,6 +12,7 @@ const initialState = {
   user: {},
   users: [],
   isRemember: false,
+  registerEmail:''
 };
 
 const authReducer = (state = initialState, action) => {
@@ -23,6 +25,8 @@ const authReducer = (state = initialState, action) => {
       return { ...state, isAuthenticated: false };
     case SET_PROFILE:
       return { ...state, user: action.payload };
+    case REGISTER_EMAIL:
+      return { ...state, registerEmail: action.payload };
     case REMOVE_PROFILE:
       return { ...state, user: {} };
     case REMEMBER_PROFILE:

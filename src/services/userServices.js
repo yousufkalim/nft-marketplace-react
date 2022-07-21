@@ -8,6 +8,7 @@ export const ChangePasswordAPI = async (userInfo) => {
     new_password: userInfo?.new_password,
     confirm_password: userInfo?.confirm_password,
   };
+  console.log("body",body)
   return await axios.post(
     `https://nftdepot-api.azurewebsites.net/reset_password`,
     body,

@@ -10,10 +10,17 @@ import { ChangePasswordAPI } from "../../services/userServices";
 import "./ResetPassword.scss";
 import useWindowSize from "../../helpers/hooks";
 import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import queryString from 'query-string'
 
 const ResetPassword = ({ match }) => {
   const [loading, setLoading] = useState(false);
   const history=useHistory();
+
+  const {search}=useLocation()
+
+  const {token}=queryString.parse(search)
+
   const onFinish = async (values) => {
     setLoading(true);
     try {
@@ -21,9 +28,10 @@ const ResetPassword = ({ match }) => {
         email: values?.email,
         new_password: values?.password,
         confirm_password: values?.confirmPassword,
-        token: match?.params?.token,
+        token: token,
       };
       const  data  = await ChangePasswordAPI(userData);
+      openNotification("Success","Password Updated Successfully")
       history.push('/auth/login')
       setLoading(false);
       

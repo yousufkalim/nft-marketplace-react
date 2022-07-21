@@ -10,7 +10,7 @@ import { AutoComplete, Drawer, Tooltip, Dropdown, Menu, Button } from "antd";
 import { searchApi } from "../../../services/searchServices";
 import useWindowSize from "../../../helpers/hooks";
 import "./Header.scss";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Logout } from "../../../store/auth/authActions";
 import { useHistory } from "react-router-dom";
 import { Web3Connector } from "../../Smart/Web3/Web3Wrapper";
@@ -22,7 +22,7 @@ const AppHeader = () => {
   const [browserWidth] = useWindowSize();
   const [visible, setVisible] = useState(false);
   const history = useHistory();
-  const isLoggedIn = localStorage.getItem("token");
+  const isAuthenticated=useSelector(state=>state?.auth?.isAuthenticated)
   const dispatch = useDispatch();
 
   const handleSearch = async (value) => {
@@ -40,7 +40,7 @@ const AppHeader = () => {
     setVisible(false);
   };
 
-  const menu = isLoggedIn ? (
+  const menu = isAuthenticated ? (
     <Menu
       items={[
         {
@@ -84,8 +84,6 @@ const AppHeader = () => {
           <a href="/explore" target={"_self"}>
             <h3>Explore</h3>
           </a>
-          {/* <h3>Stats</h3> */}
-          {/* <h3>Resource</h3> */}
           <Link to={"/createCollection"}>
             <h3>Create</h3>
           </Link>
@@ -132,7 +130,7 @@ const AppHeader = () => {
               </AutoComplete>
             }
           >
-            {isLoggedIn && (
+            {isAuthenticated && (
               <span className="headerIcons">
                 <img src={SEARCH_ICON} alt={"SEARCH_ICON"} />
               </span>
