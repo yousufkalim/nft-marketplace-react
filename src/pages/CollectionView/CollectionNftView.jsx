@@ -8,6 +8,8 @@ import { getCollectionNft } from "../../services/collectionServices";
 import FeaturedCard from "../../components/presentational/FeaturedCard/FeaturedCard";
 import FeaturedLoadingCard from "../../components/presentational/FeaturedLoadingCard/FeaturedLoadingCard";
 import Spin from "../../components/presentational/Spin";
+import CollectionNftCard from "../../components/presentational/CollectionNftCard/CollectionNftCard";
+import LoadingCard from "../../components/presentational/LoadingCard/LoadingCard";
 
 const CollectionNftView = ({
   collectionid,
@@ -95,10 +97,10 @@ const CollectionNftView = ({
                     return (
                       <Col
                         className="gutter-row"
-                        span={browserWidth < 620 ? 24 : 12}
+                        span={browserWidth < 620 ? 24 : 8}
                         key={index}
                       >
-                        <FeaturedLoadingCard isNft={true} />
+                        <LoadingCard />
                       </Col>
                     );
                   })}
@@ -119,10 +121,10 @@ const CollectionNftView = ({
                     return (
                       <Col
                         className="gutter-row"
-                        span={browserWidth < 620 ? 24 : 12}
+                        span={browserWidth < 620 ? 24 : 8}
                         key={index}
                       >
-                        <FeaturedCard isNft={true} data={item} />
+                        <CollectionNftCard data={item} />
                       </Col>
                     );
                   })}
