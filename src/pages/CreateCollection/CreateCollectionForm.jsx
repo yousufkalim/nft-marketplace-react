@@ -142,7 +142,7 @@ const CreateCollectionForm = () => {
               storename: formData?.store_name ?? "",
               instagramLink: formData?.url_instagram ?? "",
               shortDescription: formData?.description_short ?? "",
-              longDescription: formData?.description_long ?? "",
+              longDescription: formData?.description_long ?? "description long",
               personalLink: formData?.url_personal ?? storename,
               mediumLink: formData?.url_medium ?? "",
               category:formData?.category_code ?? "",

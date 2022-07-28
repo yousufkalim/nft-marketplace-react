@@ -13,7 +13,7 @@ import ExploreCard from "../../../components/presentational/ExploreCard/ExploreC
 import LoadingCard from "../../../components/presentational/LoadingCard/LoadingCard";
 import Spin from "../../../components/presentational/Spin";
 
-const MyCollections = ({ setMyCollectionItemsCount }) => {
+const MyCollections = () => {
   const arr = [0, 1, 2];
   const [browserWidth] = useWindowSize();
   const [loading,setLoading]=useState(false)
@@ -32,11 +32,6 @@ const MyCollections = ({ setMyCollectionItemsCount }) => {
         next_page: res?.body?.next_page,
         has_more: res?.body?.has_more,
       });
-      if (collections?.length > 0) {
-        setMyCollectionItemsCount(collections?.length);
-      } else {
-        setMyCollectionItemsCount(res?.body?.data?.length);
-      }
       }
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);

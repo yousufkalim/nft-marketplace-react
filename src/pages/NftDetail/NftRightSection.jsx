@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import DISCORD_ICON from "../../images/discord_icon.svg";
 import M_ICON from "../../images/M_icon.svg";
 import TWITTER_ICON from "../../images/twitter_icon.svg";
@@ -6,12 +6,50 @@ import WHITE_FRAME_ICON from "../../images/white_frame_icon.svg";
 import SHARE_ICON from "../../images/share.svg";
 import PRICE_ICON from "../../images/price_icon.svg";
 import LIKE_ICON from "../../images/like_icon.svg";
+import LIKED_ICON from "../../images/liked_icon.svg";
+
 
 import { Tooltip } from "antd";
-
 import "./NftRightSection.scss";
+import { likeNfts, unLikeNfts } from "../../services/collectionServices";
+import { openNotification } from "../../components/Smart/Notification";
 
 const NftRightSection = ({nftData}) => {
+
+  const [isLiked,setIsLiked]=useState(nftData?.is_liked)
+
+  const likeNft = async () => {
+    try {
+      const res = await likeNfts(nftData?.guid);
+      setIsLiked(true);
+      if (res?.body?.like == "1" || res?.body?.like == true) {
+        // openNotification("Success", "Liked Successfully");
+      }
+    } catch (error) {
+      openNotification("Oops", error?.response?.data?.message);
+    }
+  };
+  const unLikeNft = async () => {
+    try {
+      const res = await unLikeNfts(nftData?.guid);
+      setIsLiked(false);
+    } catch (error) {
+      openNotification("Oops", error?.response?.data?.message);
+    }
+  };
+
+    const textAreaRef = useRef(null)
+
+    async function copyToClip() {
+      try{
+        await navigator.clipboard.writeText(location.href);
+        openNotification("Link Copied Successfully")
+      }
+      catch(error){
+        console.log("error",error);
+      }
+    }
+
   return (
     <div className="NftrightSectionWrapper">
       <div className="RightHeader">
@@ -21,7 +59,7 @@ const NftRightSection = ({nftData}) => {
                 <span className="icon" >78.62  <img src={PRICE_ICON} alt={'PRICE_ICON'} /></span>
             </div>
           <div className="socialIcons">
-            <span className="socialIconImage">
+            {/* <span className="socialIconImage">
               <img src={DISCORD_ICON} alt={"DISCORD_ICON"} />
             </span>
             <span className="socialIconImage">
@@ -29,17 +67,17 @@ const NftRightSection = ({nftData}) => {
             </span>
             <span className="socialIconImage">
               <img src={TWITTER_ICON} alt={"TWITTER_ICON"} />
-            </span>
-            <span className="socialIconImage changebg">
+            </span> */}
+            <span className="socialIconImage changebg" onClick={copyToClip}>
               <img src={SHARE_ICON} alt={"SHARE_ICON"} />
             </span>
             <Tooltip
-              title="Like"
+              title={isLiked ? "UnLike" : "Like"}
               color={"#303549"}
               overlayClassName="favouriteToolTip"
             >
-              <span className="socialIconImage changebgColor ">
-                <img src={LIKE_ICON} alt={"LIKE_ICON"} />
+              <span className="socialIconImage changebgColor " onClick={isLiked ? unLikeNft : likeNft }>
+                <img src={isLiked ? LIKED_ICON : LIKE_ICON} alt={"LIKE_ICON"} />
               </span>
             </Tooltip>
           </div>

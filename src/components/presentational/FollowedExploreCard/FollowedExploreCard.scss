@@ -1,7 +1,7 @@
 @import "../../../styles/variables";
 @import "../../../styles/mixins";
 
-.ExploreCard {
+.FollowedExploreCard {
   .ant-card {
     width: 100%;
     height: auto;
@@ -142,7 +142,16 @@
   .idSection{
     color: $GrayColor;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 14px;
     margin-top: 12px;
+  }
+  .createdBy{
+    margin-top: 8px;
+    font-size: 12px;
+    float: right;
+    .textStyle{
+      font-weight: bold;
+      text-decoration: underline;
+    }
   }
 }

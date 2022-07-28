@@ -117,9 +117,6 @@ const Settings = () => {
       <div className="back_profile_btn main_page_width">
         <div className="flex_hr_ap padding_add">
           <div className="back_btn_pr_wrapper">
-            <div className="back_btn_pr">
-              <span class="chevron_icon_btn left_cev"></span>
-            </div>
             <div className="back_txt_pr">
               <span>Settings</span>
             </div>
@@ -168,7 +165,7 @@ const Settings = () => {
                 )}`}
               >
                 <div className="fields_inner">
-                    <Account/>
+                  <Account />
                 </div>
               </div>
 
@@ -180,7 +177,7 @@ const Settings = () => {
               >
                 <div className="_space_inner_de">
                   <div className="fields_inner">
-                    <Security/>
+                    <Security />
                   </div>
                 </div>
               </div>
@@ -191,7 +188,7 @@ const Settings = () => {
                 )}`}
               >
                 <div className="fields_inner">
-                  <Notification/>
+                  <Notification />
                 </div>
               </div>
             </div>

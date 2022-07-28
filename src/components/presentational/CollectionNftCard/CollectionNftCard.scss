@@ -21,6 +21,9 @@
             margin-top: 10px;
       }
     }
+    .ant-card-body{
+      padding: 16px 24px;
+    }
     .ant-card-meta-description {
       font-family: "Rubik";
       font-style: normal;
@@ -28,13 +31,26 @@
       font-size: 18px;
       line-height: 24px;
       color: $CreateBtnBg;
+      margin-top: 12px;
     }
   }
   .idSection{
     color: $GrayColor;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 16px;
+  }
+  .dflex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-top: 12px;
+  }
+  .createdBy{
+    font-size: 12px;
+    margin-top: 8px;
+  }
+  .textStyle{
+    text-decoration: underline;
   }
   .exploreCardFooter {
     border-top: 1px dashed rgba(48, 53, 73, 0.25);
@@ -78,6 +94,9 @@
       font-weight: 400;
       font-size: 18px;
       line-height: 21px;
+      color: #000;
+    }
+    .grayColor{
       color: $GrayColor;
     }
     .priceText {

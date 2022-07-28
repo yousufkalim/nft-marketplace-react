@@ -219,7 +219,7 @@ const CollectionView = ({ match }) => {
                 </div>
                 <div className="filterDropdown">
                   <Select
-                    placeholder="Minting Coin"
+                    placeholder="Filter Data"
                     allowClear
                     onChange={handleChange}
                   >

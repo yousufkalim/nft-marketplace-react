@@ -29,7 +29,6 @@ export const myCollectionsAPI = async (pageNumber) => {
   const resKey = await res.json();
   return resKey;
 };
-
 export const myCollectedNfts = async (pageNumber) => {
   return await axios.get(
     `https://nftdepot-api.azurewebsites.net/nfts/21/collected/${pageNumber}`,
@@ -37,9 +36,30 @@ export const myCollectedNfts = async (pageNumber) => {
   );
 };
 
+export const userDetailAPI = async (username) => {
+  return await axios.get(
+    `https://nftdepot-api.azurewebsites.net/user/${username}`,
+    apiConfig
+  );
+};
+
 export const myFollowingCollectionsAPI = async (pageNumber) => {
   const res = await fetch(
     `https://nftdepot-api.azurewebsites.net/collections/following/${pageNumber}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
+  );
+  const resKey = await res.json();
+  return resKey;
+};
+
+export const userStatsAPI = async () => {
+  const res = await fetch(
+    `https://nftdepot-api.azurewebsites.net/get_user_stats`,
     {
       method: "GET",
       headers: {
