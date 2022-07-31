@@ -121,9 +121,9 @@ const CreateCollectionUploadImage = () => {
         <div className="dropZoneHeader">
           <div className="step2Header">
             <span className="step2">Step 2</span>
-            <span className="desc">Upload Media</span>
+            <span className="desc">Select Layout Style</span>
             <span className="desc2">
-              Accepted file formats: JPG, JPEG,PNG,GIF
+            Select a layout style that best fits you NFT’s image ratio.
             </span>
           </div>
           <div>
@@ -141,6 +141,7 @@ const CreateCollectionUploadImage = () => {
             </Select>
           </div>
           <div className="uploadForm">
+          <label className="cardLabel">Accepted file formats for images are: JPG, JPEG,PNG and GIF</label>
             <div className="collectionImages">
               <div className="dflex">
                 {" "}

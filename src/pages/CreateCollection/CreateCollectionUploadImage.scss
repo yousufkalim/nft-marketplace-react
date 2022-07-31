@@ -163,6 +163,20 @@
     }
     .uploadForm {
       margin-bottom: 30px;
+      .cardLabel{
+        display: block;
+        width: 80%;
+        margin: 2rem auto;
+        font-family: "Rubik";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 21px;
+        color: $FadeGrayColor;
+        @include mobile{
+          width: 100%;
+        }
+      }
       .collectionImages {
         display: flex;
         justify-content: space-between;
@@ -227,6 +241,9 @@
         width: 100%;
         aspect-ratio: 7/2;
         margin-bottom: 5rem;
+        @include mobile{
+          margin-top: 4rem;
+        }
         .dropzone-style {
           height: 100%;
         }
