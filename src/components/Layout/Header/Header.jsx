@@ -22,7 +22,7 @@ const AppHeader = () => {
   const [browserWidth] = useWindowSize();
   const [visible, setVisible] = useState(false);
   const history = useHistory();
-  const isAuthenticated=useSelector(state=>state?.auth?.isAuthenticated)
+  const isAuthenticated = useSelector((state) => state?.auth?.isAuthenticated);
   const dispatch = useDispatch();
 
   const handleSearch = async (value) => {
@@ -161,7 +161,7 @@ const AppHeader = () => {
         key={"right"}
       >
         <div className="mobileConnectButton">
-          <Web3Connector/>
+          <Web3Connector />
         </div>
         <Link to={"/explore"}>
           <h2 onClick={onClose}>Explore</h2>
