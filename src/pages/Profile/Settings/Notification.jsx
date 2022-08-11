@@ -65,7 +65,7 @@ const Notification = () => {
                 />
               </Form.Item>
               <p className="get_promo_subs">
-                Get latest news and learn new opportunities
+              I would like to receive marketing, blog and special offer emails from NFTDepot.Art
               </p>
             </div>
             <span className="nextButton">

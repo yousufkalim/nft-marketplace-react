@@ -31,7 +31,8 @@ const FeatureMobileCard = ({ data, showFollowIcon = true }) => {
               className="footer"
               style={{
                 background: `url(${data?.image_small_location}) no-repeat`,
-                backgroundSize: "contain",
+                backgroundSize: "cover",
+                backgroundPosition: "center center",
               }}
             ></span>
           </span>

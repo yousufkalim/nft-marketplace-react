@@ -15,6 +15,14 @@
       line-height: 28px;
       text-transform: capitalize;
       color: $CreateBtnBg;
+      @media screen and (max-width:1100px) {
+        font-size: 20px;
+        line-height: 22px;
+            margin-top: 10px;
+      }
+    }
+    .ant-card-body{
+      padding: 16px 24px;
     }
     .ant-card-meta-description {
       font-family: "Rubik";
@@ -23,7 +31,26 @@
       font-size: 18px;
       line-height: 24px;
       color: $CreateBtnBg;
+      margin-top: 12px;
     }
+  }
+  .idSection{
+    color: $GrayColor;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  .dflex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+  }
+  .createdBy{
+    font-size: 12px;
+    margin-top: 8px;
+  }
+  .textStyle{
+    text-decoration: underline;
   }
   .exploreCardFooter {
     border-top: 1px dashed rgba(48, 53, 73, 0.25);
@@ -32,10 +59,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    @media screen and (max-width:1100px) {
+      padding-top: 24px;
+    }
     .rightSection {
       display: flex;
       justify-content: space-around;
-      align-items: center;
+      align-items: flex-start;
       .beliefPrice {
         margin-left: 13px;
         font-family: "Rubik";
@@ -46,7 +76,7 @@
         color: $CreateBtnBg;
       }
       .tagImage {
-        margin-left: 30px;
+        // margin-left: 30px;
       }
       .tagPrice {
         margin-left: 13px;
@@ -64,6 +94,9 @@
       font-weight: 400;
       font-size: 18px;
       line-height: 21px;
+      color: #000;
+    }
+    .grayColor{
       color: $GrayColor;
     }
     .priceText {
@@ -86,6 +119,20 @@
       top: 10px;
       right: 14px;
     }
+    .orangeFrame {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 38px;
+      height: 38px;
+      background-color: $ExploreBtnBg;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      position: absolute;
+      top: 10px;
+      right: 14px;
+    }
     .footer {
       position: absolute;
       bottom: -40px;
@@ -93,7 +140,12 @@
       width: 65px;
       height: 65px;
       border-radius: 50%;
-
+      @media screen and (max-width:1100px) {
+        bottom: -25px;
+        right: 10px;
+        width: 55px;
+        height: 55px;
+      }
     }
     .ExploreCardImage {
       img {
@@ -101,6 +153,9 @@
         height: 303px;
         object-fit: cover;
         border-radius: 10px 10px 0px 0px;
+        @media screen and (max-width:1100px) {
+          height: 210px;
+        }
       }
     }
   }

@@ -10,7 +10,7 @@ import "./Followed.scss";
 import FollowedExploreCard from "../../../components/presentational/FollowedExploreCard/FollowedExploreCard";
 
 
-const Followed = ({ setMyFollowedCount }) => {
+const Followed = ({setRefetchQuery}) => {
   const arr = [0, 1, 2];
   const [browserWidth] = useWindowSize();
   const [extraData, setExtraData] = useState({
@@ -27,20 +27,11 @@ const Followed = ({ setMyFollowedCount }) => {
         next_page: res?.body?.next_page,
         has_more: res?.body?.has_more,
       });
-      // if (collections?.length > 0) {
-      //   setMyFollowedCount(collections?.length);
-      // } else {
-      //   setMyFollowedCount(res?.body?.collections?.length);
-      // }
     } catch (error) {
       // openNotification("Oops", error?.response?.data?.message);
       //   setExploreData([]);
     }
   };
-
-  useEffect(()=>{
-    setMyFollowedCount(collections?.length);
-  },[collections])
 
   useEffect(() => {
     fetchCollections();
@@ -83,7 +74,7 @@ const Followed = ({ setMyFollowedCount }) => {
                   span={browserWidth < 620 ? 24 : 8}
                   key={index}
                 >
-                  <FollowedExploreCard data={item} collections={collections} setCollections={setCollections}/>
+                  <FollowedExploreCard data={item} collections={collections} setCollections={setCollections} setRefetchQuery={setRefetchQuery} />
                 </Col>
               );
             })}

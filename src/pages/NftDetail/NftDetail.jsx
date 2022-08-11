@@ -16,6 +16,7 @@ import { nftDetailsApi } from "../../services/nftServices";
 import CollectionNftView from "../CollectionView/CollectionNftView";
 import Spin from "../../components/presentational/Spin";
 import { openNotification } from "../../components/Smart/Notification";
+import NftDetailSection from "./NftDetailSection";
 
 const NftDetails = ({ match }) => {
   const arr = [1, 2, 3, 4, 5, 6];
@@ -68,7 +69,7 @@ const NftDetails = ({ match }) => {
         {loading ? (
           <Spin />
         ) : (
-          <CollectionNftView
+          <NftDetailSection
             collectionid={nftData?.store_front_guid}
             currentNftId={nftData?.guid}
             setCount={setCount}

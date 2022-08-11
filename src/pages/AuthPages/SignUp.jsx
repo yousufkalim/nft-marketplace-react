@@ -211,7 +211,7 @@ const SignUp = () => {
                     checked={newsTeller}
                     onClick={() => setNewsTeller((prev) => !prev)}
                   >
-                    I want to subscribe to the newsletter and other updates
+                    I would like to receive marketing, blog and special offer emails from NFTDepot.Art.
                   </Radio>
                 </Form.Item>
                 <Form.Item>

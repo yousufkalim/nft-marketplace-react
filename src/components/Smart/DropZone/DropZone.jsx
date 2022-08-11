@@ -38,7 +38,7 @@ const DropZone = ({
       : imageType === "banner"
       ? {
           heading:
-            "This image will display on the top of your Storefront/Collection Page. Recommended dimension 1400 X 400.",
+            "Banner Image",
         }
       : imageType === "zip"
       ? {
@@ -86,8 +86,8 @@ const DropZone = ({
                 className={imageType == "profile" ? "" : "blurBg"}
                 style={
                   imageType == "profile"
-                    ? {}
-                    : { backgroundImage: `url(${selectedImage[0]?.preview})` }
+                    ? {} : {}
+                    // : { backgroundImage: `url(${selectedImage[0]?.preview})` }
                 }
               />
               <img src={selectedImage[0].preview} alt={"not found"} />

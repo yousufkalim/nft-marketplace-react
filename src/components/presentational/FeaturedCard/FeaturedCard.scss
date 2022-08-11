@@ -33,8 +33,17 @@
     .idSection{
       color: $GrayColor;
       font-weight: bold;
-      font-size: 12px;
+      font-size: 14px;
       margin-top: 12px;
+    }
+    .createdBy{
+      margin-top: 8px;
+      font-size: 12px;
+      float: right;
+      .textStyle{
+        font-weight: bold;
+        text-decoration: underline;
+      }
     }
     .coverImageWrapper {
       position: relative;
@@ -108,7 +117,11 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
+        margin-top: 12px;
+
         .avgSection {
+          display: flex;
+          align-items: flex-end;
           .avg {
             padding-left: 4px;
             font-family: "Lato";
@@ -118,9 +131,14 @@
             line-height: 14px;
             color: $CreateBtnBg;
           }
+          img{
+            padding-bottom: 3px;
+          }
         }
         .floorSection {
           margin-left: 12px;
+          display: flex;
+          align-items: flex-end;
           .floor {
             padding-left: 4px;
             font-family: "Lato";
@@ -129,6 +147,9 @@
             font-size: 12px;
             line-height: 14px;
             color: $CreateBtnBg;
+          }
+          img{
+            padding-bottom: 3px;
           }
         }
       }

@@ -1,140 +1,89 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "antd";
-import LIKE_ICON from "../../../images/like_icon.svg";
 import EYE_ICON from "../../../images/eye_icon.svg";
 import ORANGE_FRAME from "../../../images/orange_frame.svg";
+import LIKE_ICON from "../../../images/like_icon.svg";
+import LIKED_ICON from "../../../images/liked_icon.svg";
+
 import { Tooltip } from "antd";
 import { useHistory } from "react-router-dom";
-import { followCollection, getCollectionFollowers, unFollowCollection } from "../../../services/collectionServices";
 import { openNotification } from "../../Smart/Notification";
 import { truncate } from "../../../helpers/utils";
-import { useSelector } from "react-redux";
+import { likeNfts, unLikeNfts } from "../../../services/collectionServices";
 import "./CollectionNftCard.scss";
-
 
 const { Meta } = Card;
 
 const CollectionNftCard = ({ data }) => {
-  const history = useHistory();
-  const [followed,setIsFollowed] = useState(false);
-  const user = useSelector((state) => state?.auth?.user);
-  const [collectionFollowers, setCollectionFollowers] = useState([]);
-  const [extraData, setExtraData] = useState({
-    has_more: true,
-    next_page: 1,
-  });
 
+  const history = useHistory();
+  const [isLiked, setIsLiked] = useState(data?.is_liked);
   const handleClick = () => {
     history.push(`/nftDetail/${data?.guid}`);
   };
-
-  // const followTheCollection = async () => {
-  //   try {
-  //     const res = await followCollection(data?.guid);
-  //     setIsFollowed(res?.body?.followed);
-  //     if(res?.body?.followed)
-  //     {
-  //     openNotification("Success","Followed Successfully");
-  //     }
-
-  //   } catch (error) {
-  //     openNotification("Oops", error?.response?.data?.message);
-  //     return error;
-
-  //   }
-  // };
-  // const unFollowCollections = async () => {
-  //   try {
-  //     const res = await unFollowCollection(data?.guid);
-  //     setIsFollowed(res?.body?.followed);
-  //   } catch (error) {
-  //     openNotification("Oops", error?.response?.data?.message);
-  //   }
-  // };
-
-  // const getcollectionFollowers = async () => {
-  //   try {
-  //     if (extraData?.has_more) {
-  //       const res = await getCollectionFollowers(
-  //         data?.guid,
-  //         extraData?.next_page
-  //       );
-  //       if (res?.data?.body?.followers?.length) {
-  //         setCollectionFollowers([
-  //           ...collectionFollowers,
-  //           ...res?.data?.body?.followers,
-  //         ]);
-  //         setExtraData({
-  //           has_more: res?.data?.body?.has_more,
-  //           next_page: res?.data?.body?.next_page,
-  //         });
-  //       }
-  //       if (res?.data?.body?.has_more) {
-  //         await getcollectionFollowers();
-  //       } else {
-  //         return;
-  //       }
-  //     }
-  //   } catch (error) {
-  //     openNotification("Oops", error?.response?.data?.message);
-  //     return;
-  //   }
-  // };
-
-  // useEffect(async () => {
-  //   await getcollectionFollowers();
-  //   const isUserFollowing = collectionFollowers.find(
-  //     (item) => item.guid === user?.guid
-  //   );
-  //   if (isUserFollowing) {
-  //     setIsFollowed(true);
-  //   }
-  // }, [collectionFollowers]);
-
-
+  const likeNft = async (e) => {
+    e.stopPropagation();
+    try {
+      const res = await likeNfts(data?.guid);
+      setIsLiked(true);
+      if (res?.body?.like == "1" || res?.body?.like == true) {
+        // openNotification("Success", "Liked Successfully");
+      }
+    } catch (error) {
+      openNotification("Oops", error?.response?.data?.message);
+    }
+  };
+  const unLikeNft = async (e) => {
+    e.stopPropagation();
+    try {
+      const res = await unLikeNfts(data?.guid);
+      setIsLiked(false);
+    } catch (error) {
+      openNotification("Oops", error?.response?.data?.message);
+    }
+  };
 
   return (
-    <div className="CollectionNftCard">
+    <div className="CollectionNftCard" onClick={handleClick}>
       <Card
         hoverable
         cover={
           <span className="ExploreCardWrapper">
-            <span className="ExploreCardImage" onClick={handleClick}>
+            <span className="ExploreCardImage">
               <img alt="example" src={data?.nft_data?.image_location} />
             </span>
-            <Tooltip title={followed ? "UnFollow" : "Follow"} color={"#303549"}>
-              <span className="frame" 
-              // onClick={followed ? unFollowCollections : followTheCollection} 
-               >
-                <img src={LIKE_ICON} alt={"LIKE_ICON"} />
-              </span>
-            </Tooltip>
-
-            <span
-              className="footer"
-              style={{
-                background: `url(${data?.image_small_location}) no-repeat`,
-                backgroundSize : "contain"
-              }}
-            ></span>
           </span>
         }
       >
-        <Meta title={data?.store_name} description={truncate(data?.description_short)} />
+        <Meta
+          title={data?.store_name}
+          description={truncate(data?.description_short)}
+        />
         <div className="exploreCardFooter">
-          {/* <span className="priceHeading">Price <span className="priceHeading">$$ ETH</span></span> */}
+          <span className="priceHeading">Coin Type: <span className="priceHeading grayColor">{data?.minting_coin}</span></span>
           <span className="rightSection">
-            <span>
-              <img src={EYE_ICON} alt={"EYE_ICON"} />
-              <span className="beliefPrice">456</span>
-            </span>
             <span className="tagImage">
-              <Tooltip title={"Followers"} color={"#303549"}>
-                <img src={ORANGE_FRAME} alt={"ORANGE_FRAME"}/>
+              <Tooltip title={isLiked ? "Unlike" : "Like"} color={"#303549"}>
+                <span
+                  className={data?.is_followed ? "orangeFrame" : "frame"}
+                  onClick={isLiked ? (e) => unLikeNft(e) : (e) => likeNft(e)}
+                >
+                  <img
+                    src={isLiked ? LIKED_ICON : LIKE_ICON}
+                    alt={"ORANGE_FRAME"}
+                  />
+                </span>
               </Tooltip>
-              <span className="tagPrice">33</span>
+              <span className="tagPrice">{data?.likes}</span>
             </span>
           </span>
+        </div>
+        <div className="dflex">
+        <div className="idSection"># {data?.collection_id ?? data?.guid}</div>
+        <span className="createdBy">
+            <span>Created By: </span>
+            <span className="textStyle">{data?.created_by}</span>
+            </span>
         </div>
       </Card>
     </div>
