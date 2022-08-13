@@ -35,7 +35,6 @@ const CollectionView = ({ match }) => {
   const [searchParam, setSearchParam] = useState("");
   const [filterCodes, setFilterCodes] = useState([]);
   const userData=useSelector(state=>state?.auth?.user);
-  console.log(userData);
   useEffect(() => {
     const getCollectionDetails = async () => {
       try {
@@ -74,7 +73,6 @@ const CollectionView = ({ match }) => {
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
-  console.log(collectionDetails);
 
   const handleDeployNFT = async () => {
     try {

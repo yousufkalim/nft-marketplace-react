@@ -75,6 +75,8 @@ const CollectionNftView = ({
     return true;
   };
 
+  console.log("exploreData",exploreData)
+
   return (
     <>
       <div className="collectionNftViewWrapper main_page_width">

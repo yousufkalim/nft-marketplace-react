@@ -163,6 +163,17 @@
 
   }
 }
+.ant-modal-close-x{
+  font-size: 22px !important;
+}
+.ant-modal-close{
+  color: rgb(138, 147, 155) !important;
+  top:-20px !important;
+  right: -25px !important;
+  @include mobile{
+    top:-50px !important;
+  }
+}
 .ant-modal-body {
   padding: unset !important;
 }

@@ -122,7 +122,7 @@ const CreateCollectionUploadImage = () => {
           <div className="step2Header">
             <span className="step2">Step 2</span>
             <span className="desc">Select Layout Style</span>
-            <span className="desc2">
+            <span className="desc2 changeColor">
             Select a layout style that best fits you NFT’s image ratio.
             </span>
           </div>
