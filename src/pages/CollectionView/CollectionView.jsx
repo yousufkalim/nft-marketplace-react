@@ -27,6 +27,7 @@ import TWITTER from "../../images/twitter_icon.svg";
 import "./CollectionView.scss";
 import { codesAPI } from "../../services/createCollectionServices";
 import { deployNFT } from "../../services/web3Services";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const CollectionView = ({ match }) => {
   const [collectionDetails, setCollectionDetails] = useState([]);
@@ -34,7 +35,8 @@ const CollectionView = ({ match }) => {
   const [count, setCount] = useState(0);
   const [searchParam, setSearchParam] = useState("");
   const [filterCodes, setFilterCodes] = useState([]);
-  const userData=useSelector(state=>state?.auth?.user);
+  const userData = useSelector((state) => state?.auth?.user);
+  const history=useHistory()
   useEffect(() => {
     const getCollectionDetails = async () => {
       try {
@@ -99,6 +101,16 @@ const CollectionView = ({ match }) => {
 
   const [browserWidth] = useWindowSize();
 
+  const handleClick=()=>{
+    if (userData?.guid === collectionDetails?.user_details?.guid) {
+      history.push(`/profile`);
+    } else {
+      history.push(`/creatorDetails/${collectionDetails?.user_details?.guid}`);
+    }
+  }
+
+  console.log("collectionDetails",collectionDetails);
+
   return (
     <>
       {/* <BreadCrumb match={match} /> */}
@@ -145,7 +157,10 @@ const CollectionView = ({ match }) => {
                   </div>
                 </div>
                 <div className="socialIconsSection">
-                  # {collectionDetails?.guid}
+                  <span>Create By:</span>
+                  <span className="value" onClick={handleClick}>
+                  {collectionDetails?.user_details?.username}
+                  </span>
                   {/* <div className="socialIcons">
             <a className="socialIcon" href={collectionDetails?.url_twitter ?? 'https://twitter.com/'} target='_blank'>
               <img src={TWITTER} alt="TWITTER" />
@@ -210,8 +225,11 @@ const CollectionView = ({ match }) => {
               </div>
             </div>
           )}
-          <div className="socialIconsSection main_page_width display_none">
-            # {collectionDetails?.guid}
+          <div className="socialIconsSection main_page_width display_none" >
+            <span>Create By:</span>
+            <span className="value" onClick={handleClick}>
+            {collectionDetails?.user_details?.username}
+            </span>
             {/* <div className="socialIcons">
             <a className="socialIcon" href={collectionDetails?.url_twitter ?? 'https://twitter.com/'} target='_blank'>
               <img src={TWITTER} alt="TWITTER" />
@@ -262,11 +280,13 @@ const CollectionView = ({ match }) => {
                 </div>
               </div>
               <div className="reset">
-                {!collectionDetails?.contract_address && userData && userData?.guid === collectionDetails?.user_details?.guid && (
-                  <Button type="primary" onClick={handleDeployNFT}>
-                    Deploy
-                  </Button>
-                )}
+                {!collectionDetails?.contract_address &&
+                  userData &&
+                  userData?.guid === collectionDetails?.user_details?.guid && (
+                    <Button type="primary" onClick={handleDeployNFT}>
+                      Deploy
+                    </Button>
+                  )}
                 <span>Showing {count} results</span>
               </div>
             </div>

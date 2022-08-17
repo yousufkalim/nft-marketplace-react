@@ -80,8 +80,6 @@ const CollectionNftView = ({
     return true;
   };
 
-  console.log("test", userId,user);
-
   return (
     <>
       <div className="collectionNftViewWrapper main_page_width">

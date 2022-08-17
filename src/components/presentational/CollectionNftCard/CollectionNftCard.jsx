@@ -11,13 +11,16 @@ import { openNotification } from "../../Smart/Notification";
 import { truncate } from "../../../helpers/utils";
 import { likeNfts, unLikeNfts } from "../../../services/collectionServices";
 import "./CollectionNftCard.scss";
+import { useSelector } from "react-redux";
 
 const { Meta } = Card;
 
 const CollectionNftCard = ({ data }) => {
+  console.log("data", data);
 
   const history = useHistory();
   const [isLiked, setIsLiked] = useState(data?.is_liked);
+  const user = useSelector((state) => state.auth.user);
   const handleClick = () => {
     history.push(`/nftDetail/${data?.guid}`);
   };
@@ -43,6 +46,16 @@ const CollectionNftCard = ({ data }) => {
     }
   };
 
+  const handleProfileClick = (e) => {
+    e.stopPropagation();
+
+    if (user?.guid === data?.user_guid) {
+      history.push(`/profile`);
+    } else {
+      history.push(`/creatorDetails/${data?.user_guid}`);
+    }
+  };
+
   return (
     <div className="CollectionNftCard" onClick={handleClick}>
       <Card
@@ -60,7 +73,10 @@ const CollectionNftCard = ({ data }) => {
           description={truncate(data?.description_short)}
         />
         <div className="exploreCardFooter">
-          <span className="priceHeading">Coin Type: <span className="priceHeading grayColor">{data?.minting_coin}</span></span>
+          <span className="priceHeading">
+            Coin Type:{" "}
+            <span className="priceHeading grayColor">{data?.minting_coin}</span>
+          </span>
           <span className="rightSection">
             <span className="tagImage">
               <Tooltip title={isLiked ? "Unlike" : "Like"} color={"#303549"}>
@@ -79,11 +95,13 @@ const CollectionNftCard = ({ data }) => {
           </span>
         </div>
         <div className="dflex">
-        <div className="idSection"># {data?.collection_id ?? data?.guid}</div>
-        <span className="createdBy">
+          <div className="idSection"># {data?.collection_id ?? data?.guid}</div>
+          {/* <span className="createdBy">
             <span>Created By: </span>
-            <span className="textStyle">{data?.created_by}</span>
+            <span className="textStyle" onClick={(e) => handleProfileClick(e)}>
+              {data?.user_name}
             </span>
+          </span> */}
         </div>
       </Card>
     </div>

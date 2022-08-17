@@ -4,6 +4,7 @@ import LineChart from "./LineChart";
 import OffersTable from "./OffersTable";
 
 const DetailSection = ({nftData}) => {
+
   return (
     <div className="detailSection">
       <div className="detailselectedCollection">
