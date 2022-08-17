@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Popover } from "antd";
+import { Button, Popover, Space } from "antd";
 import { useDispatch } from "react-redux";
 
 import { networkParams } from "./networks";
@@ -11,6 +11,7 @@ import {
   walletConnectionSuccess,
   walletConnectionFailure,
 } from "../../../store/web3/web3Actions";
+import { confirm } from "../../Smart/Modal"
 
 import "./Web3Wrapper.scss";
 
@@ -27,12 +28,12 @@ const Web3Connector = ({}) => {
   const [error, setError] = useState("");
   const [chainId, setChainId] = useState();
   const [network, setNetwork] = useState();
-  const [message, setMessage] = useState("");
   const [signedMessage, setSignedMessage] = useState("");
   const [verified, setVerified] = useState();
 
-  const dispatch = useDispatch();
 
+
+  const dispatch = useDispatch();
   const connectWallet = async () => {
     try {
       const provider = await web3Modal.connect();
@@ -44,8 +45,10 @@ const Web3Connector = ({}) => {
       if (accounts) {
         setAccount(accounts[0]);
         dispatch(walletConnectionSuccess(accounts[0]));
+        
       }
       setChainId(network.chainId);
+      // ask
     } catch (error) {
       setError(error);
       dispatch(walletConnectionFailure(null));
@@ -57,10 +60,10 @@ const Web3Connector = ({}) => {
     setNetwork(Number(id));
   };
 
-  const handleInput = (e) => {
-    const msg = e.target.value;
-    setMessage(msg);
-  };
+  // const handleInput = (e) => {
+  //   const msg = e.target.value;
+  //   setMessage(msg);
+  // };
 
   const switchNetwork = async () => {
     try {
@@ -83,7 +86,11 @@ const Web3Connector = ({}) => {
   };
 
   const signMessage = async () => {
+    console.log(account);
     if (!library) return;
+    let message = `Welcome to NFTDepot.Art!
+    Click “Sign” to connect your wallet and accept the NFTDepot.Art Terms of Service:  https://nftdepot.art/tos This request will not trigger a blockchain transaction or cost any gas fees. Your authentication status will reset after 24 hours. Wallet address: ${account}
+    Nonce: <METAMASK GUID>`
     try {
       const signature = await library.provider.request({
         method: "personal_sign",
@@ -91,6 +98,7 @@ const Web3Connector = ({}) => {
       });
       setSignedMessage(message);
       setSignature(signature);
+      window.localStorage.setItem("signature", signature);
     } catch (error) {
       setError(error);
     }
@@ -113,7 +121,7 @@ const Web3Connector = ({}) => {
     setAccount();
     setChainId();
     setNetwork("");
-    setMessage("");
+    // setMessage("");
     setSignature("");
     setVerified(undefined);
   };
@@ -128,7 +136,15 @@ const Web3Connector = ({}) => {
     if (web3Modal.cachedProvider) {
       connectWallet();
     }
+      
   }, []);
+  useEffect(() => {
+    console.log(window.localStorage.getItem("signature"), account);
+    if (!window.localStorage.getItem("signature") && account){
+      confirm("Welcome to NFTDepot", "By connecting your wallet and using NFTDepot, you agree to our Terms of Service and Privacy Policy.", "Agree & Sign", "Cancel", signMessage, disconnect)
+    }
+      
+  }, [account]);
 
   useEffect(() => {
     if (provider?.on) {
