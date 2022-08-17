@@ -87,7 +87,7 @@ const MyCollections = () => {
                     span={browserWidth < 620 ? 24 : 8}
                     key={index}
                   >
-                    <ExploreCard data={item} showFollowIcon={false} />
+                    <ExploreCard data={item} showFollowIcon={false} isUserCollections={true} />
                   </Col>
                 );
               })}

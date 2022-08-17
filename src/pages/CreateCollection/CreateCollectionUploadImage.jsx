@@ -68,10 +68,7 @@ const CreateCollectionUploadImage = () => {
             url_instagram:
               "https://www.instagram.com/" + formData?.url_instagram,
             url_medium: "https://medium.com/" + formData?.url_medium,
-            url_personal:
-              window.location.origin +
-              "/collectionView/" +
-              formData?.url_personal,
+            url_personal: formData?.url_personal,
             url_telegram: "https://telegram.com/" + formData?.url_telegram,
             image_small_location: smallImageLocation?.body?.url,
             image_large_location: largeImageLocation?.body?.url,
@@ -123,7 +120,7 @@ const CreateCollectionUploadImage = () => {
             <span className="step2">Step 2</span>
             <span className="desc">Select Layout Style</span>
             <span className="desc2 changeColor">
-            Select a layout style that best fits you NFT’s image ratio.
+              Select a layout style that best fits your NFT’s image ratio.
             </span>
           </div>
           <div>
@@ -141,7 +138,9 @@ const CreateCollectionUploadImage = () => {
             </Select>
           </div>
           <div className="uploadForm">
-          <label className="cardLabel">Accepted file formats for images are: JPG, JPEG,PNG and GIF</label>
+            <label className="cardLabel changeColor">
+              Accepted file formats for images are: JPG, JPEG,PNG and GIF
+            </label>
             <div className="collectionImages">
               <div className="dflex">
                 {" "}

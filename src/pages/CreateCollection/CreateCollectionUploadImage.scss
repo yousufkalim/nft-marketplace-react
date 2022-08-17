@@ -172,10 +172,10 @@
         margin: 2rem auto;
         font-family: "Rubik";
         font-style: normal;
-        font-weight: 400;
+        font-weight: 700;
         font-size: 18px;
         line-height: 21px;
-        color: $FadeGrayColor;
+        color: $CreateBtnBg;
         @include mobile{
           width: 100%;
         }

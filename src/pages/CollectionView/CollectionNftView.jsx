@@ -10,6 +10,7 @@ import FeaturedLoadingCard from "../../components/presentational/FeaturedLoading
 import Spin from "../../components/presentational/Spin";
 import CollectionNftCard from "../../components/presentational/CollectionNftCard/CollectionNftCard";
 import LoadingCard from "../../components/presentational/LoadingCard/LoadingCard";
+import { useSelector } from "react-redux";
 
 const CollectionNftView = ({
   collectionid,
@@ -17,6 +18,7 @@ const CollectionNftView = ({
   searchParam,
   sliceItem,
   setCount,
+  userId,
   count,
 }) => {
   const arr = [1, 2];
@@ -26,11 +28,14 @@ const CollectionNftView = ({
     has_more: true,
     next_page: 1,
   });
+  const user = useSelector((state) => state?.auth?.user);
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
   const [browserWidth] = useWindowSize();
   const fetchExploreData = async () => {
     try {
       const res = await getCollectionNft(collectionid, extraData?.next_page);
+      setMessage(res?.message);
       if (res?.body?.data?.length) {
         setExploreData([...exploreData, ...res?.body?.data]);
         setExtraData({
@@ -75,7 +80,7 @@ const CollectionNftView = ({
     return true;
   };
 
-  console.log("exploreData",exploreData)
+  console.log("test", userId,user);
 
   return (
     <>
@@ -135,7 +140,9 @@ const CollectionNftView = ({
           </div>
         ) : (
           <div style={{ textAlign: "center" }}>
-            No Nfts found for this collection
+            {user?.guid === userId
+              ? message
+              : "No Nfts found for this collection"}
           </div>
         )}
       </div>

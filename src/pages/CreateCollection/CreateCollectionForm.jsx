@@ -142,8 +142,8 @@ const CreateCollectionForm = () => {
               storename: formData?.store_name ?? "",
               instagramLink: formData?.url_instagram ?? "",
               shortDescription: formData?.description_short ?? "",
-              longDescription: formData?.description_long ?? "description long",
-              personalLink: formData?.url_personal ?? storename,
+              longDescription: formData?.description_long ?? "",
+              personalLink: formData?.url_personal ?? "",
               mediumLink: formData?.url_medium ?? "",
               category:formData?.category_code ?? "",
               delayDays: formData?.delay_days ??  5,
@@ -295,10 +295,21 @@ const CreateCollectionForm = () => {
               </Form.Item>
               <Form.Item
                 name="personalLink"
-                label="Personal Link"
+                label={
+                  <div>Personal Link
+                  <Tooltip title="This is the link that will be used to access your personal site. This will be generated automatically if left blank."
+                  color={"#303549"}
+                  overlayClassName="favouriteToolTip"
+                  >
+                   <span className="infoIcon"> 
+                   <img src={QUESTION_MARK} alt={"QUESTION_MARK"}/>
+                   </span>
+                    </Tooltip>
+                </div>
+                }
                 
               >
-                <Input  prefix={<span className="prefixColor">{window.location.origin+'/collectionView/'+(formData?.store_name ? +formData?.store_name : storename)}</span>} readOnly />
+                <Input placeholder="your personal site link" />
               </Form.Item>
               <span className="mediaAndDiscordLinks">
                 <Form.Item

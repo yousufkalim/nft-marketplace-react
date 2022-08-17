@@ -17,8 +17,8 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [isAgree, setIsAgree] = useState(false);
   const [newsTeller, setNewsTeller] = useState(false);
-  const dispatch=useDispatch()
-  const wallet_id = useSelector(state=>state?.web3?.wallet);
+  const dispatch = useDispatch();
+  const wallet_id = useSelector((state) => state?.web3?.wallet);
 
   const history = useHistory();
   const onFinish = async (values) => {
@@ -35,13 +35,13 @@ const SignUp = () => {
           last_name: values.lastName,
           password: values.password,
           confirm_password: values.confirmPassword,
-          wallet_id:wallet_id,
-          notification_marketing:newsTeller
+          wallet_id: wallet_id,
+          notification_marketing: newsTeller,
         };
         const res = await SignUpAPI(data);
         setLoading(false);
         openNotification("SignUp Successfully", "");
-        dispatch(registerEmail(values.email))
+        dispatch(registerEmail(values.email));
         history.push("/auth/emailVerification");
       } catch (error) {
         setLoading(false);
@@ -67,8 +67,18 @@ const SignUp = () => {
     }
   };
 
+  const checkPassword = async (_, password) => {
+    const pattern = new RegExp(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+])[A-Za-z\d~!@#$%^&*()_+]{8,}$/
+    );
+    if (!pattern.test(password)) {
+      return Promise.reject("rejected");
+    } else {
+      return Promise.resolve(true);
+    }
+  };
+
   // get state from Web3Wrapper > Web3Connector
-  
 
   return (
     <>
@@ -150,13 +160,25 @@ const SignUp = () => {
                 </Form.Item>
                 <Form.Item
                   name="password"
-                  label="Password"
+                  label={
+                    <>
+                      Password ( Passwords must be 12-25 characters and MUST
+                      contain 1 uppercase letter, 1 lowercase letter and 1
+                      special character (single and double quotes are not
+                      allowed). )
+                    </>
+                  }
                   labelCol={{ span: 24 }}
                   wrapperCol={{ span: 24 }}
                   rules={[
                     {
                       required: true,
                       message: "Please input your password!",
+                    },
+                    {
+                      validator: checkPassword,
+                      message:
+                        "The passwords MUST follow the “Password *” noted above…. 12-25 characters….. etc.",
                     },
                   ]}
                 >
@@ -211,7 +233,8 @@ const SignUp = () => {
                     checked={newsTeller}
                     onClick={() => setNewsTeller((prev) => !prev)}
                   >
-                    I would like to receive marketing, blog and special offer emails from NFTDepot.Art.
+                    I would like to receive marketing, blog and special offer
+                    emails from NFTDepot.Art.
                   </Radio>
                 </Form.Item>
                 <Form.Item>

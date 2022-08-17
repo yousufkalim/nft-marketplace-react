@@ -135,7 +135,7 @@ const ExploreCard = ({
             </span>
           </span>
         </div>
-        <div className="idSection"># {data?.guid}</div>
+        {/* <div className="idSection"># {data?.guid}</div> */}
         <div className="createdBy" onClick={(e) => handleCreatedBy(e)}>
           <span>Created By: </span>
           <span className="textStyle">{data?.created_by}</span>

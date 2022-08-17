@@ -276,6 +276,7 @@ const CollectionView = ({ match }) => {
             setCount={setCount}
             searchParam={searchParam}
             count={count}
+            userId={collectionDetails?.user_details?.guid}
           />
           <NewsLetter />
         </div>
