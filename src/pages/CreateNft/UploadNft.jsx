@@ -71,7 +71,7 @@ const UploadNft = ({ match }) => {
               />
               <div className="agree">
                 I agree to the{" "}
-                <Link to="TermsAndCondition" target="_blank">
+                <Link to="/TermsAndCondition" target="_blank">
                   <span className="termConditions">Terms and Conditions</span>{" "}
                   and{" "}
                 </Link>

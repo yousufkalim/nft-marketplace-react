@@ -157,7 +157,7 @@ const CollectionView = ({ match }) => {
                   </div>
                 </div>
                 <div className="socialIconsSection">
-                  <span>Create By:</span>
+                  <span>Created By:</span>
                   <span className="value" onClick={handleClick}>
                   {collectionDetails?.user_details?.username}
                   </span>
@@ -226,7 +226,7 @@ const CollectionView = ({ match }) => {
             </div>
           )}
           <div className="socialIconsSection main_page_width display_none" >
-            <span>Create By:</span>
+            <span>Created By:</span>
             <span className="value" onClick={handleClick}>
             {collectionDetails?.user_details?.username}
             </span>
