@@ -8,7 +8,7 @@ import { codesAPI } from "../../services/createCollectionServices";
 import { openNotification } from "../../components/Smart/Notification";
 import { StringParam, useQueryParams } from "use-query-params";
 
-const CategoryFlicker = ({ category, setCategory }) => {
+const CategoryFlicker = ({ category, setCategory, reloadOnChange }) => {
   const flickinfRef = useRef();
   const [categories, setCategories] = useState([]);
 
@@ -38,14 +38,21 @@ const CategoryFlicker = ({ category, setCategory }) => {
   });
 
   const handleCategory = (code) => {
-    setCategory(code);
-    setQuery({ SelectedCategory: code });
+    if (reloadOnChange) {
+      setCategory(code);
+      setQuery({ SelectedCategory: code });
+      window.location.reload();
+    } else {
+      setCategory(code);
+      setQuery({ SelectedCategory: code });
+    }
     // window.location.reload();
   };
 
   const handleReset = () => {
-    setCategory("");
-    setQuery({ SelectedCategory: null });
+      setCategory("");
+      setQuery({ SelectedCategory: null });
+    
   };
 
   // useEffect(()=>{
@@ -91,9 +98,15 @@ const CategoryFlicker = ({ category, setCategory }) => {
         </div>
       </div>
       <div className="resetWrapper main_page_width padding_add">
-        <div className="resetFilters" onClick={handleReset}>
-          Reset Filters
-        </div>
+        {reloadOnChange ? (
+          <a href="/explore" target={"_self"}>
+            <div className="resetFilters">Reset Filters</div>
+          </a>
+        ) : (
+          <div className="resetFilters" onClick={handleReset}>
+            Reset Filters
+          </div>
+        )}
       </div>
     </>
   );

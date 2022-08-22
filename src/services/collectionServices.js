@@ -95,9 +95,9 @@ export const getCollectionFollowers = async (id,pageNumber) => {
     apiConfig
   );
 };
-export const getCollectionByCategory = async (category) => {
+export const getCollectionByCategory = async (category,pageNumber) => {
   return await axios.get(
-    `https://nftdepot-api.azurewebsites.net/collections/category/${category}`,
+    `https://nftdepot-api.azurewebsites.net/collections/category/${category}/${pageNumber}`,
     apiConfig
   );
 };
