@@ -22,7 +22,7 @@ const AppHeader = () => {
   const [browserWidth] = useWindowSize();
   const [visible, setVisible] = useState(false);
   const history = useHistory();
-  const isAuthenticated=useSelector(state=>state?.auth?.isAuthenticated)
+  const isAuthenticated = useSelector((state) => state?.auth?.isAuthenticated);
   const dispatch = useDispatch();
 
   const handleSearch = async (value) => {
@@ -80,14 +80,16 @@ const AppHeader = () => {
         </Link>
       </div>
       <div className="tabs">
-        <div className="centerTabs">
-          <a href="/explore" target={"_self"}>
-            <h3>Explore</h3>
-          </a>
-          <Link to={"/createCollection"}>
-            <h3>Create</h3>
-          </Link>
-        </div>
+        {isAuthenticated && (
+          <div className="centerTabs">
+            <a href="/explore" target={"_self"}>
+              <h3>Explore</h3>
+            </a>
+            <Link to={"/createCollection"}>
+              <h3>Create</h3>
+            </Link>
+          </div>
+        )}
         <div className="icons">
           <div className="connectButton">
             <Web3Connector />
@@ -161,14 +163,18 @@ const AppHeader = () => {
         key={"right"}
       >
         <div className="mobileConnectButton">
-          <Web3Connector/>
+          <Web3Connector />
         </div>
-        <Link to={"/explore"}>
-          <h2 onClick={onClose}>Explore</h2>
-        </Link>
-        <Link to={"/createNft"}>
-          <h2 onClick={onClose}>Create</h2>
-        </Link>
+        {isAuthenticated && (
+          <>
+            <Link to={"/explore"}>
+              <h2 onClick={onClose}>Explore</h2>
+            </Link>
+            <Link to={"/createNft"}>
+              <h2 onClick={onClose}>Create</h2>
+            </Link>
+          </>
+        )}
       </Drawer>
     </div>
   );

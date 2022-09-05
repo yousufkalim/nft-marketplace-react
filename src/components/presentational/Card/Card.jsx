@@ -7,18 +7,18 @@ import { Link } from "react-router-dom";
 import { openNotification } from "../../Smart/Notification";
 import {
   followCollection,
-  getCollectionFollowers,  
+  getCollectionFollowers,
   unFollowCollection,
 } from "../../../services/collectionServices";
 import { truncate } from "../../../helpers/utils";
-import { useSelector } from "react-redux";  
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 const { Meta } = Card;
 
 const NftCard = ({ showTopPick = false, data, showFollowIcon = true }) => {
   const [isFollowed, setIsFollowed] = useState(false);
-  const history=useHistory()
+  const history = useHistory();
   const followCollections = async () => {
     try {
       const res = await followCollection(data?.guid);
@@ -38,9 +38,9 @@ const NftCard = ({ showTopPick = false, data, showFollowIcon = true }) => {
     }
   };
 
-  const handleClick=()=>{
-    history.push(`/collectionView/${data?.guid}`)
-  }
+  const handleClick = () => {
+    history.push(`/collectionView/${data?.guid}`);
+  };
 
   return (
     <div className="imageCard">
@@ -48,34 +48,34 @@ const NftCard = ({ showTopPick = false, data, showFollowIcon = true }) => {
         hoverable
         cover={
           <span className="coverWrapper">
-              <span className="coverImage" onClick={handleClick}>
-                <img
-                  alt="example"
-                  src={data?.image_large_location}
-                />
-              </span>
+            <span className="coverImage" onClick={handleClick}>
+              <img alt="example" src={data?.image_large_location} />
+            </span>
 
             <Tooltip
               title={isFollowed ? "UNFOLLOW" : "FOLLOW"}
               color={"#303549"}
               overlayClassName="favouriteToolTip"
             >
-             { showFollowIcon && 
-             <span
-                className="frame"
-                style={{backgroundColor : isFollowed ? "blue" : ""}}
-                onClick={isFollowed ? unFollowCollections : followCollections}
-              >
-                <img src={FRAME_ICON} alt={"FRAME_ICON"} /> 
-              </span>}
+              {showFollowIcon && (
+                <span
+                  className="frame"
+                  style={{ backgroundColor: isFollowed ? "blue" : "" }}
+                  onClick={isFollowed ? unFollowCollections : followCollections}
+                >
+                  <img src={FRAME_ICON} alt={"FRAME_ICON"} />
+                </span>
+              )}
             </Tooltip>
 
             <span
               className="footer"
               style={{
                 background: `url(${
-                  showTopPick ? data?.image_small_location : data?.image_small_location
+                  data?.image_small_location
                 }) no-repeat`,
+                backgroundSize: "cover",
+                backgroundPosition: "center center",
               }}
             ></span>
             {showTopPick && <span className="tag">TOP PICK</span>}
@@ -87,12 +87,8 @@ const NftCard = ({ showTopPick = false, data, showFollowIcon = true }) => {
             title={data ? data?.store_name : "Test Title"}
             description={
               <div className="dFlex">
-              {data ? truncate(data?.description_short) : "test description"}
-              <div className="idSection">
-                # {
-                  data?.guid
-                }
-              </div>
+                {data ? truncate(data?.description_short) : "test description"}
+                <div className="idSection"># {data?.guid}</div>
               </div>
             }
           />

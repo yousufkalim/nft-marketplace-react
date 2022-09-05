@@ -8,6 +8,9 @@ import { getCollectionNft } from "../../services/collectionServices";
 import FeaturedCard from "../../components/presentational/FeaturedCard/FeaturedCard";
 import FeaturedLoadingCard from "../../components/presentational/FeaturedLoadingCard/FeaturedLoadingCard";
 import Spin from "../../components/presentational/Spin";
+import CollectionNftCard from "../../components/presentational/CollectionNftCard/CollectionNftCard";
+import LoadingCard from "../../components/presentational/LoadingCard/LoadingCard";
+import { useSelector } from "react-redux";
 
 const CollectionNftView = ({
   collectionid,
@@ -15,6 +18,7 @@ const CollectionNftView = ({
   searchParam,
   sliceItem,
   setCount,
+  userId,
   count,
 }) => {
   const arr = [1, 2];
@@ -24,11 +28,14 @@ const CollectionNftView = ({
     has_more: true,
     next_page: 1,
   });
+  const user = useSelector((state) => state?.auth?.user);
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
   const [browserWidth] = useWindowSize();
   const fetchExploreData = async () => {
     try {
       const res = await getCollectionNft(collectionid, extraData?.next_page);
+      setMessage(res?.message);
       if (res?.body?.data?.length) {
         setExploreData([...exploreData, ...res?.body?.data]);
         setExtraData({
@@ -95,10 +102,10 @@ const CollectionNftView = ({
                     return (
                       <Col
                         className="gutter-row"
-                        span={browserWidth < 620 ? 24 : 12}
+                        span={browserWidth < 620 ? 24 : 8}
                         key={index}
                       >
-                        <FeaturedLoadingCard isNft={true} />
+                        <LoadingCard />
                       </Col>
                     );
                   })}
@@ -119,10 +126,10 @@ const CollectionNftView = ({
                     return (
                       <Col
                         className="gutter-row"
-                        span={browserWidth < 620 ? 24 : 12}
+                        span={browserWidth < 620 ? 24 : 8}
                         key={index}
                       >
-                        <FeaturedCard isNft={true} data={item} />
+                        <CollectionNftCard data={item} />
                       </Col>
                     );
                   })}
@@ -131,7 +138,9 @@ const CollectionNftView = ({
           </div>
         ) : (
           <div style={{ textAlign: "center" }}>
-            No Nfts found for this collection
+            {user?.guid === userId
+              ? message
+              : "No Nfts found for this collection"}
           </div>
         )}
       </div>

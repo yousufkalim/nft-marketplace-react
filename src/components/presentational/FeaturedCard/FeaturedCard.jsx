@@ -5,6 +5,8 @@ import TEST_IMG from "../../../images/test_img.png";
 import ORANGE_DOT from "../../../images/orange_dot.svg";
 import ORANGE_FRAME from "../../../images/orange_frame.svg";
 import LIKE_ICON from "../../../images/like_icon.svg";
+import LIKED_ICON from "../../../images/liked_icon.svg";
+
 import { Tooltip } from "antd";
 import { useHistory } from "react-router-dom";
 import { openNotification } from "../../Smart/Notification";
@@ -64,8 +66,13 @@ const FeaturedCard = ({ data, isNft, showFollowIcon = true }) => {
             {!isNft && (
               <div className="tagImage">
                 <img
-                  src={data ? data?.image_small_location : TEST_ICON}
-                  alt={"TEST_ICON"}
+                  style={{
+                    background: `url(${
+                      data && data?.image_small_location
+                    }) no-repeat`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center center",
+                  }}
                 />
               </div>
             )}
@@ -78,35 +85,35 @@ const FeaturedCard = ({ data, isNft, showFollowIcon = true }) => {
               <span className="desc">
                 {data ? truncate(data?.description_short) : "test description"}
               </span>
-              <span className="StatsSection">
-                <span className="avgSection">
-                  <img src={ORANGE_DOT} alt={"ORANGE_DOT"} />
-                  <span className="avg"> Avg: 3872.44</span>
+              {isNft && (
+                <span className="StatsSection">
+                  <span className="avgSection">
+                    <img src={ORANGE_DOT} alt={"ORANGE_DOT"} />
+                    <span className="avg"> Avg: 3872.44</span>
+                  </span>
+                  <span className="floorSection">
+                    <img src={ORANGE_DOT} alt={"ORANGE_DOT"} />
+                    <span className="floor">Floor: 3872.44</span>
+                  </span>
                 </span>
-                <span className="floorSection">
-                  <img src={ORANGE_DOT} alt={"ORANGE_DOT"} />
-                  <span className="floor">Floor: 3872.44</span>
-                </span>
+              )}
+              <span className="idSection">
+                # {data?.collection_id ?? data?.guid}
               </span>
-              <span className="idSection"># {data?.collection_id ?? data?.guid}</span>
+             {/* {isNft && <div className="createdBy" onClick={(e) => handleCreatedBy(e)}>
+              <span>Created By: </span>
+              <span className="textStyle">{data?.created_by}</span>
+            </div>} */}
             </div>
             <div className="frameIconSection">
               <Tooltip title={isLiked ? "Unlike" : "Like"} color={"#303549"}>
                 {showFollowIcon && (
                   <span
-                    style={{
-                      backgroundColor: isLiked ? "blue" : "",
-                      padding: isLiked ? "9px 7px 13px" : "",
-                      borderRadius: isLiked ? "7px" : "",
-                    }}
                     className="orangeFrame"
                     onClick={isLiked ? (e) => unLikeNft(e) : (e) => likeNft(e)}
                   >
                     <img
-                      style={{
-                        filter: isLiked ? "brightness(10)" : "",
-                      }}
-                      src={LIKE_ICON}
+                      src={isLiked ? LIKED_ICON: LIKE_ICON}
                       alt={"ORANGE_FRAME"}
                     />
                   </span>

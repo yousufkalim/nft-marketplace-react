@@ -35,20 +35,21 @@ const Web3Connector = ({}) => {
 
   const dispatch = useDispatch();
   const connectWallet = async () => {
+    // debugger
     try {
       const provider = await web3Modal.connect();
       const library = new ethers.providers.Web3Provider(provider);
+      const signer = await library.getSigner();
       const accounts = await library.listAccounts();
       const network = await library.getNetwork();
       setProvider(provider);
       setLibrary(library);
       if (accounts) {
         setAccount(accounts[0]);
-        dispatch(walletConnectionSuccess(accounts[0]));
-        
+        dispatch(walletConnectionSuccess({ provider, library, "account":accounts[0], signer }));
       }
       setChainId(network.chainId);
-      // ask
+
     } catch (error) {
       setError(error);
       dispatch(walletConnectionFailure(null));
@@ -117,6 +118,22 @@ const Web3Connector = ({}) => {
     }
   };
 
+  // contract interaction functions (later we may move them to a separate component)
+  const getContract = async (address, abi) => {
+    if (!library) {
+      console.log("no library");
+      return;
+    };
+    try {
+      const contract = new ethers.Contract(address, abi, library);
+      return contract;
+    } catch (error) {
+      console.log(error);
+        
+    }
+  }
+      
+
   const refreshState = () => {
     setAccount();
     setChainId();
@@ -132,11 +149,11 @@ const Web3Connector = ({}) => {
     dispatch(walletConnectionFailure(null));
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     if (web3Modal.cachedProvider) {
       connectWallet();
     }
-      
+
   }, []);
   useEffect(() => {
     console.log(window.localStorage.getItem("signature"), account);
@@ -152,7 +169,7 @@ const Web3Connector = ({}) => {
         console.log("accountsChanged", accounts);
         if (accounts) {
           setAccount(accounts[0]);
-          dispatch(walletConnectionSuccess(accounts[0]));
+          dispatch(walletConnectionSuccess({ provider, library, account }));
         }
       };
 

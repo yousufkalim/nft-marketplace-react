@@ -77,8 +77,8 @@ const Login = () => {
                 <Form.Item
                   name="email"
                   label="Email"
-                  labelCol={{span:24}}
-                  wrapperCol={{span:24}}
+                  labelCol={{ span: 24 }}
+                  wrapperCol={{ span: 24 }}
                   rules={[
                     {
                       type: "email",
@@ -96,8 +96,8 @@ const Login = () => {
                 <Form.Item
                   name="password"
                   label="Password"
-                  labelCol={{span:24}}
-                  wrapperCol={{span:24}}
+                  labelCol={{ span: 24 }}
+                  wrapperCol={{ span: 24 }}
                   rules={[
                     {
                       required: true,
@@ -123,19 +123,17 @@ const Login = () => {
                   </Button>
                 </Form.Item>
                 <div>
-                <Form.Item>
-                  <Link to={"/auth/forgotPassword"}>
-                    <span className="toLoginText">Forgot password?</span>
-                  </Link>
-                </Form.Item>
-                <Form.Item>
+                  <Form.Item>
+                    <Link to={"/auth/forgotPassword"}>
+                      <span className="toLoginText">Forgot password?</span>
+                    </Link>
+                  </Form.Item>
+                  <Form.Item>
                     <Link to={"/auth/login"}>
                       <span className="toLoginText">
                         Account Not Verified Yet?. Click
-                        <span style={{margin:'0px 4px'}}>
-                        <Link to="/auth/resendEmail" >
-                        here
-                        </Link>
+                        <span style={{ margin: "0px 4px" }}>
+                          <Link to="/auth/resendEmail">here</Link>
                         </span>
                         for Verification
                       </span>

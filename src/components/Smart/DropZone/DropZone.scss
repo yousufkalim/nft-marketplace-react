@@ -51,18 +51,18 @@
     display: none !important;
   }
   .blurBg {
-    z-index: 20;
-    filter: blur(8px);
-    -webkit-filter: blur(8px);
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+    // z-index: 20;
+    // filter: blur(8px);
+    // -webkit-filter: blur(8px);
+    // width: 100%;
+    // position: absolute;
+    // top: 0;
+    // left: 0;
+    // right: 0;
+    // bottom: 0;
+    // background-repeat: no-repeat;
+    // background-size: cover;
+    // background-position: center;
     img {
       display: inline-block;
       width: 100%;

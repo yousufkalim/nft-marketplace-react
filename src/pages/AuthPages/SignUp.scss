@@ -113,6 +113,9 @@
           border-radius: 10px !important;
           border: none !important;
         }
+        .ant-form-item-label>label{
+          height: auto !important;
+        }
         .formHeadingWrapper {
           display: flex;
           justify-content: space-between;

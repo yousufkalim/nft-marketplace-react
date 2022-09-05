@@ -5,10 +5,11 @@ import FILTER_IMG from "../../images/filter_icon.svg";
 
 import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import FlickerComp from "./Flicker";
-import { Input, Select, Spin } from "antd";
+import { Button, Input, Select, Spin } from "antd";
 import { SearchOutlined, DownOutlined } from "@ant-design/icons";
 import CollectionNftView from "./CollectionNftView";
 import NewsLetter from "../../components/presentational/NewsLetter/NewsLetter";
+import { useSelector } from "react-redux";
 import useWindowSize from "../../helpers/hooks";
 import {
   collectionDetailsApi,
@@ -25,6 +26,8 @@ import MEDIUM from "../../images/M_icon.svg";
 import TWITTER from "../../images/twitter_icon.svg";
 import "./CollectionView.scss";
 import { codesAPI } from "../../services/createCollectionServices";
+import { deployNFT } from "../../services/web3Services";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const CollectionView = ({ match }) => {
   const [collectionDetails, setCollectionDetails] = useState([]);
@@ -32,7 +35,8 @@ const CollectionView = ({ match }) => {
   const [count, setCount] = useState(0);
   const [searchParam, setSearchParam] = useState("");
   const [filterCodes, setFilterCodes] = useState([]);
-
+  const userData = useSelector((state) => state?.auth?.user);
+  const history=useHistory()
   useEffect(() => {
     const getCollectionDetails = async () => {
       try {
@@ -72,7 +76,40 @@ const CollectionView = ({ match }) => {
     console.log(`selected ${value}`);
   };
 
+  const handleDeployNFT = async () => {
+    try {
+      let name = collectionDetails?.store_name;
+      let symbol = collectionDetails?.store_name
+        ?.toUpperCase()
+        .replace(/ /g, "-")
+        .replace(/[^\w-]+/g, "");
+      let localGuid = collectionDetails?.guid;
+      // debugger;
+      const tx = await deployNFT(name, symbol, localGuid);
+      console.log("tx", tx);
+      if (tx) {
+        openNotification(
+          "Success",
+          "Transaction submitted successfully, waiting for completion"
+        );
+      }
+      // alert("Transaction submitted, please wait for confirmation, tx hash: " + tx?.hash);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
   const [browserWidth] = useWindowSize();
+
+  const handleClick=()=>{
+    if (userData?.guid === collectionDetails?.user_details?.guid) {
+      history.push(`/profile`);
+    } else {
+      history.push(`/creatorDetails/${collectionDetails?.user_details?.guid}`);
+    }
+  }
+
+  console.log("collectionDetails",collectionDetails);
 
   return (
     <>
@@ -120,7 +157,10 @@ const CollectionView = ({ match }) => {
                   </div>
                 </div>
                 <div className="socialIconsSection">
-                  # {collectionDetails?.guid}
+                  <span>Created By:</span>
+                  <span className="value" onClick={handleClick}>
+                  {collectionDetails?.user_details?.username}
+                  </span>
                   {/* <div className="socialIcons">
             <a className="socialIcon" href={collectionDetails?.url_twitter ?? 'https://twitter.com/'} target='_blank'>
               <img src={TWITTER} alt="TWITTER" />
@@ -185,8 +225,11 @@ const CollectionView = ({ match }) => {
               </div>
             </div>
           )}
-          <div className="socialIconsSection main_page_width display_none">
-            # {collectionDetails?.guid}
+          <div className="socialIconsSection main_page_width display_none" >
+            <span>Created By:</span>
+            <span className="value" onClick={handleClick}>
+            {collectionDetails?.user_details?.username}
+            </span>
             {/* <div className="socialIcons">
             <a className="socialIcon" href={collectionDetails?.url_twitter ?? 'https://twitter.com/'} target='_blank'>
               <img src={TWITTER} alt="TWITTER" />
@@ -219,7 +262,7 @@ const CollectionView = ({ match }) => {
                 </div>
                 <div className="filterDropdown">
                   <Select
-                    placeholder="Minting Coin"
+                    placeholder="Filter Data"
                     allowClear
                     onChange={handleChange}
                   >
@@ -236,7 +279,16 @@ const CollectionView = ({ match }) => {
                   <img src={FILTER_IMG} alt={"FILTER_IMG"} />
                 </div>
               </div>
-              <div className="reset">Showing {count} results</div>
+              <div className="reset">
+                {!collectionDetails?.contract_address &&
+                  userData &&
+                  userData?.guid === collectionDetails?.user_details?.guid && (
+                    <Button type="primary" onClick={handleDeployNFT}>
+                      Deploy
+                    </Button>
+                  )}
+                <span>Showing {count} results</span>
+              </div>
             </div>
           </div>
           <CollectionNftView
@@ -244,6 +296,7 @@ const CollectionView = ({ match }) => {
             setCount={setCount}
             searchParam={searchParam}
             count={count}
+            userId={collectionDetails?.user_details?.guid}
           />
           <NewsLetter />
         </div>

@@ -33,8 +33,17 @@
   .idSection{
     color: $GrayColor;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 14px;
     margin-top: 12px;
+  }
+  .createdBy{
+    margin-top: 8px;
+    font-size: 12px;
+    float: right;
+    .textStyle{
+      font-weight: bold;
+      text-decoration: underline;
+    }
   }
   .exploreCardFooter {
     border-top: 1px dashed rgba(48, 53, 73, 0.25);

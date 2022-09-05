@@ -1,3 +1,5 @@
+import { Tooltip } from "antd";
+
 export const apiConfig = {
   headers: {
     "Content-Type": "application/json",
@@ -17,10 +19,15 @@ export const restrictedConfig = {
   },
 };
 
-export const truncate = (text = "", [h, t] = [12, 5]) => {
+export const truncate = (text = "",h = 34) => {
   const head = text.slice(0, h)
-  const tail = text.slice(-1 * t, text.length)
-  return text.length > h + t ? [head, tail].join("...") : text
+  // const tail = text.slice(-1 * t, text.length)
+  return text.length > h  ? <div>{head}
+  <Tooltip title={text} color={"#303549"} placement="bottomRight">
+  <span>...</span> 
+  </Tooltip>
+  </div>
+  : text
 }
 
 export const truncateAddress = (address) => {

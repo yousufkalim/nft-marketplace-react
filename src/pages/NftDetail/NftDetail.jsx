@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from "react";
-import FeaturedCard from "../../components/presentational/FeaturedCard/FeaturedCard";
 import PAGE_HEADER_IMG from "../../images/PageHeader.png";
 import RIGHT_ARROW from "../../images/right_arrow.svg";
 import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import NewsLetter from "../../components/presentational/NewsLetter/NewsLetter";
-import { Row, Col, Carousel } from "antd";
 import NftLeftSection from "./NftLeftSection";
 import NftRightSection from "./NftRightSection";
 import DetailSection from "./DetailSection";
 import { Link } from "react-router-dom";
 import useWindowSize from "../../helpers/hooks";
-// import DetailSection from "./DetailSection";
 import "./NftDetail.scss";
 import { nftDetailsApi } from "../../services/nftServices";
-import CollectionNftView from "../CollectionView/CollectionNftView";
 import Spin from "../../components/presentational/Spin";
 import { openNotification } from "../../components/Smart/Notification";
+import NftDetailSection from "./NftDetailSection";
 
 const NftDetails = ({ match }) => {
   const arr = [1, 2, 3, 4, 5, 6];
@@ -68,7 +65,7 @@ const NftDetails = ({ match }) => {
         {loading ? (
           <Spin />
         ) : (
-          <CollectionNftView
+          <NftDetailSection
             collectionid={nftData?.store_front_guid}
             currentNftId={nftData?.guid}
             setCount={setCount}

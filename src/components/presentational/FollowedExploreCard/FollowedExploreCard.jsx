@@ -16,12 +16,21 @@ import { useSelector } from "react-redux";
 
 const { Meta } = Card;
 
-const FollowedExploreCard = ({ data, collections, setCollections }) => {
+const FollowedExploreCard = ({
+  data,
+  collections,
+  setCollections,
+  setRefetchQuery,
+}) => {
   const history = useHistory();
+
+  const user = useSelector((state) => state?.auth?.user);
+
   const handleClick = () => {
     history.push(`/collectionView/${data?.guid}`);
   };
-  const unFollowCollections = async () => {
+  const unFollowCollections = async (e) => {
+    e.stopPropagation();
     try {
       const res = await unFollowCollection(data?.guid);
       const dataManipulated = collections.map((el) => {
@@ -29,26 +38,39 @@ const FollowedExploreCard = ({ data, collections, setCollections }) => {
           return el;
         }
       });
-      const rawData=dataManipulated.filter(function( element ) {
+      const rawData = dataManipulated.filter(function (element) {
         return element !== undefined;
-     });
+      });
       setCollections(rawData);
+      setRefetchQuery((prev) => !prev);
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
     }
   };
 
+  const handleCreatedBy = (e) => {
+    e.stopPropagation();
+    if (user?.username === data?.created_by) {
+      history.push(`/profile`);
+    } else {
+      history.push(`/creatorDetails/${data?.created_by}`);
+    }
+  };
+
   return (
-    <div className="ExploreCard">
+    <div className="FollowedExploreCard" onClick={handleClick}>
       <Card
         hoverable
         cover={
           <span className="ExploreCardWrapper">
-            <span className="ExploreCardImage" onClick={handleClick}>
+            <span className="ExploreCardImage">
               <img alt="example" src={data?.image_large_location} />
             </span>
             <Tooltip title={"UnFollow"} color={"#303549"}>
-              <span className={"orangeFrame"} onClick={unFollowCollections}>
+              <span
+                className={"orangeFrame"}
+                onClick={(e) => unFollowCollections(e)}
+              >
                 <img src={FRAME_ICON} alt={"FRAME_ICON"} />
               </span>
             </Tooltip>
@@ -57,7 +79,8 @@ const FollowedExploreCard = ({ data, collections, setCollections }) => {
               className="footer"
               style={{
                 background: `url(${data?.image_small_location}) no-repeat`,
-                backgroundSize: "contain",
+                backgroundSize: "cover",
+                backgroundPosition: "center center",
               }}
             ></span>
           </span>
@@ -82,10 +105,10 @@ const FollowedExploreCard = ({ data, collections, setCollections }) => {
             </span>
           </span>
         </div>
-        <div className="idSection">
-          # {
-            data?.guid
-          }
+        <div className="idSection"># {data?.guid}</div>
+        <div className="createdBy" onClick={(e) => handleCreatedBy(e)}>
+          <span>Created By: </span>
+          <span className="textStyle">{data?.created_by}</span>
         </div>
       </Card>
     </div>

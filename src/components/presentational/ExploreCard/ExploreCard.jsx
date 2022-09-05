@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "antd";
 import FRAME_ICON from "../../../images/frame.svg";
 import EYE_ICON from "../../../images/eye_icon.svg";
@@ -6,90 +6,121 @@ import ORANGE_FRAME from "../../../images/orange_frame.svg";
 import { Tooltip } from "antd";
 import "./ExploreCard.scss";
 import { useHistory } from "react-router-dom";
-import { followCollection, unFollowCollection } from "../../../services/collectionServices";
+import {
+  followCollection,
+  unFollowCollection,
+} from "../../../services/collectionServices";
 import { openNotification } from "../../Smart/Notification";
 import { truncate } from "../../../helpers/utils";
 import { useSelector } from "react-redux";
 
 const { Meta } = Card;
 
-const ExploreCard = ({ data,showFollowIcon=true,exploreData,setExploreData }) => {
+const ExploreCard = ({
+  data,
+  showFollowIcon = true,
+  exploreData,
+  setExploreData,
+}) => {
+
   const history = useHistory();
+  const user = useSelector((state) => state?.auth?.user);
   const handleClick = () => {
     history.push(`/collectionView/${data?.guid}`);
   };
 
-  const followTheCollection = async () => {
+  const followTheCollection = async (e) => {
+    e.stopPropagation();
     try {
       const res = await followCollection(data?.guid);
-      if(res?.body?.followed)
-      {
-        const dataManipulated = exploreData.map((el)=>{
-          if(el.guid === data.guid) {
+      if (res?.body?.followed) {
+        const dataManipulated = exploreData.map((el) => {
+          if (el.guid === data.guid) {
             return {
               ...el,
-              is_followed : true
-            }
-          } 
+              is_followed: true,
+            };
+          }
           return el;
-        })
+        });
         setExploreData(dataManipulated);
-      // openNotification("Success","Followed Successfully");
+        // openNotification("Success","Followed Successfully");
       }
-
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
       return error;
-
     }
   };
-  const unFollowCollections = async () => {
+  const unFollowCollections = async (e) => {
+    e.stopPropagation();
     try {
       const res = await unFollowCollection(data?.guid);
-      const dataManipulated = exploreData.map((el)=>{
-        if(el.guid === data.guid) {
+      const dataManipulated = exploreData.map((el) => {
+        if (el.guid === data.guid) {
           return {
             ...el,
-            is_followed : false
-          }
+            is_followed: false,
+          };
         }
         return el;
-      })
+      });
       setExploreData(dataManipulated);
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
     }
   };
 
+  const handleCreatedBy = (e) => {
+    e.stopPropagation();
+    if (user?.username === data?.created_by) {
+      history.push(`/profile`);
+    } else {
+      history.push(`/creatorDetails/${data?.created_by}`);
+    }
+  };
 
   return (
-    <div className="ExploreCard">
+    <div className="ExploreCard" onClick={handleClick}>
       <Card
         hoverable
         cover={
           <span className="ExploreCardWrapper">
-            <span className="ExploreCardImage" onClick={handleClick}>
+            <span className="ExploreCardImage">
               <img alt="example" src={data?.image_large_location} />
-            </span> 
-            <Tooltip title={data?.is_followed ? "UnFollow" : "Follow"} color={"#303549"}>
-              {showFollowIcon && 
-              <span className={data?.is_followed ? "orangeFrame" :  "frame"} onClick={data?.is_followed ? unFollowCollections : followTheCollection}  >
-                <img src={FRAME_ICON} alt={"FRAME_ICON"} />
-              </span>
-              }
+            </span>
+            <Tooltip
+              title={data?.is_followed ? "UnFollow" : "Follow"}
+              color={"#303549"}
+            >
+              {showFollowIcon && (
+                <span
+                  className={data?.is_followed ? "orangeFrame" : "frame"}
+                  onClick={
+                    data?.is_followed
+                      ? (e) => unFollowCollections(e)
+                      : (e) => followTheCollection(e)
+                  }
+                >
+                  <img src={FRAME_ICON} alt={"FRAME_ICON"} />
+                </span>
+              )}
             </Tooltip>
 
             <span
               className="footer"
               style={{
                 background: `url(${data?.image_small_location}) no-repeat`,
-                backgroundSize : "contain"
+                backgroundSize: "cover",
+                backgroundPosition: "center center",
               }}
             ></span>
           </span>
         }
       >
-        <Meta title={data?.store_name} description={truncate(data?.description_short)} />
+        <Meta
+          title={data?.store_name}
+          description={truncate(data?.description_short)}
+        />
         <div className="exploreCardFooter">
           {/* <span className="priceHeading">Price <span className="priceHeading">$$ ETH</span></span> */}
           <span className="rightSection">
@@ -99,17 +130,17 @@ const ExploreCard = ({ data,showFollowIcon=true,exploreData,setExploreData }) =>
             </span>
             <span className="tagImage">
               <Tooltip title={"Followers"} color={"#303549"}>
-                <img src={ORANGE_FRAME} alt={"ORANGE_FRAME"}/>
+                <img src={ORANGE_FRAME} alt={"ORANGE_FRAME"} />
               </Tooltip>
               <span className="tagPrice">{data?.followers_count}</span>
             </span>
           </span>
         </div>
-        <div className="idSection">
-            # {
-              data?.guid
-            }
-          </div>
+        <div className="idSection"># {data?.guid}</div>
+        <div className="createdBy" onClick={(e) => handleCreatedBy(e)}>
+          <span>Created By: </span>
+          <span className="textStyle">{data?.created_by}</span>
+        </div>
       </Card>
     </div>
   );

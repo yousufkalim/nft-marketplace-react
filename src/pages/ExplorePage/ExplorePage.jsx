@@ -10,38 +10,58 @@ import LoadingCard from "../../components/presentational/LoadingCard/LoadingCard
 import useWindowSize from "../../helpers/hooks";
 import { openNotification } from "../../components/Smart/Notification";
 import CategoryFlicker from "../FilterCollections/CategoryFlicker";
+import { getCollectionByCategory } from "../../services/collectionServices";
 import "./ExplorePage.scss";
-
-
+import Spin from "../../components/presentational/Spin";
 
 const ExplorePage = () => {
   const arr = [1, 2, 3];
   const [exploreData, setExploreData] = useState([]);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(null);
+  const query = new URLSearchParams(window?.location?.search);
+  const [loading, setLoading] = useState(false);
   const [extraData, setExtraData] = useState({
     has_more: true,
     next_page: 1,
   });
   const [browserWidth] = useWindowSize();
-  
-  useEffect(() => {
-    const query=new URLSearchParams(window?.location?.search);
-    if(query?.get('SelectedCategory')!==""){
-      setCategory(query.get('SelectedCategory'));
-    }
-    else{
-      setCategory("");
-    }
-  }, [window.location.search]);
+
+  // useEffect(() => {
+  //   if (query?.get("SelectedCategory")) {
+  //     setCategory(query.get("SelectedCategory"));
+  //   } else {
+  //     setCategory("");
+  //   }
+  // }, [window.location.search]);
 
   const fetchExploreData = async () => {
     try {
-      const res = await allCollectionsAPI(extraData?.next_page);
-      setExploreData([...exploreData, ...res?.body?.data]);
-      setExtraData({
-        next_page: res?.body?.next_page,
-        has_more: res?.body?.has_more,
-      });
+      if (!query?.get("SelectedCategory")) {
+        const res = await allCollectionsAPI(extraData?.next_page);
+        console.log("in First");
+        if (res?.body?.data?.length) {
+          setExploreData([...exploreData, ...res?.body?.data]);
+          setExtraData({
+            next_page: res?.body?.next_page,
+            has_more: res?.body?.has_more,
+          });
+        }
+      } else {
+        const res = await getCollectionByCategory(
+          query?.get("SelectedCategory"),
+          extraData?.next_page
+        );
+        console.log("not in First");
+        console.log("res", res);
+
+        if (res?.data?.body?.data?.length) {
+          setExploreData([...exploreData, ...res?.data?.body?.data]);
+          setExtraData({
+            next_page: res?.body?.next_page,
+            has_more: res?.body?.has_more,
+          });
+        }
+      }
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
       // setExploreData([]);
@@ -49,7 +69,9 @@ const ExplorePage = () => {
   };
 
   useEffect(async () => {
+    setLoading(true);
     await fetchExploreData();
+    setLoading(false);
   }, []);
 
   const filterExplore = (exploreData) => {
@@ -89,8 +111,16 @@ const ExplorePage = () => {
             <span className="exploreHeading">Explore Collections</span>
           </div>
         </div>
-        <CategoryFlicker category={category} setCategory={setCategory} />
-        {exploreData.length > 0 ? (
+        <CategoryFlicker
+          category={category}
+          setCategory={setCategory}
+          reloadOnChange={true}
+        />
+        {loading ? (
+          <div style={{ textAlign: "center" }}>
+            <Spin/>
+          </div>
+        ) : exploreData.length > 0 ? (
           <div className="ExplorecardGrid main_page_width">
             <InfiniteScroll
               dataLength={exploreData?.length} //This is important field to render the next data
@@ -123,8 +153,8 @@ const ExplorePage = () => {
             >
               <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
                 {exploreData
-                  ?.filter(filterExplore)
-                  ?.filter(filterCategory)
+                  // ?.filter(filterExplore)
+                  // ?.filter(filterCategory)
                   ?.map((item, index) => {
                     return (
                       <Col
@@ -132,7 +162,11 @@ const ExplorePage = () => {
                         span={browserWidth < 620 ? 24 : 8}
                         key={index}
                       >
-                        <ExploreCard data={item} exploreData = {exploreData} setExploreData={setExploreData} />
+                        <ExploreCard
+                          data={item}
+                          exploreData={exploreData}
+                          setExploreData={setExploreData}
+                        />
                       </Col>
                     );
                   })}
@@ -140,8 +174,7 @@ const ExplorePage = () => {
             </InfiniteScroll>
           </div>
         ) : (
-          <></>
-          // <div style={{ textAlign: "center" }}>No Such Collection Found</div>
+          <div style={{ textAlign: "center" }}>No Such Collection Found</div>
         )}
         <NewsLetter />
       </div>

@@ -8,5 +8,4 @@ const reducers = combineReducers({
     collectionData:collectionReducer,
     web3:web3Reducer
 });
-
 export default reducers;
