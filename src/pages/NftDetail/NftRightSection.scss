@@ -32,6 +32,21 @@
         justify-content: flex-end;
         align-items: flex-end;
         margin-top: 15px;
+      .mintNft {
+        padding: 15px 60px;
+        background: #5e8ecc;
+        border-radius: 10px;
+        font-family: "Rubik";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 24px;
+        text-transform: capitalize;
+        color: #ffffff;
+        margin-right: 20px;
+        border-color: #ffffff;
+        cursor: pointer;
+      }
       .buyNow {
         padding: 15px 60px;
         background: $ExploreBtnBg;

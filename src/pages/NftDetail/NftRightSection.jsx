@@ -13,11 +13,15 @@ import { Tooltip } from "antd";
 import "./NftRightSection.scss";
 import { likeNfts, unLikeNfts } from "../../services/collectionServices";
 import { openNotification } from "../../components/Smart/Notification";
+import { mintNft, publishIpfs } from "../../services/web3Services";
+import { Button } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 const NftRightSection = ({nftData}) => {
-
   const [isLiked,setIsLiked]=useState(nftData?.is_liked)
 
+  const wallet_id = useSelector((state) => state?.web3?.wallet);
+  
   const likeNft = async () => {
     try {
       const res = await likeNfts(nftData?.guid);
@@ -38,17 +42,33 @@ const NftRightSection = ({nftData}) => {
     }
   };
 
-    const textAreaRef = useRef(null)
+  const textAreaRef = useRef(null)
 
-    async function copyToClip() {
-      try{
-        await navigator.clipboard.writeText(location.href);
-        openNotification("Link Copied Successfully")
-      }
-      catch(error){
-        console.log("error",error);
-      }
+  async function copyToClip() {
+    try{
+      await navigator.clipboard.writeText(location.href);
+      openNotification("Link Copied Successfully")
     }
+    catch(error){
+      console.log("error",error);
+    }
+  }
+
+  const mintNftPlease = async () => {
+    if(!wallet_id){
+      openNotification("please connect to wallet")
+      return;
+    }
+    await mintNft(nftData?.guid, wallet_id);
+  }
+
+  const publishToIpfs = async () => {
+    if(!wallet_id){
+      openNotification("please connect to wallet")
+      return;
+    }
+    await publishIpfs(nftData?.guid, wallet_id);
+  }
 
   return (
     <div className="NftrightSectionWrapper">
@@ -84,10 +104,12 @@ const NftRightSection = ({nftData}) => {
         </div>
         <div className="itemDetails">
           <span className="detail">
-           {nftData?.description_short}
+            {nftData?.description_short}
           </span>
         </div>
         <div className="offerBtn" >
+            <Button className="mintNft" onClick={mintNftPlease} >Mint</Button>
+            <Button className="mintNft" onClick={publishToIpfs} >Publish IPFS</Button>
             <span className="buyNow" >Buy Now</span>
             <span className="makeOffer" >Make Offer</span>
 
