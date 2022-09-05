@@ -99,7 +99,7 @@ export const mintNft = async (nft_id, buyer, collectionAddress) => {
     }
     catch (e) {
         console.log(e);
-        debugger
+        
         if(e.reason){
             openNotification("error", "Error "+e.reason);
         }else{
