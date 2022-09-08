@@ -26,6 +26,7 @@ const NftDetails = ({ match }) => {
       try {
         setLoading(true);
         const res = await nftDetailsApi(match?.params?.id);
+        console.log("response",res)
         setNftData(res?.body);
         setLoading(false);
       } catch (error) {

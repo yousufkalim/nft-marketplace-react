@@ -18,9 +18,10 @@ const NftDetailCard = ({nftData}) => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+
   return (
-    <>
-    <Modal visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} footer={null} closable>
+    <div className="detailCard">
+    <Modal visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} footer={null} closable className="modalStyle">
         <div className="modalImageWrapper">
           <img
           alt="example"
@@ -45,7 +46,7 @@ const NftDetailCard = ({nftData}) => {
       >
       </Card>
     </div>
-    </>
+    </div>
   );
 };
 

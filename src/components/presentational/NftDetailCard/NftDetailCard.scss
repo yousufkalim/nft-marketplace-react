@@ -133,14 +133,14 @@
     .ExploreCardImage {
       img {
         width: 100%;
-        height: 303px; 
+        height: 303px;
         object-fit: cover;
         border-radius: 10px 10px 0px 0px;
-        @media screen and (max-width:1100px) and (min-width:850px){
+        @media screen and (max-width: 1100px) and (min-width: 850px) {
           height: 210px;
         }
-        @media screen and (max-width: 850px) and (min-width:700px){
-            height: 160px;  
+        @media screen and (max-width: 850px) and (min-width: 700px) {
+          height: 160px;
         }
       }
     }
@@ -159,67 +159,65 @@
     width: inherit;
     height: auto;
     object-fit: contain;
-  border-radius: 10px !important;
-
+    border-radius: 10px !important;
   }
 }
-.ant-modal-close-x{
-  font-size: 22px !important;
-}
-.ant-modal-close{
-  color: rgb(138, 147, 155) !important;
-  top:-20px !important;
-  right: -25px !important;
-  @include mobile{
-    top:-50px !important;
-  }
-}
-.ant-modal-body {
-  padding: unset !important;
-}
-.ant-modal-content {
-  border-radius: 10px !important;
-  background-color: transparent;
-}
-.ant-modal-wrap{
-  background: rgba(0, 0, 0, 0.8);
-}
-.ant-modal-wrap .ant-modal {
+.modalStyle {
   transform-origin: 0 !important;
-  height: 100%;
-  display: flex;
   display: -webkit-flex;
   align-items: center;
   justify-content: center;
-  top: 0;
+  top: 0 !important;
   height: 100% !important;
   width: 70% !important;
   background: transparent;
   border: 0px;
-  position: initial;
+  position: initial !important;
   border-radius: initial;
-  padding: 0;
+  padding: 0 !important;
+  max-width: unset !important;
   @include mobile {
-    width: 90% !important; 
+    width: 90% !important;
   }
-}
-.ant-modal-wrap .ant-modal .ant-modal-content {
-  height: 90% !important;
-  width: 100%;
-  background-color: transparent;
-  box-shadow: 0px 0px;
-  @include mobile {
-    height: auto !important;
+  .ant-modal-close-x {
+    font-size: 22px !important;
   }
-  div {
+  .ant-modal-close {
+    color: rgb(138, 147, 155) !important;
+    top: -20px !important;
+    right: -25px !important;
+    @include mobile {
+      top: -50px !important;
+    }
+  }
+  .ant-modal-body {
+    padding: unset !important;
+  }
+  .ant-modal-content {
+    border-radius: 10px !important;
+    background-color: transparent;
+  }
+  .ant-modal-content {
+    height: 90% !important;
     width: 100%;
-    height: 100%;
+    background-color: transparent;
+    box-shadow: 0px 0px;
     @include mobile {
       height: auto !important;
     }
-    img {
-      height: -webkit-fill-available;
+    div {
+      width: 100%;
+      height: 100%;
+      @include mobile {
+        height: auto !important;
+      }
+      img {
+        height: -webkit-fill-available;
+      }
     }
   }
+  
 }
-
+.ant-modal-wrap {
+  background: rgba(0, 0, 0, 0.8);
+}

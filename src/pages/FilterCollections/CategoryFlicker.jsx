@@ -55,6 +55,8 @@ const CategoryFlicker = ({ category, setCategory, reloadOnChange }) => {
     
   };
 
+  const getQuery = new URLSearchParams(window?.location?.search);
+
   // useEffect(()=>{
   //   const query=new URLSearchParams(window?.location?.search);
   //   if(query?.get('SelectedCategory')){
@@ -85,7 +87,7 @@ const CategoryFlicker = ({ category, setCategory, reloadOnChange }) => {
                 className="changeCursor"
               >
                 <div
-                  className={item?.code == category ? "active" : "notActive"}
+                  className={item?.code == category || item?.code === getQuery?.get("SelectedCategory") ? "active" : "notActive"}
                 >
                   {item?.code}
                 </div>
