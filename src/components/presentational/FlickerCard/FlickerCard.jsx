@@ -2,7 +2,8 @@ import React from "react";
 import { Card } from "antd";
 import "./FlickerCard.scss";
 
-const FlickerCard = () => {
+const FlickerCard = ({data}
+  ) => {
   return (
     <div className="flickerCard">
       <Card
@@ -13,7 +14,7 @@ const FlickerCard = () => {
             <span className="flickerCardImage">
               <img
                 alt="example"
-                src="https://nftdepotblob.blob.core.windows.net/images/first/smh5bgbtfb6acg5i7x2mwnu5x25p3tqyb.PNG"
+                src={data?.image_location}
               />
             </span>
           </span>
@@ -21,14 +22,14 @@ const FlickerCard = () => {
       >
         <div className="flickerCardFooter">
           <span className="descHeading">
-             <span className="priceHeading">Private collection unique characters</span>
+             <span className="priceHeading">{data?.image_name}</span>
           </span>
           <span className="rightSection">
             <span>
               <span className="beliefPrice">RARITY</span>
             </span>
             <span className="tagImage">
-              <span className="tagPrice">30%</span>
+              <span className="tagPrice">{data?.rarity}%</span>
             </span>
           </span>
         </div>

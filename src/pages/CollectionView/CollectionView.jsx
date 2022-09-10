@@ -247,7 +247,7 @@ const CollectionView = ({ match }) => {
               <span>{collectionDetails?.description_short}</span>
             </div> */}
           </div>
-          {/* <FlickerComp /> */}
+          <FlickerComp collectionId={match.params.id} />
           <div className="searchBar_wrapper_outer">
             <div className="searchBar main_page_width">
               <div className="inputSection">

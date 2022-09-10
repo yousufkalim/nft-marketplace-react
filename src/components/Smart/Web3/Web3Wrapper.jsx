@@ -87,7 +87,6 @@ const Web3Connector = ({}) => {
   };
 
   const signMessage = async () => {
-    console.log(account);
     if (!library) return;
     let message = `Welcome to NFTDepot.Art!
     Click “Sign” to connect your wallet and accept the NFTDepot.Art Terms of Service:  https://nftdepot.art/tos This request will not trigger a blockchain transaction or cost any gas fees. Your authentication status will reset after 24 hours. Wallet address: ${account}

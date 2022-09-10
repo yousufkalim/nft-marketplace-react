@@ -11,7 +11,10 @@ import {
 import RightArrow from "../../images/rightIcon.svg";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { collectionDataSuccess, collectionNameStatus } from "../../store/collectionForm/collectionActions";
+import {
+  collectionDataSuccess,
+  collectionNameStatus,
+} from "../../store/collectionForm/collectionActions";
 import QUESTION_MARK from "../../images/questionMark.png";
 import {
   checkStroeNameAvailability,
@@ -22,7 +25,9 @@ import { openNotification } from "../../components/Smart/Notification";
 
 const CreateCollectionForm = () => {
   const formData = useSelector((state) => state?.collectionData?.data);
-  const nameStatus = useSelector((state) => state?.collectionData?.collectionNameStatus);
+  const nameStatus = useSelector(
+    (state) => state?.collectionData?.collectionNameStatus
+  );
 
   const [isExplicit, setIsExplicit] = useState(formData?.is_explicit ?? false);
   const [isMintable, setIsMintable] = useState(formData?.mintable ?? false);
@@ -32,38 +37,39 @@ const CreateCollectionForm = () => {
   const [layoutCodes, setLayoutCodes] = useState([]);
   const [mintingCoin, setMintingCoin] = useState([]);
   const [whoPaysFee, setWhoPaysFee] = useState([]);
-  const [isMintLocked, setIsMintLocked] = useState(formData?.mint_locked ?? false);
-  const [storename,setStoreName]=useState("");
-  const [storenameStatus,setStoreNameStatus]=useState(nameStatus ?? null);
-  const [personalLink,setPersonalLink]=useState("");
+  const [isMintLocked, setIsMintLocked] = useState(
+    formData?.mint_locked ?? false
+  );
+  const [storename, setStoreName] = useState("");
+  const [storenameStatus, setStoreNameStatus] = useState(nameStatus ?? null);
+  const [personalLink, setPersonalLink] = useState("");
 
   const history = useHistory();
 
   const user = useSelector((state) => state?.auth?.user);
- 
+  const walletId = useSelector((state) => state?.web3?.wallet);
 
-  const handleStorename=async(storeName)=>{
-    if(!storeName){
-    setStoreNameStatus(null);
-    setStoreName(storeName);
-    }
-    else{
-    setStoreNameStatus("validating");
-    setStoreName(storeName);
-    try {
-      const res = await checkStroeNameAvailability(storeName);
-      if (res?.data?.body?.exists) {
-        setStoreNameStatus("error")
-      } else {
-        setStoreNameStatus("success")
+
+  const handleStorename = async (storeName) => {
+    if (!storeName) {
+      setStoreNameStatus(null);
+      setStoreName(storeName);
+    } else {
+      setStoreNameStatus("validating");
+      setStoreName(storeName);
+      try {
+        const res = await checkStroeNameAvailability(storeName);
+        if (res?.data?.body?.exists) {
+          setStoreNameStatus("error");
+        } else {
+          setStoreNameStatus("success");
+        }
+      } catch (error) {
+        console.log("error", error);
+        openNotification("Oops", "Something went wrong");
       }
-    } catch (error) {
-      console.log("error", error);
-      openNotification("Oops", "Something went wrong");
     }
-  }
-  }
-
+  };
 
   const dispatch = useDispatch();
 
@@ -113,13 +119,13 @@ const CreateCollectionForm = () => {
       who_pays_fees: "Seller",
     };
     dispatch(collectionNameStatus(storenameStatus));
-      if (storenameStatus=="success") {
-        dispatch(collectionDataSuccess(data));
-        history.push("/createCollectionUploadImage");
-      } 
-      // else {
-      //   openNotification("Oops", "Store name already exists");
-      // } 
+    if (storenameStatus == "success") {
+      dispatch(collectionDataSuccess(data));
+      history.push("/createCollectionUploadImage");
+    }
+    // else {
+    //   openNotification("Oops", "Store name already exists");
+    // }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -145,9 +151,10 @@ const CreateCollectionForm = () => {
               longDescription: formData?.description_long ?? "",
               personalLink: formData?.url_personal ?? "",
               mediumLink: formData?.url_medium ?? "",
-              category:formData?.category_code ?? "",
-              delayDays: formData?.delay_days ??  5,
-              thirdPartyRoyaltyPercent: formData?.third_party_royalty_percent ?? 0.0,
+              category: formData?.category_code ?? "",
+              delayDays: formData?.delay_days ?? 5,
+              thirdPartyRoyaltyPercent:
+                formData?.third_party_royalty_percent ?? 0.0,
               discordLink: formData?.url_discord ?? "",
               telegramLink: formData?.url_telegram ?? "",
               afterPurchaseMessage: formData?.after_1st_purchase_text ?? "",
@@ -157,7 +164,7 @@ const CreateCollectionForm = () => {
               isMintable: formData?.mintable ?? isMintable,
               isMintLocked: formData?.mint_locked ?? isMintLocked,
               royaltyPercent: formData?.royalty_percent ?? 0,
-              thirdPartyWalletId: formData?.third_party_wallet_id ?? "",
+              thirdPartyWalletId: formData?.third_party_wallet_id ?? walletId,
               whoPaysFee: formData?.who_pays_fees ?? "Seller",
             }}
             scrollToFirstError="true"
@@ -167,233 +174,123 @@ const CreateCollectionForm = () => {
           >
             <div className="CreateCollectionFormItemWrapper">
               <div className="CreateCollectionFormIteminner1">
-              <Form.Item
-                name="storename" 
-                label="Store Name"
-                help={storenameStatus=="error"?"Store name already exists":""}
-                hasFeedback
-                validateStatus={storenameStatus}
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your storeName!",
-                  },
-                ]}
-              >
-                <Input placeholder="Store name" value={storename} onChange={(e)=>handleStorename(e.target.value)} />
-              </Form.Item>
-              <Form.Item
-                name="shortDescription"
-                label="Short Description"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your Short Description!",
-                  },
-                ]}
-              >
-                <Input placeholder="Short Description" />
-              </Form.Item>
-              <Form.Item name="longDescription" label="Long Description">
-                <Input.TextArea
-                  placeholder="Long description"
-                  style={{ height: 150 }}
-                />
-              </Form.Item>
-              <Form.Item
-                name="category"
-                label="Category"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please select a Category!",
-                  },
-                ]}
-              >
-                <Select placeholder="Category">
-                  {categoryCodes?.body?.map((item,index) => {
-                    return (
-                      <Select.Option value={item?.code} key={item+index}>
-                        {item?.description}
-                      </Select.Option>
-                    );
-                  })}
-                </Select>
-              </Form.Item>
-              <Form.Item
-                name="afterPurchaseMessage"
-                label="After 1st Purchase Message"
-              >
-                <Input placeholder="After purshase message" />
-              </Form.Item>
-              <Form.Item
-                name="mintingCoin"
-                label="Minting Coin"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please select a Minting Coin!",
-                  },
-                ]}
-              >
-                <Select placeholder="Minting Coin">
-                  {mintingCoin?.body?.slice(0,2)?.map((item,index) => {
-                    return (
-                      <Select.Option value={item?.code} key={item+index}>
-                        {item?.description}
-                      </Select.Option>
-                    );
-                  })}
-                </Select>
-              </Form.Item>
-              <Form.Item
-                name="thirdPartyRoyaltyPercent"
-                label={<div>Royalty Percent
-                  <Tooltip title=" This is the “Royalty Percentage” you will receive for each resale after the 1st sale. This will be deducted from the sale price and paid to the “Payout Wallet”."
-                  color={"#303549"}
-                  overlayClassName="favouriteToolTip"
-                  >
-                   <span className="infoIcon"> 
-                   <img src={QUESTION_MARK} alt={"QUESTION_MARK"}/>
-                    </span>
-                    </Tooltip>
-                </div>}
-              >
-                <InputNumber
-                  placeholder="Royalty Percent"
-                  controls={false}
-                />
-              </Form.Item>
-              <Form.Item
-                label={<div>Mint Locked
-                    <Tooltip title="Use this ONLY when you are sure there are to be no changes to any part of the collection. (Commonly when images are stored to IPFS, etc.)"
-                  color={"#303549"}
-                  overlayClassName="favouriteToolTip"
-                  >
-                   <span className="infoIcon"> 
-                   <img src={QUESTION_MARK} alt={"QUESTION_MARK"}/>
-                   </span>
-                    </Tooltip>
-                </div>}
-                labelAlign="left"
-                valuePropName="checked"
-                className="firstSwitch"
-              >
-                <Switch
-                  size="small"
-                  checked={isMintLocked}
-                  onChange={() => setIsMintLocked(!isMintLocked)}
-                />
-              </Form.Item>
-              </div>
-              <div className="CreateCollectionFormIteminner2">
-              <Form.Item
-                name="instagramLink"
-                label="Instagram Link"
-              >
-                <Input placeholder="Instagram link " prefix={<span className="prefixColor">https://www.instagram.com/</span>}/>
-              </Form.Item>
-              <Form.Item
-                name="personalLink"
-                label={
-                  <div>Personal Link
-                  <Tooltip title="This is the link that will be used to access your personal site. This will be generated automatically if left blank."
-                  color={"#303549"}
-                  overlayClassName="favouriteToolTip"
-                  >
-                   <span className="infoIcon"> 
-                   <img src={QUESTION_MARK} alt={"QUESTION_MARK"}/>
-                   </span>
-                    </Tooltip>
-                </div>
-                }
-                
-              >
-                <Input placeholder="your personal site link" />
-              </Form.Item>
-              <span className="mediaAndDiscordLinks">
                 <Form.Item
-                  name="mediumLink"
-                  label="Medium Link"
+                  name="storename"
+                  label="Store Name"
+                  help={
+                    storenameStatus == "error"
+                      ? "Store name already exists"
+                      : ""
+                  }
+                  hasFeedback
+                  validateStatus={storenameStatus}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your storeName!",
+                    },
+                  ]}
                 >
-                  <Input placeholder="Medium link" prefix={<span className="prefixColor">https://medium.com/</span>} />
+                  <Input
+                    placeholder="Store name"
+                    value={storename}
+                    onChange={(e) => handleStorename(e.target.value)}
+                  />
                 </Form.Item>
-
                 <Form.Item
-                  name="discordLink"
-                  label="Discord Link"
+                  name="shortDescription"
+                  label="Short Description"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your Short Description!",
+                    },
+                  ]}
                 >
-                  <Input placeholder="Discord link"  prefix={<span className="prefixColor">https://discord.com/</span>} />
+                  <Input placeholder="Short Description" />
                 </Form.Item>
-              </span>
-              <Form.Item name="telegramLink" label="Telegram Link">
-                <Input placeholder="Telegram link"  prefix={<span className="prefixColor">https://telegram.com/</span>} />
-              </Form.Item>
-              <Form.Item
-                name="mintingSupply"
-                label="Minting Supply"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input Minting supply Count!",
-                  },
-                ]}
-              >
-                <InputNumber
-                  placeholder="Minting supply Count"
-                  controls={false}
-                />
-              </Form.Item>
-              <Form.Item
-                name="delayDays"
-                label="Delay Days"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input Delay Days!",
-                  },
-                ]}
-              >
-                <InputNumber
-                  placeholder="Days to delay before showing next level"
-                  controls={false}
-                />
-              </Form.Item>
-              <Form.Item
-                name="thirdPartyWalletId"
-                label={<div>Payout Wallet
-                  <Tooltip title="This is the Wallet ID that will receive the first sale and future royalty payments (if applicable) for this collection."
-                  color={"#303549"}
-                  overlayClassName="favouriteToolTip"
-                  >
-                   <span className="infoIcon"> 
-                   <img src={QUESTION_MARK} alt={"QUESTION_MARK"}/>
-                   </span>
-                    </Tooltip>
-                </div>}
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input Payout Wallet id!",
-                  },
-                ]}
-              >
-                <Input placeholder="Wallet ID we will payout the royalty to" />
-              </Form.Item>
-              <div className="dFlex">
+                <Form.Item name="longDescription" label="Long Description">
+                  <Input.TextArea
+                    placeholder="Long description"
+                    style={{ height: 150 }}
+                  />
+                </Form.Item>
                 <Form.Item
+                  name="category"
+                  label="Category"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please select a Category!",
+                    },
+                  ]}
+                >
+                  <Select placeholder="Category">
+                    {categoryCodes?.body?.map((item, index) => {
+                      return (
+                        <Select.Option value={item?.code} key={item + index}>
+                          {item?.description}
+                        </Select.Option>
+                      );
+                    })}
+                  </Select>
+                </Form.Item>
+                <Form.Item
+                  name="afterPurchaseMessage"
+                  label="After 1st Purchase Message"
+                >
+                  <Input placeholder="After purshase message" />
+                </Form.Item>
+                <Form.Item
+                  name="mintingCoin"
+                  label="Minting Coin"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please select a Minting Coin!",
+                    },
+                  ]}
+                >
+                  <Select placeholder="Minting Coin">
+                    {mintingCoin?.body?.slice(0, 2)?.map((item, index) => {
+                      return (
+                        <Select.Option value={item?.code} key={item + index}>
+                          {item?.description}
+                        </Select.Option>
+                      );
+                    })}
+                  </Select>
+                </Form.Item>
+                <Form.Item
+                  name="thirdPartyRoyaltyPercent"
                   label={
                     <div>
-                      Explicit
+                      Royalty Percent
                       <Tooltip
-                        title={
-                          "Enable this if your items may contain harmful, sexual, or violent  content. This will help users to safely limit their searches."
-                        }
+                        title=" This is the “Royalty Percentage” you will receive for each resale after the 1st sale. This will be deducted from the sale price and paid to the “Payout Wallet”."
                         color={"#303549"}
                         overlayClassName="favouriteToolTip"
                       >
                         <span className="infoIcon">
-                        <img src={QUESTION_MARK} alt={"QUESTION_MARK"}/>
+                          <img src={QUESTION_MARK} alt={"QUESTION_MARK"} />
+                        </span>
+                      </Tooltip>
+                    </div>
+                  }
+                >
+                  <InputNumber placeholder="Royalty Percent" controls={false} />
+                </Form.Item>
+                <Form.Item
+                  label={
+                    <div>
+                      Mint Locked
+                      <Tooltip
+                        title="Use this ONLY when you are sure there are to be no changes to any part of the collection. (Commonly when images are stored to IPFS, etc.)"
+                        color={"#303549"}
+                        overlayClassName="favouriteToolTip"
+                      >
+                        <span className="infoIcon">
+                          <img src={QUESTION_MARK} alt={"QUESTION_MARK"} />
                         </span>
                       </Tooltip>
                     </div>
@@ -404,37 +301,180 @@ const CreateCollectionForm = () => {
                 >
                   <Switch
                     size="small"
-                    checked={isExplicit}
-                    onChange={() => setIsExplicit(!isExplicit)}
+                    checked={isMintLocked}
+                    onChange={() => setIsMintLocked(!isMintLocked)}
+                  />
+                </Form.Item>
+              </div>
+              <div className="CreateCollectionFormIteminner2">
+                <Form.Item name="instagramLink" label="Instagram Link">
+                  <Input
+                    placeholder="Instagram link "
+                    prefix={
+                      <span className="prefixColor">
+                        https://www.instagram.com/
+                      </span>
+                    }
                   />
                 </Form.Item>
                 <Form.Item
+                  name="personalLink"
                   label={
                     <div>
-                      Mintable
+                      Personal Link
                       <Tooltip
-                        title={
-                          "Enabling this will create your contract on the blockchain. This may entail gas fees depending on the blockchain you have selected."
-                        }
+                        title="This is the link that will be used to access your personal site. This will be generated automatically if left blank."
                         color={"#303549"}
                         overlayClassName="favouriteToolTip"
                       >
                         <span className="infoIcon">
-                          <img src={QUESTION_MARK} alt={"QUESTION_MARK"}/>
+                          <img src={QUESTION_MARK} alt={"QUESTION_MARK"} />
                         </span>
                       </Tooltip>
                     </div>
                   }
-                  labelAlign="left"
-                  valuePropName="checked"
                 >
-                  <Switch
-                    size="small"
-                    checked={isMintable}
-                    onChange={() => setIsMintable(!isMintable)}
+                  <Input placeholder="your personal site link" />
+                </Form.Item>
+                <span className="mediaAndDiscordLinks">
+                  <Form.Item name="mediumLink" label="Medium Link">
+                    <Input
+                      placeholder="Medium link"
+                      prefix={
+                        <span className="prefixColor">https://medium.com/</span>
+                      }
+                    />
+                  </Form.Item>
+
+                  <Form.Item name="discordLink" label="Discord Link">
+                    <Input
+                      placeholder="Discord link"
+                      prefix={
+                        <span className="prefixColor">
+                          https://discord.com/
+                        </span>
+                      }
+                    />
+                  </Form.Item>
+                </span>
+                <Form.Item name="telegramLink" label="Telegram Link">
+                  <Input
+                    placeholder="Telegram link"
+                    prefix={
+                      <span className="prefixColor">https://telegram.com/</span>
+                    }
                   />
                 </Form.Item>
-              </div>
+                <Form.Item
+                  name="mintingSupply"
+                  label="Minting Supply"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input Minting supply Count!",
+                    },
+                  ]}
+                >
+                  <InputNumber
+                    placeholder="Minting supply Count"
+                    controls={false}
+                  />
+                </Form.Item>
+                <Form.Item
+                  name="delayDays"
+                  label="Delay Days"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input Delay Days!",
+                    },
+                  ]}
+                >
+                  <InputNumber
+                    placeholder="Days to delay before showing next level"
+                    controls={false}
+                  />
+                </Form.Item>
+                <Form.Item
+                  name="thirdPartyWalletId"
+                  label={
+                    <div>
+                      Payout Wallet
+                      <Tooltip
+                        title="This is the Wallet ID that will receive the first sale and future royalty payments (if applicable) for this collection."
+                        color={"#303549"}
+                        overlayClassName="favouriteToolTip"
+                      >
+                        <span className="infoIcon">
+                          <img src={QUESTION_MARK} alt={"QUESTION_MARK"} />
+                        </span>
+                      </Tooltip>
+                    </div>
+                  }
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input Payout Wallet id!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Wallet ID we will payout the royalty to" />
+                </Form.Item>
+                <div className="dFlex">
+                  <Form.Item
+                    label={
+                      <div>
+                        Explicit
+                        <Tooltip
+                          title={
+                            "Enable this if your items may contain harmful, sexual, or violent  content. This will help users to safely limit their searches."
+                          }
+                          color={"#303549"}
+                          overlayClassName="favouriteToolTip"
+                        >
+                          <span className="infoIcon">
+                            <img src={QUESTION_MARK} alt={"QUESTION_MARK"} />
+                          </span>
+                        </Tooltip>
+                      </div>
+                    }
+                    labelAlign="left"
+                    valuePropName="checked"
+                    className="firstSwitch"
+                  >
+                    <Switch
+                      size="small"
+                      checked={isExplicit}
+                      onChange={() => setIsExplicit(!isExplicit)}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    label={
+                      <div>
+                        Mintable
+                        <Tooltip
+                          title={
+                            "Enabling this will create your contract on the blockchain. This may entail gas fees depending on the blockchain you have selected."
+                          }
+                          color={"#303549"}
+                          overlayClassName="favouriteToolTip"
+                        >
+                          <span className="infoIcon">
+                            <img src={QUESTION_MARK} alt={"QUESTION_MARK"} />
+                          </span>
+                        </Tooltip>
+                      </div>
+                    }
+                    labelAlign="left"
+                    valuePropName="checked"
+                  >
+                    <Switch
+                      size="small"
+                      checked={isMintable}
+                      onChange={() => setIsMintable(!isMintable)}
+                    />
+                  </Form.Item>
+                </div>
               </div>
             </div>
 

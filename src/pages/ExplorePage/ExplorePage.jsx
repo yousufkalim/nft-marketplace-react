@@ -11,8 +11,8 @@ import useWindowSize from "../../helpers/hooks";
 import { openNotification } from "../../components/Smart/Notification";
 import CategoryFlicker from "../FilterCollections/CategoryFlicker";
 import { getCollectionByCategory } from "../../services/collectionServices";
-import "./ExplorePage.scss";
 import Spin from "../../components/presentational/Spin";
+import "./ExplorePage.scss";
 
 const ExplorePage = () => {
   const arr = [1, 2, 3];
@@ -25,20 +25,10 @@ const ExplorePage = () => {
     next_page: 1,
   });
   const [browserWidth] = useWindowSize();
-
-  // useEffect(() => {
-  //   if (query?.get("SelectedCategory")) {
-  //     setCategory(query.get("SelectedCategory"));
-  //   } else {
-  //     setCategory("");
-  //   }
-  // }, [window.location.search]);
-
   const fetchExploreData = async () => {
     try {
       if (!query?.get("SelectedCategory")) {
         const res = await allCollectionsAPI(extraData?.next_page);
-        console.log("in First");
         if (res?.body?.data?.length) {
           setExploreData([...exploreData, ...res?.body?.data]);
           setExtraData({
@@ -51,11 +41,9 @@ const ExplorePage = () => {
           query?.get("SelectedCategory"),
           extraData?.next_page
         );
-        console.log("not in First");
-        console.log("res", res);
 
-        if (res?.data?.body?.data?.length) {
-          setExploreData([...exploreData, ...res?.data?.body?.data]);
+        if (res?.body?.data?.length) {
+          setExploreData([...exploreData, ...res?.body?.data]);
           setExtraData({
             next_page: res?.body?.next_page,
             has_more: res?.body?.has_more,
@@ -64,7 +52,6 @@ const ExplorePage = () => {
       }
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
-      // setExploreData([]);
     }
   };
 
@@ -73,28 +60,6 @@ const ExplorePage = () => {
     await fetchExploreData();
     setLoading(false);
   }, []);
-
-  const filterExplore = (exploreData) => {
-    if (exploreData?.image_large_location?.includes("https")) {
-      const check = exploreData?.image_large_location?.lastIndexOf(".");
-      const extension = exploreData?.image_large_location.slice(check);
-      if (extension !== ".svg") {
-        return true;
-      } else {
-        return false;
-      }
-    }
-    return false;
-  };
-
-  const filterCategory = (data) => {
-    if (category === "" || category === null) {
-      console.log("i am returning true");
-      return true;
-    } else {
-      return data?.category_code === category;
-    }
-  };
 
   return (
     <>
@@ -118,7 +83,7 @@ const ExplorePage = () => {
         />
         {loading ? (
           <div style={{ textAlign: "center" }}>
-            <Spin/>
+            <Spin />
           </div>
         ) : exploreData.length > 0 ? (
           <div className="ExplorecardGrid main_page_width">
@@ -152,24 +117,21 @@ const ExplorePage = () => {
               }
             >
               <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
-                {exploreData
-                  // ?.filter(filterExplore)
-                  // ?.filter(filterCategory)
-                  ?.map((item, index) => {
-                    return (
-                      <Col
-                        className="gutter-row"
-                        span={browserWidth < 620 ? 24 : 8}
-                        key={index}
-                      >
-                        <ExploreCard
-                          data={item}
-                          exploreData={exploreData}
-                          setExploreData={setExploreData}
-                        />
-                      </Col>
-                    );
-                  })}
+                {exploreData?.map((item, index) => {
+                  return (
+                    <Col
+                      className="gutter-row"
+                      span={browserWidth < 620 ? 24 : 8}
+                      key={index}
+                    >
+                      <ExploreCard
+                        data={item}
+                        exploreData={exploreData}
+                        setExploreData={setExploreData}
+                      />
+                    </Col>
+                  );
+                })}
               </Row>
             </InfiniteScroll>
           </div>

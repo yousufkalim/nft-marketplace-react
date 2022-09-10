@@ -96,8 +96,21 @@ export const getCollectionFollowers = async (id,pageNumber) => {
   );
 };
 export const getCollectionByCategory = async (category,pageNumber) => {
-  return await axios.get(
+  const res = await fetch(
     `https://nftdepot-api.azurewebsites.net/collections/category/${category}/${pageNumber}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
+  );
+  const resKey = await res.json();
+  return resKey;
+};
+export const getCollectionRarityData = async (id) => {
+  return await axios.get(
+    `https://nftdepot-api.azurewebsites.net/collections/${id}/rarity/`,
     apiConfig
   );
 };

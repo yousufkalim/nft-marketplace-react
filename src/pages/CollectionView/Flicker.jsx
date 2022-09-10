@@ -5,39 +5,66 @@ import LEFT_ARROW from "../../images/left_sign_arrow.svg";
 import RIGHT_ARROW from "../../images/right_sign_arrow.svg";
 
 import "@egjs/react-flicking/dist/flicking.css";
-import './Flicker.scss'
+import "./Flicker.scss";
+import { useEffect } from "react";
+import { getCollectionRarityData } from "../../services/collectionServices";
+import { useState } from "react";
 
-const FlickerComp = () => {
+const FlickerComp = ({ collectionId }) => {
   const flickinfRef = useRef();
-  const arr=[1,2,3,4,5,6,7]
+  const [rarityData, setRarityData] = useState([]);
 
-  const onClickLeft=()=>{
+  const onClickLeft = () => {
     flickinfRef.current.prev();
-  }
+  };
 
-  const onClickRight=()=>{
+  const onClickRight = () => {
     flickinfRef.current.next();
-  }
+  };
+
+  useEffect(() => {
+    const getRarityData = async () => {
+      try {
+        const res = await getCollectionRarityData(collectionId);
+        setRarityData(res?.data?.body?.length ? res?.data?.body : []);
+      } catch (e) {
+        console.log("error", e?.response?.data?.message);
+      }
+    };
+    getRarityData();
+  }, [collectionId]);
 
   return (
     <div className="flickerWrapper">
-        <div onClick={onClickLeft} className="arrow leftArrow"><img src={LEFT_ARROW} alt={'LEFT_ARROW'} /></div>
-      <Flicking horizontal bound viewportTag={"div"} defaultIndex={0} align={'prev'} circular ref={flickinfRef} >
-
-    {
-        arr.map((item,index)=>{
-            return(
+      {rarityData?.length ? (
+        <>
+          <div onClick={onClickLeft} className="arrow leftArrow">
+            <img src={LEFT_ARROW} alt={"LEFT_ARROW"} />
+          </div>
+          <Flicking
+            horizontal
+            bound
+            viewportTag={"div"}
+            defaultIndex={0}
+            align={"prev"}
+            circular={true}
+            ref={flickinfRef}
+          >
+            {rarityData?.map((item, index) => {
+              return (
                 <div key={index}>
-                <FlickerCard/>
+                  <FlickerCard data={item} />
                 </div>
-            )
-            })
-    }
-
-      </Flicking>
-      <div onClick={onClickRight} className="arrow rightArrow"><img src={RIGHT_ARROW} alt={'RIGHT_ARROW'} /></div>
-
-
+              );
+            })}
+          </Flicking>
+          <div onClick={onClickRight} className="arrow rightArrow">
+            <img src={RIGHT_ARROW} alt={"RIGHT_ARROW"} />
+          </div>
+        </>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
