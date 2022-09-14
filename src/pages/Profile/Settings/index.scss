@@ -1,3 +1,4 @@
+@import "../../../styles//variables";
 .bg_banner_1 {
     background-image: url("../../../images/header_bg_img.png");
     height: 65px;
@@ -412,4 +413,24 @@ span.chevron_icon_btn.left_cev {
     height: 205px;
 }
 }
+.passInfo {
+    font-family: "Rubik";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 35px;
+    color: $CreateBtnBg;
+  }
+.notificationWrapper{
+    .outer_layer_select{
+        display: flex;
+         justify-content: space-between;
+         align-items: center;
+         flex-flow: row wrap;
+    }
+    .ant-form-item{
+        margin-top: 22px;
+        flex: 50%;
 
+    }
+}

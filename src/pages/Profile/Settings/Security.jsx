@@ -28,6 +28,17 @@ const Security = () => {
     console.log("Failed:", errorInfo);
   };
 
+  const checkPassword = async (_, password) => {
+    const pattern = new RegExp(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+])[A-Za-z\d~!@#$%^&*()_+]{8,}$/
+    );
+    if (!pattern.test(password)) {
+      return Promise.reject("rejected");
+    } else {
+      return Promise.resolve(true);
+    }
+  };
+
   return (
     <div>
       <Form
@@ -62,6 +73,11 @@ const Security = () => {
                   {
                     required: true,
                     message: "Please input New password!",
+                  },
+                  {
+                    validator: checkPassword,
+                    message:
+                      "The passwords MUST follow the “Password *” noted above…. 12-25 characters….. etc.",
                   },
                 ]}
               >
@@ -104,6 +120,14 @@ const Security = () => {
               </Button>
             </Form.Item>
           </span>
+          <Form.Item>
+          <span className="passInfo">
+                  Password ( Passwords must be 12-25 characters and MUST
+                      contain 1 uppercase letter, 1 lowercase letter and 1
+                      special character (single and double quotes are not
+                      allowed). )
+                  </span>
+          </Form.Item>
         </div>
       </Form>
     </div>
