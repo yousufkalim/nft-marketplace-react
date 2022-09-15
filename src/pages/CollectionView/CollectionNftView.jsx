@@ -11,6 +11,7 @@ import Spin from "../../components/presentational/Spin";
 import CollectionNftCard from "../../components/presentational/CollectionNftCard/CollectionNftCard";
 import LoadingCard from "../../components/presentational/LoadingCard/LoadingCard";
 import { useSelector } from "react-redux";
+import TimeLine from "../../components/Timeline/TimeLine";
 
 const CollectionNftView = ({
   collectionid,
@@ -35,7 +36,7 @@ const CollectionNftView = ({
   const fetchExploreData = async () => {
     try {
       const res = await getCollectionNft(collectionid, extraData?.next_page);
-      setMessage(res?.message);
+      setMessage(res);
       if (res?.body?.data?.length) {
         setExploreData([...exploreData, ...res?.body?.data]);
         setExtraData({
@@ -137,10 +138,13 @@ const CollectionNftView = ({
             </InfiniteScroll>
           </div>
         ) : (
-          <div style={{ textAlign: "center" }}>
-            {user?.guid === userId
-              ? message
-              : "No Nfts found for this collection"}
+          <div className="progress">
+            {user?.guid === userId ? (
+              // ? message
+              <TimeLine status={message?.body?.status} />
+            ) : (
+              "No Nfts found for this collection"
+            )}
           </div>
         )}
       </div>
