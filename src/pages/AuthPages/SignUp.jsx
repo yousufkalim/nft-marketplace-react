@@ -1,25 +1,32 @@
 import React, { useState } from "react";
 import PAGE_HEADER from "../../images/PageHeader.png";
 import AUTH_ICON from "../../images/auth_icon.svg";
-import { Input, Form, Button, Radio } from "antd";
+import { Input, Form, Button, Radio, Select } from "antd";
 import { Link } from "react-router-dom";
 import { SignUpAPI, VerifyEmailAPI } from "../../services/authServices";
 import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
-import "./SignUp.scss";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { openNotification } from "../../components/Smart/Notification";
 import Spin from "../../components/presentational/Spin";
 import useWindowSize from "../../helpers/hooks";
 import { registerEmail } from "../../store/auth/authActions";
+import { useEffect } from "react";
+import { codesAPI } from "../../services/createCollectionServices";
+import "./SignUp.scss";
 
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [isAgree, setIsAgree] = useState(false);
   const [newsTeller, setNewsTeller] = useState(false);
+  const [securityQuestions, setSecurityQuestions] = useState([]);
+  const [showAnswerField, setShowAnswerField] = useState(false);
+  const [selectedQuestion,setSelectedQuestion]=useState('')
+  const [selectedQuestionIndex,setSelectedIndex]=useState('')
+  const [answersArray,setAnswersArray]=useState([])
+  const [answer, setAnswer] = useState("");
   const dispatch = useDispatch();
   const wallet_id = useSelector((state) => state?.web3?.wallet);
-
   const history = useHistory();
   const onFinish = async (values) => {
     if (!wallet_id) {
@@ -52,6 +59,14 @@ const SignUp = () => {
     }
   };
 
+  useEffect(() => {
+    const getQuestionsCode = async () => {
+      const res = await codesAPI("Security Questions");
+      setSecurityQuestions(res?.data?.body);
+    };
+    getQuestionsCode();
+  }, []);
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
@@ -78,7 +93,24 @@ const SignUp = () => {
     }
   };
 
-  // get state from Web3Wrapper > Web3Connector
+  const hanldeQuestion = (index, desc) => {
+    setShowAnswerField(true);
+    setAnswer("");
+    setSelectedQuestion(desc)
+    setSelectedIndex(index)
+
+  };
+
+  const handleQuestions=()=>{
+    console.log("selectedQuestionIndex",selectedQuestionIndex);
+    setAnswersArray({...answersArray},{
+      [`question${selectedQuestionIndex}`]:selectedQuestion,
+      [`answer${selectedQuestionIndex}`]:answer
+
+    })
+    setShowAnswerField(false);
+    setAnswer("");
+  }
 
   return (
     <>
@@ -212,6 +244,57 @@ const SignUp = () => {
                 >
                   <Input.Password placeholder="Confirm Password" />
                 </Form.Item>
+                <Form.Item
+                  name="Security Questions"
+                  label="Security Questions"
+                  labelCol={{ span: 24 }}
+                  wrapperCol={{ span: 24 }}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please Answer All Security Questions!",
+                    },
+                  ]}
+                >
+                  <Select placeholder="Security Questions">
+                    {securityQuestions?.slice(0, 4)?.map((item, index) => {
+                      return (
+                        <Select.Option value={item?.code} key={item + index}>
+                          <div
+                            className="marginTop"
+                            onClick={() =>
+                              hanldeQuestion(index + 1, item?.description)
+                            }
+                          >
+                            {item?.description}
+                          </div>
+                        </Select.Option>
+                      );
+                    })}
+                  </Select>
+                </Form.Item>
+                {showAnswerField && (
+                  <Form.Item
+                    label="Answer"
+                    labelCol={{ span: 24 }}
+                    wrapperCol={{ span: 24 }}
+                    rules={[
+                      // {
+                      //   required: true,
+                      //   message: "Please input your Answer!",
+                      // },
+                    ]}
+                  >
+                    <Input
+                      placeholder="Answer"
+                      value={answer}
+                      onChange={(e) => setAnswer(e.target.value)}
+                    />
+                    <div className="nextBtn" onClick={handleQuestions}>
+                      <span>Submit</span>
+                    </div>
+                  </Form.Item>
+                )}
                 <Form.Item name="termsAndCondition">
                   <Radio
                     checked={isAgree}

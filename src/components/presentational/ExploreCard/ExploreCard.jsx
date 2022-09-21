@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card } from "antd";
 import FRAME_ICON from "../../../images/frame.svg";
 import EYE_ICON from "../../../images/eye_icon.svg";
+import LINK_ICON from "../../../images/link_icon.svg";
 import ORANGE_FRAME from "../../../images/orange_frame.svg";
 import { Tooltip } from "antd";
 import "./ExploreCard.scss";
@@ -11,7 +12,7 @@ import {
   unFollowCollection,
 } from "../../../services/collectionServices";
 import { openNotification } from "../../Smart/Notification";
-import { truncate } from "../../../helpers/utils";
+import { truncate, truncateTitle } from "../../../helpers/utils";
 import { useSelector } from "react-redux";
 
 const { Meta } = Card;
@@ -70,6 +71,7 @@ const ExploreCard = ({
     }
   };
 
+
   const handleCreatedBy = (e) => {
     e.stopPropagation();
     if (user?.username === data?.created_by) {
@@ -78,6 +80,11 @@ const ExploreCard = ({
       history.push(`/creatorDetails/${data?.created_by}`);
     }
   };
+
+  const handleUrlPersonal=(e)=>{
+    e.stopPropagation();
+    history.push(data?.url_personal)
+  }
 
   return (
     <div className="ExploreCard" onClick={handleClick}>
@@ -118,7 +125,12 @@ const ExploreCard = ({
         }
       >
         <Meta
-          title={data?.store_name}
+          title={
+            <div className="DisplayF">
+            {truncateTitle(data?.store_name)}
+            <img src={LINK_ICON} alt={"LINK_ICON"} onClick={(e)=>handleUrlPersonal(e)} />
+            </div>
+            }
           description={truncate(data?.description_short)}
         />
         <div className="exploreCardFooter">

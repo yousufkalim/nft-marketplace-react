@@ -3,33 +3,35 @@
 
 .collectionNftViewWrapper {
   width: 100%;
+  display: flex;
+  flex-direction: column-reverse;
   .collectionNftViewCardGrid {
     margin-top: 20px;
     padding: 0% 60px;
-    @media screen and (max-width:1100px) {
+    @media screen and (max-width: 1100px) {
       padding: 0% 30px;
     }
     // margin-left: 257px;
     // margin-right: 237px;
     .ant-col {
       margin-top: 30px !important;
-      @media screen and (max-width:1200px) {
+      @media screen and (max-width: 1200px) {
         flex: 0 0 50%;
-        max-width: 50%;       
+        max-width: 50%;
       }
-      @media screen and (max-width:900px) {
+      @media screen and (max-width: 900px) {
         flex: 0 0 100%;
-        max-width: 100%;       
+        max-width: 100%;
       }
     }
-    .infinite-scroll-component__outerdiv{
+    .infinite-scroll-component__outerdiv {
       .infinite-scroll-component {
         overflow: unset !important;
       }
     }
   }
-  .progress{
-    padding: 1.2% 60px;
+  .progress {
+    padding: 1.2% 30px;
     margin-bottom: 12px;
     margin-top: 12px;
     text-align: center;

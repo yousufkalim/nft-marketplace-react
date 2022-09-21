@@ -36,7 +36,9 @@ const CollectionView = ({ match }) => {
   const [searchParam, setSearchParam] = useState("");
   const [filterCodes, setFilterCodes] = useState([]);
   const userData = useSelector((state) => state?.auth?.user);
-  const history=useHistory()
+  const [showSearchBarAndRarirtyTable, setShowSearchBarAndRarirtyTable] =
+    useState(false);
+  const history = useHistory();
   useEffect(() => {
     const getCollectionDetails = async () => {
       try {
@@ -101,15 +103,15 @@ const CollectionView = ({ match }) => {
 
   const [browserWidth] = useWindowSize();
 
-  const handleClick=()=>{
+  const handleClick = () => {
     if (userData?.guid === collectionDetails?.user_details?.guid) {
       history.push(`/profile`);
     } else {
       history.push(`/creatorDetails/${collectionDetails?.user_details?.guid}`);
     }
-  }
+  };
 
-  console.log("collectionDetails",collectionDetails);
+  console.log("collectionDetails", collectionDetails);
 
   return (
     <>
@@ -159,7 +161,7 @@ const CollectionView = ({ match }) => {
                 <div className="socialIconsSection">
                   <span>Created By:</span>
                   <span className="value" onClick={handleClick}>
-                  {collectionDetails?.user_details?.username}
+                    {collectionDetails?.user_details?.username}
                   </span>
                   {/* <div className="socialIcons">
             <a className="socialIcon" href={collectionDetails?.url_twitter ?? 'https://twitter.com/'} target='_blank'>
@@ -225,10 +227,10 @@ const CollectionView = ({ match }) => {
               </div>
             </div>
           )}
-          <div className="socialIconsSection main_page_width display_none" >
+          <div className="socialIconsSection main_page_width display_none">
             <span>Created By:</span>
             <span className="value" onClick={handleClick}>
-            {collectionDetails?.user_details?.username}
+              {collectionDetails?.user_details?.username}
             </span>
             {/* <div className="socialIcons">
             <a className="socialIcon" href={collectionDetails?.url_twitter ?? 'https://twitter.com/'} target='_blank'>
@@ -247,56 +249,62 @@ const CollectionView = ({ match }) => {
               <span>{collectionDetails?.description_short}</span>
             </div> */}
           </div>
-          <FlickerComp collectionId={match.params.id} />
-          <div className="searchBar_wrapper_outer">
-            <div className="searchBar main_page_width">
-              <div className="inputSection">
-                <div className="searchInput">
-                  <Input
-                    suffix={<SearchOutlined />}
-                    size="large"
-                    placeholder="Search here"
-                    value={searchParam}
-                    onChange={(e) => setSearchParam(e.target.value)}
-                  />
+          {showSearchBarAndRarirtyTable && (
+            <FlickerComp collectionId={match.params.id} />
+          )}
+          {showSearchBarAndRarirtyTable && (
+            <div className="searchBar_wrapper_outer">
+              <div className="searchBar main_page_width">
+                <div className="inputSection">
+                  <div className="searchInput">
+                    <Input
+                      suffix={<SearchOutlined />}
+                      size="large"
+                      placeholder="Search here"
+                      value={searchParam}
+                      onChange={(e) => setSearchParam(e.target.value)}
+                    />
+                  </div>
+                  <div className="filterDropdown">
+                    <Select
+                      placeholder="Filter Data"
+                      allowClear
+                      onChange={handleChange}
+                    >
+                      {filterCodes?.map((item, index) => {
+                        return (
+                          <Select.Option value={item?.code} key={item + index}>
+                            {item?.description}
+                          </Select.Option>
+                        );
+                      })}
+                    </Select>
+                  </div>
+                  <div className="filterImage">
+                    <img src={FILTER_IMG} alt={"FILTER_IMG"} />
+                  </div>
                 </div>
-                <div className="filterDropdown">
-                  <Select
-                    placeholder="Filter Data"
-                    allowClear
-                    onChange={handleChange}
-                  >
-                    {filterCodes?.map((item, index) => {
-                      return (
-                        <Select.Option value={item?.code} key={item + index}>
-                          {item?.description}
-                        </Select.Option>
-                      );
-                    })}
-                  </Select>
+                <div className="reset">
+                  {!collectionDetails?.contract_address &&
+                    userData &&
+                    userData?.guid ===
+                      collectionDetails?.user_details?.guid && (
+                      <Button type="primary" onClick={handleDeployNFT}>
+                        Deploy
+                      </Button>
+                    )}
+                  <span>Showing {count} results</span>
                 </div>
-                <div className="filterImage">
-                  <img src={FILTER_IMG} alt={"FILTER_IMG"} />
-                </div>
-              </div>
-              <div className="reset">
-                {!collectionDetails?.contract_address &&
-                  userData &&
-                  userData?.guid === collectionDetails?.user_details?.guid && (
-                    <Button type="primary" onClick={handleDeployNFT}>
-                      Deploy
-                    </Button>
-                  )}
-                <span>Showing {count} results</span>
               </div>
             </div>
-          </div>
+          )}
           <CollectionNftView
             collectionid={match?.params?.id}
             setCount={setCount}
             searchParam={searchParam}
             count={count}
             userId={collectionDetails?.user_details?.guid}
+            setShowSearchBarAndRarirtyTable={setShowSearchBarAndRarirtyTable}
           />
           <NewsLetter />
         </div>

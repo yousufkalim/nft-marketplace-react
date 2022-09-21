@@ -114,3 +114,16 @@ export const getCollectionRarityData = async (id) => {
     apiConfig
   );
 };
+export const collectionActions = async (id,action) => {
+  const res = await fetch(
+    `https://nftdepot-api.azurewebsites.net/collections/approve/${id}/${action}`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
+  );
+  const resKey = await res.json();
+  return resKey;
+};

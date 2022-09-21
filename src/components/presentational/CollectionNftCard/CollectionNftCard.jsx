@@ -15,9 +15,7 @@ import { useSelector } from "react-redux";
 
 const { Meta } = Card;
 
-const CollectionNftCard = ({ data }) => {
-  console.log("data", data);
-
+const CollectionNftCard = ({ data, showLikeIcon }) => {
   const history = useHistory();
   const [isLiked, setIsLiked] = useState(data?.is_liked);
   const user = useSelector((state) => state.auth.user);
@@ -56,6 +54,8 @@ const CollectionNftCard = ({ data }) => {
     }
   };
 
+  console.log("data",data)
+
   return (
     <div className="CollectionNftCard" onClick={handleClick}>
       <Card
@@ -78,20 +78,22 @@ const CollectionNftCard = ({ data }) => {
             <span className="priceHeading grayColor">{data?.minting_coin}</span>
           </span>
           <span className="rightSection">
-            <span className="tagImage">
-              <Tooltip title={isLiked ? "Unlike" : "Like"} color={"#303549"}>
-                <span
-                  className={data?.is_followed ? "orangeFrame" : "frame"}
-                  onClick={isLiked ? (e) => unLikeNft(e) : (e) => likeNft(e)}
-                >
-                  <img
-                    src={isLiked ? LIKED_ICON : LIKE_ICON}
-                    alt={"ORANGE_FRAME"}
-                  />
-                </span>
-              </Tooltip>
-              <span className="tagPrice">{data?.likes}</span>
-            </span>
+            {showLikeIcon && (
+              <span className="tagImage">
+                <Tooltip title={isLiked ? "Unlike" : "Like"} color={"#303549"}>
+                  <span
+                    className={data?.is_followed ? "orangeFrame" : "frame"}
+                    onClick={isLiked ? (e) => unLikeNft(e) : (e) => likeNft(e)}
+                  >
+                    <img
+                      src={isLiked ? LIKED_ICON : LIKE_ICON}
+                      alt={"ORANGE_FRAME"}
+                    />
+                  </span>
+                </Tooltip>
+                <span className="tagPrice">{data?.likes}</span>
+              </span>
+            )}
           </span>
         </div>
         <div className="dflex">

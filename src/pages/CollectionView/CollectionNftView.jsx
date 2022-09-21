@@ -21,6 +21,7 @@ const CollectionNftView = ({
   setCount,
   userId,
   count,
+  setShowSearchBarAndRarirtyTable
 }) => {
   const arr = [1, 2];
 
@@ -31,19 +32,24 @@ const CollectionNftView = ({
   });
   const user = useSelector((state) => state?.auth?.user);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const [timeLineData, setTimeLineData] = useState("");
   const [browserWidth] = useWindowSize();
+  const [status, setStatus] = useState(0);
   const fetchExploreData = async () => {
     try {
       const res = await getCollectionNft(collectionid, extraData?.next_page);
-      setMessage(res);
+      setTimeLineData(res);
       if (res?.body?.data?.length) {
+        setStatus(res?.body?.status);
         setExploreData([...exploreData, ...res?.body?.data]);
         setExtraData({
           next_page: res?.body?.next_page,
           has_more: res?.body?.has_more,
         });
         setCount(count + res?.body?.data?.length);
+      }
+      if(res?.body?.status===5){
+        setShowSearchBarAndRarirtyTable(true)
       }
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
@@ -88,7 +94,7 @@ const CollectionNftView = ({
           <div style={{ textAlign: "center" }}>
             <Spin />
           </div>
-        ) : exploreData.length > 0 ? (
+        ) : status == 5 && exploreData?.length > 0 ? (
           <div className="collectionNftViewCardGrid">
             <InfiniteScroll
               dataLength={exploreData.length} //This is important field to render the next data
@@ -130,7 +136,7 @@ const CollectionNftView = ({
                         span={browserWidth < 620 ? 24 : 8}
                         key={index}
                       >
-                        <CollectionNftCard data={item} />
+                        <CollectionNftCard data={item} showLikeIcon={true} />
                       </Col>
                     );
                   })}
@@ -138,14 +144,17 @@ const CollectionNftView = ({
             </InfiniteScroll>
           </div>
         ) : (
-          <div className="progress">
-            {user?.guid === userId ? (
-              // ? message
-              <TimeLine status={message?.body?.status} />
-            ) : (
-              "No Nfts found for this collection"
-            )}
-          </div>
+          <>
+            <div className="progress">
+              {user?.guid === userId ?
+                <TimeLine status={status} data={timeLineData} collectionid={collectionid} />
+                :
+                'No Nfts found for this Collection'
+              }
+            </div>
+
+           
+          </>
         )}
       </div>
     </>

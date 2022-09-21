@@ -30,6 +30,17 @@ export const truncate = (text = "",h = 34) => {
   : text
 }
 
+export const truncateTitle = (text = "",h = 15) => {
+  const head = text.slice(0, h)
+  // const tail = text.slice(-1 * t, text.length)
+  return text.length > h  ? <div>{head}
+  <Tooltip title={text} color={"#303549"} placement="bottomRight">
+  <span>...</span> 
+  </Tooltip>
+  </div>
+  : text
+}
+
 export const truncateAddress = (address) => {
   if (!address) return "No Account";
   const match = address.match(
