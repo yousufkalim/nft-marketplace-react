@@ -100,10 +100,10 @@ const FeaturedCard = ({ data, isNft, showFollowIcon = true }) => {
               <span className="idSection">
                 # {data?.collection_id ?? data?.guid}
               </span>
-             {/* {isNft && <div className="createdBy" onClick={(e) => handleCreatedBy(e)}>
+              <div className="createdBy">
               <span>Created By: </span>
-              <span className="textStyle">{data?.created_by}</span>
-            </div>} */}
+              <span className="textStyle">{data?.user_details?.username}</span>
+            </div>
             </div>
             <div className="frameIconSection">
               <Tooltip title={isLiked ? "Unlike" : "Like"} color={"#303549"}>

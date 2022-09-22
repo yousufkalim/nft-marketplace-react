@@ -116,4 +116,13 @@
     justify-content: space-between;
     align-items: flex-start;
   }
+  .createdBy{
+    margin-top: 8px;
+    font-size: 12px;
+    float: right;
+    .textStyle{
+      font-weight: bold;
+      text-decoration: underline;
+    }
+  }
 }

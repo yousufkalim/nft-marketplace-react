@@ -93,6 +93,10 @@ const NftCard = ({ showTopPick = false, data, showFollowIcon = true }) => {
             }
           />
         </Link>
+        <div className="createdBy">
+          <span>Created By: </span>
+          <span className="textStyle">{data?.user_details?.username}</span>
+        </div>
       </Card>
     </div>
   );

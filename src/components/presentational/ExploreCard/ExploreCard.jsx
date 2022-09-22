@@ -83,7 +83,8 @@ const ExploreCard = ({
 
   const handleUrlPersonal=(e)=>{
     e.stopPropagation();
-    history.push(data?.url_personal)
+    data?.url_personal?.includes('https') &&
+    window.open(data?.url_personal)
   }
 
   return (

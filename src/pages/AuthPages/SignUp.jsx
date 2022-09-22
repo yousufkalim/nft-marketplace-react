@@ -29,10 +29,15 @@ const SignUp = () => {
   const wallet_id = useSelector((state) => state?.web3?.wallet);
   const history = useHistory();
   const onFinish = async (values) => {
+    
     if (!wallet_id) {
       openNotification("Oops", "Please connect to your wallet");
       return;
     }
+    // if(answersArray?.length!==4){
+    //   openNotification("Oops", "Please Answer All Security Questions");
+    //   return; 
+    // }
     if (isAgree) {
       setLoading(true);
       try {
@@ -68,6 +73,8 @@ const SignUp = () => {
   }, []);
 
   const onFinishFailed = (errorInfo) => {
+    const object=answersArray.reduce(((r, c) => Object.assign(r, c)), {})
+console.log(object)
     console.log("Failed:", errorInfo);
   };
 
@@ -95,19 +102,17 @@ const SignUp = () => {
 
   const hanldeQuestion = (index, desc) => {
     setShowAnswerField(true);
-    setAnswer("");
     setSelectedQuestion(desc)
     setSelectedIndex(index)
-
+    setAnswer("");
   };
 
   const handleQuestions=()=>{
-    console.log("selectedQuestionIndex",selectedQuestionIndex);
-    setAnswersArray({...answersArray},{
+    setAnswersArray([...answersArray,{
       [`question${selectedQuestionIndex}`]:selectedQuestion,
       [`answer${selectedQuestionIndex}`]:answer
-
-    })
+    }
+    ])
     setShowAnswerField(false);
     setAnswer("");
   }
@@ -244,17 +249,11 @@ const SignUp = () => {
                 >
                   <Input.Password placeholder="Confirm Password" />
                 </Form.Item>
-                <Form.Item
+                {/* <Form.Item
                   name="Security Questions"
                   label="Security Questions"
                   labelCol={{ span: 24 }}
                   wrapperCol={{ span: 24 }}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please Answer All Security Questions!",
-                    },
-                  ]}
                 >
                   <Select placeholder="Security Questions">
                     {securityQuestions?.slice(0, 4)?.map((item, index) => {
@@ -294,7 +293,7 @@ const SignUp = () => {
                       <span>Submit</span>
                     </div>
                   </Form.Item>
-                )}
+                )} */}
                 <Form.Item name="termsAndCondition">
                   <Radio
                     checked={isAgree}
