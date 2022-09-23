@@ -22,6 +22,7 @@ import {
 } from "../../services/createCollectionServices";
 import "./CreateCollectionForm.scss";
 import { openNotification } from "../../components/Smart/Notification";
+import { CopyOutlined } from "@ant-design/icons";
 
 const CreateCollectionForm = () => {
   const formData = useSelector((state) => state?.collectionData?.data);
@@ -42,13 +43,12 @@ const CreateCollectionForm = () => {
   );
   const [storename, setStoreName] = useState("");
   const [storenameStatus, setStoreNameStatus] = useState(nameStatus ?? null);
-  const [personalLink, setPersonalLink] = useState("");
+  const [urlName, setUrlname] = useState("");
 
   const history = useHistory();
 
   const user = useSelector((state) => state?.auth?.user);
   const walletId = useSelector((state) => state?.web3?.wallet);
-
 
   const handleStorename = async (storeName) => {
     if (!storeName) {
@@ -111,7 +111,7 @@ const CreateCollectionForm = () => {
       created_by: user?.first_name ?? "",
       created_date: new Date().toLocaleString(),
       category_code: values.category ?? "",
-      url_name: "",
+      url_name: `${window.location.origin}/collectionView/${storename}`,
       delay_days: values.delayDays ?? 5,
       royalty_percent: values.royaltyPercent ?? 2,
       third_party_royalty_percent: values.thirdPartyRoyaltyPercent ?? 0,
@@ -131,6 +131,16 @@ const CreateCollectionForm = () => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
+  const handleClipBoardCopy=async()=>{
+    try{
+      await navigator.clipboard.writeText(`${window.location.origin}/collectionView/${storename}`);
+      openNotification("Link Copied Successfully")
+    }
+    catch(error){
+      console.log("error",error);
+    }
+  }
 
   return (
     <>
@@ -335,6 +345,32 @@ const CreateCollectionForm = () => {
                   }
                 >
                   <Input placeholder="your personal site link" />
+                </Form.Item>
+                <Form.Item
+                  name="urlName"
+                  label={
+                    <div>
+                      NFTDepot Link
+                      <Tooltip
+                        title="This is you auto generated link to your collection on Nft Deopt. Copy to ClipBoard. It will be functional once you have successfully created this collection"
+                        color={"#303549"}
+                        overlayClassName="favouriteToolTip"
+                      >
+                      <span className="infoIcon" onClick={handleClipBoardCopy}>
+                      <CopyOutlined/>
+                      </span>
+                      </Tooltip>
+                    </div>
+                  }
+                >
+                  <Input
+                    prefix={
+                      <span className="prefixColor">
+                        {`${window.location.origin}/collectionView/${storename}`}
+                      </span>
+                    }
+                    readOnly
+                  />
                 </Form.Item>
                 <span className="mediaAndDiscordLinks">
                   <Form.Item name="mediumLink" label="Medium Link">

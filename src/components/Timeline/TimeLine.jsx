@@ -43,14 +43,11 @@ const TimeLine = ({ status, data, collectionid }) => {
   return (
     <div className="main_page_width">
       <div className="timeLineWrapper">
-        <Steps current={status - 1} responsive={true}>
-          <Step
-            title="Processing Zip"
-          />
+        <Steps current={status} responsive={true}>
+          <Step title="Awaiting Processing" />
+          <Step title="Processing Zip" />
           <Step title="Waiting For Approval" />
-          <Step
-            title="Generating NFT"
-          />
+          <Step title="Generating NFT" />
         </Steps>
       </div>
       <div className="messageWrapper">
@@ -83,7 +80,12 @@ const TimeLine = ({ status, data, collectionid }) => {
           </div>
         </div>
       )}
-      {status !== 2 && <ProgressBar percent={data?.body?.progress} />}
+      {status !== 2 && (
+        <ProgressBar
+          percent={data?.body?.progress}
+          classname={status == 0 ? "dimOpacity" : ""}
+        />
+      )}
     </div>
   );
 };

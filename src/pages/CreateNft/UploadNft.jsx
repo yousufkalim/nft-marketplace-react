@@ -27,7 +27,7 @@ const UploadNft = ({ match }) => {
           const nftFileLocation = await uploadNft(nftFile[0], match.params.id);
           openNotification("Success", "Nft Uploaded created successfully");
           setIsLoading(false);
-          history.push("/myCollections");
+          history.push(`/collectionView/${match.params.id}`);
         } catch (error) {
           setIsLoading(false);
           openNotification("Oops", error?.response?.data?.message);
