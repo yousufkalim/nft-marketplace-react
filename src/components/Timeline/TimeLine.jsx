@@ -11,6 +11,7 @@ import "./Timeline.scss";
 const { Step } = Steps;
 
 const TimeLine = ({ status, data, collectionid }) => {
+
   const [browserWidth] = useWindowSize();
   const history = useHistory();
 

@@ -39,8 +39,8 @@ const CollectionNftView = ({
     try {
       const res = await getCollectionNft(collectionid, extraData?.next_page);
       setTimeLineData(res);
+      setStatus(res?.body?.status);
       if (res?.body?.data?.length) {
-        setStatus(res?.body?.status);
         setExploreData([...exploreData, ...res?.body?.data]);
         setExtraData({
           next_page: res?.body?.next_page,

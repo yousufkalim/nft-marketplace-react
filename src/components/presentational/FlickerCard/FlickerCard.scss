@@ -8,7 +8,9 @@
     width: 100%;
     height: auto;
     border-radius: 10px !important;
-    .ant-card-meta-title {
+    border-color: transparent;
+    box-shadow: 0px 4px 16px -7px rgba(83, 82, 237, 0.57);
+     .ant-card-meta-title {
       font-family: "Rubik";
       font-style: normal;
       font-weight: 700;
@@ -77,6 +79,7 @@
     }
   }
   .flickerCardWrapper {
+    position: relative;
     .flickerCardImage {
       img {
         width: 100%;
@@ -84,6 +87,15 @@
         object-fit: cover;
         border-radius: 10px 10px 0px 0px;
       }
+    }
+    .flickerCardImage::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
     }
   }
 

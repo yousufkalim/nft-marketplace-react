@@ -111,8 +111,6 @@ const CollectionView = ({ match }) => {
     }
   };
 
-  console.log("collectionDetails", collectionDetails);
-
   return (
     <>
       {/* <BreadCrumb match={match} /> */}

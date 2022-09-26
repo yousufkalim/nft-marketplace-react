@@ -8,6 +8,7 @@ import { updateProfileAPI } from "../../../services/userServices";
 import Spin from "../../../components/presentational/Spin";
 import "./Account.scss";
 import { setProfile } from "../../../store/auth/authActions";
+import { VerifyUser } from "../../../services/authServices";
 
 const Account = () => {
   const user = useSelector((state) => state?.auth?.user);
@@ -63,7 +64,9 @@ const Account = () => {
       const res = await updateProfileAPI(updatedData);
       setLoading(false);
       dispatch(setProfile({...user,updatedData}));
-      openNotification("Success", "Data Updated Successfully");
+      const userData=await VerifyUser();
+      dispatch(setProfile(userData));
+      openNotification("Success", "Data Updated Successfully")
     } catch (e) {
       setLoading(false);
       openNotification("Oops", e?.response?.data?.message);

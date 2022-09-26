@@ -76,21 +76,17 @@ const Login = () => {
               >
                 <Form.Item
                   name="email"
-                  label="Email"
+                  label="User Name / Email"
                   labelCol={{ span: 24 }}
                   wrapperCol={{ span: 24 }}
                   rules={[
                     {
-                      type: "email",
-                      message: "The input is not valid E-mail!",
-                    },
-                    {
                       required: true,
-                      message: "Please input your email!",
+                      message: "Please input your username or email!",
                     },
                   ]}
                 >
-                  <Input placeholder="Email" />
+                  <Input placeholder="Enter Username or Email" />
                 </Form.Item>
 
                 <Form.Item

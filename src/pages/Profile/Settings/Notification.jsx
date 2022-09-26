@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Spin from "../../../components/presentational/Spin";
 import { openNotification } from "../../../components/Smart/Notification";
+import { VerifyUser } from "../../../services/authServices";
 import { codesAPI } from "../../../services/createCollectionServices";
 import { updateProfileAPI } from "../../../services/userServices";
 import { setProfile } from "../../../store/auth/authActions";
@@ -34,7 +35,6 @@ const Notification = () => {
   const dispatch = useDispatch();
 
   const onFinish = async (values) => {
-    console.log("values", values);
     setLoading(true);
     const updatedData = {
       ...user,
@@ -50,11 +50,12 @@ const Notification = () => {
       notification_purchase_successful: purcshaseSuccessfull ? 1 : 0,
     };
 
-    console.log("updatedData", updatedData);
     try {
       const res = await updateProfileAPI(updatedData);
       setLoading(false);
       dispatch(setProfile(updatedData));
+      const userData=await VerifyUser();
+      dispatch(setProfile(userData));
       openNotification("Success", "Data Updated Successfully");
     } catch (e) {
       setLoading(false);

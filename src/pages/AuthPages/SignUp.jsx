@@ -3,7 +3,7 @@ import PAGE_HEADER from "../../images/PageHeader.png";
 import AUTH_ICON from "../../images/auth_icon.svg";
 import { Input, Form, Button, Radio, Select } from "antd";
 import { Link } from "react-router-dom";
-import { SignUpAPI, VerifyEmailAPI } from "../../services/authServices";
+import { SignUpAPI, VerifyEmailAPI, VerifyUsernameAPI } from "../../services/authServices";
 import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -117,6 +117,16 @@ console.log(object)
     setAnswer("");
   }
 
+  const checkUserName =  async (_, username) => {
+    const res = await VerifyUsernameAPI(username);
+    if (res?.data?.body?.exists) {
+      return Promise.reject("rejected");
+    } else {
+      return Promise.resolve(true);
+    }
+  };
+
+
   return (
     <>
       <div className="signUpWrapper">
@@ -140,6 +150,27 @@ console.log(object)
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
               >
+                 <Form.Item
+                  name="username"
+                  label="User Name"
+                  labelCol={{ span: 24 }}
+                  wrapperCol={{ span: 24 }}
+                  validateFirst={true}
+                  validateTrigger="onChange"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your userName!",
+                    },
+                    {
+                      validator: checkUserName,
+                      message: `This username is already associated to an account`,
+                    },
+                  ]}
+                >
+                  <Input placeholder="FirstName" />
+                </Form.Item>
+
                 <Form.Item
                   name="firstName"
                   label="First Name"
