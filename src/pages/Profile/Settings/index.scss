@@ -436,7 +436,7 @@ span.chevron_icon_btn.left_cev {
     flex-direction: column;
     gap: 30px;
   }
-  .ant-row{
+  .ant-row {
     flex-direction: row-reverse;
     gap: 22px;
   }
@@ -444,32 +444,76 @@ span.chevron_icon_btn.left_cev {
     margin-top: 22px;
   }
 }
-.bidAmount{
-    .ant-row{
-        flex-direction: column;
-    }
-    .ant-input {
-        background: $InputBg !important;
-        line-height: 2.9715;
-        background: $InputBg !important;
-        border-radius: 10px !important;
-        border: none !important;
-      }
+.bidAmount {
+  .ant-row {
+    flex-direction: column;
+  }
+  .ant-input {
+    background: $InputBg !important;
+    line-height: 2.9715;
+    background: $InputBg !important;
+    border-radius: 10px !important;
+    border: none !important;
+  }
 }
-.minimumMetCoinType{
-    .ant-row{
-        flex-direction: column;
-    }
-    .ant-select {
-        line-height: 2.9715;
-      }
-      .ant-select-selector {
-        background: $InputBg !important;
-        line-height: 2.9715;
-        background: $InputBg !important;
-        border-radius: 10px !important;
-        border: none !important;
-        height: 48px !important;
-        align-items: center;
-      }
+.minimumMetCoinType {
+  .ant-row {
+    flex-direction: column;
+  }
+  .ant-select {
+    line-height: 2.9715;
+  }
+  .ant-select-selector {
+    background: $InputBg !important;
+    line-height: 2.9715;
+    background: $InputBg !important;
+    border-radius: 10px !important;
+    border: none !important;
+    height: 48px !important;
+    align-items: center;
+  }
+}
+.securityWrapper {
+  .ant-input {
+    background: $InputBg !important;
+    line-height: 2.9715;
+    background: $InputBg !important;
+    border-radius: 10px !important;
+    border: none !important;
+  }
+  .ant-select {
+    line-height: 2.9715;
+  }
+  .ant-select-selector {
+    background: $InputBg !important;
+    line-height: 2.9715;
+    background: $InputBg !important;
+    border-radius: 10px !important;
+    border: none !important;
+    height: 48px !important;
+    align-items: center;
+  }
+  .ant-btn {
+    height: 50px;
+    background: $ExploreBtnBg;
+    border: none !important;
+    border-radius: 10px;
+    width: 100%;
+    font-family: "Rubik";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    text-transform: capitalize;
+    color: $textColor;
+    margin-top: 23px;
+  }
+  .heading {
+    font-family: "Rubik";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 12px;
+    color: $CreateBtnBg;
+  }
 }

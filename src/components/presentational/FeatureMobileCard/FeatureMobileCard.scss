@@ -141,5 +141,14 @@
     font-size: 14px;
     margin-top: 12px;
   }
+  .createdBy{
+    margin-top: 8px;
+    font-size: 12px;
+    float: right;
+    .textStyle{
+      font-weight: bold;
+      text-decoration: underline;
+    }
+  }
 
 }

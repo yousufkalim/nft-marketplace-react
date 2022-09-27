@@ -32,7 +32,7 @@ const TimeLine = ({ status, data, collectionid }) => {
 
   const handleInvalid = async () => {
     try {
-      const res = await collectionActions(collectionid, "invalid");
+      const res = await collectionActions(collectionid, "Invalid");
       console.log("res", res);
 
       history.push(`/createNft/${collectionid}`);

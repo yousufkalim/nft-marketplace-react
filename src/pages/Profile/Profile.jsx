@@ -53,7 +53,7 @@ const Profile = () => {
                 <span className="dFlex">
                   {/* <img src={PRICE_ICON} alt={"PRICE_ICON"} /> */}
                 </span>{" "}
-                {moment(profileData?.created_at).format("MMM DD, YYYY")}
+                {moment(profileData?.created_date).format("MMM DD, YYYY")}
               </span>
             </span>
             {profileData?.url_personal && (

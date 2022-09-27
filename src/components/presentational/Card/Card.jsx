@@ -42,6 +42,12 @@ const NftCard = ({ showTopPick = false, data, showFollowIcon = true }) => {
     history.push(`/collectionView/${data?.guid}`);
   };
 
+  const handleCreatedBy = (e) => {
+    e.stopPropagation();
+    history.push(`/creatorDetails/${data?.created_by}`);
+  
+};
+
   return (
     <div className="imageCard">
       <Card
@@ -95,7 +101,7 @@ const NftCard = ({ showTopPick = false, data, showFollowIcon = true }) => {
         </Link>
         <div className="createdBy">
           <span>Created By: </span>
-          <span className="textStyle">{data?.user_details?.username}</span>
+          <span className="textStyle" onClick={(e)=>handleCreatedBy(e)} >{data?.user_details?.username}</span>
         </div>
       </Card>
     </div>

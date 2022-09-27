@@ -43,6 +43,7 @@ const TopHits = () => {
     return false;
   };
 
+
   return (
     <div className="TopHits main_page_width">
       <div className="heading">

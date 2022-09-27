@@ -6,10 +6,17 @@ import ORANGE_FRAME from "../../../images/orange_frame.svg";
 import { Tooltip } from "antd";
 import "./FeatureMobileCard.scss";
 import { truncate } from "../../../helpers/utils";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const { Meta } = Card;
 
 const FeatureMobileCard = ({ data, showFollowIcon = true }) => {
+  const history=useHistory()
+  const handleCreatedBy = (e) => {
+    e.stopPropagation();
+    history.push(`/creatorDetails/${data?.created_by}`);
+  
+};
   return (
     <div className="FeatureMobileCard">
       <Card
@@ -47,6 +54,10 @@ const FeatureMobileCard = ({ data, showFollowIcon = true }) => {
             </div>
           }
         />
+        <div className="createdBy">
+          <span>Created By: </span>
+          <span className="textStyle" onClick={(e)=>handleCreatedBy(e)} >{data?.user_details?.username}</span>
+        </div>
         {/* <div className="exploreCardFooter">
             <span className="priceHeading">Price <span className="priceHeading">$$ ETH</span></span>
             <span className="rightSection" >

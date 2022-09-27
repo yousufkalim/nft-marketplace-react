@@ -45,6 +45,11 @@ const FeaturedCard = ({ data, isNft, showFollowIcon = true }) => {
       openNotification("Oops", error?.response?.data?.message);
     }
   };
+  const handleCreatedBy = (e) => {
+    e.stopPropagation();
+    history.push(`/creatorDetails/${data?.created_by}`);
+  
+};
 
   return (
     <div className="featuredCard">
@@ -102,7 +107,7 @@ const FeaturedCard = ({ data, isNft, showFollowIcon = true }) => {
               </span>
               <div className="createdBy">
               <span>Created By: </span>
-              <span className="textStyle">{data?.user_details?.username}</span>
+              <span className="textStyle" onClick={(e)=>handleCreatedBy(e)}>{data?.user_details?.username}</span>
             </div>
             </div>
             <div className="frameIconSection">

@@ -1,137 +1,87 @@
-import React, { useState } from "react";
-import { Button, Form, Input, Switch } from "antd";
-import { updatePasswordAPI } from "../../../services/userServices";
-import Spin from "../../../components/presentational/Spin";
-import { openNotification } from "../../../components/Smart/Notification";
+import { Form , Button ,Input, Select   } from 'antd'
+import React from 'react'
+import { useEffect } from 'react'
+import { useState } from 'react'
+import Spin from '../../../components/presentational/Spin'
+import { codesAPI } from '../../../services/createCollectionServices'
+import './index.scss'
 
 const Security = () => {
-  const [loading, setLoading] = useState(false);
-  const onFinish = async (values) => {
-    setLoading(true);
-    const updatedData = {
-      old_password: values?.old_password,
-      new_password: values?.new_password,
-      confirm_password: values?.confirm_password,
+  const [loading,setLoading]=useState(false)
+  const [securityQuestions,setSecurityQuestions]=useState([])
+  const onFinish=(values)=>{
+
+  }
+  const onFinishFailed=()=>{
+
+  }
+
+  useEffect(() => {
+    const getQuestionsCode = async () => {
+      const res = await codesAPI("Security Questions");
+      setSecurityQuestions(res?.data?.body);
     };
+    getQuestionsCode();
+  }, []);
 
-    try {
-      const res = await updatePasswordAPI(updatedData);
-      setLoading(false);
-      openNotification("Success", "Password Updated Successfully");
-    } catch (e) {
-      setLoading(false);
-      openNotification("Oops", e?.response?.data?.message);
-    }
-  };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
-
-  const checkPassword = async (_, password) => {
-    const pattern = new RegExp(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+])[A-Za-z\d~!@#$%^&*()_+]{8,}$/
-    );
-    if (!pattern.test(password)) {
-      return Promise.reject("rejected");
-    } else {
-      return Promise.resolve(true);
-    }
-  };
+  console.log("securityQuestions",securityQuestions);
 
   return (
-    <div>
-      <Form
-        name="basic"
-        layout="horizontal"
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-      >
-        <div className="tabform_part_1">
-          <div className="_field_out">
-            <div className="fields_input_data">
-              <Form.Item
-                name="old_password"
-                label="Current Password"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input current password!",
-                  },
-                ]}
+    <div className='securityWrapper'>
+    <div className='heading'>Security Questions</div>
+    <Form
+                name="basic"
+                initialValues={{
+                  remember: true,
+                }}
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+                autoComplete="on"
               >
-                <Input.Password placeholder="" />
-              </Form.Item>
-            </div>
-          </div>
-          <div className="_field_out">
-            <div className="fields_input_data">
-              <Form.Item
-                name="new_password"
-                label="New Password"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input New password!",
-                  },
-                  {
-                    validator: checkPassword,
-                    message:
-                      "The passwords MUST follow the “Password *” noted above…. 12-25 characters….. etc.",
-                  },
-                ]}
-              >
-                <Input.Password placeholder="" />
-              </Form.Item>
-            </div>
-          </div>
-          <div className="_field_out">
-            <div className="fields_input_data">
-              <Form.Item
-                name="confirm_password"
-                label="Confirm Password"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please confirm new password!",
-                  },
-                  ({ getFieldValue }) => ({
-                    validator(_, value) {
-                      if (!value || getFieldValue("new_password") === value) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject(
-                        new Error(
-                          "The two passwords that you entered do not match!"
-                        )
-                      );
+                <Form.Item
+                  name="question"
+                  labelCol={{ span: 24 }}
+                  wrapperCol={{ span: 24 }}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your username or email!",
                     },
-                  }),
-                ]}
-              >
-                <Input.Password placeholder="" />
-              </Form.Item>
-            </div>
-          </div>
-          <span className="nextButton">
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                {loading ? <Spin /> : "Save changes"}
-              </Button>
-            </Form.Item>
-          </span>
-          <Form.Item>
-          <span className="passInfo">
-                  Password ( Passwords must be 12-25 characters and MUST
-                      contain 1 uppercase letter, 1 lowercase letter and 1
-                      special character (single and double quotes are not
-                      allowed). )
-                  </span>
-          </Form.Item>
-        </div>
-      </Form>
-    </div>
-  );
-};
+                  ]}
+                >
+                  <Select placeholder="Select Your Question">
+                    {securityQuestions?.slice(0,4)?.map((item, index) => {
+                      return (
+                        <Select.Option value={item?.code} key={item?.code}>
+                          {item?.description}
+                        </Select.Option>
+                      );
+                    })}
+                  </Select>
+                </Form.Item>
 
-export default Security;
+                <Form.Item
+                  name="answer"
+                  labelCol={{ span: 24 }}
+                  wrapperCol={{ span: 24 }}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your answer!",
+                    },
+                  ]}
+                >
+                 <Input.TextArea placeholder='Type Your Answer Here' />
+                </Form.Item>
+
+                <Form.Item>
+                  <Button type="primary" htmlType="submit">
+                    {loading ? <Spin /> : "Submit"}
+                  </Button>
+                </Form.Item>
+              </Form>
+    </div>
+  )
+}
+
+export default Security

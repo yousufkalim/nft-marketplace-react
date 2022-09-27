@@ -58,6 +58,7 @@
         border-bottom: 1px dashed rgba(48, 53, 73, 0.25);
         margin-top: 30px;
         gap: 20px;
+        min-width: max-content;
         .key {
           font-family: "Rubik";
           font-style: normal;
