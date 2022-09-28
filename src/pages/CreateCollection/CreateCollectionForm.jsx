@@ -352,7 +352,7 @@ const CreateCollectionForm = () => {
                     <div>
                       NFTDepot Link
                       <Tooltip
-                        title="This is you auto generated link to your collection on Nft Deopt. Copy to ClipBoard. It will be functional once you have successfully created this collection"
+                        title="Click here for the auto-generated link to your collection on NFTDepot.Art. It will be functional once the collection has been successfully created."
                         color={"#303549"}
                         overlayClassName="favouriteToolTip"
                       >
