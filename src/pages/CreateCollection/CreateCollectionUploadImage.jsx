@@ -21,7 +21,6 @@ const CreateCollectionUploadImage = () => {
   const [smallImage, setSmallImage] = useState("");
   const [largeImage, setLargeImage] = useState("");
   const [bannerImage, setBannerImage] = useState("");
-  const [isAgree, setIsAgree] = useState(false);
   const [loading, setIsLoading] = useState(false);
   const [layoutCodes, setLayoutCodes] = useState([]);
   const [selectedCode, setSelectedCode] = useState(null);
@@ -54,40 +53,35 @@ const CreateCollectionUploadImage = () => {
       bannerImage?.length &&
       selectedCode
     ) {
-      if (isAgree) {
-        setIsLoading(true);
-        try {
-          const smallImageLocation = await uploadAPI(smallImage[0]);
-          const largeImageLocation = await uploadAPI(largeImage[0]);
-          const bannerImageLocation = await uploadAPI(bannerImage[0]);
+      setIsLoading(true);
+      try {
+        const smallImageLocation = await uploadAPI(smallImage[0]);
+        const largeImageLocation = await uploadAPI(largeImage[0]);
+        const bannerImageLocation = await uploadAPI(bannerImage[0]);
 
-          const data = {
-            ...formData,
-            layout_style_code: selectedCode,
-            url_discord: "https://discord.com/" + formData?.url_discord,
-            url_instagram:
-              "https://www.instagram.com/" + formData?.url_instagram,
-            url_medium: "https://medium.com/" + formData?.url_medium,
-            url_personal: formData?.url_personal,
-            url_telegram: "https://telegram.com/" + formData?.url_telegram,
-            image_small_location: smallImageLocation?.body?.url,
-            image_large_location: largeImageLocation?.body?.url,
-            image_banner_location: bannerImageLocation?.body?.url,
-          };
-          const res = await createCollectionAPI(data);
-          dispatch(collectionDataSuccess({}));
-          openNotification(
-            "Success",
-            "Collection created successfully , Lets Add some NFTs to your collection"
-          );
-          history.push(`/createNft/${res?.body?.collection_id}`);
-          setIsLoading(false);
-        } catch (error) {
-          setIsLoading(false);
-          openNotification("Oops", error?.response?.data?.message);
-        }
-      } else {
-        openNotification("Oops", "Please agree to the terms and conditions");
+        const data = {
+          ...formData,
+          layout_style_code: selectedCode,
+          url_discord: "https://discord.com/" + formData?.url_discord,
+          url_instagram: "https://www.instagram.com/" + formData?.url_instagram,
+          url_medium: "https://medium.com/" + formData?.url_medium,
+          url_personal: formData?.url_personal,
+          url_telegram: "https://telegram.com/" + formData?.url_telegram,
+          image_small_location: smallImageLocation?.body?.url,
+          image_large_location: largeImageLocation?.body?.url,
+          image_banner_location: bannerImageLocation?.body?.url,
+        };
+        const res = await createCollectionAPI(data);
+        dispatch(collectionDataSuccess({}));
+        openNotification(
+          "Success",
+          "Collection created successfully , Lets Add some NFTs to your collection"
+        );
+        history.push(`/createNft/${res?.body?.collection_id}`);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        openNotification("Oops", error?.response?.data?.message);
       }
     } else {
       openNotification("Oops", "Please Fill in all Fields");
@@ -190,20 +184,6 @@ const CreateCollectionUploadImage = () => {
                 imageType="banner"
               />
             </div> */}
-            <div className="agreeSection">
-              <Radio
-                checked={isAgree}
-                onClick={() => setIsAgree((prev) => !prev)}
-              />
-              <div className="agree">
-                I agree to the{" "}
-                <Link to="TermsAndCondition" target="_blank">
-                  <span className="termConditions">Terms and Conditions</span>{" "}
-                  and{" "}
-                </Link>
-                <span className="termConditions">Privacy Policy</span>
-              </div>
-            </div>
             <div className="submitBtn" onClick={handleSubmit}>
               {loading ? (
                 <span>
