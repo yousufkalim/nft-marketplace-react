@@ -8,7 +8,6 @@ export const ChangePasswordAPI = async (userInfo) => {
     new_password: userInfo?.new_password,
     confirm_password: userInfo?.confirm_password,
   };
-  console.log("body",body)
   return await axios.post(
     `https://nftdepot-api.azurewebsites.net/reset_password`,
     body,
@@ -104,3 +103,47 @@ export const updatePasswordAPI = async (updatedInfo) => {
   });
   return data;
 };
+
+export const updateQuestionsAPI = async (questionsInfo) => {
+  const { data } = await axios({
+    method: "POST",
+    url: `https://nftdepot-api.azurewebsites.net/update_user_questions`,
+    data: JSON.stringify(questionsInfo),
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": `${window.location.origin}/`,
+      "Access-Control-Allow-Headers":
+        "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization",
+    },
+  });
+  return data;
+};
+
+export const getSecurityQuestionsStatusAPI = async (userId) => {
+  return await axios.get(
+    `https://nftdepot-api.azurewebsites.net/get_user_q_status/${userId}`,
+    apiConfig
+  );
+};
+
+export const getRandomSecurityQuestionsAPI = async (userId) => {
+  return await axios.get(
+    `https://nftdepot-api.azurewebsites.net/get_random_question/${userId}`,
+    apiConfig
+  );
+};
+
+export const verifyQuestionAPI = async (userInfo) => {
+  const body = {
+    ...userInfo
+  };
+  return await axios.post(
+    `https://nftdepot-api.azurewebsites.net/verify_question`,
+    body,
+    apiConfig
+  );
+};
+
+

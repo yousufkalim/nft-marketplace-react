@@ -87,6 +87,15 @@ const CollectionNftView = ({
     return true;
   };
 
+  useEffect(() => {
+    const interval = setInterval(async() => {
+      !status == 5 && await fetchExploreData()
+    }, 10000)
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
+
   return (
     <>
       <div className="collectionNftViewWrapper main_page_width">

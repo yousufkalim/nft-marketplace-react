@@ -23,12 +23,17 @@ import {
 import "./CreateCollectionForm.scss";
 import { openNotification } from "../../components/Smart/Notification";
 import { CopyOutlined } from "@ant-design/icons";
+import TextFormatter from "../../components/Smart/TextFormatter";
+import { EditorState } from "draft-js";
 
 const CreateCollectionForm = () => {
   const formData = useSelector((state) => state?.collectionData?.data);
   const nameStatus = useSelector(
     (state) => state?.collectionData?.collectionNameStatus
   );
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [textContent,setTextContent]=useState('')
+
 
   const [isExplicit, setIsExplicit] = useState(formData?.is_explicit ?? false);
   const [isMintable, setIsMintable] = useState(formData?.mintable ?? false);
@@ -96,7 +101,7 @@ const CreateCollectionForm = () => {
       store_name: values.storename ?? "",
       url_instagram: values.instagramLink ?? "",
       description_short: values.shortDescription ?? "",
-      description_long: values.longDescription ?? "",
+      description_long: JSON.stringify(textContent),
       url_personal: values.personalLink ?? "",
       url_medium: values.mediumLink ?? "",
       url_discord: values.discordLink ?? "",
@@ -132,15 +137,17 @@ const CreateCollectionForm = () => {
     console.log("Failed:", errorInfo);
   };
 
-  const handleClipBoardCopy=async()=>{
-    try{
-      await navigator.clipboard.writeText(`${window.location.origin}/collectionView/${storename}`);
-      openNotification("Link Copied Successfully")
+  const handleClipBoardCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(
+        `${window.location.origin}/collectionView/${storename}`
+      );
+      openNotification("Link Copied Successfully");
+    } catch (error) {
+      console.log("error", error);
     }
-    catch(error){
-      console.log("error",error);
-    }
-  }
+  };
+
 
   return (
     <>
@@ -220,9 +227,11 @@ const CreateCollectionForm = () => {
                   <Input placeholder="Short Description" />
                 </Form.Item>
                 <Form.Item name="longDescription" label="Long Description">
-                  <Input.TextArea
-                    placeholder="Long description"
-                    style={{ height: 150 }}
+                  <TextFormatter
+                   editorState={editorState}
+                   setEditorState={setEditorState}
+                   setEmailContent={setTextContent}
+                   htmlText={formData?.description_long ? JSON.parse(formData?.description_long) : ''}
                   />
                 </Form.Item>
                 <Form.Item
@@ -356,9 +365,12 @@ const CreateCollectionForm = () => {
                         color={"#303549"}
                         overlayClassName="favouriteToolTip"
                       >
-                      <span className="infoIcon" onClick={handleClipBoardCopy}>
-                      <CopyOutlined/>
-                      </span>
+                        <span
+                          className="infoIcon"
+                          onClick={handleClipBoardCopy}
+                        >
+                          <CopyOutlined />
+                        </span>
                       </Tooltip>
                     </div>
                   }

@@ -6,6 +6,7 @@ import useWindowSize from "../../helpers/hooks";
 import { collectionActions } from "../../services/collectionServices";
 import CollectionNftCard from "../presentational/CollectionNftCard/CollectionNftCard";
 import ProgressBar from "../presentational/Progress";
+import { openNotification } from "../Smart/Notification";
 import "./Timeline.scss";
 
 const { Step } = Steps;
@@ -24,7 +25,7 @@ const TimeLine = ({ status, data, collectionid }) => {
   const handleAction = async () => {
     try {
       const res = await collectionActions(collectionid, "Approve");
-      console.log("res", res);
+      openNotification("Approved","Thanks for your approval. You will receive further updates here soon.")
     } catch (error) {
       console.log("error", error);
     }

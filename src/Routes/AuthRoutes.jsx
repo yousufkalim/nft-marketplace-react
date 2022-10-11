@@ -11,6 +11,7 @@ import ResetPassword from "../pages/AuthPages/ResetPassword";
 import VerificationEmail from "../pages/AuthPages/VerificationEmail";
 import VerifiedEmail from "../pages/AuthPages/VerifiedEmail";
 import ResendEmail from "../pages/AuthPages/ResendEmail";
+import SecurityQuestion from "../pages/AuthPages/SecurityQuestionPage";
 const { Header, Footer, Content } = Layout;
 
 const AuthRoutes = () => {
@@ -25,6 +26,8 @@ const AuthRoutes = () => {
             <Route path="/auth/login" exact component={Login} />
             <Route path="/auth/signup" exact component={SignUp} />
             <Route path="/auth/reset-password" exact component={ResetPassword} />
+            <Route path="/auth/security-question" exact component={SecurityQuestion} />
+
             <Route
               path="/auth/forgotPassword"
               exact

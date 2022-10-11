@@ -19,25 +19,16 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [isAgree, setIsAgree] = useState(false);
   const [newsTeller, setNewsTeller] = useState(false);
-  const [securityQuestions, setSecurityQuestions] = useState([]);
-  const [showAnswerField, setShowAnswerField] = useState(false);
-  const [selectedQuestion,setSelectedQuestion]=useState('')
-  const [selectedQuestionIndex,setSelectedIndex]=useState('')
-  const [answersArray,setAnswersArray]=useState([])
-  const [answer, setAnswer] = useState("");
   const dispatch = useDispatch();
   const wallet_id = useSelector((state) => state?.web3?.wallet);
   const history = useHistory();
   const onFinish = async (values) => {
+    console.log("values",values)
     
     if (!wallet_id) {
       openNotification("Oops", "Please connect to your wallet");
       return;
     }
-    // if(answersArray?.length!==4){
-    //   openNotification("Oops", "Please Answer All Security Questions");
-    //   return; 
-    // }
     if (isAgree) {
       setLoading(true);
       try {
@@ -49,6 +40,7 @@ const SignUp = () => {
           confirm_password: values.confirmPassword,
           wallet_id: wallet_id,
           notification_marketing: newsTeller,
+          username:values?.username
         };
         const res = await SignUpAPI(data);
         setLoading(false);
@@ -64,17 +56,8 @@ const SignUp = () => {
     }
   };
 
-  useEffect(() => {
-    const getQuestionsCode = async () => {
-      const res = await codesAPI("Security Questions");
-      setSecurityQuestions(res?.data?.body);
-    };
-    getQuestionsCode();
-  }, []);
 
   const onFinishFailed = (errorInfo) => {
-    const object=answersArray.reduce(((r, c) => Object.assign(r, c)), {})
-console.log(object)
     console.log("Failed:", errorInfo);
   };
 
@@ -100,22 +83,6 @@ console.log(object)
     }
   };
 
-  const hanldeQuestion = (index, desc) => {
-    setShowAnswerField(true);
-    setSelectedQuestion(desc)
-    setSelectedIndex(index)
-    setAnswer("");
-  };
-
-  const handleQuestions=()=>{
-    setAnswersArray([...answersArray,{
-      [`question${selectedQuestionIndex}`]:selectedQuestion,
-      [`answer${selectedQuestionIndex}`]:answer
-    }
-    ])
-    setShowAnswerField(false);
-    setAnswer("");
-  }
 
   const checkUserName =  async (_, username) => {
     const res = await VerifyUsernameAPI(username);
@@ -167,6 +134,7 @@ console.log(object)
                       message: `This username is already associated to an account`,
                     },
                   ]}
+                  hasFeedback
                 >
                   <Input placeholder="FirstName" />
                 </Form.Item>

@@ -240,12 +240,20 @@ const CollectionView = ({ match }) => {
             <a className="socialIcon" href={collectionDetails?.url_medium} target='_blank'>
               <img src={MEDIUM} alt="MEDIUM" />
             </a>
-          </div>      
+          </div>       */}
           </div>
           <div className="collectionDetailsWrapper main_page_width">
             <div className="collectionDetails">
-              <span>{collectionDetails?.description_short}</span>
-            </div> */}
+              <span
+                dangerouslySetInnerHTML={{
+                  __html:
+                    collectionDetails?.description_long?.startsWith('"') ?
+                    JSON.parse(collectionDetails?.description_long)
+                    : collectionDetails?.description_long
+                    ,
+                }}
+              ></span>
+            </div>
           </div>
           {showSearchBarAndRarirtyTable && (
             <FlickerComp collectionId={match.params.id} />

@@ -6,20 +6,24 @@ import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import Spin from "../../components/presentational/Spin";
 import { openNotification } from "../../components/Smart/Notification";
 import { useSelector } from "react-redux";
-import { ChangePasswordAPI } from "../../services/userServices";
+import {
+  ChangePasswordAPI,
+  getSecurityQuestionsStatusAPI,
+} from "../../services/userServices";
 import "./ResetPassword.scss";
 import useWindowSize from "../../helpers/hooks";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import queryString from 'query-string'
+import queryString from "query-string";
+import { useEffect } from "react";
 
 const ResetPassword = ({ match }) => {
   const [loading, setLoading] = useState(false);
-  const history=useHistory();
+  const history = useHistory();
+  const [isSecurityEnabled, setIsSecurityEnabled] = useState(false);
+  const { search } = useLocation();
 
-  const {search}=useLocation()
-
-  const {token}=queryString.parse(search)
+  const { token, user_guid } = queryString.parse(search);
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -30,11 +34,10 @@ const ResetPassword = ({ match }) => {
         confirm_password: values?.confirmPassword,
         token: token,
       };
-      const  data  = await ChangePasswordAPI(userData);
-      openNotification("Success","Password Updated Successfully")
-      history.push('/auth/login')
+      const data = await ChangePasswordAPI(userData);
+      openNotification("Success", "Password Updated Successfully");
+      history.push("/auth/login");
       setLoading(false);
-      
     } catch (error) {
       setLoading(false);
       openNotification("Oops", error?.response?.data?.message);
@@ -58,6 +61,22 @@ const ResetPassword = ({ match }) => {
     }
   };
 
+  useEffect(() => {
+    const checkSecurityQuestionsStatus = async () => {
+      if (user_guid) {
+        try {
+          const res = await getSecurityQuestionsStatusAPI('15fc3743-866d-4529-9674-e7f464bd230e');
+          if(res?.data?.body?.status==1){
+            history.push(`/auth/security-question`)
+          }
+        } catch (e) {
+          console.log("e", e);
+        }
+      }
+    };
+    checkSecurityQuestionsStatus();
+  }, []);
+
   return (
     <>
       <div className="ChangePasswordWrapper">
@@ -76,6 +95,7 @@ const ResetPassword = ({ match }) => {
                   <img src={AUTH_ICON} alt={"AUTH_ICON"} />
                 </span>
               </span>
+
               <Form
                 name="basic"
                 initialValues={{
@@ -153,10 +173,9 @@ const ResetPassword = ({ match }) => {
                 </Form.Item>
                 <Form.Item>
                   <span className="passInfo">
-                  Password ( Passwords must be 12-25 characters and MUST
-                      contain 1 uppercase letter, 1 lowercase letter and 1
-                      special character (single and double quotes are not
-                      allowed). )
+                    Password ( Passwords must be 12-25 characters and MUST
+                    contain 1 uppercase letter, 1 lowercase letter and 1 special
+                    character (single and double quotes are not allowed). )
                   </span>
                 </Form.Item>
               </Form>

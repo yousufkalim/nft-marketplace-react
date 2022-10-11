@@ -35,7 +35,7 @@ const FlickerComp = ({ collectionId }) => {
   }, [collectionId]);
 
   return (
-    <div className="flickerWrapper">
+    <div className="flickerWrapper main_page_width">
       {rarityData?.length ? (
         <>
           <div onClick={onClickLeft} className="arrow leftArrow">

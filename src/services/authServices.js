@@ -9,7 +9,8 @@ export const SignUpAPI = async (userInfo) => {
     confirm_password: userInfo.confirm_password,
     wallet_id: userInfo.wallet_id,
     email: userInfo.email,
-    notification_marketing:userInfo.notification_marketing
+    notification_marketing:userInfo.notification_marketing,
+    username:userInfo?.username
   };
   return await axios.post(
     `https://nftdepot-api.azurewebsites.net/signup`,
