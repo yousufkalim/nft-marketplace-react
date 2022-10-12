@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Logout } from "../../../store/auth/authActions";
 import { useHistory } from "react-router-dom";
 import { Web3Connector } from "../../Smart/Web3/Web3Wrapper";
+import { StringParam, useQueryParam } from "use-query-params";
 
 const { Option } = AutoComplete;
 
@@ -24,8 +25,13 @@ const AppHeader = () => {
   const history = useHistory();
   const isAuthenticated = useSelector((state) => state?.auth?.isAuthenticated);
   const dispatch = useDispatch();
+  const [searchedValue, setSearchedValue] = useState("");
+  const [query, setQuery] = useQueryParam({
+    searchCollection: StringParam,
+  });
 
   const handleSearch = async (value) => {
+    setSearchedValue(value);
     if (value) {
       let collections = await searchApi(value);
       setCollections(collections?.data?.body);
@@ -72,12 +78,48 @@ const AppHeader = () => {
     history.push(`/collectionView/${id}`);
   };
 
+  const searchCollection = (e) => {
+    if (e.keyCode == 13 && searchedValue !== "") {
+      history.push(`/explore?searchCollection=${searchedValue}`);
+    }
+  };
+
   return (
     <div className="editpf header main_page_width">
+      <div className="dFlex">
       <div className="logo">
         <Link to="/">
           <img src={HEADER_LOGO} alt={"HEADER_LOGO"} />
         </Link>
+      </div>
+
+      {isAuthenticated && (
+        <div className="searchBar">
+          <AutoComplete
+            style={{
+              width: 200,
+            }}
+            onSelect={(e) => onSelect(e)}
+            onSearch={handleSearch}
+            placeholder="Search here"
+            onInputKeyDown={(e) => searchCollection(e)}
+          >
+            {collections?.length ? (
+              collections?.map((location) => (
+                <Option key={location.guid} value={location.store_name}>
+                  <div onClick={() => handleClick(location?.guid)}>
+                    {location.store_name}
+                  </div>
+                </Option>
+              ))
+            ) : (
+              <Option key={1} value={"No Collections Found"}>
+                No Collections Found
+              </Option>
+            )}
+          </AutoComplete>
+        </div>
+      )}
       </div>
       <div className="tabs">
         {isAuthenticated && (
@@ -103,7 +145,7 @@ const AppHeader = () => {
               <img src={TOGGLE_ICON} alt={"PROFILE_ICON"} />
             </span>
           )}
-          <Tooltip
+          {/* <Tooltip
             placement={"bottomLeft"}
             color={"transparent"}
             trigger={"click"}
@@ -137,7 +179,7 @@ const AppHeader = () => {
                 <img src={SEARCH_ICON} alt={"SEARCH_ICON"} />
               </span>
             )}
-          </Tooltip>
+          </Tooltip> */}
           <span className="headerIcons">
             <img src={BELL_ICON} alt={"BELL_ICON"} />
           </span>

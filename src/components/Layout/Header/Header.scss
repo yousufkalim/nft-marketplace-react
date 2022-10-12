@@ -20,6 +20,11 @@
   @include mobile {
     height:55px;
   }
+  .dFlex{
+    display: flex;
+    flex-direction: row;
+    gap:12px;
+  }
   .logo {
     // margin-left: 250px;
     @include mobile{
@@ -93,6 +98,11 @@
           display: none;
         }
       }
+    }
+  }
+  .searchBar{
+    @include mobile{
+      display: none;
     }
   }
 }

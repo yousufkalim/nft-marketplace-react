@@ -14,6 +14,7 @@ import {
 import { openNotification } from "../../Smart/Notification";
 import { truncate, truncateTitle } from "../../../helpers/utils";
 import { useSelector } from "react-redux";
+import { confirm } from "../../Smart/Modal";
 
 const { Meta } = Card;
 
@@ -23,7 +24,6 @@ const ExploreCard = ({
   exploreData,
   setExploreData,
 }) => {
-
   const history = useHistory();
   const user = useSelector((state) => state?.auth?.user);
   const handleClick = () => {
@@ -71,7 +71,6 @@ const ExploreCard = ({
     }
   };
 
-
   const handleCreatedBy = (e) => {
     e.stopPropagation();
     if (user?.username === data?.created_by) {
@@ -81,11 +80,20 @@ const ExploreCard = ({
     }
   };
 
-  const handleUrlPersonal=(e)=>{
+  const handleOk = () => {
+    data?.url_personal?.includes("https") && window.open(data?.url_personal);
+  };
+
+  const handleUrlPersonal = (e) => {
     e.stopPropagation();
-    data?.url_personal?.includes('https') &&
-    window.open(data?.url_personal)
-  }
+    confirm(
+      "Are you sure",
+      "By click ok you will leave this site",
+      "",
+      "",
+      handleOk
+    );
+  };
 
   return (
     <div className="ExploreCard" onClick={handleClick}>
@@ -127,18 +135,16 @@ const ExploreCard = ({
       >
         <Meta
           title={
-            <div className="DisplayF">
-            {truncateTitle(data?.store_name)}
-            <img src={LINK_ICON} alt={"LINK_ICON"} onClick={(e)=>handleUrlPersonal(e)} />
-            </div>
-            }
+            <div className="DisplayF">{truncateTitle(data?.store_name)}</div>
+          }
           description={truncate(data?.description_short)}
         />
         <div className="exploreCardFooter">
-          {/* <span className="priceHeading">Price <span className="priceHeading">$$ ETH</span></span> */}
-          <span className="rightSection">
-            <span>
-              <img src={EYE_ICON} alt={"EYE_ICON"} />
+          <div className="rightSection">
+            <span className="tagImage">
+              <Tooltip title={"Views"} color={"#303549"}>
+                <img src={EYE_ICON} alt={"EYE_ICON"} />
+              </Tooltip>
               <span className="beliefPrice">{data?.views}</span>
             </span>
             <span className="tagImage">
@@ -147,12 +153,24 @@ const ExploreCard = ({
               </Tooltip>
               <span className="tagPrice">{data?.followers_count}</span>
             </span>
-          </span>
-        </div>
-        <div className="idSection"># {data?.guid}</div>
-        <div className="createdBy" onClick={(e) => handleCreatedBy(e)}>
-          <span>Created By: </span>
-          <span className="textStyle">{data?.created_by}</span>
+            {data?.url_personal?.includes("https") && (
+              <span className="tagImage">
+                <Tooltip title={data?.url_personal} color={"#303549"}>
+                  <img
+                    src={LINK_ICON}
+                    alt={"LINK_ICON"}
+                    onClick={(e) => handleUrlPersonal(e)}
+                  />
+                </Tooltip>
+              </span>
+            )}
+            {data?.created_by && (
+              <span className="dFlex" onClick={(e) => handleCreatedBy(e)}>
+                <span className="createdBy">Created By: </span>
+                <span className="textStyle">{data?.created_by}</span>
+              </span>
+            )}
+          </div>
         </div>
       </Card>
     </div>
