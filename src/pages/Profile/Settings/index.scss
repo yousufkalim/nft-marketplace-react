@@ -483,6 +483,7 @@ span.chevron_icon_btn.left_cev {
   }
   .ant-select {
     line-height: 2.9715;
+    width: 100%;
   }
   .ant-select-selector {
     background: $InputBg !important;
@@ -523,4 +524,11 @@ span.chevron_icon_btn.left_cev {
   margin-right: 4px;
   color: $CreateBtnBg;
 
+}
+.form{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
 }

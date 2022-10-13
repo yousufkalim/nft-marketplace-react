@@ -19,7 +19,7 @@ export const restrictedConfig = {
   },
 };
 
-export const truncate = (text = "",h = 38) => {
+export const truncate = (text = "",h = 35) => {
   const head = text.slice(0, h)
   // const tail = text.slice(-1 * t, text.length)
   return text.length > h  ? <div>{head}
@@ -30,7 +30,7 @@ export const truncate = (text = "",h = 38) => {
   : text
 }
 
-export const truncateTitle = (text = "",h = 15) => {
+export const truncateTitle = (text = "",h = 25) => {
   const head = text.slice(0, h)
   // const tail = text.slice(-1 * t, text.length)
   return text.length > h  ? <div>{head}

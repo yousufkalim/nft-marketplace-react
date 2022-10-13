@@ -21,14 +21,17 @@ const { Option } = AutoComplete;
 const AppHeader = () => {
   const [collections, setCollections] = useState([]);
   const [browserWidth] = useWindowSize();
+  const searchValue = new URLSearchParams(window?.location?.search);
   const [visible, setVisible] = useState(false);
   const history = useHistory();
   const isAuthenticated = useSelector((state) => state?.auth?.isAuthenticated);
   const dispatch = useDispatch();
-  const [searchedValue, setSearchedValue] = useState("");
+  const [searchedValue, setSearchedValue] = useState(searchValue?.get("searchCollection"));
   const [query, setQuery] = useQueryParam({
     searchCollection: StringParam,
   });
+
+  console.log(searchValue?.get("searchCollection"))
 
   const handleSearch = async (value) => {
     setSearchedValue(value);
@@ -80,7 +83,8 @@ const AppHeader = () => {
 
   const searchCollection = (e) => {
     if (e.keyCode == 13 && searchedValue !== "") {
-      history.push(`/explore?searchCollection=${searchedValue}`);
+      setQuery({ searchCollection: searchedValue });
+      // history.push(`/explore`);
     }
   };
 
@@ -102,6 +106,7 @@ const AppHeader = () => {
             onSelect={(e) => onSelect(e)}
             onSearch={handleSearch}
             placeholder="Search here"
+            defaultValue={searchedValue}
             onInputKeyDown={(e) => searchCollection(e)}
           >
             {collections?.length ? (

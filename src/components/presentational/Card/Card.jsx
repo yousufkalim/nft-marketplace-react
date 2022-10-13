@@ -10,7 +10,7 @@ import {
   getCollectionFollowers,
   unFollowCollection,
 } from "../../../services/collectionServices";
-import { truncate } from "../../../helpers/utils";
+import { truncate, truncateTitle } from "../../../helpers/utils";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -90,11 +90,10 @@ const NftCard = ({ showTopPick = false, data, showFollowIcon = true }) => {
       >
         <Link to={`/collectionView/${data?.guid}`}>
           <Meta
-            title={data ? data?.store_name : "Test Title"}
+            title={data ? truncateTitle(data?.store_name) : "Test Title"}
             description={
               <div className="dFlex">
                 {data ? truncate(data?.description_short) : "test description"}
-                <div className="idSection"># {data?.guid}</div>
               </div>
             }
           />

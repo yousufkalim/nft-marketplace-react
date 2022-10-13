@@ -50,7 +50,6 @@ const FeatureMobileCard = ({ data, showFollowIcon = true }) => {
           description={
             <div className="dFlex">
               <div>{truncate(data?.description_short)}</div>
-              <div className="idSection"># {data?.guid}</div>
             </div>
           }
         />

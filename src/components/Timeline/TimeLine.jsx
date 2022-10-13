@@ -1,5 +1,6 @@
-import { Button, Col, Row, Steps } from "antd";
+import { Button, Col, Row, Steps, Modal } from "antd";
 import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import useWindowSize from "../../helpers/hooks";
@@ -12,9 +13,10 @@ import "./Timeline.scss";
 const { Step } = Steps;
 
 const TimeLine = ({ status, data, collectionid }) => {
-
+  console.log("data", data);
   const [browserWidth] = useWindowSize();
   const history = useHistory();
+  const [visible, setVisible] = useState(status == -1);
 
   const messages = {
     1: "We are generating samples.... You will receive an email shortly when they are ready for your review.",
@@ -25,7 +27,10 @@ const TimeLine = ({ status, data, collectionid }) => {
   const handleAction = async () => {
     try {
       const res = await collectionActions(collectionid, "Approve");
-      openNotification("Approved","Thanks for your approval. You will receive further updates here soon.")
+      openNotification(
+        "Approved",
+        "Thanks for your approval. You will receive further updates here soon."
+      );
     } catch (error) {
       console.log("error", error);
     }
@@ -42,6 +47,15 @@ const TimeLine = ({ status, data, collectionid }) => {
     }
   };
 
+  const handleOk = () => {
+    setVisible(false);
+    history.goBack();
+  };
+
+  const handleZip = () => {
+    history.push(`/createNft/${collectionid}`);
+  };
+
   return (
     <div className="main_page_width">
       <div className="timeLineWrapper">
@@ -53,7 +67,7 @@ const TimeLine = ({ status, data, collectionid }) => {
         </Steps>
       </div>
       <div className="messageWrapper">
-        <div className="message">{messages[status]}</div>
+        <div className="message">{data?.body?.comments}</div>
       </div>
       <div className="collectionNftViewCardGrid">
         <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
@@ -87,6 +101,30 @@ const TimeLine = ({ status, data, collectionid }) => {
           percent={data?.body?.progress}
           classname={status == 0 ? "dimOpacity" : ""}
         />
+      )}
+      {status == -1 && (
+        <Modal
+          visible={visible}
+          footer={
+            <>
+              <Button onClick={handleZip}>Upload Zip File</Button>
+              <Button className="bgColor" onClick={handleOk}>
+                Ok
+              </Button>
+            </>
+          }
+          closable={false}
+          onOk={() => setVisible(false)}
+          onCancel={() => setVisible(false)}
+          maskClosable={false}
+        >
+          <p>{data?.body?.comments}</p>
+          <p>
+            You can choose to upload a new valid Zip File or email
+            <span className="email"> support@nftdepot.art</span>
+            with the above error information.
+          </p>
+        </Modal>
       )}
     </div>
   );

@@ -1,4 +1,4 @@
-import { Form, Button, Input } from "antd";
+import { Button, Input, Select } from "antd";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -15,44 +15,55 @@ import "./index.scss";
 const Security = () => {
   const [loading, setLoading] = useState(false);
   const [securityQuestions, setSecurityQuestions] = useState([]);
-  const [codes, setCodes] = useState([]);
-  const dispatch=useDispatch()
-  const user=useSelector(state=>state?.auth?.user)
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state?.auth?.user);
+  const [answer1, setAnswer1] = useState("");
+  const [answer2, setAnswer2] = useState("");
+  const [answer3, setAnswer3] = useState("");
+  const [answer4, setAnswer4] = useState("");
+  const [question1, setQuestion1] = useState("");
+  const [question2, setQuestion2] = useState("");
+  const [question3, setQuestion3] = useState("");
+  const [question4, setQuestion4] = useState("");
 
-  const onFinish = async (values) => {
-    setLoading(true);
-    const data = {
-      question1: codes[0],
-      question2: codes[1],
-      question3: codes[2],
-      question4: codes[3],
-      answer1: values?.answer1,
-      answer2: values?.answer2,
-      answer3: values?.answer3,
-      answer4: values?.answer4,
-      has_questions: 1,
-    };
-    try {
-      const res = await updateQuestionsAPI(data);
-      const user = await VerifyUser();
-      dispatch(setProfile(user));
-      setLoading(false);
-      openNotification("Success", "Questions Updated Successfully");
-    } catch (error) {
-      setLoading(false);
-      console.log("error", error);
-      // openNotification("Error",error)
+  const onFinish = async () => {
+    if (
+      answer1?.length &&
+      answer2?.length &&
+      answer3?.length &&
+      answer4?.length
+    ) {
+      setLoading(true);
+      const data = {
+        question1: question1,
+        question2: question2,
+        question3: question3,
+        question4: question4,
+        answer1: answer1,
+        answer2: answer2,
+        answer3: answer3,
+        answer4: answer4,
+        has_questions: 1,
+      };
+      try {
+        const res = await updateQuestionsAPI(data);
+        const user = await VerifyUser();
+        dispatch(setProfile(user));
+        setLoading(false);
+        openNotification("Success", "Questions Updated Successfully");
+      } catch (error) {
+        setLoading(false);
+        console.log("error", error);
+        // openNotification("Error",error)
+      }
+    } else {
+      openNotification("Warning", "Kindly Answer all Questions");
     }
   };
-  const onFinishFailed = () => {};
 
-  const getSecurityQuestionsCode = () => {
-    const QuestionsCodes = securityQuestions?.slice(0, 4)
-    ?.map((item) => {
-      return item?.code;
-    });
-    setCodes(QuestionsCodes);
-  };
+  function getKeyByValue(object, value) {
+    return Object.keys(object).find((key) => object[key] === value);
+  }
 
   useEffect(() => {
     const getQuestionsCode = async () => {
@@ -62,57 +73,125 @@ const Security = () => {
     getQuestionsCode();
   }, []);
 
-  useEffect(() => {
-    getSecurityQuestionsCode();
-  }, [securityQuestions]);
+  const handleFormFilling = (value, index) => {
+    const filterArray = securityQuestions
+      ?.slice(0, 4)
+      ?.filter((item) => item?.code !== value);
+    setSecurityQuestions([...filterArray]);
+    const Questionkey = getKeyByValue(user, value);
+    const answerIndex = Questionkey?.match(/\d+/);
+    index == 1
+      ? setAnswer1(user?.[`answer${answerIndex}`])
+      : index == 2
+      ? setAnswer2(user?.[`answer${answerIndex}`])
+      : index == 3
+      ? setAnswer3(user?.[`answer${answerIndex}`])
+      : index == 4
+      ? setAnswer4(user?.[`answer${answerIndex}`])
+      : null;
+  };
+
+  const handleQuestion1Change = (value) => {
+    setQuestion1(value);
+    handleFormFilling(value, 1);
+  };
+  const handleQuestion2Change = (value) => {
+    setQuestion2(value);
+    handleFormFilling(value, 2);
+  };
+  const handleQuestion3Change = (value) => {
+    setQuestion3(value);
+    handleFormFilling(value, 3);
+  };
+  const handleQuestion4Change = (value) => {
+    setQuestion4(value);
+    handleFormFilling(value, 4);
+  };
 
   return (
     <div className="securityWrapper">
       <div className="heading">Security Questions</div>
-      <Form
-        name="basic"
-        initialValues={{
-          answer1:user?.answer1 ?? '',
-          answer2:user?.answer2 ?? '',
-          answer3:user?.answer3 ?? '',
-          answer4:user?.answer4 ?? ''
-        }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete="on"
-      >
-        {securityQuestions?.slice(0, 4)?.map((item, index) => {
-          return (
-            <Form.Item
-              name={`answer${index + 1}`}
-              labelCol={{ span: 24 }}
-              wrapperCol={{ span: 24 }}
-              label={
-                <>
-                  <span className={"QuestionsHeading"}>
-                    {`Question ${index + 1}:`}
-                  </span>
-                  {item?.description}
-                </>
-              }
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your answer!",
-                },
-              ]}
-            >
-              <Input placeholder="Type Your Answer Here" />
-            </Form.Item>
-          );
-        })}
+      <div className="form">
+        <Select
+          placeholder="Select Your Question"
+          onChange={handleQuestion1Change}
+        >
+          {securityQuestions?.slice(0, 4)?.map((item, index) => {
+            return (
+              <Select.Option value={item?.code} key={item?.code}>
+                {item?.description}
+              </Select.Option>
+            );
+          })}
+        </Select>
 
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            {loading ? <Spin /> : "Submit"}
-          </Button>
-        </Form.Item>
-      </Form>
+        <Input
+          value={answer1}
+          onChange={(e) => setAnswer1(e.target.value)}
+          placeholder="Type Your Answer Here"
+        />
+
+        <Select
+          placeholder="Select Your Question"
+          onChange={handleQuestion2Change}
+        >
+          {securityQuestions?.slice(0, 4)?.map((item, index) => {
+            return (
+              <Select.Option value={item?.code} key={item?.code}>
+                {item?.description}
+              </Select.Option>
+            );
+          })}
+        </Select>
+
+        <Input
+          value={answer2}
+          onChange={(e) => setAnswer2(e.target.value)}
+          placeholder="Type Your Answer Here"
+        />
+
+        <Select
+          placeholder="Select Your Question"
+          onChange={handleQuestion3Change}
+        >
+          {securityQuestions?.slice(0, 4)?.map((item, index) => {
+            return (
+              <Select.Option value={item?.code} key={item?.code}>
+                {item?.description}
+              </Select.Option>
+            );
+          })}
+        </Select>
+
+        <Input
+          value={answer3}
+          onChange={(e) => setAnswer3(e.target.value)}
+          placeholder="Type Your Answer Here"
+        />
+
+        <Select
+          placeholder="Select Your Question"
+          onChange={handleQuestion4Change}
+        >
+          {securityQuestions?.slice(0, 4)?.map((item, index) => {
+            return (
+              <Select.Option value={item?.code} key={item?.code}>
+                {item?.description}
+              </Select.Option>
+            );
+          })}
+        </Select>
+
+        <Input
+          value={answer4}
+          onChange={(e) => setAnswer4(e.target.value)}
+          placeholder="Type Your Answer Here"
+        />
+
+        <Button type="primary" onClick={onFinish}>
+          {loading ? <Spin /> : "Submit"}
+        </Button>
+      </div>
     </div>
   );
 };

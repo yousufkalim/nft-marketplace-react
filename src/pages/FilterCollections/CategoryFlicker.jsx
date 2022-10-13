@@ -52,6 +52,8 @@ const CategoryFlicker = ({ category, setCategory, reloadOnChange }) => {
   const handleReset = () => {
       setCategory("");
       setQuery({ SelectedCategory: null });
+      reloadOnChange && window.location.reload();
+
     
   };
 
@@ -100,15 +102,10 @@ const CategoryFlicker = ({ category, setCategory, reloadOnChange }) => {
         </div>
       </div>
       <div className="resetWrapper main_page_width padding_add">
-        {reloadOnChange ? (
-          <a href="/explore" target={"_self"}>
-            <div className="resetFilters">Reset Filters</div>
-          </a>
-        ) : (
           <div className="resetFilters" onClick={handleReset}>
             Reset Filters
           </div>
-        )}
+        
       </div>
     </>
   );

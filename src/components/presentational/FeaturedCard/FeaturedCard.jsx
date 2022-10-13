@@ -48,8 +48,7 @@ const FeaturedCard = ({ data, isNft, showFollowIcon = true }) => {
   const handleCreatedBy = (e) => {
     e.stopPropagation();
     history.push(`/creatorDetails/${data?.created_by}`);
-  
-};
+  };
 
   return (
     <div className="featuredCard">
@@ -102,13 +101,13 @@ const FeaturedCard = ({ data, isNft, showFollowIcon = true }) => {
                   </span>
                 </span>
               )}
-              <span className="idSection">
-                # {data?.collection_id ?? data?.guid}
-              </span>
+
               <div className="createdBy">
-              <span>Created By: </span>
-              <span className="textStyle" onClick={(e)=>handleCreatedBy(e)}>{data?.user_details?.username}</span>
-            </div>
+                <span>Created By: </span>
+                <span className="textStyle" onClick={(e) => handleCreatedBy(e)}>
+                  {data?.user_details?.username}
+                </span>
+              </div>
             </div>
             <div className="frameIconSection">
               <Tooltip title={isLiked ? "Unlike" : "Like"} color={"#303549"}>
@@ -118,7 +117,7 @@ const FeaturedCard = ({ data, isNft, showFollowIcon = true }) => {
                     onClick={isLiked ? (e) => unLikeNft(e) : (e) => likeNft(e)}
                   >
                     <img
-                      src={isLiked ? LIKED_ICON: LIKE_ICON}
+                      src={isLiked ? LIKED_ICON : LIKE_ICON}
                       alt={"ORANGE_FRAME"}
                     />
                   </span>

@@ -36,6 +36,7 @@ const CollectionNftView = ({
   const [browserWidth] = useWindowSize();
   const [status, setStatus] = useState(0);
   const fetchExploreData = async () => {
+    console.log("i am called")
     try {
       const res = await getCollectionNft(collectionid, extraData?.next_page);
       setTimeLineData(res);
@@ -89,8 +90,8 @@ const CollectionNftView = ({
 
   useEffect(() => {
     const interval = setInterval(async() => {
-      !status == 5 && await fetchExploreData()
-    }, 10000)
+      status == 5 ? null : await fetchExploreData()
+    }, 9000)
     return () => {
       clearInterval(interval)
     }

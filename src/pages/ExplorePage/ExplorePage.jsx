@@ -12,7 +12,9 @@ import { openNotification } from "../../components/Smart/Notification";
 import CategoryFlicker from "../FilterCollections/CategoryFlicker";
 import { getCollectionByCategory } from "../../services/collectionServices";
 import Spin from "../../components/presentational/Spin";
+
 import "./ExplorePage.scss";
+import { searchApi } from "../../services/searchServices";
 
 const ExplorePage = () => {
   const arr = [1, 2, 3];
@@ -27,8 +29,26 @@ const ExplorePage = () => {
   const [browserWidth] = useWindowSize();
   const fetchExploreData = async () => {
     try {
-      if (!query?.get("SelectedCategory")) {
-        const res = await allCollectionsAPI(extraData?.next_page);
+      if (query?.get("searchCollection")) {
+        console.log("first")
+        const res = await searchApi(query?.get("searchCollection"),
+        query?.get("SelectedCategory")
+        );
+        if (res?.data?.body?.length) {
+          setExploreData([...res?.data?.body]);
+          setExtraData({
+            next_page: null,
+            has_more: false,
+          });
+        }
+
+      } else if (query?.get("SelectedCategory")) {
+        console.log("second")
+        const res = await getCollectionByCategory(
+          query?.get("SelectedCategory"),
+          extraData?.next_page
+        );
+
         if (res?.body?.data?.length) {
           setExploreData([...exploreData, ...res?.body?.data]);
           setExtraData({
@@ -37,11 +57,8 @@ const ExplorePage = () => {
           });
         }
       } else {
-        const res = await getCollectionByCategory(
-          query?.get("SelectedCategory"),
-          extraData?.next_page
-        );
-
+        console.log("third")
+        const res = await allCollectionsAPI(extraData?.next_page);
         if (res?.body?.data?.length) {
           setExploreData([...exploreData, ...res?.body?.data]);
           setExtraData({
@@ -59,7 +76,7 @@ const ExplorePage = () => {
     setLoading(true);
     await fetchExploreData();
     setLoading(false);
-  }, []);
+  }, [query?.get("searchCollection")]);
 
   return (
     <>

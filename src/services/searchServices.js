@@ -1,9 +1,9 @@
 import axios from "axios";
 import { apiConfig } from "../helpers/utils";
 
-export const searchApi = async (query) => {
+export const searchApi = async (query,category) => {
   return await axios.get(
-    `https://nftdepot-api.azurewebsites.net/collections/search?query=${query}`,
+    `https://nftdepot-api.azurewebsites.net/collections/search?query=${query}&category=${category}`,
     apiConfig
   );
 };
