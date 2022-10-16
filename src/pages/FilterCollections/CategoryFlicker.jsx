@@ -38,6 +38,7 @@ const CategoryFlicker = ({ category, setCategory, reloadOnChange }) => {
   });
 
   const handleCategory = (code) => {
+    console.log("code",typeof code)
     if (reloadOnChange) {
       setCategory(code);
       setQuery({ SelectedCategory: code });

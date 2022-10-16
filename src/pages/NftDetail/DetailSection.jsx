@@ -1,9 +1,12 @@
+import { Tooltip } from "antd";
 import React from "react";
+import { truncateAddress } from "../../helpers/utils";
 import "./DetailSection.scss";
 import LineChart from "./LineChart";
 import OffersTable from "./OffersTable";
 
-const DetailSection = ({nftData}) => {
+const DetailSection = ({ nftData }) => {
+  console.log("nftData", nftData);
 
   return (
     <div className="detailSection">
@@ -24,10 +27,25 @@ const DetailSection = ({nftData}) => {
             </span>
           </div>
           <div className="details">
-          <span className="heading">Details</span>
+            <span className="heading">Details</span>
             <span className="flexStyle">
               <span className="key">Contract Address</span>
-              <span className="value">0xeaa4...bb7b</span>
+              <span className="value">
+                {nftData?.contract_id && (
+                  <a
+                    href={`https://etherscan.io/address/${nftData?.contract_id}`}
+                    target='_blank'
+                  >
+                    <Tooltip
+                      color={"#303549"}
+                      title={nftData?.contract_id}
+                      placement={"leftTop"}
+                    >
+                      {truncateAddress(nftData?.contract_id)}
+                    </Tooltip>
+                  </a>
+                )}
+              </span>
             </span>
             <span className="flexStyle">
               <span className="key"> Token ID</span>
@@ -48,9 +66,13 @@ const DetailSection = ({nftData}) => {
             </span>
           </div>
         </div>
-        <div className="statsSection" >
-          <div className="chartContainer"><LineChart/></div>
-          <div className="offers"><OffersTable/></div> 
+        <div className="statsSection">
+          <div className="chartContainer">
+            <LineChart />
+          </div>
+          <div className="offers">
+            <OffersTable />
+          </div>
         </div>
       </div>
     </div>

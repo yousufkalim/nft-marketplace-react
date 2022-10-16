@@ -14,30 +14,39 @@ import { useDispatch, useSelector } from "react-redux";
 import { Logout } from "../../../store/auth/authActions";
 import { useHistory } from "react-router-dom";
 import { Web3Connector } from "../../Smart/Web3/Web3Wrapper";
-import { StringParam, useQueryParam } from "use-query-params";
+import { StringParam, useQueryParams } from "use-query-params";
+import Spin from "../../presentational/Spin";
+import { SearchOutlined } from "@ant-design/icons";
 
 const { Option } = AutoComplete;
 
 const AppHeader = () => {
   const [collections, setCollections] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [browserWidth] = useWindowSize();
   const searchValue = new URLSearchParams(window?.location?.search);
   const [visible, setVisible] = useState(false);
   const history = useHistory();
   const isAuthenticated = useSelector((state) => state?.auth?.isAuthenticated);
   const dispatch = useDispatch();
-  const [searchedValue, setSearchedValue] = useState(searchValue?.get("searchCollection"));
-  const [query, setQuery] = useQueryParam({
-    searchCollection: StringParam,
+  const [query, setQuery] = useQueryParams({
+    SearchCollection: StringParam,
   });
-
-  console.log(searchValue?.get("searchCollection"))
+  const [searchedValue, setSearchedValue] = useState(
+    searchValue?.get("SearchCollection")
+  );
 
   const handleSearch = async (value) => {
-    setSearchedValue(value);
-    if (value) {
-      let collections = await searchApi(value);
-      setCollections(collections?.data?.body);
+    setLoading(true);
+    try {
+      setSearchedValue(value);
+      if (value) {
+        let collections = await searchApi(value);
+        setCollections(collections?.data?.body);
+      }
+      setLoading(false);
+    } catch (e) {
+      console.log("e", e);
     }
   };
 
@@ -77,54 +86,69 @@ const AppHeader = () => {
     />
   );
 
-  const handleClick = (id) => {
+  const handleClick = (e, id) => {
+    e.stopPropagation();
     history.push(`/collectionView/${id}`);
   };
 
   const searchCollection = (e) => {
     if (e.keyCode == 13 && searchedValue !== "") {
-      setQuery({ searchCollection: searchedValue });
-      // history.push(`/explore`);
+      setQuery({ SelectedCategory: null });
+      history.push(`/explore?SearchCollection=${searchedValue}`);
     }
   };
 
   return (
     <div className="editpf header main_page_width">
       <div className="dFlex">
-      <div className="logo">
-        <Link to="/">
-          <img src={HEADER_LOGO} alt={"HEADER_LOGO"} />
-        </Link>
-      </div>
+        <div className="logo">
+          <Link to="/">
+            <img src={HEADER_LOGO} alt={"HEADER_LOGO"} />
+          </Link>
+        </div>
 
-      {isAuthenticated && (
-        <div className="searchBar">
-          <AutoComplete
-            style={{
-              width: 200,
-            }}
-            onSelect={(e) => onSelect(e)}
-            onSearch={handleSearch}
-            placeholder="Search here"
-            defaultValue={searchedValue}
-            onInputKeyDown={(e) => searchCollection(e)}
-          >
-            {collections?.length ? (
-              collections?.map((location) => (
-                <Option key={location.guid} value={location.store_name}>
-                  <div onClick={() => handleClick(location?.guid)}>
-                    {location.store_name}
+        {isAuthenticated && (
+          <div className="searchBar">
+            <AutoComplete
+              style={{
+                width: 250,
+              }}
+              onSelect={(e) => onSelect(e)}
+              onSearch={handleSearch}
+              placeholder={
+                <div className="searchPlaceHolder">
+                  <SearchOutlined />
+                  <span>Search Here</span>
+                </div>
+              }
+              onInputKeyDown={(e) => searchCollection(e)}
+              defaultValue={searchValue?.get("SearchCollection")}
+              allowClear
+            >
+              {collections?.length ? (
+                collections?.map((location) => (
+                  <Option key={location.guid} value={location.store_name}>
+                    <div onClick={(e) => handleClick(e, location?.guid)}>
+                      {location.store_name}
+                    </div>
+                  </Option>
+                ))
+              ) : loading ? (
+                <Option key={111} value={"loading"} disabled>
+                  <div style={{ textAlign: "center" }}>
+                    <Spin />
                   </div>
                 </Option>
-              ))
-            ) : (
-              <Option key={1} value={"No Collections Found"}>
-                No Collections Found
-              </Option>
-            )}
-          </AutoComplete>
-        </div>
-      )}
+              ) : (
+                searchedValue && (
+                  <Option key={1} value={"No Collections Found"} disabled>
+                    No Collections Found
+                  </Option>
+                )
+              )}
+            </AutoComplete>
+          </div>
+        )}
       </div>
       <div className="tabs">
         {isAuthenticated && (
@@ -150,7 +174,7 @@ const AppHeader = () => {
               <img src={TOGGLE_ICON} alt={"PROFILE_ICON"} />
             </span>
           )}
-          {/* <Tooltip
+          <Tooltip
             placement={"bottomLeft"}
             color={"transparent"}
             trigger={"click"}
@@ -161,7 +185,15 @@ const AppHeader = () => {
                 }}
                 onSelect={(e) => onSelect(e)}
                 onSearch={handleSearch}
-                placeholder="Search here"
+                placeholder={
+                  <div className="searchPlaceHolder">
+                    <SearchOutlined />
+                    <span>Search Here</span>
+                  </div>
+                }
+                onInputKeyDown={(e) => searchCollection(e)}
+                defaultValue={searchValue?.get("SearchCollection")}
+                allowClear
               >
                 {collections?.length ? (
                   collections?.map((location) => (
@@ -171,20 +203,28 @@ const AppHeader = () => {
                       </div>
                     </Option>
                   ))
-                ) : (
-                  <Option key={1} value={"No Collections Found"}>
-                    No Collections Found
+                ) : loading ? (
+                  <Option key={111} value={"loading"} disabled>
+                    <div style={{ textAlign: "center" }}>
+                      <Spin />
+                    </div>
                   </Option>
+                ) : (
+                  searchedValue && (
+                    <Option key={1} value={"No Collections Found"} disabled>
+                      No Collections Found
+                    </Option>
+                  )
                 )}
               </AutoComplete>
             }
           >
-            {isAuthenticated && (
+            {isAuthenticated && browserWidth < 620 && (
               <span className="headerIcons">
                 <img src={SEARCH_ICON} alt={"SEARCH_ICON"} />
               </span>
             )}
-          </Tooltip> */}
+          </Tooltip>
           <span className="headerIcons">
             <img src={BELL_ICON} alt={"BELL_ICON"} />
           </span>

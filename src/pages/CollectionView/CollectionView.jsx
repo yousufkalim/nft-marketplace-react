@@ -5,7 +5,7 @@ import FILTER_IMG from "../../images/filter_icon.svg";
 
 import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import FlickerComp from "./Flicker";
-import { Button, Input, Select, Spin } from "antd";
+import { Button, Input, Select, Spin, Tooltip } from "antd";
 import { SearchOutlined, DownOutlined } from "@ant-design/icons";
 import CollectionNftView from "./CollectionNftView";
 import NewsLetter from "../../components/presentational/NewsLetter/NewsLetter";
@@ -28,6 +28,10 @@ import "./CollectionView.scss";
 import { codesAPI } from "../../services/createCollectionServices";
 import { deployNFT } from "../../services/web3Services";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import REPORT_ICON from "../../images/report_icon.svg";
+import LINK_ICON from "../../images/link_white_icon.svg";
+import { confirm } from "../../components/Smart/Modal";
+import ReportCollectionModal from "../../components/Smart/ReportCollectionModal";
 
 const CollectionView = ({ match }) => {
   const [collectionDetails, setCollectionDetails] = useState([]);
@@ -35,6 +39,7 @@ const CollectionView = ({ match }) => {
   const [count, setCount] = useState(0);
   const [searchParam, setSearchParam] = useState("");
   const [filterCodes, setFilterCodes] = useState([]);
+  const [isReportModalVisible, setIsReportModalVisible] = useState(false);
   const userData = useSelector((state) => state?.auth?.user);
   const [showSearchBarAndRarirtyTable, setShowSearchBarAndRarirtyTable] =
     useState(false);
@@ -111,9 +116,29 @@ const CollectionView = ({ match }) => {
     }
   };
 
+  const handleOk = () => {
+    collectionDetails?.url_personal?.includes("https") &&
+      window.open(collectionDetails?.url_personal);
+  };
+
+  const handleUrlPersonal = (e) => {
+    e.stopPropagation();
+    confirm(
+      "Are you sure",
+      "By click ok you will leave this site",
+      "",
+      "",
+      handleOk
+    );
+  };
+
   return (
     <>
-      {/* <BreadCrumb match={match} /> */}
+      <ReportCollectionModal
+        visible={isReportModalVisible}
+        setVisible={setIsReportModalVisible}
+        collectionId={collectionDetails?.guid}
+      />
       {loading ? (
         <div className="antdSpinContainer">
           <Spin />
@@ -122,7 +147,6 @@ const CollectionView = ({ match }) => {
         <div className="CollectionViewPageWrapper">
           <div className="CollectionViewPageHeader">
             <img
-              // src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER_IMG}
               src={
                 collectionDetails?.image_banner_location?.includes("https")
                   ? collectionDetails?.image_banner_location
@@ -131,9 +155,6 @@ const CollectionView = ({ match }) => {
               alt={"COLLECTION_BANNER_IMG"}
             />
             <div className="CollectionViewHeadingSection">
-              {/* <span className="CollectionViewText">
-            FIND, EXPLORE & FOLLOW DIGITAL ART NFTS.
-          </span> */}
               <span className="CollectionViewHeading">
                 {collectionDetails?.store_name}
               </span>
@@ -204,15 +225,31 @@ const CollectionView = ({ match }) => {
                   <span>Volume Traded</span>
                   <span>$0.00</span>
                 </div>
-                <div className="imageWrapper">
-                  <img
-                    src={
-                      collectionDetails?.image_large_location?.includes("https")
-                        ? collectionDetails?.image_large_location
-                        : BANNER_IMG
-                    }
-                    alt={"BANNER_IMG"}
-                  />
+                <div className="mainWrapper">
+                  <div className="imageWrapper">
+                    <img
+                      src={
+                        collectionDetails?.image_large_location?.includes(
+                          "https"
+                        )
+                          ? collectionDetails?.image_large_location
+                          : BANNER_IMG
+                      }
+                      alt={"BANNER_IMG"}
+                    />
+                  </div>
+                  <div className="icons">
+                    <Tooltip title={"Personal Link"} color={"#303549"}>
+                      <span onClick={(e) => handleUrlPersonal(e)}>
+                        <img src={LINK_ICON} alt={"LINK_ICON"} />
+                      </span>
+                    </Tooltip>
+                    <Tooltip title={"Report this Collection"} color={"#303549"}>
+                      <span onClick={()=>setIsReportModalVisible(true)}>
+                        <img src={REPORT_ICON} alt={"REPORT_ICON"} />
+                      </span>
+                    </Tooltip>
+                  </div>
                 </div>
                 <div className="itemWrapper">
                   <span>Items</span>
@@ -244,15 +281,16 @@ const CollectionView = ({ match }) => {
           </div>
           <div className="collectionDetailsWrapper main_page_width">
             <div className="collectionDetails">
-              <span
+              <div className="descriptionShort">
+                {collectionDetails?.description_short}
+              </div>
+              <div
                 dangerouslySetInnerHTML={{
-                  __html:
-                    collectionDetails?.description_long?.startsWith('"') ?
-                    JSON.parse(collectionDetails?.description_long)
-                    : collectionDetails?.description_long
-                    ,
+                  __html: collectionDetails?.description_long?.startsWith('"')
+                    ? JSON.parse(collectionDetails?.description_long)
+                    : collectionDetails?.description_long,
                 }}
-              ></span>
+              ></div>
             </div>
           </div>
           {showSearchBarAndRarirtyTable && (

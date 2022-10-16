@@ -76,6 +76,9 @@
           font-size: 18px;
           line-height: 21px;
           color: $CreateBtnBg;
+          a{
+            color: unset !important;
+          }
           .dFlex {
             img {
               margin-right: 14px;

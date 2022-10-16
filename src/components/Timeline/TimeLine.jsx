@@ -63,6 +63,7 @@ const TimeLine = ({ status, data, collectionid }) => {
           <Step title="Awaiting Processing" />
           <Step title="Processing Zip" />
           <Step title="Waiting For Approval" />
+          <Step title="Awaiting Processing" />
           <Step title="Generating NFT" />
         </Steps>
       </div>

@@ -12,9 +12,8 @@ import { openNotification } from "../../components/Smart/Notification";
 import CategoryFlicker from "../FilterCollections/CategoryFlicker";
 import { getCollectionByCategory } from "../../services/collectionServices";
 import Spin from "../../components/presentational/Spin";
-
 import "./ExplorePage.scss";
-import { searchApi } from "../../services/searchServices";
+import { AdvanceSearchApi } from "../../services/searchServices";
 
 const ExplorePage = () => {
   const arr = [1, 2, 3];
@@ -29,21 +28,21 @@ const ExplorePage = () => {
   const [browserWidth] = useWindowSize();
   const fetchExploreData = async () => {
     try {
-      if (query?.get("searchCollection")) {
-        console.log("first")
-        const res = await searchApi(query?.get("searchCollection"),
-        query?.get("SelectedCategory")
+      if (query?.get("SearchCollection")) {
+        const res = await AdvanceSearchApi(
+          query?.get("SearchCollection"),
+          query?.get("SelectedCategory"),
+          extraData?.next_page
         );
-        if (res?.data?.body?.length) {
-          setExploreData([...res?.data?.body]);
+        console.log("res",res)
+        if (res?.body?.data?.length) {
+          setExploreData([...exploreData, ...res?.body?.data]);
           setExtraData({
-            next_page: null,
-            has_more: false,
+            next_page: res?.body?.next_page,
+            has_more: res?.body?.has_more,
           });
         }
-
       } else if (query?.get("SelectedCategory")) {
-        console.log("second")
         const res = await getCollectionByCategory(
           query?.get("SelectedCategory"),
           extraData?.next_page
@@ -57,7 +56,6 @@ const ExplorePage = () => {
           });
         }
       } else {
-        console.log("third")
         const res = await allCollectionsAPI(extraData?.next_page);
         if (res?.body?.data?.length) {
           setExploreData([...exploreData, ...res?.body?.data]);
@@ -73,10 +71,13 @@ const ExplorePage = () => {
   };
 
   useEffect(async () => {
+    console.log("called");
     setLoading(true);
     await fetchExploreData();
     setLoading(false);
-  }, [query?.get("searchCollection")]);
+  }, [query?.get("SearchCollection")]);
+
+  console.log("test", query?.get("SearchCollection"));
 
   return (
     <>

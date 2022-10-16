@@ -118,6 +118,24 @@
       }
     }
   }
+  .mainWrapper {
+    position: relative;
+  }
+  .icons {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    span {
+      background: $ExploreBtnBg;
+      width: 25px;
+      text-align: center;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
   .bannerDetailsWrapper {
     display: flex;
     justify-content: center;
@@ -190,13 +208,19 @@
     }
     .collectionDetails {
       display: flex;
-      justify-content: center;
-      align-items: center;
+      justify-content: flex-start;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
       width: 60%;
       background: #ffffff;
       box-shadow: 0px 4px 16px -7px rgba(83, 82, 237, 0.57);
       border-radius: 10px;
       padding: 20px;
+      .descriptionShort {
+        width: 100%;
+        text-align: center;
+      }
       @include mobile {
         width: 100%;
       }
@@ -221,13 +245,15 @@
       align-items: flex-start;
     }
     .reset {
+      display: flex;
+      gap: 8px;
+      align-items: center;
       font-family: "Rubik";
       font-style: normal;
       font-weight: 400;
       font-size: 16px;
       line-height: 22px;
       color: $GrayColor;
-      margin-left: 27px;
       @include mobile {
         margin-left: unset;
         margin-top: 12px;

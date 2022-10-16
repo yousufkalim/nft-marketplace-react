@@ -89,13 +89,13 @@ export const collectionView = async (id) => {
     apiConfig
   );
 };
-export const getCollectionFollowers = async (id,pageNumber) => {
+export const getCollectionFollowers = async (id, pageNumber) => {
   return await axios.get(
     `https://nftdepot-api.azurewebsites.net/collections/${id}/followers/${pageNumber}`,
     apiConfig
   );
 };
-export const getCollectionByCategory = async (category,pageNumber) => {
+export const getCollectionByCategory = async (category, pageNumber) => {
   const res = await fetch(
     `https://nftdepot-api.azurewebsites.net/collections/category/${category}/${pageNumber}`,
     {
@@ -114,7 +114,7 @@ export const getCollectionRarityData = async (id) => {
     apiConfig
   );
 };
-export const collectionActions = async (id,action) => {
+export const collectionActions = async (id, action) => {
   const res = await fetch(
     `https://nftdepot-api.azurewebsites.net/collections/approve/${id}/${action}`,
     {
@@ -126,4 +126,21 @@ export const collectionActions = async (id,action) => {
   );
   const resKey = await res.json();
   return resKey;
+};
+
+export const reportCollectionAPI = async (body) => {
+  const { data } = await axios({
+    method: "POST",
+    url: `https://nftdepot-api.azurewebsites.net/collections/report_collection`,
+    data: JSON.stringify(body),
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": `${window.location.origin}/`,
+      "Access-Control-Allow-Headers":
+        "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization",
+    },
+  });
+  return data;
 };
