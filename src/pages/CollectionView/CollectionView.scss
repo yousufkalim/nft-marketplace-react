@@ -121,6 +121,9 @@
   .mainWrapper {
     position: relative;
   }
+  .top{
+    top: 25px !important;
+  }
   .icons {
     position: absolute;
     top: 8px;
@@ -375,3 +378,6 @@
     display: none !important;
   }
 }
+.ant-tooltip{
+  z-index: 999 !important;
+  }

@@ -35,40 +35,8 @@ export const createCollectionAPI = async (collectionInfo) => {
         "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization",
     },
   });
-  console.log("data", data);
   return data;
-  // const body = collectionInfo;
-  // const headers={
-  //   "Content-Type": "application/json",
-  //    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //   "Access-Control-Allow-Origin": `${window.location.origin}/`,
-  //   "Access-Control-Allow-Headers":
-  //     "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization",
-  // }
-  // return await axios.post(
-  //   `https://nftdepot-api.azurewebsites.net/collections/create`,
-  //   body,
-  //   headers
-  // );
 };
-
-// export const createCollectionAPI = async (collectionInfo) => {
-//   // const body = collectionInfo;
-//   // console.log("body", body);
-//   const res = await fetch(
-//     `https://nftdepot-api.azurewebsites.net/collections/create`,
-//     {
-//       method: "POST",
-//       body:collectionInfo,
-//       headers: {
-//         Authorization: `Bearer ${localStorage.getItem("token")}`,
-//       },
-//     }
-//   );
-//   const resKey = await res.json();
-//   console.log("key", resKey);
-//   return resKey;
-// };
 
 export const codesAPI = async (codes) => {
   return await axios.get(

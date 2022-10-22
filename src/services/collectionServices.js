@@ -144,3 +144,20 @@ export const reportCollectionAPI = async (body) => {
   });
   return data;
 };
+
+export const editCollectionAPI = async (collectionInfo,collectionId) => {
+  const { data } = await axios({
+    method: "POST",
+    url: `https://nftdepot-api.azurewebsites.net/collections/${collectionId}/update`,
+    data: JSON.stringify(collectionInfo),
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": `${window.location.origin}/`,
+      "Access-Control-Allow-Headers":
+        "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization",
+    },
+  });
+  return data;
+};

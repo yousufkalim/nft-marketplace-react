@@ -1,11 +1,8 @@
 import { useEffect } from "react";
-
-import "./DropZone.scss";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useDropzone } from "react-dropzone";
-
-// import UploadBtn from "../../../images/upload-icon.svg";
+import "./DropZone.scss";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 const DropZone = ({

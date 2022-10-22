@@ -17,14 +17,14 @@ const Security = () => {
   const [securityQuestions, setSecurityQuestions] = useState([]);
   const dispatch = useDispatch();
   const user = useSelector((state) => state?.auth?.user);
-  const [answer1, setAnswer1] = useState("");
-  const [answer2, setAnswer2] = useState("");
-  const [answer3, setAnswer3] = useState("");
-  const [answer4, setAnswer4] = useState("");
-  const [question1, setQuestion1] = useState("");
-  const [question2, setQuestion2] = useState("");
-  const [question3, setQuestion3] = useState("");
-  const [question4, setQuestion4] = useState("");
+  const [answer1, setAnswer1] = useState(user?.answer1);
+  const [answer2, setAnswer2] = useState(user?.answer2);
+  const [answer3, setAnswer3] = useState(user?.answer3);
+  const [answer4, setAnswer4] = useState(user?.answer4);
+  const [question1, setQuestion1] = useState(user?.question1);
+  const [question2, setQuestion2] = useState(user?.question2);
+  const [question3, setQuestion3] = useState(user?.question3);
+  const [question4, setQuestion4] = useState(user?.question4);
 
   const onFinish = async () => {
     if (
@@ -115,6 +115,9 @@ const Security = () => {
         <Select
           placeholder="Select Your Question"
           onChange={handleQuestion1Change}
+          defaultValue={question1}
+          disabled={user?.question1}
+
         >
           {securityQuestions?.slice(0, 4)?.map((item, index) => {
             return (
@@ -134,6 +137,10 @@ const Security = () => {
         <Select
           placeholder="Select Your Question"
           onChange={handleQuestion2Change}
+          defaultValue={question2}
+          disabled={user?.question2}
+
+
         >
           {securityQuestions?.slice(0, 4)?.map((item, index) => {
             return (
@@ -148,11 +155,16 @@ const Security = () => {
           value={answer2}
           onChange={(e) => setAnswer2(e.target.value)}
           placeholder="Type Your Answer Here"
+
         />
 
         <Select
           placeholder="Select Your Question"
           onChange={handleQuestion3Change}
+          defaultValue={question3}
+          disabled={user?.question3}
+
+
         >
           {securityQuestions?.slice(0, 4)?.map((item, index) => {
             return (
@@ -172,6 +184,10 @@ const Security = () => {
         <Select
           placeholder="Select Your Question"
           onChange={handleQuestion4Change}
+          defaultValue={question4}
+          disabled={user?.question4}
+
+
         >
           {securityQuestions?.slice(0, 4)?.map((item, index) => {
             return (

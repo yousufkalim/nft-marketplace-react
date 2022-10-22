@@ -124,13 +124,18 @@ const CollectionView = ({ match }) => {
   const handleUrlPersonal = (e) => {
     e.stopPropagation();
     confirm(
-      "Are you sure",
-      "By click ok you will leave this site",
-      "",
-      "",
+      <>
+        You are about ready to leave NFTDepot.Art and go to
+        <p className="linkStyle">{collectionDetails?.url_personal}</p>
+      </>,
+      "Are you sure you wish to do this? ",
+      "YES",
+      "NO",
       handleOk
     );
   };
+
+  console.log("collectionDetails",collectionDetails)
 
   return (
     <>
@@ -164,17 +169,34 @@ const CollectionView = ({ match }) => {
             <div className="mobileBannerDetailsWrapper">
               <div className="mobileBannerDetails">
                 <div className="banner">
-                  <div className="imageWrapper">
-                    <img
-                      src={
-                        collectionDetails?.image_large_location?.includes(
-                          "https"
-                        )
-                          ? collectionDetails?.image_large_location
-                          : BANNER_IMG
-                      }
-                      alt={"BANNER_IMG"}
-                    />
+                  <div className="mainWrapper">
+                    <div className="imageWrapper">
+                      <img
+                        src={
+                          collectionDetails?.image_large_location?.includes(
+                            "https"
+                          )
+                            ? collectionDetails?.image_large_location
+                            : BANNER_IMG
+                        }
+                        alt={"BANNER_IMG"}
+                      />
+                    </div>
+                    <div className="icons top">
+                      <Tooltip title={"Personal Link"} color={"#303549"} className="toltipStyle">
+                        <span onClick={(e) => handleUrlPersonal(e)}>
+                          <img src={LINK_ICON} alt={"LINK_ICON"} />
+                        </span>
+                      </Tooltip>
+                      <Tooltip
+                        title={"Report this Collection"}
+                        color={"#303549"}
+                      >
+                        <span onClick={() => setIsReportModalVisible(true)}>
+                          <img src={REPORT_ICON} alt={"REPORT_ICON"} />
+                        </span>
+                      </Tooltip>
+                    </div>
                   </div>
                 </div>
                 <div className="socialIconsSection">
@@ -182,17 +204,6 @@ const CollectionView = ({ match }) => {
                   <span className="value" onClick={handleClick}>
                     {collectionDetails?.user_details?.username}
                   </span>
-                  {/* <div className="socialIcons">
-            <a className="socialIcon" href={collectionDetails?.url_twitter ?? 'https://twitter.com/'} target='_blank'>
-              <img src={TWITTER} alt="TWITTER" />
-            </a>
-            <a className="socialIcon" href={collectionDetails?.url_discord} target='_blank'>
-              <img src={DISCORD} alt="DISCORD" />
-            </a>
-            <a className="socialIcon" href={collectionDetails?.url_medium} target='_blank'>
-              <img src={MEDIUM} alt="MEDIUM" />
-            </a>
-          </div> */}
                 </div>
                 <div className="values">
                   <div className="mobileItemWrapper">
@@ -245,7 +256,7 @@ const CollectionView = ({ match }) => {
                       </span>
                     </Tooltip>
                     <Tooltip title={"Report this Collection"} color={"#303549"}>
-                      <span onClick={()=>setIsReportModalVisible(true)}>
+                      <span onClick={() => setIsReportModalVisible(true)}>
                         <img src={REPORT_ICON} alt={"REPORT_ICON"} />
                       </span>
                     </Tooltip>
@@ -267,17 +278,6 @@ const CollectionView = ({ match }) => {
             <span className="value" onClick={handleClick}>
               {collectionDetails?.user_details?.username}
             </span>
-            {/* <div className="socialIcons">
-            <a className="socialIcon" href={collectionDetails?.url_twitter ?? 'https://twitter.com/'} target='_blank'>
-              <img src={TWITTER} alt="TWITTER" />
-            </a>
-            <a className="socialIcon" href={collectionDetails?.url_discord} target='_blank'>
-              <img src={DISCORD} alt="DISCORD" />
-            </a>
-            <a className="socialIcon" href={collectionDetails?.url_medium} target='_blank'>
-              <img src={MEDIUM} alt="MEDIUM" />
-            </a>
-          </div>       */}
           </div>
           <div className="collectionDetailsWrapper main_page_width">
             <div className="collectionDetails">

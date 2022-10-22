@@ -1,5 +1,8 @@
 @import url("https://fonts.googleapis.com/css?family=Rubik");
 @import url("https://fonts.googleapis.com/css?family=Lato");
+@import "./styles/mixins";
+@import "./styles/variables";
+
 
 .App {
   height: 100vh;
@@ -118,4 +121,8 @@ iframe {
 .editor{
   background-color: #f2fafc !important;
   border-radius: 10px;
+  min-height: 100px;
+  @include mobile{
+    min-height: unset;
+  }
 }

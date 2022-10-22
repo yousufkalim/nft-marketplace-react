@@ -1,5 +1,5 @@
 import React from "react";
-import { Card } from "antd";
+import { Card, Dropdown, Menu } from "antd";
 import EYE_ICON from "../../../images/eye_icon.svg";
 import LINK_ICON from "../../../images/link_icon.svg";
 import ORANGE_FRAME from "../../../images/orange_frame.svg";
@@ -8,7 +8,7 @@ import "./MyCollectionCard.scss";
 import { useHistory } from "react-router-dom";
 import { truncate, truncateTitle } from "../../../helpers/utils";
 import { confirm } from "../../Smart/Modal";
-import { MoreOutlined } from "@ant-design/icons";
+import { EditOutlined, MoreOutlined } from "@ant-design/icons";
 
 const { Meta } = Card;
 
@@ -38,6 +38,27 @@ const MyCollectionCard = ({ data }) => {
     );
   };
 
+  const handleMore = (e) => {
+    e.stopPropagation();
+    history.push(`/edit-collection/${data?.guid}`)
+  };
+
+  const menu = (
+    <Menu
+      items={[
+        {
+          key: "1",
+          label: (
+            <div className="edit" onClick={(e)=>handleMore(e)}>
+              <EditOutlined style={{fontSize:'18px'}} /> 
+              <span>Edit</span>
+            </div>
+          ),
+        },
+      ]}
+    />
+  );
+
   return (
     <div className="myCollectionCard" onClick={handleClick}>
       <Card
@@ -47,13 +68,12 @@ const MyCollectionCard = ({ data }) => {
             <span className="ExploreCardImage">
               <img alt="example" src={data?.image_large_location} />
             </span>
-            <span
-              className="frame"
-            >
-              <MoreOutlined
-              style={{fontSize:'23px'}}
-              />
-            </span>
+            <Dropdown overlay={menu} placement="bottomRight" arrow={true} trigger={'click'}>
+              <span className="frame" onClick={(e) => e.stopPropagation()}>
+                <MoreOutlined style={{ fontSize: "23px" }} />
+              </span>
+            </Dropdown>
+
             <span
               className="footer"
               style={{

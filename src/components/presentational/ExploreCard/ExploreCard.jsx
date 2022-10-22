@@ -87,10 +87,15 @@ const ExploreCard = ({
   const handleUrlPersonal = (e) => {
     e.stopPropagation();
     confirm(
-      "Are you sure",
-      "By click ok you will leave this site",
-      "",
-      "",
+      
+      <>You are about ready to leave NFTDepot.Art and go to 
+      <p className="linkStyle">
+      {data?.url_personal}
+      </p>
+      </>,
+      "Are you sure you wish to do this? ",
+      "YES",
+      "NO",
       handleOk
     );
   };

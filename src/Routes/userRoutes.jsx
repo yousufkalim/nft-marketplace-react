@@ -3,6 +3,8 @@ import CollectionView from "../pages/CollectionView/CollectionView";
 import CreateCollection from "../pages/CreateCollection/CreateCollection";
 import CreateCollectionUploadImage from "../pages/CreateCollection/CreateCollectionUploadImage";
 import UploadNft from "../pages/CreateNft/UploadNft";
+import EditCollection from "../pages/EditCollection/EditCollection";
+import EditCollectionImage from "../pages/EditCollection/EditCollectionImage";
 import ExplorePage from "../pages/ExplorePage/ExplorePage";
 import MyCollections from "../pages/FilterCollections/MyCollections";
 import HomePage from "../pages/HomePage";
@@ -59,6 +61,14 @@ export const userRoutes = [
     {
         path:"/creatorDetails/:id",
         component:OtherUserProfile,
+    },
+    {
+        path:"/edit-collection/:id",
+        component:EditCollection,
+    },
+    {
+        path:"/edit-collection-images/:id",
+        component:EditCollectionImage,
     }
 
 
