@@ -41,7 +41,6 @@ const Profile = () => {
           <div className="profileCard">
             <ProfileCard />
           </div>
-          {console.log(profileData)}
           <div className="profilecardFotterSection">
             <span className="flexStyle">
               <span className="key">Username</span>

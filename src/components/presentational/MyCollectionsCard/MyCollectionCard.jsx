@@ -13,6 +13,7 @@ import { EditOutlined, MoreOutlined } from "@ant-design/icons";
 const { Meta } = Card;
 
 const MyCollectionCard = ({ data }) => {
+
   const history = useHistory();
   const handleClick = () => {
     history.push(`/collectionView/${data?.guid}`);
@@ -40,7 +41,7 @@ const MyCollectionCard = ({ data }) => {
 
   const handleMore = (e) => {
     e.stopPropagation();
-    history.push(`/edit-collection/${data?.guid}`)
+    history.push(`/edit-collection/${data?.guid}`);
   };
 
   const menu = (
@@ -49,8 +50,8 @@ const MyCollectionCard = ({ data }) => {
         {
           key: "1",
           label: (
-            <div className="edit" onClick={(e)=>handleMore(e)}>
-              <EditOutlined style={{fontSize:'18px'}} /> 
+            <div className="edit" onClick={(e) => handleMore(e)}>
+              <EditOutlined style={{ fontSize: "18px" }} />
               <span>Edit</span>
             </div>
           ),
@@ -68,11 +69,18 @@ const MyCollectionCard = ({ data }) => {
             <span className="ExploreCardImage">
               <img alt="example" src={data?.image_large_location} />
             </span>
-            <Dropdown overlay={menu} placement="bottomRight" arrow={true} trigger={'click'}>
-              <span className="frame" onClick={(e) => e.stopPropagation()}>
-                <MoreOutlined style={{ fontSize: "23px" }} />
-              </span>
-            </Dropdown>
+            {!data?.contract_address && (
+              <Dropdown
+                overlay={menu}
+                placement="bottomRight"
+                arrow={true}
+                trigger={"click"}
+              >
+                <span className="frame" onClick={(e) => e.stopPropagation()}>
+                  <MoreOutlined style={{ fontSize: "23px" }} />
+                </span>
+              </Dropdown>
+            )}
 
             <span
               className="footer"

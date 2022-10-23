@@ -12,10 +12,18 @@ import { truncate } from "../../../helpers/utils";
 import { likeNfts, unLikeNfts } from "../../../services/collectionServices";
 import "./CollectionNftCard.scss";
 import { useSelector } from "react-redux";
+import { EditOutlined } from "@ant-design/icons";
 
 const { Meta } = Card;
 
-const CollectionNftCard = ({ data, showLikeIcon }) => {
+const CollectionNftCard = ({
+  data,
+  showLikeIcon,
+  isCollectionDeployed,
+  isUserCollection,
+  setVisible,
+  setSelectedNft
+}) => {
   const history = useHistory();
   const [isLiked, setIsLiked] = useState(data?.is_liked);
   const user = useSelector((state) => state.auth.user);
@@ -54,7 +62,11 @@ const CollectionNftCard = ({ data, showLikeIcon }) => {
     }
   };
 
-  console.log("data",data)
+  const handleEdit=(e)=>{
+    e.stopPropagation()
+    setVisible(true)
+    setSelectedNft(data)
+  }
 
   return (
     <div className="CollectionNftCard" onClick={handleClick}>
@@ -70,7 +82,18 @@ const CollectionNftCard = ({ data, showLikeIcon }) => {
       >
         <Meta
           title={data?.store_name}
-          description={truncate(data?.description_short)}
+          description={
+            <div className="nftDesc">
+              <span>{truncate(data?.description_short)}</span>
+              {!isCollectionDeployed && isUserCollection && (
+                <Tooltip title={"Edit Nft Details"} color={"#303549"}>
+                  <span className="editIcon" onClick={(e)=>handleEdit(e)}>
+                    <EditOutlined style={{ color: "#f37342" }} />
+                  </span>
+                </Tooltip>
+              )}
+            </div>
+          }
         />
         <div className="exploreCardFooter">
           <span className="priceHeading">

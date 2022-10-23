@@ -13,6 +13,7 @@ import "./Timeline.scss";
 const { Step } = Steps;
 
 const TimeLine = ({ status, data, collectionid }) => {
+  console.log("status",status)
   console.log("data", data);
   const [browserWidth] = useWindowSize();
   const history = useHistory();

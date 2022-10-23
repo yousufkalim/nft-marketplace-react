@@ -135,8 +135,6 @@ const CollectionView = ({ match }) => {
     );
   };
 
-  console.log("collectionDetails",collectionDetails)
-
   return (
     <>
       <ReportCollectionModal
@@ -183,7 +181,11 @@ const CollectionView = ({ match }) => {
                       />
                     </div>
                     <div className="icons top">
-                      <Tooltip title={"Personal Link"} color={"#303549"} className="toltipStyle">
+                      <Tooltip
+                        title={"Personal Link"}
+                        color={"#303549"}
+                        className="toltipStyle"
+                      >
                         <span onClick={(e) => handleUrlPersonal(e)}>
                           <img src={LINK_ICON} alt={"LINK_ICON"} />
                         </span>
@@ -250,11 +252,13 @@ const CollectionView = ({ match }) => {
                     />
                   </div>
                   <div className="icons">
-                    <Tooltip title={"Personal Link"} color={"#303549"}>
-                      <span onClick={(e) => handleUrlPersonal(e)}>
-                        <img src={LINK_ICON} alt={"LINK_ICON"} />
-                      </span>
-                    </Tooltip>
+                    {collectionDetails?.url_personal && (
+                      <Tooltip title={"Personal Link"} color={"#303549"}>
+                        <span onClick={(e) => handleUrlPersonal(e)}>
+                          <img src={LINK_ICON} alt={"LINK_ICON"} />
+                        </span>
+                      </Tooltip>
+                    )}
                     <Tooltip title={"Report this Collection"} color={"#303549"}>
                       <span onClick={() => setIsReportModalVisible(true)}>
                         <img src={REPORT_ICON} alt={"REPORT_ICON"} />
@@ -330,7 +334,6 @@ const CollectionView = ({ match }) => {
                 </div>
                 <div className="reset">
                   {!collectionDetails?.contract_address &&
-                    userData &&
                     userData?.guid ===
                       collectionDetails?.user_details?.guid && (
                       <Button type="primary" onClick={handleDeployNFT}>
@@ -349,6 +352,7 @@ const CollectionView = ({ match }) => {
             count={count}
             userId={collectionDetails?.user_details?.guid}
             setShowSearchBarAndRarirtyTable={setShowSearchBarAndRarirtyTable}
+            isCollectionDeployed={collectionDetails?.contract_address ? true : false}
           />
           <NewsLetter />
         </div>

@@ -26,7 +26,6 @@ const NftDetails = ({ match }) => {
       try {
         setLoading(true);
         const res = await nftDetailsApi(match?.params?.id);
-        console.log("response",res)
         setNftData(res?.body);
         setLoading(false);
       } catch (error) {
@@ -37,67 +36,53 @@ const NftDetails = ({ match }) => {
     getNftDetail();
   }, [match?.params?.id]);
 
-
   return (
-    <div className="NftDetailPageWrapper">
-      <div className="CollectionPageHeader">
-        <img
-          src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER_IMG}
-          alt={"PAGE_HEADER_IMG"}
-        />
-      </div>
-      <div className="selectedCollection main_page_width">
-        <div className="CollectionDetailsSubHeader">
-          <NftLeftSection nftData={nftData} />
-          <NftRightSection nftData={nftData} />
-        </div>
-        <DetailSection nftData={nftData} />
-      </div>
-      <div className="resultCardsGrid">
-        <div className="heading main_page_width">
-          <span className="seeMore">More from this collection</span>
-          <span>
-            <Link to={`/collectionView/${nftData.store_front_guid}`}>
-              <span className="view">View all</span>{" "}
-              <img src={RIGHT_ARROW} alt="RIGHT_ARROW" />
-            </Link>
-          </span>
-        </div>
-        {loading ? (
-          <Spin />
-        ) : (
-          <NftDetailSection
-            collectionid={nftData?.store_front_guid}
-            currentNftId={nftData?.guid}
-            setCount={setCount}
-            sliceItem={true}
+    <>
+      <div className="NftDetailPageWrapper">
+        <div className="CollectionPageHeader">
+          <img
+            src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER_IMG}
+            alt={"PAGE_HEADER_IMG"}
           />
-        )}
-        {/* <CollectionNftView collectionid={nftData?.store_front_guid}/> */}
-        {/* {browserWidth < 620 ? (
-           <Carousel  dotPosition={"bottom"}>
-            {arr.map(() => {
-                return (
-                    <FeaturedCard />
-                );
-              })}
-         </Carousel>
-        ) : (
-          <div className="cardGrid">
-            <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
-              {arr.map(() => {
-                return (
-                  <Col className="gutter-row" span={12}>
-                    <FeaturedCard />
-                  </Col>
-                );
-              })}
-            </Row>
-          </div>
-        )} */}
+        </div>
+        <>
+          {loading ? (
+            <div style={{ textAlign: "center" }}>
+              <Spin />
+            </div>
+          ) : (
+            <>
+              <div className="selectedCollection main_page_width">
+                <div className="CollectionDetailsSubHeader">
+                  <NftLeftSection nftData={nftData} />
+                  <NftRightSection nftData={nftData} />
+                </div>
+                <DetailSection nftData={nftData} />
+              </div>
+              <div className="resultCardsGrid">
+                <div className="heading main_page_width">
+                  <span className="seeMore">More from this collection</span>
+                  <span>
+                    <Link to={`/collectionView/${nftData.store_front_guid}`}>
+                      <span className="view">View all</span>{" "}
+                      <img src={RIGHT_ARROW} alt="RIGHT_ARROW" />
+                    </Link>
+                  </span>
+                </div>
+
+                <NftDetailSection
+                  collectionid={nftData?.store_front_guid}
+                  currentNftId={nftData?.guid}
+                  setCount={setCount}
+                  sliceItem={true}
+                />
+              </div>
+            </>
+          )}
+        </>
+        <NewsLetter />
       </div>
-      <NewsLetter />
-    </div>
+    </>
   );
 };
 

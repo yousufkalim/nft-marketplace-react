@@ -32,8 +32,7 @@ const CreateCollectionForm = () => {
     (state) => state?.collectionData?.collectionNameStatus
   );
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const [textContent,setTextContent]=useState('')
-
+  const [textContent, setTextContent] = useState("");
 
   const [isExplicit, setIsExplicit] = useState(formData?.is_explicit ?? false);
   const [isMintable, setIsMintable] = useState(formData?.mintable ?? false);
@@ -148,7 +147,6 @@ const CreateCollectionForm = () => {
     }
   };
 
-
   return (
     <>
       <div className="CreateCollectionFormWrapper main_page_width">
@@ -228,10 +226,14 @@ const CreateCollectionForm = () => {
                 </Form.Item>
                 <Form.Item name="longDescription" label="Long Description">
                   <TextFormatter
-                   editorState={editorState}
-                   setEditorState={setEditorState}
-                   setEmailContent={setTextContent}
-                   htmlText={formData?.description_long ? JSON.parse(formData?.description_long) : ''}
+                    editorState={editorState}
+                    setEditorState={setEditorState}
+                    setEmailContent={setTextContent}
+                    htmlText={
+                      formData?.description_long
+                        ? JSON.parse(formData?.description_long)
+                        : ""
+                    }
                   />
                 </Form.Item>
                 <Form.Item
@@ -299,31 +301,86 @@ const CreateCollectionForm = () => {
                 >
                   <InputNumber placeholder="Royalty Percent" controls={false} />
                 </Form.Item>
-                <Form.Item
-                  label={
-                    <div>
-                      Mint Locked
-                      <Tooltip
-                        title="Use this ONLY when you are sure there are to be no changes to any part of the collection. (Commonly when images are stored to IPFS, etc.)"
-                        color={"#303549"}
-                        overlayClassName="favouriteToolTip"
-                      >
-                        <span className="infoIcon">
-                          <img src={QUESTION_MARK} alt={"QUESTION_MARK"} />
-                        </span>
-                      </Tooltip>
-                    </div>
-                  }
-                  labelAlign="left"
-                  valuePropName="checked"
-                  className="firstSwitch"
-                >
-                  <Switch
-                    size="small"
-                    checked={isMintLocked}
-                    onChange={() => setIsMintLocked(!isMintLocked)}
-                  />
-                </Form.Item>
+                <div className="displayFlex">
+                  <Form.Item
+                    label={
+                      <div>
+                        Mint Locked
+                        <Tooltip
+                          title="Use this ONLY when you are sure there are to be no changes to any part of the collection. (Commonly when images are stored to IPFS, etc.)"
+                          color={"#303549"}
+                          overlayClassName="favouriteToolTip"
+                        >
+                          <span className="infoIcon">
+                            <img src={QUESTION_MARK} alt={"QUESTION_MARK"} />
+                          </span>
+                        </Tooltip>
+                      </div>
+                    }
+                    labelAlign="left"
+                    valuePropName="checked"
+                    className="firstSwitch"
+                  >
+                    <Switch
+                      size="small"
+                      checked={isMintLocked}
+                      onChange={() => setIsMintLocked(!isMintLocked)}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    label={
+                      <div>
+                        Explicit
+                        <Tooltip
+                          title={
+                            "Enable this if your items may contain harmful, sexual, or violent  content. This will help users to safely limit their searches."
+                          }
+                          color={"#303549"}
+                          overlayClassName="favouriteToolTip"
+                        >
+                          <span className="infoIcon">
+                            <img src={QUESTION_MARK} alt={"QUESTION_MARK"} />
+                          </span>
+                        </Tooltip>
+                      </div>
+                    }
+                    labelAlign="left"
+                    valuePropName="checked"
+                    className="firstSwitch"
+                  >
+                    <Switch
+                      size="small"
+                      checked={isExplicit}
+                      onChange={() => setIsExplicit(!isExplicit)}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    label={
+                      <div>
+                        Mintable
+                        <Tooltip
+                          title={
+                            "Enabling this will create your contract on the blockchain. This may entail gas fees depending on the blockchain you have selected."
+                          }
+                          color={"#303549"}
+                          overlayClassName="favouriteToolTip"
+                        >
+                          <span className="infoIcon">
+                            <img src={QUESTION_MARK} alt={"QUESTION_MARK"} />
+                          </span>
+                        </Tooltip>
+                      </div>
+                    }
+                    labelAlign="left"
+                    valuePropName="checked"
+                  >
+                    <Switch
+                      size="small"
+                      checked={isMintable}
+                      onChange={() => setIsMintable(!isMintable)}
+                    />
+                  </Form.Item>
+                </div>
               </div>
               <div className="CreateCollectionFormIteminner2">
                 <Form.Item name="instagramLink" label="Instagram Link">
@@ -468,61 +525,6 @@ const CreateCollectionForm = () => {
                 >
                   <Input placeholder="Wallet ID we will payout the royalty to" />
                 </Form.Item>
-                <div className="dFlex">
-                  <Form.Item
-                    label={
-                      <div>
-                        Explicit
-                        <Tooltip
-                          title={
-                            "Enable this if your items may contain harmful, sexual, or violent  content. This will help users to safely limit their searches."
-                          }
-                          color={"#303549"}
-                          overlayClassName="favouriteToolTip"
-                        >
-                          <span className="infoIcon">
-                            <img src={QUESTION_MARK} alt={"QUESTION_MARK"} />
-                          </span>
-                        </Tooltip>
-                      </div>
-                    }
-                    labelAlign="left"
-                    valuePropName="checked"
-                    className="firstSwitch"
-                  >
-                    <Switch
-                      size="small"
-                      checked={isExplicit}
-                      onChange={() => setIsExplicit(!isExplicit)}
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    label={
-                      <div>
-                        Mintable
-                        <Tooltip
-                          title={
-                            "Enabling this will create your contract on the blockchain. This may entail gas fees depending on the blockchain you have selected."
-                          }
-                          color={"#303549"}
-                          overlayClassName="favouriteToolTip"
-                        >
-                          <span className="infoIcon">
-                            <img src={QUESTION_MARK} alt={"QUESTION_MARK"} />
-                          </span>
-                        </Tooltip>
-                      </div>
-                    }
-                    labelAlign="left"
-                    valuePropName="checked"
-                  >
-                    <Switch
-                      size="small"
-                      checked={isMintable}
-                      onChange={() => setIsMintable(!isMintable)}
-                    />
-                  </Form.Item>
-                </div>
               </div>
             </div>
 

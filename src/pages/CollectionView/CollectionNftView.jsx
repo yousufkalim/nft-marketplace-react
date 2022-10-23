@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col } from "antd";
+import { Row, Col, Modal, Button, Form, Input } from "antd";
 import "./CollectionNftView.scss";
 import useWindowSize from "../../helpers/hooks";
 import { openNotification } from "../../components/Smart/Notification";
@@ -12,6 +12,9 @@ import CollectionNftCard from "../../components/presentational/CollectionNftCard
 import LoadingCard from "../../components/presentational/LoadingCard/LoadingCard";
 import { useSelector } from "react-redux";
 import TimeLine from "../../components/Timeline/TimeLine";
+import { useRef } from "react";
+import { useForm } from "antd/es/form/Form";
+import EditNftModal from "../../components/Smart/EditNftModal/EditNftModal";
 
 const CollectionNftView = ({
   collectionid,
@@ -21,7 +24,8 @@ const CollectionNftView = ({
   setCount,
   userId,
   count,
-  setShowSearchBarAndRarirtyTable
+  setShowSearchBarAndRarirtyTable,
+  isCollectionDeployed,
 }) => {
   const arr = [1, 2];
 
@@ -31,12 +35,13 @@ const CollectionNftView = ({
     next_page: 1,
   });
   const user = useSelector((state) => state?.auth?.user);
+  const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [timeLineData, setTimeLineData] = useState("");
   const [browserWidth] = useWindowSize();
   const [status, setStatus] = useState(0);
+  const [selectedNft, setSelectedNft] = useState({});
   const fetchExploreData = async () => {
-    console.log("i am called")
     try {
       const res = await getCollectionNft(collectionid, extraData?.next_page);
       setTimeLineData(res);
@@ -49,8 +54,8 @@ const CollectionNftView = ({
         });
         setCount(count + res?.body?.data?.length);
       }
-      if(res?.body?.status===5){
-        setShowSearchBarAndRarirtyTable(true)
+      if (res?.body?.status === 5) {
+        setShowSearchBarAndRarirtyTable(true);
       }
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
@@ -89,16 +94,26 @@ const CollectionNftView = ({
   };
 
   useEffect(() => {
-    const interval = setInterval(async() => {
-      status == 5 ? null : await fetchExploreData()
-    }, 9000)
-    return () => {
-      clearInterval(interval)
+    if (status !== 5) {
+      console.log("i am ");
+      const interval = setInterval(() => {
+        fetchExploreData();
+      }, 60000);
+      return () => {
+        clearInterval(interval);
+      };
     }
-  }, [])
+  }, []);
+
+  console.log("status", status);
 
   return (
     <>
+      <EditNftModal
+        visible={visible}
+        data={selectedNft}
+        setVisible={setVisible}
+      />
       <div className="collectionNftViewWrapper main_page_width">
         {loading ? (
           <div style={{ textAlign: "center" }}>
@@ -146,7 +161,14 @@ const CollectionNftView = ({
                         span={browserWidth < 620 ? 24 : 8}
                         key={index}
                       >
-                        <CollectionNftCard data={item} showLikeIcon={true} />
+                        <CollectionNftCard
+                          data={item}
+                          showLikeIcon={true}
+                          isCollectionDeployed={isCollectionDeployed}
+                          isUserCollection={user?.guid === userId}
+                          setVisible={setVisible}
+                          setSelectedNft={setSelectedNft}
+                        />
                       </Col>
                     );
                   })}
@@ -156,14 +178,16 @@ const CollectionNftView = ({
         ) : (
           <>
             <div className="progress">
-              {user?.guid === userId ?
-                <TimeLine status={status} data={timeLineData} collectionid={collectionid} />
-                :
-                'No Nfts found for this Collection'
-              }
+              {user?.guid === userId ? (
+                <TimeLine
+                  status={status}
+                  data={timeLineData}
+                  collectionid={collectionid}
+                />
+              ) : (
+                "No Nfts found for this Collection"
+              )}
             </div>
-
-           
           </>
         )}
       </div>

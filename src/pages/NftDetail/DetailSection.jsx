@@ -3,7 +3,9 @@ import React from "react";
 import { truncateAddress } from "../../helpers/utils";
 import "./DetailSection.scss";
 import LineChart from "./LineChart";
+import { Collapse } from "antd";
 import OffersTable from "./OffersTable";
+const { Panel } = Collapse;
 
 const DetailSection = ({ nftData }) => {
   console.log("nftData", nftData);
@@ -13,17 +15,40 @@ const DetailSection = ({ nftData }) => {
       <div className="detailselectedCollection">
         <div className="detailCollectionDetailsSubHeader">
           <div className="leftSide">
-            <span className="aboutUser">About {nftData?.created_by}</span>
             <span className="aboutUserDesc">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Lorem ipsum dolor sit amet, consectetur adipiscing
-              elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-              aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-              laboris nisi ut aliquip ex ea commodo consequat.
+              <Collapse expandIconPosition="end">
+                <Panel
+                  header={<div className="aboutUser">Traits & Attributes</div>}
+                  key="1"
+                >
+                  <div className="nftTraitWrpper">
+                    {nftData.nft_data_attributes?.length ?
+                      nftData?.nft_data_attributes?.map((item) => {
+                        return (
+                          <div className="nftTrait">
+                            <span className="name">{item?.trait_name}</span>
+                            <span className="value">{item?.value}</span>
+                          </div>
+                        );
+                      })
+                    :
+                    'No Such Traits Yet..'
+                    }
+                  </div>
+                </Panel>
+              </Collapse>
+            </span>
+            <span className="aboutUserDesc">
+              <Collapse expandIconPosition="end">
+                <Panel
+                  header={<div className="aboutUser">Long Description</div>}
+                  key="1"
+                >
+                  <div className="aboutUserDesc">
+                    {nftData?.description_long}
+                  </div>
+                </Panel>
+              </Collapse>
             </span>
           </div>
           <div className="details">
@@ -34,7 +59,7 @@ const DetailSection = ({ nftData }) => {
                 {nftData?.contract_id && (
                   <a
                     href={`https://etherscan.io/address/${nftData?.contract_id}`}
-                    target='_blank'
+                    target="_blank"
                   >
                     <Tooltip
                       color={"#303549"}

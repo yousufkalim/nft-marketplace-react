@@ -16,9 +16,12 @@
       .leftSide {
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
+        gap: 170px;
         width: 48%;
         @include mobile{
           width: 100%;
+          gap: 24px;
         }
         .aboutUser {
           font-family: "Rubik";
@@ -33,9 +36,37 @@
           font-style: normal;
           font-weight: 400;
           font-size: 18px;
-          line-height: 25px;
           color: $CreateBtnBg;
-          margin-top: 20px;
+          .nftTraitWrpper{
+            display: flex;
+            justify-content: flex-start;
+            gap: 12px;
+            flex-flow: row wrap;
+          }
+          .nftTrait{
+            padding: 8px 12px;
+            border: 1px solid #92C4EA;
+            // 8E9295
+            background: #F3F8FD;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            .name{
+              font-family: "Rubik";
+              font-style: normal;
+              font-size: 10px;
+            }
+            .value{
+              font-family: "Rubik";
+              font-style: normal;
+              font-weight: 500;
+              font-size: 12px;
+              color:#8E9295
+
+            }
+          }
         }
       }
     }
