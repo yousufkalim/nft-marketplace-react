@@ -81,7 +81,7 @@ const Featured = () => {
         </Row>
       </div>
       </div>
-      {browserWidth < 620 && (
+      {browserWidth < 821 && (
         <Carousel dotPosition={"bottom"}>
           {loading ? (
             <LoadingCard />

@@ -77,7 +77,7 @@ const SecurityQuestion = ({ user_guid }) => {
       <div className="ChangePasswordWrapper">
         <div className="ChangePasswordPageHeader">
           <img
-            src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER}
+            src={browserWidth < 821 ? HEADER_IMAGE_MOBILE : PAGE_HEADER}
             alt={"PAGE_HEADER"}
           />
         </div>

@@ -37,7 +37,7 @@ const ForgotPassword = () => {
     <>
       <div className="ForgotPasswordWrapper">
         <div className="ForgotPasswordPageHeader">
-          <img src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER} alt={"PAGE_HEADER"} />
+          <img src={browserWidth < 821 ? HEADER_IMAGE_MOBILE : PAGE_HEADER} alt={"PAGE_HEADER"} />
         </div>
         <div className="ForgotPasswordFormWrapper main_page_width" >
         <div className="ForgotPasswordForm">

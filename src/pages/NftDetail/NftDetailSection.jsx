@@ -96,7 +96,12 @@ const NftDetailSection = ({
                     return (
                       <Col
                         className="gutter-row"
-                        span={browserWidth < 620 ? 24 : 12}
+                        xs={24}
+                        sm={24}
+                        md={12}
+                        lg={12}
+                        xl={8}
+                        xxl={4}        
                         key={index}
                       >
                         <FeaturedLoadingCard />
@@ -120,7 +125,12 @@ const NftDetailSection = ({
                     return (
                       <Col
                         className="gutter-row"
-                        span={browserWidth < 620 ? 24 : 12}
+                        xs={24}
+                        sm={24}
+                        md={12}
+                        lg={12}
+                        xl={8}
+                        xxl={4}     
                         key={index}
                       >
                         <FeaturedCard isNft={true} data={item} />

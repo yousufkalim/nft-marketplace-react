@@ -11,7 +11,7 @@ const EditCollection = ({match}) => {
     <>
       <div className="EditCollectionWrapper">
         <div className="EditCollectionHeader">
-          <img src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER} alt={"PAGE_HEADER"} />
+          <img src={browserWidth < 821 ? HEADER_IMAGE_MOBILE : PAGE_HEADER} alt={"PAGE_HEADER"} />
           <div className="EditCollectionHeadingSection">
             <span className="EditCollectionText">
               Become an NFT artist with NFTdepot

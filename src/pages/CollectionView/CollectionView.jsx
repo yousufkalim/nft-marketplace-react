@@ -40,6 +40,7 @@ const CollectionView = ({ match }) => {
   const [searchParam, setSearchParam] = useState("");
   const [filterCodes, setFilterCodes] = useState([]);
   const [isReportModalVisible, setIsReportModalVisible] = useState(false);
+  const [selectedFilter,setSelectedFilter]=useState('')
   const userData = useSelector((state) => state?.auth?.user);
   const [showSearchBarAndRarirtyTable, setShowSearchBarAndRarirtyTable] =
     useState(false);
@@ -80,7 +81,7 @@ const CollectionView = ({ match }) => {
   }, []);
 
   const handleChange = (value) => {
-    console.log(`selected ${value}`);
+    setSelectedFilter(value)
   };
 
   const handleDeployNFT = async () => {
@@ -163,7 +164,7 @@ const CollectionView = ({ match }) => {
               </span>
             </div>
           </div>
-          {browserWidth < 620 ? (
+          {browserWidth < 821 ? (
             <div className="mobileBannerDetailsWrapper">
               <div className="mobileBannerDetails">
                 <div className="banner">
@@ -353,6 +354,7 @@ const CollectionView = ({ match }) => {
             userId={collectionDetails?.user_details?.guid}
             setShowSearchBarAndRarirtyTable={setShowSearchBarAndRarirtyTable}
             isCollectionDeployed={collectionDetails?.contract_address ? true : false}
+            selectedFilter={selectedFilter}
           />
           <NewsLetter />
         </div>

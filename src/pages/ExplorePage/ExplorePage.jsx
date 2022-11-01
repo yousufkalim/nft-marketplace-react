@@ -84,7 +84,7 @@ const ExplorePage = () => {
       <div className="ExplorePageWrapper">
         <div className="ExplorePageHeader">
           <img
-            src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER}
+            src={browserWidth < 821 ? HEADER_IMAGE_MOBILE : PAGE_HEADER}
             alt={"PAGE_HEADER"}
           />
           <div className="exploreHeadingSection">
@@ -118,7 +118,12 @@ const ExplorePage = () => {
                       return (
                         <Col
                           className="gutter-row"
-                          span={browserWidth < 620 ? 24 : 8}
+                          xs={24}
+                          sm={24}
+                          md={12}
+                          lg={12}
+                          xl={8}
+                          xxl={4}     
                           key={index}
                         >
                           <LoadingCard />
@@ -139,7 +144,13 @@ const ExplorePage = () => {
                   return (
                     <Col
                       className="gutter-row"
-                      span={browserWidth < 620 ? 24 : 8}
+                      xs={24}
+                      sm={24}
+                      md={12}
+                      lg={12}
+                      xl={8}
+                      xxl={4}
+
                       key={index}
                     >
                       <ExploreCard

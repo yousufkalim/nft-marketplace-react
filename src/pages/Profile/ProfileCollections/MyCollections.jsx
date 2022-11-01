@@ -63,7 +63,12 @@ const MyCollections = () => {
                   return (
                     <Col
                       className="gutter-row"
-                      span={browserWidth < 620 ? 24 : 8}
+                      xs={24}
+                      sm={24}
+                      md={12}
+                      lg={12}
+                      xl={8}
+                      xxl={4}     
                       key={index}
                     >
                       <LoadingCard />
@@ -83,7 +88,12 @@ const MyCollections = () => {
                 return (
                   <Col
                     className="gutter-row"
-                    span={browserWidth < 620 ? 24 : 8}
+                    xs={24}
+                    sm={24}
+                    md={12}
+                    lg={12}
+                    xl={8}
+                    xxl={4}     
                     key={index}
                   >
                     <MyCollectionCard data={item} />

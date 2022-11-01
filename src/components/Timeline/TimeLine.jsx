@@ -13,8 +13,6 @@ import "./Timeline.scss";
 const { Step } = Steps;
 
 const TimeLine = ({ status, data, collectionid }) => {
-  console.log("status",status)
-  console.log("data", data);
   const [browserWidth] = useWindowSize();
   const history = useHistory();
   const [visible, setVisible] = useState(status == -1);
@@ -77,7 +75,12 @@ const TimeLine = ({ status, data, collectionid }) => {
             return (
               <Col
                 className="gutter-row"
-                span={browserWidth < 620 ? 24 : 8}
+                xs={24}
+                sm={24}
+                md={12}
+                lg={12}
+                xl={8}
+                xxl={4}
                 key={index}
               >
                 <CollectionNftCard data={item} showLikeIcon={false} />

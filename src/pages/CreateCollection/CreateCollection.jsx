@@ -12,7 +12,7 @@ const CreateCollection = () => {
     <>
       <div className="CreateCollectionWrapper">
         <div className="CreateCollectionHeader">
-          <img src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER} alt={"PAGE_HEADER"} />
+          <img src={browserWidth < 821 ? HEADER_IMAGE_MOBILE : PAGE_HEADER} alt={"PAGE_HEADER"} />
           <div className="CreateCollectionHeadingSection">
             <span className="CreateCollectionText">
               Become an NFT artist with NFTdepot

@@ -69,7 +69,7 @@ const MyCollections = () => {
     <div className="FilterCollectionsPageWrapper">
       <div className="FilterCollectionsPageHeader">
         <img
-          src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER_IMG}
+          src={browserWidth < 821 ? HEADER_IMAGE_MOBILE : PAGE_HEADER_IMG}
           alt={"PAGE_HEADER_IMG"}
         />
         <div className="FilterCollectionsHeadingSection">

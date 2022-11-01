@@ -166,7 +166,7 @@ const AppHeader = () => {
             <Web3Connector />
           </div>
 
-          {browserWidth < 620 && (
+          {browserWidth < 821 && (
             <span
               className="toggleIcon"
               onClick={() => setVisible((prev) => !prev)}
@@ -219,7 +219,7 @@ const AppHeader = () => {
               </AutoComplete>
             }
           >
-            {isAuthenticated && browserWidth < 620 && (
+            {isAuthenticated && browserWidth < 821 && (
               <span className="headerIcons">
                 <img src={SEARCH_ICON} alt={"SEARCH_ICON"} />
               </span>

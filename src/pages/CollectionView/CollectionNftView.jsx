@@ -26,6 +26,7 @@ const CollectionNftView = ({
   count,
   setShowSearchBarAndRarirtyTable,
   isCollectionDeployed,
+  selectedFilter
 }) => {
   const arr = [1, 2];
 
@@ -63,9 +64,14 @@ const CollectionNftView = ({
   };
   useEffect(async () => {
     setLoading(true);
+    setExploreData([]);
+    setExtraData({
+      next_page: 1,
+      has_more: true,
+    });
     await fetchExploreData();
     setLoading(false);
-  }, []);
+  }, [searchParam,selectedFilter]);
 
   const filterNft = (data) => {
     if (data?.guid === currentNftId) {
@@ -75,27 +81,9 @@ const CollectionNftView = ({
     }
   };
 
-  const searchNft = (data) => {
-    if (!sliceItem) {
-      if (
-        data?.description_short
-          ?.toLowerCase()
-          ?.includes(searchParam?.toLowerCase()) ||
-        data?.description_long
-          ?.toLowerCase()
-          ?.includes(searchParam?.toLowerCase())
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-    return true;
-  };
 
   useEffect(() => {
     if (status !== 5) {
-      console.log("i am ");
       const interval = setInterval(() => {
         fetchExploreData();
       }, 60000);
@@ -104,8 +92,6 @@ const CollectionNftView = ({
       };
     }
   }, []);
-
-  console.log("status", status);
 
   return (
     <>
@@ -134,7 +120,12 @@ const CollectionNftView = ({
                     return (
                       <Col
                         className="gutter-row"
-                        span={browserWidth < 620 ? 24 : 8}
+                        xs={24}
+                        sm={24}
+                        md={12}
+                        lg={12}
+                        xl={8}
+                        xxl={4}        
                         key={index}
                       >
                         <LoadingCard />
@@ -152,13 +143,17 @@ const CollectionNftView = ({
               <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
                 {exploreData
                   ?.filter?.(filterNft)
-                  ?.filter?.(searchNft)
                   ?.slice(sliceItem && 0, sliceItem && 20)
                   ?.map((item, index) => {
                     return (
                       <Col
                         className="gutter-row"
-                        span={browserWidth < 620 ? 24 : 8}
+                        xs={24}
+                        sm={24}
+                        md={12}
+                        lg={12}
+                        xl={8}
+                        xxl={4}        
                         key={index}
                       >
                         <CollectionNftCard

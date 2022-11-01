@@ -16,7 +16,7 @@ const DetailSection = ({ nftData }) => {
         <div className="detailCollectionDetailsSubHeader">
           <div className="leftSide">
             <span className="aboutUserDesc">
-              <Collapse expandIconPosition="end">
+              <Collapse expandIconPosition="end" className="headerDesign">
                 <Panel
                   header={<div className="aboutUser">Traits & Attributes</div>}
                   key="1"
@@ -39,7 +39,7 @@ const DetailSection = ({ nftData }) => {
               </Collapse>
             </span>
             <span className="aboutUserDesc">
-              <Collapse expandIconPosition="end">
+              <Collapse expandIconPosition="end" className="headerDesign">
                 <Panel
                   header={<div className="aboutUser">Long Description</div>}
                   key="1"

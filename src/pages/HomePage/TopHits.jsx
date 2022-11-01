@@ -77,7 +77,7 @@ const TopHits = () => {
                 })}
         </Row>
       </div>
-      {browserWidth < 620 && (
+      {browserWidth < 821 && (
         <Carousel dotPosition={"bottom"}>
           {loading ? (
             <LoadingCard />

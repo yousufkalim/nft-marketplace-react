@@ -44,7 +44,7 @@ const UploadNft = ({ match }) => {
     <div className="UploadNft">
       <div className="UploadNftHeader">
         <img
-          src={browserWidth < 620 ? HEADER_IMAGE_MOBILE : PAGE_HEADER}
+          src={browserWidth < 821 ? HEADER_IMAGE_MOBILE : PAGE_HEADER}
           alt={"PAGE_HEADER"}
         />
         <div className="UploadNftHeadingSection">

@@ -40,7 +40,7 @@ const HomePage = ({match}) => {
           className="bgImage"
           style={{
             background: `url(${
-              browserWidth < 620 ? MOBILE_HEADER_IMG : BG_IMGAGE
+              browserWidth < 821 ? MOBILE_HEADER_IMG : BG_IMGAGE
             }) no-repeat`,
             width: "100%",
           }}
@@ -64,7 +64,7 @@ const HomePage = ({match}) => {
                 </Link>
               </span>
             </div>
-            {browserWidth > 620 && <div className="rightSide">
+            {browserWidth > 821 && <div className="rightSide">
               <span className="leftHeading">
                 <NftCard showTopPick={true} data={topPick[0]} showFollowIcon={false} />
               </span>
@@ -74,7 +74,7 @@ const HomePage = ({match}) => {
         </div>
         <img src={IMAGE_FOOTER} alt={"IMAGE_FOOTER"} className="footerImage" />
       </div>
-      {browserWidth < 620 && <div className="rightSide">
+      {browserWidth < 821 && <div className="rightSide">
             <span className="leftHeading"> 
               <NftCard showTopPick={true} data={topPick[0]} />
             </span>
