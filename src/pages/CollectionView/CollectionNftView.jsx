@@ -26,7 +26,7 @@ const CollectionNftView = ({
   count,
   setShowSearchBarAndRarirtyTable,
   isCollectionDeployed,
-  selectedFilter
+  selectedFilter,
 }) => {
   const arr = [1, 2];
 
@@ -71,7 +71,7 @@ const CollectionNftView = ({
     });
     await fetchExploreData();
     setLoading(false);
-  }, [searchParam,selectedFilter]);
+  }, [searchParam, selectedFilter]);
 
   const filterNft = (data) => {
     if (data?.guid === currentNftId) {
@@ -80,7 +80,6 @@ const CollectionNftView = ({
       return true;
     }
   };
-
 
   useEffect(() => {
     if (status !== 5) {
@@ -91,7 +90,7 @@ const CollectionNftView = ({
         clearInterval(interval);
       };
     }
-  }, []);
+  }, [status]);
 
   return (
     <>
@@ -125,7 +124,7 @@ const CollectionNftView = ({
                         md={12}
                         lg={12}
                         xl={8}
-                        xxl={4}        
+                        xxl={4}
                         key={index}
                       >
                         <LoadingCard />
@@ -153,7 +152,7 @@ const CollectionNftView = ({
                         md={12}
                         lg={12}
                         xl={8}
-                        xxl={4}        
+                        xxl={4}
                         key={index}
                       >
                         <CollectionNftCard

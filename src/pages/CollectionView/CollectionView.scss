@@ -121,7 +121,7 @@
   .mainWrapper {
     position: relative;
   }
-  .top{
+  .top {
     top: 25px !important;
   }
   .icons {
@@ -235,17 +235,17 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.2% 60px;
+    padding: 10px 60px;
     @media screen and (max-width: 1100px) {
-      padding: 1.2% 30px;
+      padding: 10px 30px;
     }
-    margin-bottom: 12px;
     margin-top: 12px;
 
     @include mobile {
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
+      margin-bottom: 12px;
     }
     .reset {
       display: flex;
@@ -352,6 +352,10 @@
     border: unset !important;
     box-shadow: unset !important;
   }
+  .toogle_icon {
+    margin-right: 8px;
+    cursor: pointer;
+  }
 }
 .antdSpinContainer {
   inset: 0;
@@ -378,6 +382,45 @@
     display: none !important;
   }
 }
-.ant-tooltip{
+.ant-tooltip {
   z-index: 999 !important;
+}
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  box-shadow: 0px 4px 16px -7px rgba(83, 82, 237, 0.57);
+}
+.filterBar {
+  flex-direction: column;
+  position: sticky;
+  top: 80px;
+  height: calc(100vh - 80px);
+  width: 340px;
+  overflow: auto;
+  margin-left: -10px;
+  margin-right: 16px;
+}
+.filtersSection {
+  .ant-collapse-borderless {
+    background: unset !important;
+    .ant-collapse-item {
+      border-bottom: unset !important;
+    }
   }
+  .filtersHeader {
+    font-family: "Rubik";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    text-transform: capitalize;
+    color: #303549;
+  }
+  .ant-checkbox-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 12px;
+  }
+}

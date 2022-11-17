@@ -162,3 +162,9 @@ export const editCollectionAPI = async (collectionInfo,collectionId) => {
   });
   return data;
 };
+export const getCollectionTraitsFilter = async (id) => {
+  return await axios.get(
+    `https://nftdepot-api.azurewebsites.net/traits_filters/${id}`,
+    apiConfig
+  );
+};

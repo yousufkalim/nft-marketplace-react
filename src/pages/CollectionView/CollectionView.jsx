@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PAGE_HEADER_IMG from "../../images/PageHeader.png";
 import BANNER_IMG from "../../images/banner_img.svg";
 import FILTER_IMG from "../../images/filter_icon.svg";
+import TOOGLE_IMG from "../../images/toogle_icon.svg";
 
 import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
 import FlickerComp from "./Flicker";
@@ -14,6 +15,7 @@ import useWindowSize from "../../helpers/hooks";
 import {
   collectionDetailsApi,
   collectionView,
+  getCollectionTraitsFilter,
 } from "../../services/collectionServices";
 import { openNotification } from "../../components/Smart/Notification";
 import BreadCrumb from "../../components/Smart/Breadcrumb";
@@ -32,6 +34,7 @@ import REPORT_ICON from "../../images/report_icon.svg";
 import LINK_ICON from "../../images/link_white_icon.svg";
 import { confirm } from "../../components/Smart/Modal";
 import ReportCollectionModal from "../../components/Smart/ReportCollectionModal";
+import FiltersSection from "./FiltersSection";
 
 const CollectionView = ({ match }) => {
   const [collectionDetails, setCollectionDetails] = useState([]);
@@ -40,10 +43,27 @@ const CollectionView = ({ match }) => {
   const [searchParam, setSearchParam] = useState("");
   const [filterCodes, setFilterCodes] = useState([]);
   const [isReportModalVisible, setIsReportModalVisible] = useState(false);
-  const [selectedFilter,setSelectedFilter]=useState('')
+  const [selectedFilter, setSelectedFilter] = useState("");
   const userData = useSelector((state) => state?.auth?.user);
+  const [stickyOffset, setStickyOffset] = useState(0);
   const [showSearchBarAndRarirtyTable, setShowSearchBarAndRarirtyTable] =
     useState(false);
+  const [showFiltersBar,setShowFiltersBar]=useState(true)
+  const isSticky = () => {
+    var header = document.getElementById("searchHeader");
+    var sticky = header?.offsetTop;
+    if (sticky !== 0) {
+      setStickyOffset(sticky);
+    }
+    if (window.pageYOffset > sticky && window.pageYOffset > stickyOffset) {
+      header.classList.add("sticky");
+    } else {
+      header.classList.remove("sticky");
+    }
+  };
+  window.onscroll = function () {
+    isSticky();
+  };
   const history = useHistory();
   useEffect(() => {
     const getCollectionDetails = async () => {
@@ -60,14 +80,6 @@ const CollectionView = ({ match }) => {
     getCollectionDetails();
   }, [match.params.id]);
 
-  useEffect(async () => {
-    try {
-      await collectionView(match.params.id);
-    } catch (error) {
-      // openNotification("Oops", error?.response?.data?.message);
-    }
-  }, []);
-
   useEffect(() => {
     const getCode = async () => {
       try {
@@ -81,7 +93,7 @@ const CollectionView = ({ match }) => {
   }, []);
 
   const handleChange = (value) => {
-    setSelectedFilter(value)
+    setSelectedFilter(value);
   };
 
   const handleDeployNFT = async () => {
@@ -94,7 +106,6 @@ const CollectionView = ({ match }) => {
       let localGuid = collectionDetails?.guid;
       // debugger;
       const tx = await deployNFT(name, symbol, localGuid);
-      console.log("tx", tx);
       if (tx) {
         openNotification(
           "Success",
@@ -302,9 +313,12 @@ const CollectionView = ({ match }) => {
             <FlickerComp collectionId={match.params.id} />
           )}
           {showSearchBarAndRarirtyTable && (
-            <div className="searchBar_wrapper_outer">
+            <div className={`searchBar_wrapper_outer`} id="searchHeader">
               <div className="searchBar main_page_width">
                 <div className="inputSection">
+                  <div className="toogle_icon" onClick={()=>setShowFiltersBar(prev=>!prev)}>
+                    <img src={TOOGLE_IMG} alt={"TOOGLE_IMG"} />
+                  </div>
                   <div className="searchInput">
                     <Input
                       suffix={<SearchOutlined />}
@@ -346,16 +360,27 @@ const CollectionView = ({ match }) => {
               </div>
             </div>
           )}
-          <CollectionNftView
-            collectionid={match?.params?.id}
-            setCount={setCount}
-            searchParam={searchParam}
-            count={count}
-            userId={collectionDetails?.user_details?.guid}
-            setShowSearchBarAndRarirtyTable={setShowSearchBarAndRarirtyTable}
-            isCollectionDeployed={collectionDetails?.contract_address ? true : false}
-            selectedFilter={selectedFilter}
-          />
+          <div style={{ display: "flex" }}>
+            {browserWidth > 821 && showFiltersBar && (
+              <div>
+                <div className="filterBar">
+                  <FiltersSection collectionid={match?.params?.id} />
+                </div>
+              </div>
+            )}
+            <CollectionNftView
+              collectionid={match?.params?.id}
+              setCount={setCount}
+              searchParam={searchParam}
+              count={count}
+              userId={collectionDetails?.user_details?.guid}
+              setShowSearchBarAndRarirtyTable={setShowSearchBarAndRarirtyTable}
+              isCollectionDeployed={
+                collectionDetails?.contract_address ? true : false
+              }
+              selectedFilter={selectedFilter}
+            />
+          </div>
           <NewsLetter />
         </div>
       )}
