@@ -29,7 +29,21 @@ const FiltersSection = ({ collectionid }) => {
   };
 
   const handleCheck=({value,type})=>{
+    const findItem=selectedTraitsFilter.find(item=>item==`${type}=${value}`)
+    if(findItem){
+      const temArray=selectedTraitsFilter?.filter(item=>item!=findItem)
+      setSelectedTraitsFilter([...temArray])
+    }
+    else{
     setSelectedTraitsFilter([...selectedTraitsFilter,`${type}=${value}`])
+    }
+  }
+
+  const handleIfIsChecked=({value,type})=>{
+    console.log("i am called");
+    const findItem=selectedTraitsFilter.find(item=>item==`${type}=${value}`)
+    console.log("findItem",findItem);
+    return findItem?.length ? true : false
   }
 
   console.log("selectedTraitsFilter",selectedTraitsFilter);
@@ -55,8 +69,11 @@ const FiltersSection = ({ collectionid }) => {
                 </span>
                 } key={index}>
               {item?.value?.map((itemValue) => (
-                <p key={'item'+itemValue} onClick={()=>handleCheck({value : itemValue,type:item.trait_type})}>
-                  <Checkbox>{itemValue}</Checkbox>
+                <p key={'item'+itemValue}>
+                  <Checkbox 
+                  onClick={()=>handleCheck({value : itemValue,type:item.trait_type})}
+                  // defaultChecked={()=>handleIfIsChecked({value : itemValue,type:item.trait_type})}
+                  >{itemValue}</Checkbox>
                 </p>
               ))}
             </Panel>

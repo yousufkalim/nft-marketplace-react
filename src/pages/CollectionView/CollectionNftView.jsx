@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Modal, Button, Form, Input } from "antd";
-import "./CollectionNftView.scss";
+import { Row, Col } from "antd";
 import useWindowSize from "../../helpers/hooks";
 import { openNotification } from "../../components/Smart/Notification";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { getCollectionNft } from "../../services/collectionServices";
-import FeaturedCard from "../../components/presentational/FeaturedCard/FeaturedCard";
-import FeaturedLoadingCard from "../../components/presentational/FeaturedLoadingCard/FeaturedLoadingCard";
 import Spin from "../../components/presentational/Spin";
 import CollectionNftCard from "../../components/presentational/CollectionNftCard/CollectionNftCard";
 import LoadingCard from "../../components/presentational/LoadingCard/LoadingCard";
 import { useSelector } from "react-redux";
 import TimeLine from "../../components/Timeline/TimeLine";
-import { useRef } from "react";
-import { useForm } from "antd/es/form/Form";
 import EditNftModal from "../../components/Smart/EditNftModal/EditNftModal";
+import "./CollectionNftView.scss";
 
 const CollectionNftView = ({
   collectionid,
@@ -44,7 +40,7 @@ const CollectionNftView = ({
   const [selectedNft, setSelectedNft] = useState({});
   const fetchExploreData = async () => {
     try {
-      const res = await getCollectionNft(collectionid, extraData?.next_page);
+      const res = await getCollectionNft(collectionid, extraData?.next_page,searchParam,selectedFilter);
       setTimeLineData(res);
       setStatus(res?.body?.status);
       if (res?.body?.data?.length) {
@@ -53,25 +49,35 @@ const CollectionNftView = ({
           next_page: res?.body?.next_page,
           has_more: res?.body?.has_more,
         });
-        setCount(count + res?.body?.data?.length);
       }
       if (res?.body?.status === 5) {
         setShowSearchBarAndRarirtyTable(true);
       }
+      setCount(count + res?.body?.data?.length);
     } catch (error) {
       openNotification("Oops", error?.response?.data?.message);
     }
   };
-  useEffect(async () => {
+
+  const Reset=()=>{
     setLoading(true);
-    setExploreData([]);
+    setExploreData(prev=>[]);
     setExtraData({
-      next_page: 1,
-      has_more: true,
+      next_page:1,
+      has_more:true
     });
+    setCount(0)
+  }
+
+  useEffect(async () => {
+    Reset()
     await fetchExploreData();
     setLoading(false);
   }, [searchParam, selectedFilter]);
+
+
+
+  console.log("testing",exploreData,extraData);
 
   const filterNft = (data) => {
     if (data?.guid === currentNftId) {

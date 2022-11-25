@@ -361,7 +361,7 @@ const CollectionView = ({ match }) => {
             </div>
           )}
           <div style={{ display: "flex" }}>
-            {browserWidth > 821 && showFiltersBar && (
+            {browserWidth > 821 && count >0 && showFiltersBar && (
               <div>
                 <div className="filterBar">
                   <FiltersSection collectionid={match?.params?.id} />

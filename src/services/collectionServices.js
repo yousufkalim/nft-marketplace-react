@@ -72,7 +72,7 @@ export const unLikeNfts = async (id) => {
 };
 export const getCollectionNft = async (id, pageNumber,searchParam,selectedFilter) => {
   const res = await fetch(
-    `https://nftdepot-api.azurewebsites.net/collections/${id}/nfts/${pageNumber}`,
+    `https://nftdepot-api.azurewebsites.net/collections/${id}/nfts/${pageNumber}?search_query=${searchParam}&sort_by=${selectedFilter ?  selectedFilter : ''}`,
     // ?search_query=${searchParam}&sort_by=${selectedFilter}`,
     {
       method: "GET",
