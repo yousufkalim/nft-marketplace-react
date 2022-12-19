@@ -14,8 +14,10 @@ import { getCollectionByCategory } from "../../services/collectionServices";
 import Spin from "../../components/presentational/Spin";
 import "./ExplorePage.scss";
 import { AdvanceSearchApi } from "../../services/searchServices";
+import { useSelector } from "react-redux";
 
 const ExplorePage = () => {
+  const web3 = useSelector((state) => state.web3);
   const arr = [1, 2, 3];
   const [exploreData, setExploreData] = useState([]);
   const [category, setCategory] = useState(null);
@@ -26,6 +28,7 @@ const ExplorePage = () => {
     next_page: 1,
   });
   const [browserWidth] = useWindowSize();
+
   const fetchExploreData = async () => {
     try {
       if (query?.get("SearchCollection")) {
@@ -34,7 +37,7 @@ const ExplorePage = () => {
           query?.get("SelectedCategory"),
           extraData?.next_page
         );
-        console.log("res",res)
+        console.log("res", res);
         if (res?.body?.data?.length) {
           setExploreData([...exploreData, ...res?.body?.data]);
           setExtraData({
@@ -69,7 +72,6 @@ const ExplorePage = () => {
       openNotification("Oops", error?.response?.data?.message);
     }
   };
-
   useEffect(async () => {
     console.log("called");
     setLoading(true);
@@ -104,66 +106,67 @@ const ExplorePage = () => {
             <Spin />
           </div>
         ) : exploreData.length > 0 ? (
-          <div className="ExplorecardGrid main_page_width">
-            <InfiniteScroll
-              dataLength={exploreData?.length} //This is important field to render the next data
-              next={fetchExploreData}
-              hasMore={extraData?.has_more}
-              loader={
+          <>
+            <div className="ExplorecardGrid main_page_width">
+              <InfiniteScroll
+                dataLength={exploreData?.length} //This is important field to render the next data
+                next={fetchExploreData}
+                hasMore={extraData?.has_more}
+                loader={
+                  <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
+                    {browserWidth < 620 ? (
+                      <LoadingCard />
+                    ) : (
+                      arr?.map((item, index) => {
+                        return (
+                          <Col
+                            className="gutter-row"
+                            xs={24}
+                            sm={24}
+                            md={12}
+                            lg={12}
+                            xl={8}
+                            xxl={4}
+                            key={index}
+                          >
+                            <LoadingCard />
+                          </Col>
+                        );
+                      })
+                    )}
+                  </Row>
+                }
+                endMessage={
+                  <p className="all_seen_txt" style={{ textAlign: "center" }}>
+                    <b>Yay! You have seen it all</b>
+                  </p>
+                }
+              >
                 <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
-                  {browserWidth < 620 ? (
-                    <LoadingCard />
-                  ) : (
-                    arr?.map((item, index) => {
-                      return (
-                        <Col
-                          className="gutter-row"
-                          xs={24}
-                          sm={24}
-                          md={12}
-                          lg={12}
-                          xl={8}
-                          xxl={4}     
-                          key={index}
-                        >
-                          <LoadingCard />
-                        </Col>
-                      );
-                    })
-                  )}
+                  {exploreData?.map((item, index) => {
+                    return (
+                      <Col
+                        className="gutter-row"
+                        xs={24}
+                        sm={24}
+                        md={12}
+                        lg={12}
+                        xl={8}
+                        xxl={4}
+                        key={index}
+                      >
+                        <ExploreCard
+                          data={item}
+                          exploreData={exploreData}
+                          setExploreData={setExploreData}
+                        />
+                      </Col>
+                    );
+                  })}
                 </Row>
-              }
-              endMessage={
-                <p className="all_seen_txt" style={{ textAlign: "center" }}>
-                  <b>Yay! You have seen it all</b>
-                </p>
-              }
-            >
-              <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
-                {exploreData?.map((item, index) => {
-                  return (
-                    <Col
-                      className="gutter-row"
-                      xs={24}
-                      sm={24}
-                      md={12}
-                      lg={12}
-                      xl={8}
-                      xxl={4}
-
-                      key={index}
-                    >
-                      <ExploreCard
-                        data={item}
-                        exploreData={exploreData}
-                        setExploreData={setExploreData}
-                      />
-                    </Col>
-                  );
-                })}
-              </Row>
-            </InfiniteScroll>
-          </div>
+              </InfiniteScroll>
+            </div>
+          </>
         ) : (
           <div style={{ textAlign: "center" }}>No Such Collection Found</div>
         )}

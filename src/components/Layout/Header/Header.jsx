@@ -156,6 +156,9 @@ const AppHeader = () => {
             <a href="/explore" target={"_self"}>
               <h3>Explore</h3>
             </a>
+            <Link to="/myNfts">
+              <h3>My Nfts</h3>
+            </Link>
             <Link to={"/createCollection"}>
               <h3>Create</h3>
             </Link>

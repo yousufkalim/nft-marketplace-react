@@ -6,12 +6,16 @@ import { networkParams } from "./networks";
 import { toHex, truncateAddress } from "../../../helpers/utils";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
+import web3 from "web3";
 import { providerOptions } from "./providerOptions";
 import {
   walletConnectionSuccess,
   walletConnectionFailure,
 } from "../../../store/web3/web3Actions";
-import { confirm } from "../../Smart/Modal"
+import { confirm } from "../../Smart/Modal";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+toast.configure()
 
 import "./Web3Wrapper.scss";
 
@@ -24,16 +28,16 @@ const Web3Connector = ({}) => {
   const [provider, setProvider] = useState();
   const [library, setLibrary] = useState();
   const [account, setAccount] = useState();
-  const [signature, setSignature] = useState("");
+  const [signer, setSigner] = useState();
+  const [signature, sisAuthenticatedetSignature] = useState("");
   const [error, setError] = useState("");
   const [chainId, setChainId] = useState();
   const [network, setNetwork] = useState();
   const [signedMessage, setSignedMessage] = useState("");
   const [verified, setVerified] = useState();
 
-
-
   const dispatch = useDispatch();
+
   const connectWallet = async () => {
     // debugger
     try {
@@ -44,12 +48,19 @@ const Web3Connector = ({}) => {
       const network = await library.getNetwork();
       setProvider(provider);
       setLibrary(library);
+      setSigner(signer);
       if (accounts) {
         setAccount(accounts[0]);
-        dispatch(walletConnectionSuccess({ provider, library, "account":accounts[0], signer }));
+        dispatch(
+          walletConnectionSuccess({
+            provider,
+            library,
+            account: accounts[0],
+            signer,
+          })
+        );
       }
       setChainId(network.chainId);
-
     } catch (error) {
       setError(error);
       dispatch(walletConnectionFailure(null));
@@ -90,7 +101,7 @@ const Web3Connector = ({}) => {
     if (!library) return;
     let message = `Welcome to NFTDepot.Art!
     Click “Sign” to connect your wallet and accept the NFTDepot.Art Terms of Service:  https://nftdepot.art/tos This request will not trigger a blockchain transaction or cost any gas fees. Your authentication status will reset after 24 hours. Wallet address: ${account}
-    Nonce: <METAMASK GUID>`
+    Nonce: <METAMASK GUID>`;
     try {
       const signature = await library.provider.request({
         method: "personal_sign",
@@ -122,16 +133,14 @@ const Web3Connector = ({}) => {
     if (!library) {
       console.log("no library");
       return;
-    };
+    }
     try {
       const contract = new ethers.Contract(address, abi, library);
       return contract;
     } catch (error) {
       console.log(error);
-        
     }
-  }
-      
+  };
 
   const refreshState = () => {
     setAccount();
@@ -152,14 +161,19 @@ const Web3Connector = ({}) => {
     if (web3Modal.cachedProvider) {
       connectWallet();
     }
-
   }, []);
   useEffect(() => {
     console.log(window.localStorage.getItem("signature"), account);
-    if (!window.localStorage.getItem("signature") && account){
-      confirm("Welcome to NFTDepot", "By connecting your wallet and using NFTDepot, you agree to our Terms of Service and Privacy Policy.", "Agree & Sign", "Cancel", signMessage, disconnect)
+    if (!window.localStorage.getItem("signature") && account) {
+      confirm(
+        "Welcome to NFTDepot",
+        "By connecting your wallet and using NFTDepot, you agree to our Terms of Service and Privacy Policy.",
+        "Agree & Sign",
+        "Cancel",
+        signMessage,
+        disconnect
+      );
     }
-      
   }, [account]);
 
   useEffect(() => {
@@ -195,6 +209,40 @@ const Web3Connector = ({}) => {
     }
   }, [provider]);
 
+
+// Test Transaction
+  const requestPolygonTransaction = async (signer, address, provider) => {
+    // check validity of addresses
+    if (
+      !web3.utils.isAddress(address) ||
+      !web3.utils.isAddress("0x4bE01c5a1fD055eAaF76C5eE257FEbc529D9b5Ed")
+    ) {
+      toast.error("ERROR invalid wallet addresses provided");
+      console.log("ERROR invalid wallet addresses provided");
+      return;
+    }
+
+    const transactionParameters = {
+      from: address, // sender wallet address
+      to: "0x4bE01c5a1fD055eAaF76C5eE257FEbc529D9b5Ed", // receiver address
+      data: "0x",
+      value: ethers.utils.parseEther('0.005'),
+      // gasLimit: ethers.utils.hexlify(10000),
+      gasPrice: ethers.utils.hexlify(parseInt(await library.getGasPrice())),
+    };
+
+    await signer
+      .sendTransaction(transactionParameters)
+      .then((transaction) => {
+        toast.success("Transaction Success!");
+      })
+      .catch((e) => {
+        console.log("failed!", e);
+        toast.error('Transaction Failed:' + e.message)
+        return;
+      });
+  };
+
   return (
     <div style={{ color: "white" }}>
       {!account ? (
@@ -209,9 +257,9 @@ const Web3Connector = ({}) => {
         <Popover
           placement="bottomRight"
           content={
-              <Button onClick={disconnect} type={"dashed"}>
-                Disconnect
-              </Button>
+            <Button onClick={disconnect} type={"dashed"}>
+              Disconnect
+            </Button>
           }
           trigger="click"
         >
@@ -221,6 +269,13 @@ const Web3Connector = ({}) => {
       {/* <div>
         <span>{error ? error.message : null}</span>
       </div> */}
+      {/* {account && (
+        <Button
+          onClick={() => requestPolygonTransaction(signer, account, provider)}
+        >
+          Test Transfer
+        </Button>
+      )} */}
     </div>
   );
 };
