@@ -223,7 +223,7 @@ const checkIfWalletConnected = async() => {
     
 
     return (
-        <NFTMarketplacecontext.Provider value ={{connectWallet,uploadToIPFS,createNFT,fetchNFTs,fetchMyNFTsOrListedNFTs,buyNFT}}>
+        <NFTMarketplacecontext.Provider value ={{connectWallet,uploadToIPFS,createNFT,fetchNFTs,fetchMyNFTsOrListedNFTs,buyNFT,currentAccount}}>
             {children}
         </NFTMarketplacecontext.Provider>
     );
