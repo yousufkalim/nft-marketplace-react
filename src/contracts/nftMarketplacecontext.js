@@ -203,12 +203,27 @@ const checkIfWalletConnected = async() => {
    } catch (error){
         console.log ("error while fetching listed NFTs")
     }
-  }
+  };
 
+// buy nfts function 
+   const buyNFT = async (nft) => {
+    try {
+        const contract = await connectingWithSmartContract();
+        const price = ethers.utils.parseUnits(nft.price.toString(), "ethers");
 
+        const transaction = await contract.createAuction(nft.tokenId,{
+            value: price,
+
+        });
+        await transaction.wait();
+    } catch (error){
+        console.log("error while buying nft ")
+    }
+   }
+    
 
     return (
-        <NFTMarketplacecontext.Provider value ={{connectWallet,uploadToIPFS,createNFT,fetchNFTs,fetchMyNFTsOrListedNFTs}}>
+        <NFTMarketplacecontext.Provider value ={{connectWallet,uploadToIPFS,createNFT,fetchNFTs,fetchMyNFTsOrListedNFTs,buyNFT}}>
             {children}
         </NFTMarketplacecontext.Provider>
     );
