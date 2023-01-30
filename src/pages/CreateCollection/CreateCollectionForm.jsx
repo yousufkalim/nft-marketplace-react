@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"; 
 import {
   Input,
   Form,
@@ -48,6 +48,7 @@ const CreateCollectionForm = () => {
   const [storename, setStoreName] = useState("");
   const [storenameStatus, setStoreNameStatus] = useState(nameStatus ?? null);
   const [urlName, setUrlname] = useState("");
+  
 
   const history = useHistory();
 
@@ -299,7 +300,7 @@ const CreateCollectionForm = () => {
                     </div>
                   }
                 >
-                  <InputNumber placeholder="Royalty Percent" controls={false} />
+                  <InputNumber placeMint Lockedholder="Royalty Percent" controls={false} />
                 </Form.Item>
                 <div className="displayFlex">
                   <Form.Item
@@ -525,13 +526,60 @@ const CreateCollectionForm = () => {
                 >
                   <Input placeholder="Wallet ID we will payout the royalty to" />
                 </Form.Item>
+                <Form.Item
+                  name="nft collection addrress"
+                  label={
+                    <div>
+                      NFT Collection Address
+                    </div>
+                  }
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input Contract Address!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="" />
+                </Form.Item>
+                <Form.Item
+                  name="nft collection addrress"
+                  label={
+                    <div>
+                      NFT ID
+                    </div>
+                  }
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input Contract Address!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="" />
+                </Form.Item>
+                <Form.Item
+                  name="nft collection addrress"
+                  label={
+                    <div>
+                      NFT Price
+                    </div>
+                  }
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input Contract Address!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="" />
+                </Form.Item>
               </div>
-            </div>
-
+            </div>           
             <span className="nextButton">
               <Form.Item>
                 <Button type="primary" htmlType="submit">
-                  {"Next"}
+                  {"Next karoo"}
                   <img src={RightArrow} alt={"RightArrow"} />
                 </Button>
               </Form.Item>

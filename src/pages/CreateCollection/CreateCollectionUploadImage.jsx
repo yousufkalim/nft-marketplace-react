@@ -8,7 +8,7 @@ import {
   createCollectionAPI,
   uploadAPI,
 } from "../../services/createCollectionServices";
-import { useDispatch, useSelector } from "react-redux";
+import { createStoreHook, useDispatch, useSelector } from "react-redux";
 import { openNotification } from "../../components/Smart/Notification";
 import "./CreateCollectionUploadImage.scss";
 import Spin from "../../components/presentational/Spin";
@@ -16,6 +16,7 @@ import useWindowSize from "../../helpers/hooks";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { collectionDataSuccess } from "../../store/collectionForm/collectionActions";
 import { Link } from "react-router-dom";
+import { uploadFileToIPFS} from "../../pinata";
 
 const CreateCollectionUploadImage = () => {
   const [smallImage, setSmallImage] = useState("");
@@ -55,6 +56,7 @@ const CreateCollectionUploadImage = () => {
     ) {
       setIsLoading(true);
       try {
+        // smallImageLocation got reskey from uploadAPI
         const smallImageLocation = await uploadAPI(smallImage[0]);
         const largeImageLocation = await uploadAPI(largeImage[0]);
         const bannerImageLocation = await uploadAPI(bannerImage[0]);
@@ -67,11 +69,14 @@ const CreateCollectionUploadImage = () => {
           url_medium: "https://medium.com/" + formData?.url_medium,
           url_personal: formData?.url_personal,
           url_telegram: "https://telegram.com/" + formData?.url_telegram,
+
+          //get reskey in json format
           image_small_location: smallImageLocation?.body?.url,
           image_large_location: largeImageLocation?.body?.url,
           image_banner_location: bannerImageLocation?.body?.url,
         };
         const res = await createCollectionAPI(data);
+        // console.log(res);
         dispatch(collectionDataSuccess({}));
         openNotification(
           "Success",
@@ -93,6 +98,22 @@ const CreateCollectionUploadImage = () => {
       history.push("/createCollection");
     }
   }, []);
+
+  // async function OnChangeFile(e){
+  //   var file = e.target.files[0];
+    
+  //   try {
+  //     const response = await uploadFileToIPFS(file);
+  //     if(response.success == true ){
+  //         console.log("Uploaded image to Pinata: ", respnose.pinataURL )
+  //         setFileURL(response.pinataURL);
+  //     }
+  //   }
+  //   catch(e){
+  //       console.log("Error during file uploading", e)
+  //   }
+  // }
+
 
   return (
     <div className="CreateCollectionUploadImage">
@@ -145,6 +166,7 @@ const CreateCollectionUploadImage = () => {
                     size: 350 x 350{" "}
                   </span>
                   <DropZone
+                    OnChange={OnChangeFile}
                     selectedImage={smallImage}
                     setSelectedImage={setSmallImage}
                     imageType="small"
@@ -177,13 +199,13 @@ const CreateCollectionUploadImage = () => {
                 />
               </div>
             </div>
-            {/* <div className="bannerImage">
+            <div className="bannerImage">
               <DropZone
                 selectedImage={bannerImage}
                 setSelectedImage={setBannerImage}
                 imageType="banner"
               />
-            </div> */}
+            </div>
             <div className="submitBtn" onClick={handleSubmit}>
               {loading ? (
                 <span>

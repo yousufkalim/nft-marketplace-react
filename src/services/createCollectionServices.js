@@ -21,7 +21,9 @@ export const uploadAPI = async (selectedImage) => {
   return resKey;
 };
 
+// get data value as a parameter in term of collectionInfo below here
 export const createCollectionAPI = async (collectionInfo) => {
+  // push data value through collectionInfo parameter to azure database and make pack of url,location in azure and json strign file of data value
   const { data } = await axios({
     method: "POST",
     url: `https://nftdepot-api.azurewebsites.net/collections/create`,

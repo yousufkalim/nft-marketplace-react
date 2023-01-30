@@ -1,14 +1,26 @@
 import Web3 from 'web3'
+import CreateCollectionForm from "\..CreateCollection"
+
+
 export const getWeb3 = async () => {
     let instance;
+    const web = new Web3();
     if (window.ethereum) {
         await window.web3.currentProvider.enable();
         instance = new Web3(window.web3.currentProvider);
+        web.eth.net.isListening()
+        .then(() => console.log('Provider is connected'))
+        .catch(e => console.log('Wow. Something went wrong: '+ e));
     } else {
         instance = new Web3('http://localhost:7545');
     }
-
     return instance;
+};
+
+export const getSigner = async () => {
+    let web3 = await getWeb3();
+    const signer = web3.getSigner();
+    return signer;
 };
 
 export const getContractMethods = async (abiJson, contract) => {

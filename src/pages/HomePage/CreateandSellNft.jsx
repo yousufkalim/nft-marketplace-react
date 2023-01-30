@@ -43,6 +43,17 @@ const CreateandSellNft = () => {
     },
   ];
 
+  const onFinish = async () => {
+    
+      history.push("../CreateNft/CreateNft.jsx");
+    
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+
+
   return (
     <div className="instructionSection main_page_width">
       <div className="headingText">Create and sell your NFTs</div>
@@ -52,6 +63,18 @@ const CreateandSellNft = () => {
                 <InstructionCard title={item?.title} description={item?.description} changeDirection={item?.changeDirection} imageUrl={item?.imageUrl} key={index} />
             ))
           }
+          <div className="Createnft">
+          
+            {/* name="basic"
+            layout="vertical"
+            initialValues={{
+            }}
+            scrollToFirstError="true" */}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="on"
+            </div>
+          
       </div>
     </div>
   );

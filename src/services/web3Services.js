@@ -11,6 +11,7 @@ const settings = {
 };
 // const alchemy = new Alchemy(settings);
 
+//after getting this fucntion you get signer
 export const getContract = async (address, abi) => {
     if (!isConnected()) {
         toast.error("Please connect to a wallet");
