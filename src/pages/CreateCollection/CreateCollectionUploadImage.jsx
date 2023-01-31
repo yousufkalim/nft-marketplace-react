@@ -16,8 +16,14 @@ import useWindowSize from "../../helpers/hooks";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { collectionDataSuccess } from "../../store/collectionForm/collectionActions";
 import { Link } from "react-router-dom";
+import { ethers } from "ethers";
+// import { uploadJSONToIPFS,uploadFileToIPFS} from "../../../src/pinata";
+import { NftSaleMarketplace } from "alchemy-sdk";
+// process.env.config();
+// import {address, abi } from "../../../src/indexabi";
 
-const CreateCollectionUploadImage = () => {
+   const NftMarketplace = process.env.NftMarketplace;
+  const CreateCollectionUploadImage = () => {
   const [smallImage, setSmallImage] = useState("");
   const [largeImage, setLargeImage] = useState("");
   const [bannerImage, setBannerImage] = useState("");
@@ -25,11 +31,11 @@ const CreateCollectionUploadImage = () => {
   const [layoutCodes, setLayoutCodes] = useState([]);
   const [selectedCode, setSelectedCode] = useState(null);
   const [browserWidth] = useWindowSize();
+  const [fileURL , setFileURL] = useState(null);
   const history = useHistory();
   const dispatch = useDispatch();
 
   const formData = useSelector((state) => state?.collectionData?.data);
-
   useEffect(() => {
     const getCode = async () => {
       try {
@@ -43,6 +49,7 @@ const CreateCollectionUploadImage = () => {
   }, []);
 
   const handleChange = (value) => {
+    console.log("handleChange")
     setSelectedCode(value);
   };
 
@@ -55,6 +62,23 @@ const CreateCollectionUploadImage = () => {
     ) {
       setIsLoading(true);
       try {
+
+      //   const metadataURL = await uploadMetadataToIPFS ();
+      //   const provider = new ethers.providers.Web3Provider(window.ethereum);
+      //   const signer = provider.getSigner();
+
+      //   let contract = new ethers.Contract(NftMarketplace,abi, signer);
+
+      //   const price = ethers.utils.parseUnits(formParams.pricd, "ether");
+      //   let listingPrice = await contract.getListingFee();
+      //   listingPrice = await contract.getListingFee();
+      //   listingPrice = listingPrice.toString();
+
+      //  let transaction = await contract.creatToken(metadataURL,price, {value:getListingFee});
+      //  await transaction.wait();
+      //  alert("Succesfully listed your NFT");
+      //  window.location.replace("/");
+        
         const smallImageLocation = await uploadAPI(smallImage[0]);
         const largeImageLocation = await uploadAPI(largeImage[0]);
         const bannerImageLocation = await uploadAPI(bannerImage[0]);
@@ -81,7 +105,7 @@ const CreateCollectionUploadImage = () => {
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
-        openNotification("Oops", error?.response?.data?.message);
+        openNotification("Ooooooooops", error?.response?.data?.message);
       }
     } else {
       openNotification("Oops", "Please Fill in all Fields");
@@ -93,6 +117,43 @@ const CreateCollectionUploadImage = () => {
       history.push("/createCollection");
     }
   }, []);
+
+//  const onChangefile = async (e) =>{
+// console.log("onChangefile")
+//     var file = e.target.files[0];
+
+//     try {
+//       const response = await uploadFileToIPFS(file)
+//       if (response.success === true){
+//         console.log("uploading files......", response,pinataURL)
+//         setFileURL(response.pinataURL);
+//       }
+//     }catch(e) {
+//       console.log("Error during uploading ", e)
+//     }
+//   }
+
+  // async function uploadMetadataToIPFS(){
+  //   const data = history ;
+  //   if (! data|| ~fileURL)
+  //   return;
+
+  //   const nftJSON = {
+  //     history, image: fileURL
+  //   };
+  //   try {
+  //     const response = await uploadJSONToIPFS(nftJSON);
+  //     if(response.success=== true){
+  //       console.log("UPloaded JSON metadata : ");
+  //       return response.pinataURL;
+  //     }
+  //   }catch (e){
+  //     console.log ("error uploading JSON metadata", e);    
+  //   }
+
+  // }
+
+ 
 
   return (
     <div className="CreateCollectionUploadImage">
@@ -138,7 +199,7 @@ const CreateCollectionUploadImage = () => {
             <div className="collectionImages">
               <div className="dflex">
                 {" "}
-                <div className="smallImage">
+                <div className="smallImage" >
                   <label>Small Image</label>
                   <span>
                     Image will show on the collection as a icon. Recommended
@@ -150,7 +211,7 @@ const CreateCollectionUploadImage = () => {
                     imageType="small"
                   />
                 </div>
-                <div className="largeImage">
+                <div className="largeImage" >
                   <label>Large Image</label>
                   <span>
                     This is the larger image shown on all listings, categories
@@ -164,7 +225,7 @@ const CreateCollectionUploadImage = () => {
                 </div>
               </div>
 
-              <div className="bannerImage">
+              <div className="bannerImage" >
                 <label>Banner Image</label>
                 <span>
                   This image will display on the top of your
