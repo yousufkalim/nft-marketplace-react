@@ -125,7 +125,7 @@ const CreateCollectionForm = () => {
     dispatch(collectionNameStatus(storenameStatus));
     if (storenameStatus == "success") {
       dispatch(collectionDataSuccess(data));
-      history.push("/createCollectionUploadImage");
+      history.push("/createCollectionUploadImage", {data:data} );
     }
     // else {
     //   openNotification("Oops", "Store name already exists");
