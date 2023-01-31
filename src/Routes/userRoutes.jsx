@@ -1,78 +1,84 @@
-import CollectionDetails from "../pages/CollectionDetails/CollectionDetails";
-import CollectionView from "../pages/CollectionView/CollectionView";
-import CreateCollection from "../pages/CreateCollection/CreateCollection";
-import CreateCollectionUploadImage from "../pages/CreateCollection/CreateCollectionUploadImage";
-import UploadNft from "../pages/CreateNft/UploadNft";
-import EditCollection from "../pages/EditCollection/EditCollection";
-import EditCollectionImage from "../pages/EditCollection/EditCollectionImage";
-import ExplorePage from "../pages/ExplorePage/ExplorePage";
-import MyCollections from "../pages/FilterCollections/MyCollections";
-import HomePage from "../pages/HomePage";
-import MyNfts from "../pages/MyNfts";
-import NftDetail from "../pages/NftDetail/NftDetail";
-import OtherUserProfile from "../pages/Profile/OtherUserProfile/OtherUserProfile";
-import Profile from "../pages/Profile/Profile";
-import Settings from "../pages/Profile/Settings";
+import CollectionDetails from '../pages/CollectionDetails/CollectionDetails';
+import CollectionView from '../pages/CollectionView/CollectionView';
+import CreateCollection from '../pages/CreateCollection/CreateCollection';
+import CreateCollectionUploadImage from '../pages/CreateCollection/CreateCollectionUploadImage';
+import CreateNft from '../pages/CreateNft/CreateNft';
+import CreateNftForm from '../pages/CreateNft/CreateNftForm';
+import UploadNft from '../pages/CreateNft/UploadNft';
+import EditCollection from '../pages/EditCollection/EditCollection';
+import EditCollectionImage from '../pages/EditCollection/EditCollectionImage';
+import ExplorePage from '../pages/ExplorePage/ExplorePage';
+import MyCollections from '../pages/FilterCollections/MyCollections';
+import HomePage from '../pages/HomePage';
+import MyNfts from '../pages/MyNfts';
+import NftDetail from '../pages/NftDetail/NftDetail';
+import OtherUserProfile from '../pages/Profile/OtherUserProfile/OtherUserProfile';
+import Profile from '../pages/Profile/Profile';
+import Settings from '../pages/Profile/Settings';
 
 export const userRoutes = [
   {
-    path: "/",
+    path: '/',
     component: HomePage,
   },
   {
-    path: "/myNfts",
+    path: '/myNfts',
     component: MyNfts,
   },
   {
-    path: "/explore",
+    path: '/explore',
     component: ExplorePage,
   },
   {
-    path: "/collectionDetails",
+    path: '/collectionDetails',
     component: CollectionDetails,
   },
   {
-    path: "/createNft/:id",
+    path: '/createNft/:id',
     component: UploadNft,
   },
   {
-    path: "/createCollection",
+    path: '/createCollection',
     component: CreateCollection,
   },
   {
-    path: "/createCollectionUploadImage",
+    path: '/createCollectionUploadImage',
     component: CreateCollectionUploadImage,
   },
   {
-    path: "/nftDetail/:id",
+    path: '/nftDetail/:id',
     component: NftDetail,
   },
   {
-    path: "/collectionView/:id",
+    path: '/collectionView/:id',
     component: CollectionView,
   },
   {
-    path: "/profile",
+    path: '/profile',
     component: Profile,
   },
   {
-    path: "/settings",
+    path: '/settings',
     component: Settings,
   },
   {
-    path: "/myCollections",
+    path: '/myCollections',
     component: MyCollections,
   },
   {
-    path: "/creatorDetails/:id",
+    path: '/creatorDetails/:id',
     component: OtherUserProfile,
   },
   {
-    path: "/edit-collection/:id",
+    path: '/edit-collection/:id',
     component: EditCollection,
   },
   {
-    path: "/edit-collection-images/:id",
+    path: '/edit-collection-images/:id',
     component: EditCollectionImage,
+  },
+  {
+    path: '/create-nft-form',
+    component: CreateNft,
   },
 ];

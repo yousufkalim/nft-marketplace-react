@@ -1,6 +1,80 @@
 @import "../../styles/mixins";
 @import "../../styles/variables";
 
+.MintNftContainer{
+  //   background: orange;
+     width: 100%; padding: 2% 0 7% 0;
+  }
+  .MintNftMainDiv{
+      display: flex; align-items: center; justify-content: center; width: 100%;
+  }
+  .MintNftFormDiv{
+          display: flex;
+          width: 80%;
+          justify-content: space-evenly;
+          align-items: center;
+          // background: green;
+  }
+  .MintNftLeftForm{
+      width: 30%; 
+      // background: red;
+      height: 25vh;
+  }
+  .MintNftImageDiv{
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+  }
+  .MintNftRightForm{
+      display: flex; flex-direction: column; width: 50%;
+  }
+  .MintNftInputDiv{
+  display: flex;
+  flex-direction: column;
+  padding: 2%;
+  }
+  .MintNftInputDiv label{
+      color: rgba(0,0,0,.85);
+  }
+  .MintNftInputDiv input{
+      line-height: 2.9715;
+      background: #f2fafc ;
+      border-radius: 10px ;
+      border: none ;
+      padding: 0 2%;
+      // outline: 1px solid rgb(144, 192, 229);
+      outline: none;
+  }
+  .MintNftButtonDiv{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 2%;
+  }
+  .MintNftButton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5%;
+    gap: 5%;
+    width: 30%;
+    background: #f37342;
+    border-radius: 10px;
+    border-top: 1px dashed rgba(48, 53, 73, 0.25);
+    font-family: "Rubik";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    text-transform: capitalize;
+    color: #ffffff;
+    padding: 1% 2%;
+  }
+  .MintNftButton img{
+    width: 15%;
+  }
+
 .CreateCollectionFormWrapper {
   width: 100%;
   .header {
