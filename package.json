@@ -45,14 +45,8 @@
   "scripts": {
     "start": "cross-env GENERATE_SOURCEMAP=false react-scripts start",
     "build": "react-scripts build",
-<<<<<<< HEAD
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-=======
-    "test": "react-scripts test"
-    
-
->>>>>>> refs/remotes/origin/dev
   },
   "eslintConfig": {
     "extends": [
