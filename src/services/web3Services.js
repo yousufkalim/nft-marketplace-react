@@ -190,7 +190,7 @@ const publishToIpfs = async (nft_id) => {
     );
 }
 
-export const listNft = async (nftId, nftAddress, wallet, price) => {
+export const listNft = async (nftId, nftAddress,  wallet, price) => {
     try {
         const ercContract = require("../contracts/erc721.json");
         const { abi, address } = require("../contracts/marketplaceAbi.json");

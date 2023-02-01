@@ -20,7 +20,7 @@
     "jquery": "^3.6.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.3",
-    "node-sass": "^7.0.1",
+    "node-sass": "^8.0.0",
     "query-string": "^7.1.1",
     "react": "^17.0.2",
     "react-bootstrap": "^2.2.2",
@@ -40,11 +40,11 @@
     "use-query-params": "^1.2.3",
     "web-vitals": "^2.1.4",
     "web3": "^1.8.1",
-    "web3modal": "^1.9.8"
+    "web3modal": "^1.9.12"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test"
   },
   "eslintConfig": {
@@ -64,8 +64,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "prettier": "2.8.3"
   }
 }

@@ -1,5 +1,6 @@
 import Web3 from 'web3'
 import CreateCollectionForm from "\..CreateCollection"
+import { Contract } from 'alchemy-sdk';
 
 
 export const getWeb3 = async () => {
@@ -54,3 +55,17 @@ export const switchNetworkToChainId = async (id) => {
         }
     }
 };
+
+
+// export const setNftListItem = async () => {
+//     try {
+//         const provider = await getWeb3();
+//         const { abi , address } = require("../contracts/marketplaceAbi.json");
+
+//         const NftMarketPlace = new Contract( address, abi);
+
+
+            
+        
+//     }
+// };
