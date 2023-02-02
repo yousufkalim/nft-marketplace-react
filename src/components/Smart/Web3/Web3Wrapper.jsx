@@ -29,7 +29,7 @@ const Web3Connector = ({}) => {
   const [library, setLibrary] = useState();
   const [account, setAccount] = useState();
   const [signer, setSigner] = useState();
-  const [signature, sisAuthenticatedetSignature] = useState("");
+  const [signature,setSignature] = useState("");
   const [error, setError] = useState("");
   const [chainId, setChainId] = useState();
   const [network, setNetwork] = useState();

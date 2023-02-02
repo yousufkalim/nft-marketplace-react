@@ -5,6 +5,12 @@ import { userRoutes } from "../../Routes/userRoutes";
 import AppHeader from "./Header/Header";
 import AppFooter from "./Footer/Footer";
 import { Layout } from "antd";
+
+import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+
+
 const { Header, Footer, Content } = Layout;
 const MainLayout = () => {
   return (
