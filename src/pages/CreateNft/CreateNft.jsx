@@ -1,12 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import PAGE_HEADER from '../../images/PageHeader.png';
 import RightArrow from '../../images/rightIcon.svg';
+import { create as IPFSHTTPClient } from 'ipfs-http-client';
+import { Buffer } from 'buffer';
 import './CreateNft.scss';
+import { openNotification } from '../../components/Smart/Notification';
+
+const ID = '2L5BTgzxk6H4D4rKwCN00eLpWyM';
+const Secret_key = '79eb5f374c780c6f08ca113f56754e7a';
+const auth = 'Basic ' + Buffer.from(ID + ':' + Secret_key).toString('base64');
+const client = IPFSHTTPClient({
+  host: 'ipfs.infura.io',
+  port: 5001,
+  protocol: 'https',
+  headers: {
+    authorization: auth,
+  },
+});
 
 const CreateNft = () => {
   const [currentAccount, setcurrentAccount] = useState('');
-
   const [formData, setFormData] = useState({
     name: '',
     desp: '',
@@ -42,6 +55,7 @@ const CreateNft = () => {
     Object.entries(formData).forEach(([key, value]) => {
       data.append(key, value);
     });
+    uploadToIPFS();
   };
 
   const connectWallet = async () => {
@@ -52,9 +66,22 @@ const CreateNft = () => {
         method: 'eth_requestAccounts',
       });
       setcurrentAccount(accounts[0]);
-      toast.success('Wallet Connected');
     } catch (error) {
       console.log('error while connecting to the wallet');
+    }
+  };
+  const uploadToIPFS = async () => {
+    try {
+      const details = formData.toString();
+      const added = await client.add(details);
+      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      console.log('details', details);
+      openNotification('Mint NFT added successfully');
+      console.log('uploaded image url is :', url);
+      console.log('your nft has been created successfully  THANK YOU');
+      return url;
+    } catch (error) {
+      console.log('error uploading to IPFS');
     }
   };
   useEffect(() => {
@@ -77,9 +104,9 @@ const CreateNft = () => {
             <div className='MintNftMainDiv'>
               <form className='MintNftFormDiv' onSubmit={handleSubmit}>
                 <div className='MintNftLeftForm'>
-                  <div style={{ position: 'relative', width: '250px', background: 'red' }}>
+                  <div className='MintNftImageDiv'>
                     <img
-                      style={{ width: '100%', position: 'absolute' }}
+                      className='MintNftImage'
                       src={
                         imagePreviewUrl ||
                         'https://png.pngtree.com/background/20210711/original/pngtree-gray-minimalist-light-headphones-psd-layered-main-picture-picture-image_1120970.jpg'
@@ -88,16 +115,8 @@ const CreateNft = () => {
                       onClick={() => document.querySelector('input[type="file"]').click()}
                     />
                     <div
+                      className='MintNftUploadText'
                       style={{
-                        position: 'absolute',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        zIndex: 1,
-                        width: '100%',
-                        height: '250px',
-                        color: 'gray',
-                        fontSize: '1.5rem',
                         opacity: imagePreviewUrl ? 0 : 1,
                       }}
                       onClick={() => document.querySelector('input[type="file"]').click()}
