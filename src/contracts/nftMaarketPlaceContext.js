@@ -1,17 +1,17 @@
-import React,{useState,useEffect,useContext} from 'react'
+import React,{useState,useEffect} from 'react'
 import web3Modal from 'web3modal';
 import { ethers } from 'ethers';
 import { router } from 'react-router-dom/cjs/react-router-dom.min';
 import axios from "axios";
 import {create as ipfsHttpClient} from "ipfs-http-client";
+import {NFTMarketplaceAddress, NFTMarketplaceABI} from "./constant";
+import { type } from '@testing-library/user-event/dist/type';
 
 //creating client 
 const client = ipfsHttpClient ("https://goerli.infura.io/v3/4613b9244a77458fac5250b39f574b5f");
-// import {NFTMarketplaceABI,NFTMarketplaceAddress} from "./constant";
+import {NFTMarketplaceABI,NFTMarketplaceAddress} from "./constant";
 
 
-import {NFTMarketplaceAddress, NFTMarketplaceABI} from "./constant";
-import { type } from '@testing-library/user-event/dist/type';
 const fetchContract = (signerOrProvider ) => new ethers.Contract(NFTMarketplaceABI,NFTMarketplaceAddress, signerOrProvider);
 
 // conecting with smart contract 
@@ -32,7 +32,7 @@ const connectingWithSmartContract = async () => {
 
 export const  NFTMarketplacecontext = React.createContext();
 export const NFTMarketplaceProvider = ({children}) => {
-    //usestates
+   // useStates
     const [currentAccount, setcurrentAccount] = useState("");
 
 const checkIfWalletConnected = async() => {
@@ -54,22 +54,22 @@ const checkIfWalletConnected = async() => {
     useEffect(() => {
         checkIfWalletConnected()
     },  []);
-   //--- connect wallet function
+  
    const connectWallet = async () =>{
     try{
-        if (!window.ethereum) return console,log("indtall metamask ");
+        if (!window.ethereum) return console.log("install metamask ");
 
         const accounts = await window.ethereum.request({
             method:"eth_requestAccount",
         });
         setcurrentAccount(accounts[0])
-        window.location.reload();
+        // window.location.reload();
 
     }catch (error){
         console.log("error while connecting to the wallet")
     }
    }
-   // upload to ipfs function 
+  // upload to ipfs function 
    const uploadToIPFS = async () => {
     try{        
         const added = await client.add({content: file});
@@ -83,6 +83,30 @@ const checkIfWalletConnected = async() => {
 }
    // create nft function 
    const createNFT = async (formInput, fileUrl, router) =>{
+
+    // create sale function
+
+const createSale = async (url, formInputPrice, isReselling, id) => {
+    try {
+        const price = ethers.utils.parseUnits(formInputPrice,"ether");
+        const contract = await connectingWithSmartContract();
+
+        const listing = await contract.getListingFee();
+
+        const transaction = ! isReselling ? await contract.listItem(url, price ,{
+        value : listing.toString()
+    }): await contract.UpdateListing(url,price,{
+        value: getListingFee.toString(),
+    });
+
+     await transaction.wait();
+
+
+    }catch (error){
+        console.log("error while creating sale")
+    }
+
+}
         const { name , description, price} = formInput;
         if (!name || !description||!price||!fileUrl) return console.log("Data is missing ");
         const data = JSON.stringify({name,description,image:fileUrl})
@@ -96,29 +120,7 @@ const checkIfWalletConnected = async() => {
     } catch (error){
         console.log (" something went wrong wile creating nft ")
     }
-// create sale function
 
-    const createSale = async (url, formInputPrice, isReselling, id) => {
-        try {
-            const price = ethers.utils.parseUnits(formInputPrice,"ether");
-            const contract = await connectingWithSmartContract();
-
-            const listing = await contract.getListingFee();
-
-            const transaction = ! isReselling ? await contract.listItem(url, price ,{
-            value : listing.toString()
-        }): await contract.UpdateListing(url,price,{
-            value: getListingFee.toString(),
-        });
-
-         await transaction.wait();
-
-
-        }catch (error){
-            console.log("error while creating sale")
-        }
-
-    }
 
    };
   // fetching nft function
@@ -168,7 +170,7 @@ const checkIfWalletConnected = async() => {
     try{
         const contract = await connectingWithSmartContract();
     
-        const data= type == "fetchItemListed" ? await contract.fetchItemListed () 
+        const data= type === "fetchItemListed" ? await contract.fetchItemListed () 
         : await contract.ListingsRecord();
         const items = await Promise.all(
             data.map(

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState,  } from "react";
 import HEADER_LOGO from "../../../images/headerLogo.svg";
 import BELL_ICON from "../../../images/bell_icon.svg";
 import PROFILE_ICON from "../../../images/profile_icon.svg";
