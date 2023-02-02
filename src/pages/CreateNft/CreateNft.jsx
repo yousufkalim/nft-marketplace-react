@@ -87,6 +87,7 @@ const uploadToIPFS = async () => {
         </div>
 
         <div>
+
           <div className='MintNftContainer'>
             <div className='MintNftMainDiv'>
               <form className='MintNftFormDiv'>
