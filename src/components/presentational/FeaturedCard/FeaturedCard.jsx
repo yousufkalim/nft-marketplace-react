@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { Card } from "antd";
 import TEST_ICON from "../../../images/test_footer.svg";
 import TEST_IMG from "../../../images/test_img.png";
