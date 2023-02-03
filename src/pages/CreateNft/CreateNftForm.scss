@@ -42,8 +42,32 @@
       border-radius: 10px ;
       border: none ;
       padding: 0 2%;
-      // outline: 1px solid rgb(144, 192, 229);
       outline: none;
+  }
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .MintNftImageDiv{
+    position:relative; 
+    width: 250px;
+    height: 350px;
+
+  }
+  .MintNftImage{
+     width: 100%; position: absolute;
+
+  }
+  .MintNftUploadText{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    width: 100%;
+    height: 250px;
+    color: gray;
+    font-size: 1.5rem;
   }
   .MintNftButtonDiv{
     width: 100%;
@@ -52,7 +76,13 @@
     justify-content: flex-end;
     padding: 2%;
   }
+  .MintNftChooseFile{
+    // visibility: hidden;
+    // position: absolute;
+  }
+
   .MintNftButton{
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -70,6 +100,10 @@
     text-transform: capitalize;
     color: #ffffff;
     padding: 1% 2%;
+  }
+  .MintNftButton button{
+    border: none;
+    background: transparent;
   }
   .MintNftButton img{
     width: 15%;
