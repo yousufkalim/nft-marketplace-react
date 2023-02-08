@@ -1,3 +1,4 @@
+import "./Web3Wrapper.scss";
 import { useEffect, useState } from "react";
 import { Button, Popover, Space } from "antd";
 import { useDispatch } from "react-redux";
@@ -17,7 +18,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 toast.configure()
 
-import "./Web3Wrapper.scss";
+
 
 const web3Modal = new Web3Modal({
   cacheProvider: true, // optional
