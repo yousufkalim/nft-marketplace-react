@@ -5,10 +5,15 @@ import { create as IPFSHTTPClient } from 'ipfs-http-client';
 import { Buffer } from 'buffer';
 import './CreateNft.scss';
 import { openNotification } from '../../components/Smart/Notification';
+import web3Modal from 'web3modal';
+import { ethers } from 'ethers';
+import {NFTMarketplaceAddress, NFTMarketplaceABI} from "../../contracts/constant";
 
 const ID = '2L5BTgzxk6H4D4rKwCN00eLpWyM';
 const Secret_key = '79eb5f374c780c6f08ca113f56754e7a';
 const auth = 'Basic ' + Buffer.from(ID + ':' + Secret_key).toString('base64');
+const fetchContract = (signerOrProvider ) => new ethers.Contract(NFTMarketplaceAddress,NFTMarketplaceABI,signerOrProvider);
+
 const client = IPFSHTTPClient({
   host: 'ipfs.infura.io',
   port: 5001,
@@ -35,6 +40,7 @@ const CreateNft = () => {
     });
   };
 
+  
   const handleImageChange = (e) => {
     setFormData({
       ...formData,
@@ -49,13 +55,23 @@ const CreateNft = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    connectWallet();
+  
+if(!currentAccount){
 
+  connectWallet();
+}else{
+
+     
+   
     const data = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
       data.append(key, value);
     });
     uploadToIPFS();
+    createNFT(formData, imagePreviewUrl);
+}
+
+
   };
 
   const connectWallet = async () => {
@@ -72,6 +88,7 @@ const CreateNft = () => {
   };
   const uploadToIPFS = async () => {
     try {
+      console.log("welcome to ipfs")
       const details = formData.toString();
       const added = await client.add(details);
       const url = `https://ipfs.infura.io/ipfs/${added.path}`;
@@ -84,7 +101,58 @@ const CreateNft = () => {
       console.log('error uploading to IPFS');
     }
   };
-  useEffect(() => {
+
+
+
+  // conecting with smart contract 
+  
+  const connectingWithSmartContract = async () => {
+      try {
+          const web3modal = new web3Modal();
+          const connection = await web3modal.connect();
+          const provider = new ethers.providers.Web3Provider(connection);
+          const signer = provider.getSigner()
+         
+         const contract = fetchContract(signer);
+         return contract;
+  
+      } catch(error){
+          console.log ("something went wrong while connecting with contract ")
+      };
+  }
+
+  const createNFT = async (formInput, fileUrl) =>{
+
+ const nftid = 1;
+ const nftcollectionaddress = "0xcF708576626e92AadC37b4Cccf3Bd9c60a306Dc3";
+  try {
+      const price = ethers.utils.parseUnits(formInput?.price,"ether");
+      const contract = await connectingWithSmartContract();
+      // const listing = await contract.getListingFee();
+     const transaction = await contract.listItem(nftcollectionaddress, nftid, price)
+    console.log("Your fucntion of smart contract has been triggerd")
+    await transaction.wait();
+
+  }catch (error){
+      
+    console.log("error while creating sale")
+  }
+
+
+
+
+
+
+
+
+
+
+
+  
+
+ };
+
+ useEffect(() => {
     connectWallet();
   }, []);
 
@@ -102,7 +170,7 @@ const CreateNft = () => {
         <div>
           <div className='MintNftContainer'>
             <div className='MintNftMainDiv'>
-              <form className='MintNftFormDiv' onSubmit={handleSubmit}>
+              <form className='MintNftFormDiv' >
                 <div className='MintNftLeftForm'>
                   <div className='MintNftImageDiv'>
                     <img
@@ -170,8 +238,8 @@ const CreateNft = () => {
                     />
                   </div>
                   <div className='MintNftButtonDiv'>
-                    <div onClick={handleSubmit} className='MintNftButton'>
-                      <button type='submit'>Create</button>
+                    <div className='MintNftButton' onClick={handleSubmit} >
+                      <button type='submit' >Create</button>
                       <img src={RightArrow} alt={'RightArrow'} />
                     </div>
                   </div>
