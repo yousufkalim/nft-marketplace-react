@@ -1,17 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
-import Flicking from "@egjs/react-flicking";
-import LEFT_ARROW from "../../images/left_icon_gray.svg";
-import RIGHT_ARROW from "../../images/right_icon_gray.svg";
-import "@egjs/react-flicking/dist/flicking.css";
-import "./CategoryFlicker.scss";
-import { codesAPI } from "../../services/createCollectionServices";
-import { openNotification } from "../../components/Smart/Notification";
-import { StringParam, useQueryParams } from "use-query-params";
+import React, { useEffect, useRef, useState } from 'react';
+import Flicking from '@egjs/react-flicking';
+import LEFT_ARROW from '../../images/left_icon_gray.svg';
+import RIGHT_ARROW from '../../images/right_icon_gray.svg';
+import '@egjs/react-flicking/dist/flicking.css';
+import './CategoryFlicker.scss';
+import { codesAPI } from '../../services/createCollectionServices';
+import { openNotification } from '../../components/Smart/Notification';
+import { StringParam, useQueryParams } from 'use-query-params';
 
 const CategoryFlicker = ({ category, setCategory, reloadOnChange }) => {
   const flickinfRef = useRef();
   const [categories, setCategories] = useState([]);
-
+  console.log('categories', categories);
   const onClickLeft = () => {
     flickinfRef.current.prev();
   };
@@ -23,10 +23,10 @@ const CategoryFlicker = ({ category, setCategory, reloadOnChange }) => {
   useEffect(() => {
     const getCategories = async () => {
       try {
-        const res = await codesAPI("categoryCode");
+        const res = await codesAPI('categoryCode');
         setCategories(res?.data?.body);
       } catch (error) {
-        openNotification("Oops", error?.response?.data?.message);
+        openNotification('Oops', error?.response?.data?.message);
       }
     };
 
@@ -38,7 +38,7 @@ const CategoryFlicker = ({ category, setCategory, reloadOnChange }) => {
   });
 
   const handleCategory = (code) => {
-    console.log("code",typeof code)
+    console.log('code', typeof code);
     if (reloadOnChange) {
       setCategory(code);
       setQuery({ SelectedCategory: code });
@@ -51,11 +51,9 @@ const CategoryFlicker = ({ category, setCategory, reloadOnChange }) => {
   };
 
   const handleReset = () => {
-      setCategory("");
-      setQuery({ SelectedCategory: null });
-      reloadOnChange && window.location.reload();
-
-    
+    setCategory('');
+    setQuery({ SelectedCategory: null });
+    reloadOnChange && window.location.reload();
   };
 
   const getQuery = new URLSearchParams(window?.location?.search);
@@ -69,28 +67,28 @@ const CategoryFlicker = ({ category, setCategory, reloadOnChange }) => {
 
   return (
     <>
-      <div className="CategoryFlickerWrapper main_page_width padding_add ">
-        <div onClick={onClickLeft} className="arrow leftArrow">
-          <img src={LEFT_ARROW} alt={"LEFT_ARROW"} />
+      <div className='CategoryFlickerWrapper main_page_width padding_add '>
+        <div onClick={onClickLeft} className='arrow leftArrow'>
+          <img src={LEFT_ARROW} alt={'LEFT_ARROW'} />
         </div>
         <Flicking
           horizontal
           bound
-          viewportTag={"div"}
+          viewportTag={'div'}
           defaultIndex={0}
-          align={"prev"}
+          align={'prev'}
           circular
           ref={flickinfRef}
         >
           {categories?.map((item, index) => {
             return (
-              <div
-                key={index}
-                onClick={() => handleCategory(item.code)}
-                className="changeCursor"
-              >
+              <div key={index} onClick={() => handleCategory(item.code)} className='changeCursor'>
                 <div
-                  className={item?.code == category || item?.code === getQuery?.get("SelectedCategory") ? "active" : "notActive"}
+                  className={
+                    item?.code == category || item?.code === getQuery?.get('SelectedCategory')
+                      ? 'active'
+                      : 'notActive'
+                  }
                 >
                   {item?.code}
                 </div>
@@ -98,15 +96,14 @@ const CategoryFlicker = ({ category, setCategory, reloadOnChange }) => {
             );
           })}
         </Flicking>
-        <div onClick={onClickRight} className="arrow rightArrow">
-          <img src={RIGHT_ARROW} alt={"RIGHT_ARROW"} />
+        <div onClick={onClickRight} className='arrow rightArrow'>
+          <img src={RIGHT_ARROW} alt={'RIGHT_ARROW'} />
         </div>
       </div>
-      <div className="resetWrapper main_page_width padding_add">
-          <div className="resetFilters" onClick={handleReset}>
-            Reset Filters
-          </div>
-        
+      <div className='resetWrapper main_page_width padding_add'>
+        <div className='resetFilters' onClick={handleReset}>
+          Reset Filters
+        </div>
       </div>
     </>
   );

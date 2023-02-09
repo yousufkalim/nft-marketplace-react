@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Row, Col } from "antd";
-import useWindowSize from "../../helpers/hooks";
-import { openNotification } from "../../components/Smart/Notification";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { getCollectionNft } from "../../services/collectionServices";
-import FeaturedCard from "../../components/presentational/FeaturedCard/FeaturedCard";
-import FeaturedLoadingCard from "../../components/presentational/FeaturedLoadingCard/FeaturedLoadingCard";
-import Spin from "../../components/presentational/Spin";
-import "./NftDetailSection.scss";
-
+import React, { useEffect, useState } from 'react';
+import { Row, Col } from 'antd';
+import useWindowSize from '../../helpers/hooks';
+import { openNotification } from '../../components/Smart/Notification';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { getCollectionNft } from '../../services/collectionServices';
+import FeaturedCard from '../../components/presentational/FeaturedCard/FeaturedCard';
+import FeaturedLoadingCard from '../../components/presentational/FeaturedLoadingCard/FeaturedLoadingCard';
+import Spin from '../../components/presentational/Spin';
+import './NftDetailSection.scss';
 
 const NftDetailSection = ({
   collectionid,
@@ -18,6 +17,7 @@ const NftDetailSection = ({
   setCount,
   count,
 }) => {
+  console.log('currentNftId', currentNftId);
   const arr = [1, 2];
 
   const [exploreData, setExploreData] = useState([]);
@@ -39,7 +39,7 @@ const NftDetailSection = ({
         setCount(count + res?.body?.data?.length);
       }
     } catch (error) {
-      openNotification("Oops", error?.response?.data?.message);
+      openNotification('Oops', error?.response?.data?.message);
     }
   };
   useEffect(async () => {
@@ -59,12 +59,8 @@ const NftDetailSection = ({
   const searchNft = (data) => {
     if (!sliceItem) {
       if (
-        data?.description_short
-          ?.toLowerCase()
-          ?.includes(searchParam?.toLowerCase()) ||
-        data?.description_long
-          ?.toLowerCase()
-          ?.includes(searchParam?.toLowerCase())
+        data?.description_short?.toLowerCase()?.includes(searchParam?.toLowerCase()) ||
+        data?.description_long?.toLowerCase()?.includes(searchParam?.toLowerCase())
       ) {
         return true;
       } else {
@@ -76,32 +72,29 @@ const NftDetailSection = ({
 
   return (
     <>
-      <div className="nftDetailSection main_page_width">
+      <div className='nftDetailSection main_page_width'>
         {loading ? (
-          <div style={{ textAlign: "center" }}>
+          <div style={{ textAlign: 'center' }}>
             <Spin />
           </div>
         ) : exploreData.length > 0 ? (
-          <div className="collectionNftViewCardGrid">
+          <div className='collectionNftViewCardGrid'>
             <InfiniteScroll
               dataLength={exploreData.length} //This is important field to render the next data
               next={fetchExploreData}
-              hasMore={
-                extraData?.has_more &&
-                (sliceItem ? exploreData.length < 21 : true)
-              }
+              hasMore={extraData?.has_more && (sliceItem ? exploreData.length < 21 : true)}
               loader={
                 <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
                   {arr?.map((item, index) => {
                     return (
                       <Col
-                        className="gutter-row"
+                        className='gutter-row'
                         xs={24}
                         sm={24}
                         md={12}
                         lg={12}
                         xl={8}
-                        xxl={4}        
+                        xxl={4}
                         key={index}
                       >
                         <FeaturedLoadingCard />
@@ -111,7 +104,7 @@ const NftDetailSection = ({
                 </Row>
               }
               endMessage={
-                <p className="all_seen_txt" style={{ textAlign: "center" }}>
+                <p className='all_seen_txt' style={{ textAlign: 'center' }}>
                   <b>Yay! You have seen it all</b>
                 </p>
               }
@@ -124,13 +117,13 @@ const NftDetailSection = ({
                   ?.map((item, index) => {
                     return (
                       <Col
-                        className="gutter-row"
+                        className='gutter-row'
                         xs={24}
                         sm={24}
                         md={12}
                         lg={12}
                         xl={8}
-                        xxl={4}     
+                        xxl={4}
                         key={index}
                       >
                         <FeaturedCard isNft={true} data={item} />
@@ -141,9 +134,7 @@ const NftDetailSection = ({
             </InfiniteScroll>
           </div>
         ) : (
-          <div style={{ textAlign: "center" }}>
-            No Nfts found for this collection
-          </div>
+          <div style={{ textAlign: 'center' }}>No Nfts found for this collection</div>
         )}
       </div>
     </>

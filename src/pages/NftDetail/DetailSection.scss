@@ -17,7 +17,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        gap: 170px;
+        gap: 15px;
         width: 48%;
         @include mobile {
           width: 100%;
@@ -44,12 +44,14 @@
           }
           .nftTraitWrpper {
             display: flex;
-            justify-content: flex-start;
-            gap: 12px;
+            justify-content: space-evenly;
+            gap: 10px;
             flex-flow: row wrap;
+            padding: 2% 0;
           }
           .nftTrait {
             padding: 8px 12px;
+            width: 30%;
             border: 1px solid #92c4ea;
             // 8E9295
             background: #f3f8fd;
@@ -59,19 +61,21 @@
             align-items: center;
             gap: 16px;
             border-radius: 5px;
-    box-shadow: 0px 4px 16px -7px rgba(83, 82, 237, 0.57);
+            box-shadow: 0px 4px 16px -7px rgba(83, 82, 237, 0.57);
 
             .name {
               font-family: "Rubik";
               font-style: normal;
-              font-size: 10px;
+              font-size: 11px;
+              text-transform: uppercase;
+              color: rgb(21, 178, 229);
             }
             .value {
               font-family: "Rubik";
               font-style: normal;
               font-weight: 500;
-              font-size: 12px;
-              color: #8e9295;
+              font-size: 15px;
+              color: rgb(53, 56, 64);
             }
           }
         }

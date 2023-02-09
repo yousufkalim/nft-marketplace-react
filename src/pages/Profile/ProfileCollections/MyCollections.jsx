@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { Row, Col } from "antd";
-import NewsLetter from "../../../components/presentational/NewsLetter/NewsLetter";
-import FeaturedCard from "../../../components/presentational/FeaturedCard/FeaturedCard";
-import useWindowSize from "../../../helpers/hooks";
-import ProfileCollectionsFlicker from "../ProfileCollectionsFlicker";
-import { myCollectionsAPI } from "../../../services/userServices";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { openNotification } from "../../../components/Smart/Notification";
-import FeaturedLoadingCard from "../../../components/presentational/FeaturedLoadingCard/FeaturedLoadingCard";
-import "./MyCollections.scss";
-import ExploreCard from "../../../components/presentational/ExploreCard/ExploreCard";
-import LoadingCard from "../../../components/presentational/LoadingCard/LoadingCard";
-import Spin from "../../../components/presentational/Spin";
-import MyCollectionCard from "../../../components/presentational/MyCollectionsCard/MyCollectionCard";
+import React, { useEffect, useState } from 'react';
+import { Row, Col } from 'antd';
+import NewsLetter from '../../../components/presentational/NewsLetter/NewsLetter';
+import FeaturedCard from '../../../components/presentational/FeaturedCard/FeaturedCard';
+import useWindowSize from '../../../helpers/hooks';
+import ProfileCollectionsFlicker from '../ProfileCollectionsFlicker';
+import { myCollectionsAPI } from '../../../services/userServices';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { openNotification } from '../../../components/Smart/Notification';
+import FeaturedLoadingCard from '../../../components/presentational/FeaturedLoadingCard/FeaturedLoadingCard';
+import './MyCollections.scss';
+import ExploreCard from '../../../components/presentational/ExploreCard/ExploreCard';
+import LoadingCard from '../../../components/presentational/LoadingCard/LoadingCard';
+import Spin from '../../../components/presentational/Spin';
+import MyCollectionCard from '../../../components/presentational/MyCollectionsCard/MyCollectionCard';
 
 const MyCollections = () => {
   const arr = [0, 1, 2];
@@ -35,7 +35,7 @@ const MyCollections = () => {
         });
       }
     } catch (error) {
-      openNotification("Oops", error?.response?.data?.message);
+      openNotification('Oops', error?.response?.data?.message);
       // setExploreData([]);
     }
   };
@@ -47,9 +47,9 @@ const MyCollections = () => {
   }, []);
   return (
     <>
-      <div className="MyCollectionCardsGrid main_page_width">
+      <div className='MyCollectionCardsGrid main_page_width'>
         {loading ? (
-          <div style={{ textAlign: "center" }}>
+          <div style={{ textAlign: 'center' }}>
             <Spin />
           </div>
         ) : collections?.length > 0 ? (
@@ -62,13 +62,13 @@ const MyCollections = () => {
                 {arr?.map((item, index) => {
                   return (
                     <Col
-                      className="gutter-row"
+                      className='gutter-row'
                       xs={24}
                       sm={24}
                       md={12}
                       lg={12}
                       xl={8}
-                      xxl={4}     
+                      xxl={4}
                       key={index}
                     >
                       <LoadingCard />
@@ -78,7 +78,7 @@ const MyCollections = () => {
               </Row>
             }
             endMessage={
-              <p className="all_seen_txt" style={{ textAlign: "center" }}>
+              <p className='all_seen_txt' style={{ textAlign: 'center' }}>
                 <b>Yay! You have seen it all</b>
               </p>
             }
@@ -87,13 +87,13 @@ const MyCollections = () => {
               {collections?.map((item, index) => {
                 return (
                   <Col
-                    className="gutter-row"
+                    className='gutter-row'
                     xs={24}
                     sm={24}
                     md={12}
                     lg={12}
                     xl={8}
-                    xxl={4}     
+                    xxl={4}
                     key={index}
                   >
                     <MyCollectionCard data={item} />
@@ -103,7 +103,7 @@ const MyCollections = () => {
             </Row>
           </InfiniteScroll>
         ) : (
-          <div>Create Some Collections here</div>
+          <div>You are not following any collections</div>
         )}
       </div>
     </>

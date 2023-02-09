@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Row, Col } from "antd";
-import useWindowSize from "../../helpers/hooks";
-import { openNotification } from "../../components/Smart/Notification";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { getCollectionNft } from "../../services/collectionServices";
-import Spin from "../../components/presentational/Spin";
-import CollectionNftCard from "../../components/presentational/CollectionNftCard/CollectionNftCard";
-import LoadingCard from "../../components/presentational/LoadingCard/LoadingCard";
-import { useSelector } from "react-redux";
-import TimeLine from "../../components/Timeline/TimeLine";
-import EditNftModal from "../../components/Smart/EditNftModal/EditNftModal";
-import "./CollectionNftView.scss";
+import React, { useEffect, useState } from 'react';
+import { Row, Col } from 'antd';
+import useWindowSize from '../../helpers/hooks';
+import { openNotification } from '../../components/Smart/Notification';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { getCollectionNft } from '../../services/collectionServices';
+import Spin from '../../components/presentational/Spin';
+import CollectionNftCard from '../../components/presentational/CollectionNftCard/CollectionNftCard';
+import LoadingCard from '../../components/presentational/LoadingCard/LoadingCard';
+import { useSelector } from 'react-redux';
+import TimeLine from '../../components/Timeline/TimeLine';
+import EditNftModal from '../../components/Smart/EditNftModal/EditNftModal';
+import './CollectionNftView.scss';
 
 const CollectionNftView = ({
   collectionid,
@@ -24,6 +24,7 @@ const CollectionNftView = ({
   isCollectionDeployed,
   selectedFilter,
 }) => {
+  console.log('selectedFilter', selectedFilter);
   const arr = [1, 2];
 
   const [exploreData, setExploreData] = useState([]);
@@ -34,13 +35,18 @@ const CollectionNftView = ({
   const user = useSelector((state) => state?.auth?.user);
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [timeLineData, setTimeLineData] = useState("");
+  const [timeLineData, setTimeLineData] = useState('');
   const [browserWidth] = useWindowSize();
   const [status, setStatus] = useState(0);
   const [selectedNft, setSelectedNft] = useState({});
   const fetchExploreData = async () => {
     try {
-      const res = await getCollectionNft(collectionid, extraData?.next_page,searchParam,selectedFilter);
+      const res = await getCollectionNft(
+        collectionid,
+        extraData?.next_page,
+        searchParam,
+        selectedFilter
+      );
       setTimeLineData(res);
       setStatus(res?.body?.status);
       if (res?.body?.data?.length) {
@@ -55,29 +61,27 @@ const CollectionNftView = ({
       }
       setCount(count + res?.body?.data?.length);
     } catch (error) {
-      openNotification("Oops", error?.response?.data?.message);
+      openNotification('Oops', error?.response?.data?.message);
     }
   };
 
-  const Reset=()=>{
+  const Reset = () => {
     setLoading(true);
-    setExploreData(prev=>[]);
+    setExploreData((prev) => []);
     setExtraData({
-      next_page:1,
-      has_more:true
+      next_page: 1,
+      has_more: true,
     });
-    setCount(0)
-  }
+    setCount(0);
+  };
 
   useEffect(async () => {
-    Reset()
+    Reset();
     await fetchExploreData();
     setLoading(false);
   }, [searchParam, selectedFilter]);
 
-
-
-  console.log("testing",exploreData,extraData);
+  console.log('testing', exploreData, extraData);
 
   const filterNft = (data) => {
     if (data?.guid === currentNftId) {
@@ -100,31 +104,29 @@ const CollectionNftView = ({
 
   return (
     <>
-      <EditNftModal
-        visible={visible}
-        data={selectedNft}
-        setVisible={setVisible}
-      />
-      <div className="collectionNftViewWrapper main_page_width">
+      <EditNftModal visible={visible} data={selectedNft} setVisible={setVisible} />
+      <div className='collectionNftViewWrapper main_page_width'>
         {loading ? (
-          <div style={{ textAlign: "center" }}>
+          <div style={{ textAlign: 'center' }}>
             <Spin />
           </div>
         ) : status == 5 && exploreData?.length > 0 ? (
-          <div className="collectionNftViewCardGrid">
+          <div className='collectionNftViewCardGrid'>
             <InfiniteScroll
               dataLength={exploreData.length} //This is important field to render the next data
               next={fetchExploreData}
-              hasMore={
-                extraData?.has_more &&
-                (sliceItem ? exploreData.length < 21 : true)
-              }
+              hasMore={extraData?.has_more && (sliceItem ? exploreData.length < 21 : true)}
               loader={
                 <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
                   {arr?.map((item, index) => {
+                    {
+                      exploreData.map((item) => {
+                        console.log('exploreData', item?.created_date);
+                      });
+                    }
                     return (
                       <Col
-                        className="gutter-row"
+                        className='gutter-row'
                         xs={24}
                         sm={24}
                         md={12}
@@ -140,7 +142,7 @@ const CollectionNftView = ({
                 </Row>
               }
               endMessage={
-                <p className="all_seen_txt" style={{ textAlign: "center" }}>
+                <p className='all_seen_txt' style={{ textAlign: 'center' }}>
                   <b>Yay! You have seen it all</b>
                 </p>
               }
@@ -152,7 +154,7 @@ const CollectionNftView = ({
                   ?.map((item, index) => {
                     return (
                       <Col
-                        className="gutter-row"
+                        className='gutter-row'
                         xs={24}
                         sm={24}
                         md={12}
@@ -177,15 +179,11 @@ const CollectionNftView = ({
           </div>
         ) : (
           <>
-            <div className="progress">
+            <div className='progress'>
               {user?.guid === userId ? (
-                <TimeLine
-                  status={status}
-                  data={timeLineData}
-                  collectionid={collectionid}
-                />
+                <TimeLine status={status} data={timeLineData} collectionid={collectionid} />
               ) : (
-                "No Nfts found for this Collection"
+                'No Nfts found for this Collection'
               )}
             </div>
           </>
