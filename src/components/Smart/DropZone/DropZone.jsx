@@ -1,20 +1,14 @@
-import { useEffect } from "react";
-import { Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
-import { useDropzone } from "react-dropzone";
-import "./DropZone.scss";
+import { useEffect } from 'react';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+import { useDropzone } from 'react-dropzone';
+import './DropZone.scss';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-const DropZone = ({
-  setSelectedImage,
-  selectedImage,
-  imageType,
-  imgSrc,
-  isUploading,
-}) => {
+const DropZone = ({ setSelectedImage, selectedImage, imageType, imgSrc, isUploading }) => {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "image/png": [".png", ".jpg", ".jpeg", ".gif"],
+      'image/png': ['.png', '.jpg', '.jpeg', '.gif'],
     },
     onDrop: (acceptedFiles) =>
       acceptedFiles.map((file) =>
@@ -24,34 +18,31 @@ const DropZone = ({
       ),
   });
   const constantData =
-    imageType === "small"
+    imageType === 'small'
       ? {
-          heading: "Small Image",
+          heading: 'Small Image',
         }
-      : imageType === "large"
+      : imageType === 'large'
       ? {
-          heading: "Large Image",
+          heading: 'Large Image',
         }
-      : imageType === "banner"
+      : imageType === 'banner'
       ? {
-          heading:
-            "Banner Image",
+          heading: 'Banner Image',
         }
-      : imageType === "zip"
+      : imageType === 'zip'
       ? {
-          heading: "Upload Zip File",
+          heading: 'Upload Zip File',
         }
-      : imageType == "profile"
+      : imageType == 'profile'
       ? {
-          heading: "Profile Image",
+          heading: 'Profile Image',
         }
       : null;
 
   const { heading } = constantData;
   const dropzoneOptions =
-    selectedImage?.length || imgSrc
-      ? "Uploadoptions hideOptions"
-      : "Uploadoptions";
+    selectedImage?.length || imgSrc ? 'Uploadoptions hideOptions' : 'Uploadoptions';
 
   useEffect(() => {
     if (acceptedFiles && acceptedFiles?.length) {
@@ -59,7 +50,7 @@ const DropZone = ({
     }
   }, [acceptedFiles]);
   return (
-    <section className="dropzone-style">
+    <section className='dropzone-style'>
       {/* {selectedImage && (
         <>
           <div
@@ -74,57 +65,49 @@ const DropZone = ({
         </>
       )} */}
       {selectedImage && selectedImage.length ? (
-        <div className="UploadedImg">
+        <div className='UploadedImg'>
           {isUploading ? (
             <Spin indicator={antIcon} />
           ) : (
             <>
               <div
-                className={imageType == "profile" ? "" : "blurBg"}
+                className={imageType == 'profile' ? '' : 'blurBg'}
                 style={
-                  imageType == "profile"
-                    ? {} : {}
-                    // : { backgroundImage: `url(${selectedImage[0]?.preview})` }
+                  imageType == 'profile' ? {} : {}
+                  // : { backgroundImage: `url(${selectedImage[0]?.preview})` }
                 }
               />
-              <img src={selectedImage[0].preview} alt={"not found"} />
+              <img src={selectedImage[0].preview} alt={'not found'} />
             </>
           )}
         </div>
       ) : imgSrc ? (
-        <div className="UploadedImg">
+        <div className='UploadedImg'>
           <div
-            className={imageType == "profile" ? "" : "blurBg"}
-            style={
-              imageType == "profile"
-                ? {}
-                : { backgroundImage: `url(${imgSrc})` }
-            }
+            className={imageType == 'profile' ? '' : 'blurBg'}
+            style={imageType == 'profile' ? {} : { backgroundImage: `url(${imgSrc})` }}
           />
-          <img src={imgSrc} alt={"not found"} />
+          <img src={imgSrc} alt={'not found'} />
         </div>
       ) : (
-        ""
+        ''
       )}
       <div
         {...getRootProps()}
         style={{
-          width: "100%",
-          height: "100%",
-          zIndex: "999",
-          cursor: "pointer",
+          width: '100%',
+          height: '100%',
+          zIndex: '999',
+          cursor: 'pointer',
         }}
       >
-        <div
-          style={{ zIndex: "550", width: "100%", height: "100%" }}
-          className={dropzoneOptions}
-        >
+        <div style={{ zIndex: '550', width: '100%', height: '100%' }} className={dropzoneOptions}>
           {/* <img src={UploadBtn} className="" /> */}
-          <p className="heading">{heading}</p>
+          <p className='heading'>{heading}</p>
 
           <input {...getInputProps()} />
           {/* <Button className="browse-btn">{button}</Button> */}
-          {<p className="desc">Drag n drop or choose file</p>}
+          {<p className='desc'>Drag n drop or choose file</p>}
         </div>
       </div>
     </section>

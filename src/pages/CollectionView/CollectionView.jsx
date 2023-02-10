@@ -38,6 +38,7 @@ import FiltersSection from './FiltersSection';
 
 const CollectionView = ({ match }) => {
   const [collectionDetails, setCollectionDetails] = useState([]);
+  console.log('collectionDetails', collectionDetails);
   const [loading, setLoading] = useState(false);
   const [count, setCount] = useState(0);
   const [searchParam, setSearchParam] = useState('');
@@ -142,7 +143,8 @@ const CollectionView = ({ match }) => {
       handleOk
     );
   };
-
+  console.log('filterCodes', filterCodes);
+  console.log('collectionDetails', collectionDetails);
   return (
     <>
       <ReportCollectionModal
@@ -278,51 +280,14 @@ const CollectionView = ({ match }) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '5%',
               marginTop: '3%',
             }}
           >
-            <div
-              style={{
-                padding: '.5% 1%',
-                background: '#f37342',
-                borderRadius: '10px',
-                borderTop: '1px dashed rgba(48, 53, 73, 0.25)',
-                color: '#ffffff',
-                fontWeight: '700',
-                fontSize: '18px',
-                width: '7%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer',
-              }}
-            >
-              BUY
-            </div>
             <div className='socialIconsSection display_none'>
               <span>Created By:</span>
               <span className='value' onClick={handleClick}>
                 {collectionDetails?.user_details?.username}s
               </span>
-            </div>
-            <div
-              style={{
-                padding: '.5% 1%',
-                background: '#f37342',
-                borderRadius: '10px',
-                borderTop: '1px dashed rgba(48, 53, 73, 0.25)',
-                color: '#ffffff',
-                fontWeight: '700',
-                fontSize: '18px',
-                width: '7%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer',
-              }}
-            >
-              BID
             </div>
           </div>
           <div className='collectionDetailsWrapper main_page_width'>
@@ -334,7 +299,9 @@ const CollectionView = ({ match }) => {
                     ? JSON.parse(collectionDetails?.description_long)
                     : collectionDetails?.description_long,
                 }}
-              ></div>
+              >
+                {/* {collectionDetails?.description_long} */}
+              </div>
             </div>
           </div>
           {showSearchBarAndRarirtyTable && <FlickerComp collectionId={match.params.id} />}
@@ -355,7 +322,7 @@ const CollectionView = ({ match }) => {
                     />
                   </div>
                   <div className='filterDropdown'>
-                    <Select placeholder='Filter Data' allowClear onChange={handleChange}>
+                    <Select placeholder='Filter By' allowClear onChange={handleChange}>
                       {filterCodes?.map((item, index) => {
                         return (
                           <Select.Option value={item?.code} key={item + index}>

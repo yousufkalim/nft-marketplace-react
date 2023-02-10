@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
-import ExploreCard from "../../components/presentational/ExploreCard/ExploreCard";
-import PAGE_HEADER from "../../images/PageHeader.png";
-import HEADER_IMAGE_MOBILE from "../../images/header_image_mobile.png";
-import { Row, Col } from "antd";
-import NewsLetter from "../../components/presentational/NewsLetter/NewsLetter";
-import { allCollectionsAPI } from "../../services/explorePageServices";
-import InfiniteScroll from "react-infinite-scroll-component";
-import LoadingCard from "../../components/presentational/LoadingCard/LoadingCard";
-import useWindowSize from "../../helpers/hooks";
-import { openNotification } from "../../components/Smart/Notification";
-import CategoryFlicker from "../FilterCollections/CategoryFlicker";
-import { getCollectionByCategory } from "../../services/collectionServices";
-import Spin from "../../components/presentational/Spin";
-import "./ExplorePage.scss";
-import { AdvanceSearchApi } from "../../services/searchServices";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import ExploreCard from '../../components/presentational/ExploreCard/ExploreCard';
+import PAGE_HEADER from '../../images/PageHeader.png';
+import HEADER_IMAGE_MOBILE from '../../images/header_image_mobile.png';
+import { Row, Col } from 'antd';
+import NewsLetter from '../../components/presentational/NewsLetter/NewsLetter';
+import { allCollectionsAPI } from '../../services/explorePageServices';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import LoadingCard from '../../components/presentational/LoadingCard/LoadingCard';
+import useWindowSize from '../../helpers/hooks';
+import { openNotification } from '../../components/Smart/Notification';
+import CategoryFlicker from '../FilterCollections/CategoryFlicker';
+import { getCollectionByCategory } from '../../services/collectionServices';
+import Spin from '../../components/presentational/Spin';
+import './ExplorePage.scss';
+import { AdvanceSearchApi } from '../../services/searchServices';
+import { useSelector } from 'react-redux';
 
 const ExplorePage = () => {
   const web3 = useSelector((state) => state.web3);
@@ -28,16 +28,16 @@ const ExplorePage = () => {
     next_page: 1,
   });
   const [browserWidth] = useWindowSize();
-
+  console.log('exploreData', exploreData);
   const fetchExploreData = async () => {
     try {
-      if (query?.get("SearchCollection")) {
+      if (query?.get('SearchCollection')) {
         const res = await AdvanceSearchApi(
-          query?.get("SearchCollection"),
-          query?.get("SelectedCategory"),
+          query?.get('SearchCollection'),
+          query?.get('SelectedCategory'),
           extraData?.next_page
         );
-        console.log("res", res);
+        console.log('res', res);
         if (res?.body?.data?.length) {
           setExploreData([...exploreData, ...res?.body?.data]);
           setExtraData({
@@ -45,9 +45,9 @@ const ExplorePage = () => {
             has_more: res?.body?.has_more,
           });
         }
-      } else if (query?.get("SelectedCategory")) {
+      } else if (query?.get('SelectedCategory')) {
         const res = await getCollectionByCategory(
-          query?.get("SelectedCategory"),
+          query?.get('SelectedCategory'),
           extraData?.next_page
         );
 
@@ -69,45 +69,36 @@ const ExplorePage = () => {
         }
       }
     } catch (error) {
-      openNotification("Oops", error?.response?.data?.message);
+      openNotification('Oops', error?.response?.data?.message);
     }
   };
   useEffect(async () => {
-    console.log("called");
+    console.log('called');
     setLoading(true);
     await fetchExploreData();
     setLoading(false);
-  }, [query?.get("SearchCollection")]);
+  }, [query?.get('SearchCollection')]);
 
-  console.log("test", query?.get("SearchCollection"));
-
+  console.log('test', query?.get('SearchCollection'));
+  console.log('exploreData', exploreData);
   return (
     <>
-      <div className="ExplorePageWrapper">
-        <div className="ExplorePageHeader">
-          <img
-            src={browserWidth < 821 ? HEADER_IMAGE_MOBILE : PAGE_HEADER}
-            alt={"PAGE_HEADER"}
-          />
-          <div className="exploreHeadingSection">
-            <span className="exploreText">
-              FIND, EXPLORE & FOLLOW DIGITAL ART NFTS.
-            </span>
-            <span className="exploreHeading">Explore Collections</span>
+      <div className='ExplorePageWrapper'>
+        <div className='ExplorePageHeader'>
+          <img src={browserWidth < 821 ? HEADER_IMAGE_MOBILE : PAGE_HEADER} alt={'PAGE_HEADER'} />
+          <div className='exploreHeadingSection'>
+            <span className='exploreText'>FIND, EXPLORE & FOLLOW DIGITAL ART NFTS.</span>
+            <span className='exploreHeading'>Explore Collections</span>
           </div>
         </div>
-        <CategoryFlicker
-          category={category}
-          setCategory={setCategory}
-          reloadOnChange={true}
-        />
+        <CategoryFlicker category={category} setCategory={setCategory} reloadOnChange={true} />
         {loading ? (
-          <div style={{ textAlign: "center" }}>
+          <div style={{ textAlign: 'center' }}>
             <Spin />
           </div>
         ) : exploreData.length > 0 ? (
           <>
-            <div className="ExplorecardGrid main_page_width">
+            <div className='ExplorecardGrid main_page_width'>
               <InfiniteScroll
                 dataLength={exploreData?.length} //This is important field to render the next data
                 next={fetchExploreData}
@@ -120,7 +111,7 @@ const ExplorePage = () => {
                       arr?.map((item, index) => {
                         return (
                           <Col
-                            className="gutter-row"
+                            className='gutter-row'
                             xs={24}
                             sm={24}
                             md={12}
@@ -137,7 +128,7 @@ const ExplorePage = () => {
                   </Row>
                 }
                 endMessage={
-                  <p className="all_seen_txt" style={{ textAlign: "center" }}>
+                  <p className='all_seen_txt' style={{ textAlign: 'center' }}>
                     <b>Yay! You have seen it all</b>
                   </p>
                 }
@@ -146,7 +137,7 @@ const ExplorePage = () => {
                   {exploreData?.map((item, index) => {
                     return (
                       <Col
-                        className="gutter-row"
+                        className='gutter-row'
                         xs={24}
                         sm={24}
                         md={12}
@@ -168,7 +159,7 @@ const ExplorePage = () => {
             </div>
           </>
         ) : (
-          <div style={{ textAlign: "center" }}>No Such Collection Found</div>
+          <div style={{ textAlign: 'center' }}>No Such Collection Found</div>
         )}
         <NewsLetter />
       </div>
