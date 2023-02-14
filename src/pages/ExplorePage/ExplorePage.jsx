@@ -23,6 +23,8 @@ const ExplorePage = () => {
   const [category, setCategory] = useState(null);
   const query = new URLSearchParams(window?.location?.search);
   const [loading, setLoading] = useState(false);
+  const [stickyOffset, setStickyOffset] = useState(0);
+
   const [extraData, setExtraData] = useState({
     has_more: true,
     next_page: 1,
@@ -79,6 +81,21 @@ const ExplorePage = () => {
     setLoading(false);
   }, [query?.get('SearchCollection')]);
 
+  const isSticky = () => {
+    var header = document.getElementById('searchHeader');
+    var sticky = header?.offsetTop;
+    if (sticky !== 0) {
+      setStickyOffset(sticky);
+    }
+    if (window.pageYOffset > sticky && window.pageYOffset > stickyOffset) {
+      header.classList.add('sticky');
+    } else {
+      header.classList.remove('sticky');
+    }
+  };
+  window.onscroll = function () {
+    isSticky();
+  };
   console.log('test', query?.get('SearchCollection'));
   console.log('exploreData', exploreData);
   return (
@@ -91,7 +108,9 @@ const ExplorePage = () => {
             <span className='exploreHeading'>Explore Collections</span>
           </div>
         </div>
-        <CategoryFlicker category={category} setCategory={setCategory} reloadOnChange={true} />
+        <div id='searchHeader'>
+          <CategoryFlicker category={category} setCategory={setCategory} reloadOnChange={true} />
+        </div>
         {loading ? (
           <div style={{ textAlign: 'center' }}>
             <Spin />

@@ -26,7 +26,7 @@ const NftRightSection = ({ nftData }) => {
       const res = await likeNfts(nftData?.guid);
       setIsLiked(true);
       if (res?.body?.like == '1' || res?.body?.like == true) {
-        // openNotification("Success", "Liked Successfully");
+        openNotification('Nft liked successfully');
       }
     } catch (error) {
       openNotification('Oops', error?.response?.data?.message);
@@ -36,6 +36,7 @@ const NftRightSection = ({ nftData }) => {
     try {
       const res = await unLikeNfts(nftData?.guid);
       setIsLiked(false);
+      openNotification('Nft unliked successfully');
     } catch (error) {
       openNotification('Oops', error?.response?.data?.message);
     }

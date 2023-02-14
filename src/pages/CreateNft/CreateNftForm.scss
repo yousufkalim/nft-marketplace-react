@@ -21,6 +21,7 @@
       height: 25vh;
   }
   .MintNftImageDiv{
+    cursor: pointer !important;
       width: 100% !important;
       height: 100% !important;
       object-fit: cover !important;
@@ -104,9 +105,13 @@
   .MintNftButton button{
     border: none;
     background: transparent;
+    cursor: pointer;
+
   }
   .MintNftButton img{
     width: 15%;
+    cursor: pointer;
+
   }
 
 .CreateCollectionFormWrapper {
