@@ -18,6 +18,7 @@ export const uploadFileToIPFS = async (file) => {
   //pinataOptions are optional
   const pinataOptions = JSON.stringify({
     cidVersion: 0,
+
     customPinPolicy: {
       regions: [
         {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PAGE_HEADER from '../../images/PageHeader.png';
 import RightArrow from '../../images/rightIcon.svg';
 import './CreateNft.scss';
-import { openNotification } from '../../components/Smart/Notification';
+// import { openNotification } from '../../components/Smart/Notification';
 import web3Modal from 'web3modal';
 import { ethers } from 'ethers';
 import {
@@ -109,7 +109,6 @@ const CreateNft = () => {
       alert('Error during file upload', e);
     }
   };
-
   // conecting with smart contract
 
   const connectingWithSmartContract = async () => {
