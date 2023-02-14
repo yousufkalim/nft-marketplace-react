@@ -23,6 +23,7 @@ const CreateCollectionForm = () => {
 
   const [isExplicit, setIsExplicit] = useState(formData?.is_explicit ?? false);
   const [isMintable, setIsMintable] = useState(formData?.mintable ?? false);
+  const [isPublish, setIsPublish] = useState(formData?.publish ?? false);
   // const [isActive, setIsActive] = useState(false);
   const [delayDays, setDelayDays] = useState(5);
   const [categoryCodes, setCategoryCodes] = useState([]);
@@ -96,6 +97,7 @@ const CreateCollectionForm = () => {
       mint_locked: isMintLocked ? 1 : 0,
       is_explicit: isExplicit ? 1 : 0,
       mintable: isMintable ? 1 : 0,
+      publish: isPublish ? 1 : 0,
       isActive: 1,
       created_by: user?.first_name ?? '',
       created_date: new Date().toLocaleString(),
@@ -107,6 +109,7 @@ const CreateCollectionForm = () => {
       third_party_wallet_id: values.thirdPartyWalletId ?? '',
       who_pays_fees: 'Seller',
     };
+    console.log('data create', data);
     dispatch(collectionNameStatus(storenameStatus));
     if (storenameStatus == 'success') {
       dispatch(collectionDataSuccess(data));
@@ -159,6 +162,7 @@ const CreateCollectionForm = () => {
               mintingCoin: formData?.minting_coin ?? '',
               isExplicit: formData?.is_explicit ?? isExplicit,
               isMintable: formData?.mintable ?? isMintable,
+              isPublish: formData?.publish ?? isPublish,
               isMintLocked: formData?.mint_locked ?? isMintLocked,
               royaltyPercent: formData?.royalty_percent ?? 0,
               thirdPartyWalletId: formData?.third_party_wallet_id ?? walletId,
@@ -351,6 +355,30 @@ const CreateCollectionForm = () => {
                       size='small'
                       checked={isMintable}
                       onChange={() => setIsMintable(!isMintable)}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    label={
+                      <div>
+                        Publish
+                        <Tooltip
+                          title={'Enabling this will create your collection'}
+                          color={'#303549'}
+                          overlayClassName='favouriteToolTip'
+                        >
+                          <span className='infoIcon'>
+                            <img src={QUESTION_MARK} alt={'QUESTION_MARK'} />
+                          </span>
+                        </Tooltip>
+                      </div>
+                    }
+                    labelAlign='left'
+                    valuePropName='checked'
+                  >
+                    <Switch
+                      size='small'
+                      checked={isPublish}
+                      onChange={() => setIsPublish(!isPublish)}
                     />
                   </Form.Item>
                 </div>
