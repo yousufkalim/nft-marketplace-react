@@ -6,13 +6,19 @@ import axios from 'axios';
 import { create as ipfsHttpClient } from 'ipfs-http-client';
 
 //creating client
-const client = ipfsHttpClient('https://goerli.infura.io/v3/4613b9244a77458fac5250b39f574b5f');
+const client = ipfsHttpClient(
+  'https://goerli.infura.io/v3/4613b9244a77458fac5250b39f574b5f'
+);
 // import {NFTMarketplaceABI,NFTMarketplaceAddress} from "./constant";
 
 import { NFTMarketplaceAddress, NFTMarketplaceABI } from './constant';
 import { type } from '@testing-library/user-event/dist/type';
 const fetchContract = (signerOrProvider) =>
-  new ethers.Contract(NFTMarketplaceABI, NFTMarketplaceAddress, signerOrProvider);
+  new ethers.Contract(
+    NFTMarketplaceABI,
+    NFTMarketplaceAddress,
+    signerOrProvider
+  );
 
 // conecting with smart contract
 
@@ -79,7 +85,8 @@ export const NFTMarketplaceProvider = ({ children }) => {
   // create nft function
   const createNFT = async (formInput, fileUrl, router) => {
     const { name, description, price } = formInput;
-    if (!name || !description || !price || !fileUrl) return console.log('Data is missing ');
+    if (!name || !description || !price || !fileUrl)
+      return console.log('Data is missing ');
     const data = JSON.stringify({ name, description, image: fileUrl });
     try {
       const added = await client.add(data);
@@ -121,24 +128,29 @@ export const NFTMarketplaceProvider = ({ children }) => {
       const data = await contract.getAllListings();
       //console.log(data)
       const items = await Promise.all(
-        data.map(async ({ tokenId, seller, owner, price: unformattedPrice }) => {
-          const tokenURI = await contract.tokenURI(tokenId);
+        data.map(
+          async ({ tokenId, seller, owner, price: unformattedPrice }) => {
+            const tokenURI = await contract.tokenURI(tokenId);
 
-          const {
-            data: { image, name, description },
-          } = await axios.get(tokenURI);
-          const price = ethers.utils.formatUnits(unformattedPrice.toString(), 'ether');
-          return {
-            price,
-            tokenId: tokenId.toNumber(),
-            seller,
-            owner,
-            image,
-            name,
-            description,
-            tokenURI,
-          };
-        })
+            const {
+              data: { image, name, description },
+            } = await axios.get(tokenURI);
+            const price = ethers.utils.formatUnits(
+              unformattedPrice.toString(),
+              'ether'
+            );
+            return {
+              price,
+              tokenId: tokenId.toNumber(),
+              seller,
+              owner,
+              image,
+              name,
+              description,
+              tokenURI,
+            };
+          }
+        )
       );
       return items;
     } catch (error) {
@@ -157,24 +169,29 @@ export const NFTMarketplaceProvider = ({ children }) => {
           ? await contract.fetchItemListed()
           : await contract.ListingsRecord();
       const items = await Promise.all(
-        data.map(async ({ tokenId, seller, owner, price: unformattedPrice }) => {
-          const tokenURI = await contract.tokenURI(tokenId);
-          const {
-            data: { image, name, description },
-          } = await axios.get(tokenURI);
-          const price = ethers.utils.fornatUnits(unformattedPrice.toString(), 'ether');
+        data.map(
+          async ({ tokenId, seller, owner, price: unformattedPrice }) => {
+            const tokenURI = await contract.tokenURI(tokenId);
+            const {
+              data: { image, name, description },
+            } = await axios.get(tokenURI);
+            const price = ethers.utils.fornatUnits(
+              unformattedPrice.toString(),
+              'ether'
+            );
 
-          return {
-            price,
-            tokenId: tokenId.toNumber(),
-            seller,
-            owner,
-            image,
-            name,
-            description,
-            tokenURI,
-          };
-        })
+            return {
+              price,
+              tokenId: tokenId.toNumber(),
+              seller,
+              owner,
+              image,
+              name,
+              description,
+              tokenURI,
+            };
+          }
+        )
       );
       return items;
     } catch (error) {
@@ -207,8 +224,7 @@ export const NFTMarketplaceProvider = ({ children }) => {
         fetchMyNFTsOrListedNFTs,
         buyNFT,
         currentAccount,
-      }}
-    >
+      }}>
       {children}
     </NFTMarketplacecontext.Provider>
   );

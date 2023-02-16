@@ -3,19 +3,9 @@ import PAGE_HEADER from '../../images/PageHeader.png';
 import RightArrow from '../../images/rightIcon.svg';
 import './CreateNft.scss';
 // import { openNotification } from '../../components/Smart/Notification';
-import web3Modal from 'web3modal';
 import { ethers } from 'ethers';
-import {
-  NFTMarketplaceAddress,
-  NFTMarketplaceABI,
-} from '../../contracts/constant';
-import { uploadFileToIPFS } from '../../pinata.js';
-const fetchContract = (signerOrProvider) =>
-  new ethers.Contract(
-    NFTMarketplaceAddress,
-    NFTMarketplaceABI,
-    signerOrProvider
-  );
+
+import { uploadFileToIPFS, connectingWithSmartContract } from '../../pinata.js';
 
 const CreateNft = () => {
   const [currentAccount, setcurrentAccount] = useState('');
@@ -33,9 +23,9 @@ const CreateNft = () => {
       image: null,
     });
   };
+
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
-  const [formVal, setFormVal] = useState();
-  const [esultUrl, setResultUrl] = useState();
+  const [ResultUrl, setResultUrl] = useState();
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
@@ -69,7 +59,6 @@ const CreateNft = () => {
       createNFT(formData, imagePreviewUrl);
     }
   };
-
   const connectWallet = async () => {
     try {
       if (!window.ethereum) return console.log('install metamask ');
@@ -82,6 +71,7 @@ const CreateNft = () => {
       console.log('error while connecting to the wallet');
     }
   };
+
   const uploadToIPFS = async (file) => {
     console.log(file);
     try {
@@ -110,20 +100,6 @@ const CreateNft = () => {
     }
   };
   // conecting with smart contract
-
-  const connectingWithSmartContract = async () => {
-    try {
-      const web3modal = new web3Modal();
-      const connection = await web3modal.connect();
-      const provider = new ethers.providers.Web3Provider(connection);
-      const signer = provider.getSigner();
-
-      const contract = fetchContract(signer);
-      return contract;
-    } catch (error) {
-      console.log('something went wrong while connecting with contract ');
-    }
-  };
 
   const createNFT = async (formInput, fileUrl) => {
     const nftid = 1;
