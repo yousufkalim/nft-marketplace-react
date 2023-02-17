@@ -286,7 +286,7 @@ const CollectionView = ({ match }) => {
             <div className='socialIconsSection display_none'>
               <span>Created By:</span>
               <span className='value' onClick={handleClick}>
-                {collectionDetails?.user_details?.username}s
+                {collectionDetails?.user_details?.username}
               </span>
             </div>
           </div>
