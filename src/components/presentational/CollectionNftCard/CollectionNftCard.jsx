@@ -119,12 +119,12 @@ const CollectionNftCard = ({
         </div>
         <div className='dflex'>
           <div className='idSection'># {data?.collection_id ?? data?.guid}</div>
-          {/* <span className="createdBy">
+          <span className='createdBy'>
             <span>Created By: </span>
-            <span className="textStyle" onClick={(e) => handleProfileClick(e)}>
+            <span className='textStyle' onClick={(e) => handleProfileClick(e)}>
               {data?.user_name}
             </span>
-          </span> */}
+          </span>
         </div>
       </Card>
     </div>
