@@ -112,7 +112,15 @@ export const connectingWithCollection = async () => {
     console.log('somthing went wrong while connecting with collection ');
   }
 };
-export const createcollection = async () => {
+export const createcollection = async (
+  _name,
+  _symbol,
+  _uri,
+  _totalSupply,
+  _mintPrice,
+  _startDate,
+  _expirationDate
+) => {
   try {
     const price = ethers.utils.parseUnits('ethers');
     const contract = await connectingWithCollection();
