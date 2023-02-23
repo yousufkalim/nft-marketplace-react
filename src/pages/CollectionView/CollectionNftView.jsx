@@ -23,8 +23,8 @@ const CollectionNftView = ({
   setShowSearchBarAndRarirtyTable,
   isCollectionDeployed,
   selectedFilter,
+  collectionDetails,
 }) => {
-  console.log('selectedFilter', selectedFilter);
   const arr = [1, 2];
 
   const [exploreData, setExploreData] = useState([]);
@@ -81,7 +81,9 @@ const CollectionNftView = ({
     setLoading(false);
   }, [searchParam, selectedFilter]);
 
-  console.log('testing', exploreData, extraData);
+  const imageLinks = exploreData.map((obj) => obj?.nft_data?.image_location);
+  const imageLinksJSON = JSON.stringify(imageLinks);
+  const imageLinksObject = JSON.parse(imageLinksJSON);
 
   const filterNft = (data) => {
     if (data?.guid === currentNftId) {
@@ -119,11 +121,6 @@ const CollectionNftView = ({
               loader={
                 <Row gutter={{ xs: 8, sm: 8, md: 8, lg: 8 }}>
                   {arr?.map((item, index) => {
-                    {
-                      exploreData.map((item) => {
-                        console.log('exploreData', item?.created_date);
-                      });
-                    }
                     return (
                       <Col
                         className='gutter-row'
@@ -170,6 +167,7 @@ const CollectionNftView = ({
                           isUserCollection={user?.guid === userId}
                           setVisible={setVisible}
                           setSelectedNft={setSelectedNft}
+                          collectionDetails={collectionDetails}
                         />
                       </Col>
                     );

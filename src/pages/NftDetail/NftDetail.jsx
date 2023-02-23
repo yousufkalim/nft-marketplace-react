@@ -13,8 +13,12 @@ import { nftDetailsApi } from '../../services/nftServices';
 import Spin from '../../components/presentational/Spin';
 import { openNotification } from '../../components/Smart/Notification';
 import NftDetailSection from './NftDetailSection';
+import { useLocation } from 'react-router-dom';
 
 const NftDetails = ({ match }) => {
+  const location = useLocation();
+  const collectionData = location.state?.data;
+  console.log('collectionDatacollectionData', collectionData);
   const arr = [1, 2, 3, 4, 5, 6];
   const [browserWidth] = useWindowSize();
   const [nftData, setNftData] = useState([]);
@@ -53,7 +57,7 @@ const NftDetails = ({ match }) => {
             <>
               <div className='selectedCollection main_page_width'>
                 <div className='CollectionDetailsSubHeader'>
-                  <NftLeftSection nftData={nftData} />
+                  <NftLeftSection nftData={nftData} collectionData={collectionData} />
                   <NftRightSection nftData={nftData} />
                 </div>
                 <DetailSection nftData={nftData} />

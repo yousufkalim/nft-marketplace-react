@@ -76,6 +76,7 @@ const FeaturedCard = ({ data, isNft, showFollowIcon = true }) => {
                     backgroundSize: 'cover',
                     backgroundPosition: 'center center',
                   }}
+                  alt='image_small'
                 />
               </div>
             )}
@@ -99,12 +100,12 @@ const FeaturedCard = ({ data, isNft, showFollowIcon = true }) => {
                 </span>
               )}
 
-              <div className='createdBy'>
+              {/* <div className='createdBy'>
                 <span>Created By: </span>
                 <span className='textStyle' onClick={(e) => handleCreatedBy(e)}>
-                  {data?.user_details?.username}
+                  {data?.created_by}
                 </span>
-              </div>
+              </div> */}
             </div>
             <div className='frameIconSection'>
               <Tooltip title={isLiked ? 'Unlike' : 'Like'} color={'#303549'}>

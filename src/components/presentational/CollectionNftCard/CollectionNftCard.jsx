@@ -23,12 +23,13 @@ const CollectionNftCard = ({
   isUserCollection,
   setVisible,
   setSelectedNft,
+  collectionDetails,
 }) => {
   const history = useHistory();
   const [isLiked, setIsLiked] = useState(data?.is_liked);
   const user = useSelector((state) => state.auth.user);
   const handleClick = () => {
-    history.push(`/nftDetail/${data?.guid}`);
+    history.push(`/nftDetail/${data?.guid}`, { data: collectionDetails });
   };
   const likeNft = async (e) => {
     e.stopPropagation();
