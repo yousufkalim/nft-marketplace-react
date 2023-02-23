@@ -9,14 +9,9 @@ import web3Modal from 'web3modal';
 // import React, { useEffect, useState } from 'react';
 
 const key = '92e1e4c867572f2216b3';
-const secret =
-  '8b6edd618f851eafa765a08807a8e520da3f2ef6f0e7178942b4b691d56dd0d2';
+const secret = '8b6edd618f851eafa765a08807a8e520da3f2ef6f0e7178942b4b691d56dd0d2';
 const fetchContract = (signerOrProvider) =>
-  new ethers.Contract(
-    NFTMarketplaceAddress,
-    NFTMarketplaceABI,
-    signerOrProvider
-  );
+  new ethers.Contract(NFTMarketplaceAddress, NFTMarketplaceABI, signerOrProvider);
 
 const axios = require('axios');
 const FormData = require('form-data');
@@ -65,8 +60,7 @@ export const uploadFileToIPFS = async (file) => {
 
       return {
         success: true,
-        pinataURL:
-          'https://gateway.pinata.cloud/ipfs/' + response.data.IpfsHash,
+        pinataURL: 'https://gateway.pinata.cloud/ipfs/' + response.data.IpfsHash,
       };
     })
     .catch(function (error) {
@@ -93,19 +87,14 @@ export const connectingWithSmartContract = async () => {
 };
 
 const fetchCollectionContract = (signerOrProvider) =>
-  new ethers.Contract(
-    collectionFactoryaddress,
-    collectionfactoryABI,
-    signerOrProvider
-  );
+  new ethers.Contract(collectionFactoryaddress, collectionfactoryABI, signerOrProvider);
 
 export const connectingWithCollection = async () => {
   try {
-    const web3modal = new web3Modal.connect();
+    const web3modal = new web3Modal();
     const connecting = await web3modal.connect();
     const provider = new ethers.providers.Web3Provider(connecting);
     const signer = provider.getSigner();
-
     const contract = fetchCollectionContract(signer);
     return contract;
   } catch (error) {
@@ -122,16 +111,13 @@ export const createcollection = async (
   _expirationDate
 ) => {
   try {
-    const price = ethers.utils.parseUnits('ethers');
-    const contract = await connectingWithCollection();
-    const transaction = await contract.createCollection(
+    const instance = await connectingWithCollection();
+    const transaction = await instance.createCollection(
       _name,
       _symbol,
       _uri,
       _totalSupply,
-      _mintPrice,
-      _startDate,
-      _expirationDate
+      _mintPrice
     );
     await transaction.wait();
   } catch (error) {

@@ -35,6 +35,7 @@ import LINK_ICON from '../../images/link_white_icon.svg';
 import { confirm } from '../../components/Smart/Modal';
 import ReportCollectionModal from '../../components/Smart/ReportCollectionModal';
 import FiltersSection from './FiltersSection';
+import { createcollection } from '../../pinata';
 
 const CollectionView = ({ match }) => {
   const [collectionDetails, setCollectionDetails] = useState([]);
@@ -98,14 +99,41 @@ const CollectionView = ({ match }) => {
 
   const handleDeployNFT = async () => {
     try {
-      let name = collectionDetails?.store_name;
-      let symbol = collectionDetails?.store_name
+      let _name = collectionDetails?.store_name;
+      let _symbol = collectionDetails?.store_name
         ?.toUpperCase()
         .replace(/ /g, '-')
         .replace(/[^\w-]+/g, '');
-      let localGuid = collectionDetails?.guid;
-      // debugger;
-      const tx = await deployNFT(name, symbol, localGuid);
+      let _uri = collectionDetails?.guid;
+      let _totalSupply = collectionDetails?.minting_supply_count;
+      let _mintPrice = localStorage.getItem('collectionPrice');
+      let _startDate = collectionDetails?.modified_date;
+      let daysNeeded = collectionDetails?.delay_days;
+      const startDateObj = new Date(_startDate);
+      const expiryDateObj = new Date(
+        startDateObj.getFullYear(),
+        startDateObj.getMonth(),
+        startDateObj.getDate() + daysNeeded
+      );
+      const expiryDateString = expiryDateObj.toISOString().slice(0, 10);
+      let _expirationDate = expiryDateString;
+      // // debugger;
+      const tx = await createcollection(
+        _name,
+        _symbol,
+        _uri,
+        _totalSupply,
+        _mintPrice,
+        _startDate,
+        _expirationDate
+      );
+      // let name = collectionDetails?.store_name;
+      // let symbol = collectionDetails?.store_name
+      //   ?.toUpperCase()
+      //   .replace(/ /g, '-')
+      //   .replace(/[^\w-]+/g, '');
+      // let localGuid = collectionDetails?.guid;
+      // const tx = await deployNFT(name, symbol, localGuid);
       if (tx) {
         openNotification('Success', 'Transaction submitted successfully, waiting for completion');
       }
@@ -365,6 +393,7 @@ const CollectionView = ({ match }) => {
               setShowSearchBarAndRarirtyTable={setShowSearchBarAndRarirtyTable}
               isCollectionDeployed={collectionDetails?.contract_address ? true : false}
               selectedFilter={selectedFilter}
+              collectionDetails={collectionDetails}
             />
           </div>
           <NewsLetter />
