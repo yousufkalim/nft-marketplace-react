@@ -23,7 +23,7 @@
     "hardhat": "^2.10.2",
     "hardhat-gas-reporter": "^1.0.8",
     "postcss": "^8.4.16",
-    "solidity-coverage": "^0.8.0",
+    "solidity-coverage": "^0.8.17",
     "tailwindcss": "^3.1.8",
     "typechain": "^8.1.0",
     "typescript": "4.8.3"
@@ -38,6 +38,6 @@
     "hardhat-contract-sizer": "^2.6.1",
     "hardhat-etherscan-abi": "github:usmansharif525/hardhat-etherscan-abi",
     "hardhat-gas-reporter": "^1.0.8",
-    "solidity-coverage": "^0.7.21"
+    "solidity-coverage": "^0.8.17"
   }
 }
